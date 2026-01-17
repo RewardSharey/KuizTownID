@@ -1,0 +1,2061 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuis - KuizTown</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    
+    <style>
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #5F729F;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255, 192, 203, 0.08) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(255, 192, 203, 0.08) 0%, transparent 20%),
+                radial-gradient(circle at 50% 50%, rgba(255, 192, 203, 0.05) 0%, transparent 30%);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* Geometric Pattern Background */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(30deg, rgba(255, 192, 203, 0.05) 12%, transparent 12.5%, transparent 87%, rgba(255, 192, 203, 0.05) 87.5%, rgba(255, 192, 203, 0.05)),
+                linear-gradient(150deg, rgba(255, 192, 203, 0.05) 12%, transparent 12.5%, transparent 87%, rgba(255, 192, 203, 0.05) 87.5%, rgba(255, 192, 203, 0.05)),
+                linear-gradient(30deg, rgba(255, 192, 203, 0.05) 12%, transparent 12.5%, transparent 87%, rgba(255, 192, 203, 0.05) 87.5%, rgba(255, 192, 203, 0.05)),
+                linear-gradient(150deg, rgba(255, 192, 203, 0.05) 12%, transparent 12.5%, transparent 87%, rgba(255, 192, 203, 0.05) 87.5%, rgba(255, 192, 203, 0.05)),
+                linear-gradient(60deg, rgba(255, 192, 203, 0.08) 25%, transparent 25.5%, transparent 75%, rgba(255, 192, 203, 0.08) 75%, rgba(255, 192, 203, 0.08)),
+                linear-gradient(60deg, rgba(255, 192, 203, 0.08) 25%, transparent 25.5%, transparent 75%, rgba(255, 192, 203, 0.08) 75%, rgba(255, 192, 203, 0.08));
+            background-size: 80px 140px;
+            background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
+            opacity: 0.3;
+            z-index: -1;
+        }
+        
+        /* Container */
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 0 15px 80px; /* Padding bottom untuk nav bar */
+        }
+        
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            margin-bottom: 10px;
+        }
+        
+        .back-btn {
+            color: white;
+            font-size: 22px;
+            cursor: pointer;
+            text-decoration: none;
+            background: none;
+            border: none;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo-icon {
+            font-size: 28px;
+            background: linear-gradient(135deg, #9b59b6, #3498db);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .logo-text {
+            font-size: 20px;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .page-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #fff;
+        }
+        
+        /* Tabs Container */
+        .tabs-container {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Card Styles */
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .card-title {
+            font-size: 1.1rem;
+            color: #444;
+            margin-bottom: 15px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .card-title i {
+            color: #87CEEB;
+        }
+        
+        /* Welcome Card */
+        .welcome-card {
+            text-align: center;
+        }
+        
+        .welcome-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .welcome-subtitle {
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .stats-container {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #87CEEB;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .level-label {
+            font-size: 0.9rem;
+            color: #333;
+            margin-top: 10px;
+        }
+        
+        /* Categories Grid */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        @media (min-width: 768px) {
+            .categories-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        .category-card {
+            border-radius: 15px;
+            padding: 20px;
+            color: white;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            border: none;
+            text-align: left;
+            display: block;
+            width: 100%;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .category-card:active {
+            transform: translateY(-2px);
+        }
+        
+        .category-icon {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+        
+        .category-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .category-desc {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 10px;
+        }
+        
+        .category-reward {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .category-life {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        /* Category Colors */
+        .easy-card {
+            background: linear-gradient(135deg, #90EE90, #32CD32);
+        }
+        
+        .medium-card {
+            background: linear-gradient(135deg, #87CEEB, #4682B4);
+        }
+        
+        .hard-card {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+        }
+        
+        .very-hard-card {
+            background: linear-gradient(135deg, #FFA500, #FF6347);
+        }
+        
+        .ultimate-hard-card {
+            background: linear-gradient(135deg, #FF6347, #DC143C);
+        }
+        
+        /* Levels Container */
+        .levels-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .levels-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .levels-scroll-container {
+            overflow-x: auto;
+            white-space: nowrap;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .levels-grid {
+            display: inline-flex;
+            gap: 15px;
+        }
+        
+        .level-card {
+            min-width: 150px;
+            border-radius: 12px;
+            padding: 15px;
+            color: white;
+            position: relative;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+            cursor: pointer;
+            border: none;
+            text-align: center;
+        }
+        
+        .level-card:hover:not(.locked):not(.completed) {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .level-card:active:not(.locked):not(.completed) {
+            transform: translateY(-1px);
+        }
+        
+        .level-number {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .level-difficulty {
+            font-size: 0.8rem;
+            opacity: 0.9;
+            margin-bottom: 10px;
+        }
+        
+        .level-reward {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .level-life {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 10px;
+        }
+        
+        .level-status {
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-align: center;
+            padding: 8px;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+        
+        .btn-start {
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            border: none;
+            border-radius: 8px;
+            padding: 10px;
+            width: 100%;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        
+        .btn-start:hover:not(:disabled) {
+            background: white;
+            transform: translateY(-2px);
+        }
+        
+        .btn-start:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .btn-retry {
+            background: #FFD700;
+            color: #333;
+        }
+        
+        .completed .level-status {
+            background: rgba(0, 0, 0, 0.2);
+        }
+        
+        .locked .level-status {
+            background: rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Rules Card */
+        .rules-card {
+            background: rgba(255, 255, 255, 0.9);
+        }
+        
+        .rules-list {
+            padding-left: 20px;
+        }
+        
+        .rules-list li {
+            margin-bottom: 8px;
+            color: #555;
+        }
+        
+        /* Level Detail Card */
+        .detail-card {
+            text-align: center;
+        }
+        
+        .detail-title {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .detail-category {
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .detail-info {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+        }
+        
+        .info-item {
+            text-align: center;
+        }
+        
+        .info-label {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .info-value {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #87CEEB;
+        }
+        
+        .warning-box {
+            background: rgba(255, 165, 0, 0.1);
+            border-left: 4px solid #FFA500;
+            padding: 12px;
+            margin: 20px 0;
+            text-align: left;
+            border-radius: 4px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #87CEEB, #5F729F);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 20px;
+        }
+        
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(135, 206, 235, 0.4);
+        }
+        
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        /* Quiz Question Card */
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .quiz-info {
+            font-size: 1rem;
+            color: #666;
+        }
+        
+        .quiz-timer {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #FF6347;
+            background: rgba(255, 99, 71, 0.1);
+            padding: 8px 15px;
+            border-radius: 20px;
+        }
+        
+        .quiz-question {
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            color: #333;
+            line-height: 1.5;
+        }
+        
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        @media (min-width: 768px) {
+            .options-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        .option-btn {
+            background: rgba(135, 206, 235, 0.1);
+            border: 2px solid #87CEEB;
+            border-radius: 12px;
+            padding: 15px;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .option-btn:hover:not(.selected):not(:disabled) {
+            background: rgba(135, 206, 235, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .option-btn.selected {
+            background: #87CEEB;
+            color: white;
+            border-color: #5F729F;
+        }
+        
+        .option-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .option-letter {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+        
+        .option-btn.selected .option-letter {
+            background: white;
+            color: #87CEEB;
+        }
+        
+        .option-text {
+            flex: 1;
+        }
+        
+        .quiz-rules {
+            background: rgba(255, 192, 203, 0.1);
+            border-left: 3px solid #FFC0CB;
+            padding: 12px;
+            margin: 20px 0;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        /* Quiz Result Card */
+        .result-icon {
+            font-size: 70px;
+            margin-bottom: 20px;
+        }
+        
+        .success-icon {
+            color: #90EE90;
+        }
+        
+        .fail-icon {
+            color: #FF6347;
+        }
+        
+        .average-icon {
+            color: #FFD700;
+        }
+        
+        .result-title {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .result-score {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #87CEEB;
+            margin: 20px 0;
+        }
+        
+        .result-reward {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #90EE90;
+            margin-bottom: 20px;
+        }
+        
+        .result-message {
+            color: #666;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+        
+        .btn-claim {
+            background: linear-gradient(135deg, #90EE90, #32CD32);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 10px;
+        }
+        
+        .btn-claim:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(144, 238, 144, 0.4);
+        }
+        
+        /* Footer Navigation */
+        .nav-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            padding: 12px 0;
+            display: flex;
+            justify-content: space-around;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+            z-index: 1000;
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #666;
+            transition: all 0.3s ease;
+            flex: 1;
+            padding: 5px 0;
+        }
+        
+        .nav-item.active {
+            color: #87CEEB;
+        }
+        
+        .nav-icon {
+            font-size: 20px;
+            margin-bottom: 3px;
+        }
+        
+        .nav-text {
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            padding: 25px;
+            border-radius: 15px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            animation: modalFadeIn 0.3s ease-out;
+        }
+        
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+        
+        .modal-icon {
+            font-size: 50px;
+            margin-bottom: 20px;
+        }
+        
+        .warning .modal-icon {
+            color: #FFA500;
+        }
+        
+        .error .modal-icon {
+            color: #FF6347;
+        }
+        
+        .modal-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .modal-message {
+            color: #666;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+        
+        .modal-btn {
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #87CEEB, #5F729F);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .modal-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(135, 206, 235, 0.4);
+        }
+        
+        /* Progress Bar */
+        .progress-container {
+            width: 100%;
+            height: 10px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+            margin: 10px 0 20px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #87CEEB, #5F729F);
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+        
+        /* Scrollbar Styling */
+        .levels-scroll-container::-webkit-scrollbar {
+            height: 6px;
+        }
+        
+        .levels-scroll-container::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+        
+        .levels-scroll-container::-webkit-scrollbar-thumb {
+            background: rgba(135, 206, 235, 0.5);
+            border-radius: 10px;
+        }
+        
+        .levels-scroll-container::-webkit-scrollbar-thumb:hover {
+            background: rgba(135, 206, 235, 0.7);
+        }
+        
+        /* Loading State */
+        .loading {
+            opacity: 0.7;
+            pointer-events: none;
+        }
+        
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 3000;
+            color: white;
+            font-size: 1.2rem;
+        }
+        .card-divider {
+    width: 100%;
+    height: 1px;
+    background: rgba(0,0,0,0.08);
+    margin: 15px 0;
+}
+
+.quiz-instruction {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: #555;
+}
+
+.quiz-instruction i {
+    color: #87CEEB;
+    font-size: 15px;
+}
+    </style>
+</head>
+<body>
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay" style="display: none;">
+        <div style="text-align: center;">
+            <i class="fas fa-spinner fa-spin" style="font-size: 3rem; margin-bottom: 20px;"></i>
+            <p>Memuat data...</p>
+        </div>
+    </div>
+
+    <!-- Container Utama -->
+    <div class="container">
+        <!-- TAB 1: Kategori Kuis -->
+        <div id="tabCategories" class="tab-content active">
+            <!-- Header -->
+            <header>
+                <div class="logo-container">
+                    <i class="fas fa-shapes logo-icon"></i>
+                    <span class="logo-text">KuizTown</span>
+                </div>
+                <div class="page-title">QUIZ</div>
+            </header>
+            
+            <!-- Welcome Card -->
+            <div class="card welcome-card">
+                <h2 class="welcome-title">Selamat Datang di Quiz!</h2>
+                <p class="welcome-subtitle">Uji pengetahuan dan dapatkan GEO!</p>
+                
+                <div class="stats-container">
+                    <div class="stat-item">
+                        <div class="stat-value" id="geoBalanceQuiz">0,0</div>
+                        <div class="stat-label">GEO</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="lifeBalanceQuiz">0</div>
+                        <div class="stat-label">LIFE</div>
+                    </div>
+                    </div>
+                
+                <div class="level-label">
+                    Level tertinggi yang berhasil dicapai: 
+                    <span id="highestLevelDetail">Belum ada</span>
+                </div>
+                <div class="card-divider"></div>
+
+<div class="quiz-instruction">
+    <i class="fas fa-layer-group"></i>
+    <span>Pilih salah satu kategori di bawah untuk mulai bermain dan mendapatkan GEO</span>
+</div>
+            </div>
+            
+            <!-- Categories Grid -->
+            <div class="categories-grid">
+                <!-- Easy Category -->
+                <button class="category-card easy-card" onclick="selectCategory('E')">
+                    <div class="category-icon">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h3 class="category-title">EASY</h3>
+                    <p class="category-desc">Pertanyaan dasar untuk pemula</p>
+                    <div class="category-reward">Reward: 0,2 GEO per soal</div>
+                    <div class="category-life">Biaya: 1 LIFE per level</div>
+                </button>
+                
+                <!-- Medium Category -->
+                <button class="category-card medium-card" onclick="selectCategory('M')">
+                    <div class="category-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3 class="category-title">MEDIUM</h3>
+                    <p class="category-desc">Pertanyaan dengan tingkat kesulitan sedang</p>
+                    <div class="category-reward">Reward: 0,4 GEO per soal</div>
+                    <div class="category-life">Biaya: 2 LIFE per level</div>
+                </button>
+                
+                <!-- Hard Category -->
+                <button class="category-card hard-card" onclick="selectCategory('H')">
+                    <div class="category-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3 class="category-title">HARD</h3>
+                    <p class="category-desc">Pertanyaan yang membutuhkan pemikiran lebih</p>
+                    <div class="category-reward">Reward: 0,6 GEO per soal</div>
+                    <div class="category-life">Biaya: 3 LIFE per level</div>
+                </button>
+                
+                <!-- Very Hard Category -->
+                <button class="category-card very-hard-card" onclick="selectCategory('VH')">
+                    <div class="category-icon">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <h3 class="category-title">VERY HARD</h3>
+                    <p class="category-desc">Pertanyaan tingkat lanjut</p>
+                    <div class="category-reward">Reward: 0,8 GEO per soal</div>
+                    <div class="category-life">Biaya: 4 LIFE per level</div>
+                </button>
+                
+                <!-- Ultimate Hard Category -->
+                <button class="category-card ultimate-hard-card" onclick="selectCategory('UH')">
+                    <div class="category-icon">
+                        <i class="fas fa-crown"></i>
+                    </div>
+                    <h3 class="category-title">ULTIMATE HARD</h3>
+                    <p class="category-desc">Pertanyaan paling sulit</p>
+                    <div class="category-reward">Reward: 1,0 GEO per soal</div>
+                    <div class="category-life">Biaya: 5 LIFE per level</div>
+                </button>
+            </div>
+            
+            <!-- Rules Card -->
+            <div class="card rules-card">
+                <h3 class="card-title">
+                    <i class="fas fa-info-circle"></i> Peraturan Kuis
+                </h3>
+                <ul class="rules-list">
+                    <li>Setiap level terdiri dari 10 soal pilihan ganda</li>
+                    <li>Untuk membuka Level N, harus mencapai skor 10/10 di Level N-1</li>
+                    <li>Level yang sudah selesai (10/10) akan terkunci selamanya</li>
+                    <li>Jika gagal (skor &lt;10/10), level terkunci selama 5 menit</li>
+                    <li>Jangan berpindah tab browser atau meminimalkan window selama mengerjakan soal</li>
+                    <li>Setiap pengerjaan level akan mengonsumsi LIFE sesuai kategori</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- TAB 2: Detail Level -->
+        <div id="tabLevelDetail" class="tab-content">
+            <!-- Header -->
+            <header>
+                <button class="back-btn" onclick="goBackToCategories()">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <div class="page-title" id="levelDetailTitle">LEVEL DETAIL</div>
+                <div></div> <!-- Empty div untuk alignment -->
+            </header>
+            
+            <!-- Level Detail akan dimuat secara dinamis -->
+            <div id="levelDetailContent"></div>
+        </div>
+        
+        <!-- TAB 3: Pengerjaan Soal -->
+        <div id="tabQuiz" class="tab-content">
+            <!-- Header -->
+            <header>
+                <div></div> <!-- Empty div untuk alignment -->
+                <div class="page-title">‎ ‎ ‎ QUIZ</div>
+                <div class="quiz-timer" id="quizTimer">60</div>
+            </header>
+            
+            <div class="card">
+                <div class="quiz-header">
+                    <div class="quiz-info" id="questionInfo">SOAL 1/10</div>
+                    <div class="quiz-info" id="categoryInfo">EASY</div>
+                </div>
+                
+                <div class="quiz-question" id="quizQuestion">
+                    Memuat pertanyaan...
+                </div>
+                
+                <div class="options-grid" id="optionsGrid">
+                    <!-- Options akan diisi secara dinamis -->
+                </div>
+                
+                <button class="btn-primary" id="btnNextQuestion" onclick="nextQuestion()" disabled>
+                    SELANJUTNYA
+                </button>
+                <div class="quiz-rules">
+                    <i class="fas fa-exclamation-circle"></i>
+                    Pilih satu jawaban yang menurut Anda benar. Anda hanya memiliki waktu sesuai kategori untuk menjawab setiap soal.
+                </div>
+                
+                
+            </div>
+        </div>
+        
+        <!-- TAB 4: Hasil Kuis -->
+        <div id="tabResult" class="tab-content">
+            <!-- Header -->
+            <header>
+                <div></div> <!-- Empty div untuk alignment -->
+                <div class="page-title" id="resultCategory">HASIL KUIS</div>
+                <div></div> <!-- Empty div untuk alignment -->
+            </header>
+            
+            <div class="card">
+                <div class="result-icon" id="resultIcon">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                
+                <h2 class="result-title" id="resultTitle">Kerja Bagus!</h2>
+                
+                <div class="result-score" id="resultScore">0/10</div>
+                
+                <div class="result-reward" id="resultReward">+0,0 GEO</div>
+                
+                <p class="result-message" id="resultMessage">
+                    Anda telah menyelesaikan level ini. Hasil Anda akan menentukan apakah level berikutnya terbuka.
+                </p>
+                
+                <button class="btn-claim" id="btnClaimReward" onclick="claimReward()">
+                    KLAIM REWARD
+                </button>
+                
+                <button class="btn-primary" id="btnBackToLevels" onclick="goBackToLevels()" style="margin-top: 10px;">
+                    KEMBALI KE LEVEL
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer Navigation (Hanya di Tab Categories) -->
+    <nav class="nav-footer" id="navFooter">
+        <a href="dashboard.html" class="nav-item">
+            <i class="fas fa-home nav-icon"></i>
+            <span class="nav-text">Home</span>
+        </a>
+        <a href="quiz.html" class="nav-item active">
+            <i class="fas fa-brain nav-icon"></i>
+            <span class="nav-text">Quiz</span>
+        </a>
+        <a href="tugas.html" class="nav-item">
+            <i class="fas fa-tasks nav-icon"></i>
+            <span class="nav-text">Tugas</span>
+        </a>
+        <a href="referral.html" class="nav-item">
+            <i class="fas fa-user-friends nav-icon"></i>
+            <span class="nav-text">Referral</span>
+        </a>
+        <a href="profil.html" class="nav-item">
+            <i class="fas fa-user nav-icon"></i>
+            <span class="nav-text">Profil</span>
+        </a>
+    </nav>
+    
+    <!-- Modal Success -->
+    <div id="successModal" class="modal">
+        <div class="modal-content success">
+            <i class="fas fa-check-circle modal-icon" style="color: #90EE90;"></i>
+            <h2 class="modal-title" id="successTitle">Berhasil!</h2>
+            <p class="modal-message" id="successMessage">Reward berhasil diklaim.</p>
+            <button class="modal-btn" onclick="closeModal('successModal')">Tutup</button>
+        </div>
+    </div>
+    
+    <!-- Modal Peringatan -->
+    <div id="warningModal" class="modal">
+        <div class="modal-content warning">
+            <i class="fas fa-exclamation-triangle modal-icon"></i>
+            <h2 class="modal-title" id="warningTitle">Peringatan</h2>
+            <p class="modal-message" id="warningMessage">Pesan peringatan akan muncul di sini.</p>
+            <button class="modal-btn" onclick="closeModal('warningModal')">Tutup</button>
+        </div>
+    </div>
+    
+    <!-- Modal Error -->
+    <div id="errorModal" class="modal">
+        <div class="modal-content error">
+            <i class="fas fa-times-circle modal-icon"></i>
+            <h2 class="modal-title">Aturan Dilanggar!</h2>
+            <p class="modal-message">Anda berpindah tab browser atau meminimalkan window selama mengerjakan soal. Semua reward yang dikerjakan sebelumnya tidak akan diberikan dan LIFE tetap berkurang.</p>
+            <button class="modal-btn" onclick="closeModal('errorModal')">Kembali ke Kuis</button>
+        </div>
+    </div>
+    
+    <!-- Modal Cooldown -->
+    <div id="cooldownModal" class="modal">
+        <div class="modal-content warning">
+            <i class="fas fa-clock modal-icon"></i>
+            <h2 class="modal-title">Level Terkunci</h2>
+            <p class="modal-message" id="cooldownMessage">Level ini terkunci selama 5 menit. Silakan coba lagi nanti.</p>
+            <button class="modal-btn" onclick="closeModal('cooldownModal')">Tutup</button>
+        </div>
+    </div>
+
+    <script>
+        // ============================
+        // FIREBASE CONFIGURATION
+        // ============================
+        const firebaseConfig = {
+            apiKey: "AIzaSyB9DCc6rCmeXl0O3CCLYe6zUmfByfRz428",
+            authDomain: "kuiztown.firebaseapp.com",
+            projectId: "kuiztown",
+            storageBucket: "kuiztown.firebasestorage.app",
+            messagingSenderId: "334081803913",
+            appId: "1:334081803913:web:84899b42961e12f538a858"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        // ============================
+        // KONFIGURASI KUIS
+        // ============================
+        const QUIZ_CONFIG = {
+            E: { 
+                name: "EASY", 
+                rewardPerQuestion: 0.2, 
+                lifeCost: 1, 
+                timePerQuestion: 60, 
+                color: "easy",
+                maxLevel: 100 
+            },
+            M: { 
+                name: "MEDIUM", 
+                rewardPerQuestion: 0.4, 
+                lifeCost: 2, 
+                timePerQuestion: 50, 
+                color: "medium",
+                maxLevel: 100 
+            },
+            H: { 
+                name: "HARD", 
+                rewardPerQuestion: 0.6, 
+                lifeCost: 3, 
+                timePerQuestion: 40, 
+                color: "hard",
+                maxLevel: 100 
+            },
+            VH: { 
+                name: "VERY HARD", 
+                rewardPerQuestion: 0.8, 
+                lifeCost: 4, 
+                timePerQuestion: 30, 
+                color: "very-hard",
+                maxLevel: 100 
+            },
+            UH: { 
+                name: "ULTIMATE HARD", 
+                rewardPerQuestion: 1.0, 
+                lifeCost: 5, 
+                timePerQuestion: 25, 
+                color: "ultimate-hard",
+                maxLevel: 100 
+            }
+        };
+
+        // ============================
+        // VARIABEL GLOBAL
+        // ============================
+        let currentUser = null;
+        let currentCategory = null;
+        let currentLevel = null;
+        let currentQuestions = [];
+        let currentQuestionIndex = 0;
+        let userAnswers = [];
+        let quizTimer = null;
+        let remainingTime = 0;
+        let selectedOption = null;
+        let isSubmitting = false;
+        let allQuestions = [];
+        let userProgress = {};
+        let levelCooldowns = {};
+        let userFirestoreData = {};
+
+        // ============================
+        // AUTHENTICATION LISTENER
+        // ============================
+        auth.onAuthStateChanged(async (user) => {
+            if (!user) {
+                window.location.href = "login.html";
+                return;
+            }
+            
+            currentUser = user;
+            console.log("User authenticated:", user.uid);
+            
+            // Load user data dari Firestore
+            await loadUserFromFirestore();
+            
+            // Load soal dari file kuis.txt
+            await loadQuestions();
+            
+            // Load progress user
+            await loadUserProgress();
+            
+            // Setup visibility change detection
+            setupVisibilityChange();
+            
+            // Update UI awal
+            updateUIFromFirestore();
+            
+            // Sembunyikan loading
+            document.getElementById('loadingOverlay').style.display = 'none';
+        });
+
+        // ============================
+        // FUNGSI FIREBASE
+        // ============================
+        async function loadUserFromFirestore() {
+            try {
+                const userDoc = await db.collection("users").doc(currentUser.uid).get();
+                
+                if (userDoc.exists) {
+                    userFirestoreData = userDoc.data();
+                    console.log("User data loaded from Firestore:", userFirestoreData);
+                } else {
+                    console.log("User document not found");
+                    showWarningModal("Error", "Data pengguna tidak ditemukan");
+                    return;
+                }
+            } catch (error) {
+                console.error("Error loading user from Firestore:", error);
+                showWarningModal("Error", "Gagal memuat data pengguna");
+            }
+        }
+
+        async function updateLifeInFirestore(lifeChange) {
+            try {
+                const userRef = db.collection("users").doc(currentUser.uid);
+                const userDoc = await userRef.get();
+                
+                if (userDoc.exists) {
+                    const currentLife = userDoc.data().lifeBalance || 0;
+                    const newLife = Math.max(0, currentLife + lifeChange);
+                    
+                    // Update lifeBalance dan lastLifeReduction
+                    await userRef.update({
+                        lifeBalance: newLife,
+                        lastLifeReduction: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                    
+                    // Update local data
+                    userFirestoreData.lifeBalance = newLife;
+                    userFirestoreData.lastLifeReduction = new Date();
+                    
+                    console.log(`Updated LIFE: ${currentLife} -> ${newLife}`);
+                    return newLife;
+                }
+            } catch (error) {
+                console.error("Error updating LIFE in Firestore:", error);
+            }
+            return 0;
+        }
+
+        async function updateGeoInFirestore(geoChange) {
+            try {
+                const userRef = db.collection("users").doc(currentUser.uid);
+                
+                // Gunakan transaction untuk menghindari race condition
+                await db.runTransaction(async (transaction) => {
+                    const userDoc = await transaction.get(userRef);
+                    
+                    if (!userDoc.exists) {
+                        throw new Error("User document does not exist");
+                    }
+                    
+                    const currentGeo = userDoc.data().geoBalance || 0;
+                    const newGeo = currentGeo + geoChange;
+                    
+                    // Update geoBalance
+                    transaction.update(userRef, {
+                        geoBalance: newGeo
+                    });
+                    
+                    // Update local data
+                    userFirestoreData.geoBalance = newGeo;
+                    
+                    console.log(`Updated GEO via transaction: ${currentGeo} -> ${newGeo}`);
+                    return newGeo;
+                });
+                
+                return true;
+            } catch (error) {
+                console.error("Error updating GEO in Firestore:", error);
+                showWarningModal("Error", "Gagal memperbarui saldo GEO");
+                return false;
+            }
+        }
+
+        // ============================
+        // FUNGSI UTAMA
+        // ============================
+        function setupEventListeners() {
+            // Option selection (akan di-setup secara dinamis)
+            
+            // Modal close buttons sudah ditangani oleh fungsi closeModal
+        }
+
+        // Load soal dari kuis.txt
+        async function loadQuestions() {
+            try {
+                const response = await fetch('kuis.txt');
+                const text = await response.text();
+                allQuestions = parseQuestions(text);
+                console.log(`Loaded ${allQuestions.length} questions from kuis.txt`);
+            } catch (error) {
+                console.error("Error loading questions:", error);
+                showWarningModal("Error", "Gagal memuat soal kuis. Silakan refresh halaman.");
+            }
+        }
+
+        function parseQuestions(text) {
+            const questions = [];
+            const lines = text.trim().split('\n');
+            
+            for (let i = 0; i < lines.length; i++) {
+                const line = lines[i].trim();
+                if (!line) continue;
+                
+                const parts = line.split('|');
+                
+                if (parts.length >= 8) {
+                    const question = {
+                        category: parts[0],
+                        levelCode: parts[1],
+                        level: parseInt(parts[1].match(/\d+/)[0]),
+                        question: parts[2],
+                        options: [
+                            parts[3],
+                            parts[4],
+                            parts[5],
+                            parts[6]
+                        ],
+                        answer: parts[7].trim()
+                    };
+                    
+                    if (['A', 'B', 'C', 'D'].includes(question.answer)) {
+                        questions.push(question);
+                    }
+                }
+            }
+            
+            return questions;
+        }
+
+        async function loadUserProgress() {
+            try {
+                const progressData = localStorage.getItem('kuiztown_user_progress');
+                if (progressData) {
+                    userProgress = JSON.parse(progressData);
+                } else {
+                    userProgress = {
+                        categories: {
+                            E: { currentLevel: 1, scores: {} },
+                            M: { currentLevel: 1, scores: {} },
+                            H: { currentLevel: 1, scores: {} },
+                            VH: { currentLevel: 1, scores: {} },
+                            UH: { currentLevel: 1, scores: {} }
+                        },
+                        highestLevel: {
+                            category: 'E',
+                            level: 1
+                        }
+                    };
+                    saveProgress();
+                }
+                
+                const cooldownData = localStorage.getItem('kuiztown_level_cooldowns');
+                if (cooldownData) {
+                    levelCooldowns = JSON.parse(cooldownData);
+                    const now = Date.now();
+                    Object.keys(levelCooldowns).forEach(key => {
+                        if (levelCooldowns[key] <= now) {
+                            delete levelCooldowns[key];
+                        }
+                    });
+                    saveCooldowns();
+                }
+            } catch (error) {
+                console.error("Error loading progress:", error);
+            }
+        }
+
+        function saveProgress() {
+            localStorage.setItem('kuiztown_user_progress', JSON.stringify(userProgress));
+        }
+
+        function saveCooldowns() {
+            localStorage.setItem('kuiztown_level_cooldowns', JSON.stringify(levelCooldowns));
+        }
+
+        function updateUIFromFirestore() {
+            if (!userFirestoreData) return;
+            
+            // Update GEO balance
+            const geoBalance = userFirestoreData.geoBalance || 0;
+            document.getElementById('geoBalanceQuiz').textContent = 
+                formatNumber(geoBalance) + ' GEO';
+            
+            // Update LIFE balance
+            const lifeBalance = userFirestoreData.lifeBalance || 0;
+            document.getElementById('lifeBalanceQuiz').textContent = lifeBalance;
+            
+            updateHighestLevel();
+        }
+
+        function updateHighestLevel() {
+            if (!userProgress.highestLevel) return;
+            
+            const highest = userProgress.highestLevel;
+            
+            document.getElementById('highestLevelDetail').textContent = 
+                `${QUIZ_CONFIG[highest.category].name} - LV${highest.level}`;
+        }
+
+        // ============================
+        // FUNGSI TAB NAVIGASI
+        // ============================
+        function showTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            document.getElementById(tabId).classList.add('active');
+            
+            if (tabId === 'tabCategories') {
+                document.getElementById('navFooter').style.display = 'flex';
+            } else {
+                document.getElementById('navFooter').style.display = 'none';
+            }
+        }
+
+        // ============================
+        // FUNGSI KATEGORI & LEVEL
+        // ============================
+        function selectCategory(category) {
+            currentCategory = category;
+            const config = QUIZ_CONFIG[category];
+            
+            document.getElementById('levelDetailTitle').textContent = config.name;
+            generateLevelCards(category);
+            showTab('tabLevelDetail');
+        }
+
+        function generateLevelCards(category) {
+            const container = document.getElementById('levelDetailContent');
+            const config = QUIZ_CONFIG[category];
+            const categoryProgress = userProgress.categories[category];
+            const currentUnlockedLevel = categoryProgress.currentLevel;
+            
+            let html = `
+                <div class="card detail-card">
+                    <h2 class="detail-title">${config.name}</h2>
+                    <p class="detail-category">Pilih level untuk mulai bermain</p>
+                    
+                    <div class="progress-container">
+                        <div class="progress-bar" id="levelProgress" style="width: ${((currentUnlockedLevel - 1) / config.maxLevel) * 100}%"></div>
+                    </div>
+                    
+                    <div class="levels-header">
+                        <h3 class="levels-title">Level ${currentUnlockedLevel - 1}/${config.maxLevel} Terbuka</h3>
+                        <div class="stat-value">${config.name}</div>
+                    </div>
+                    
+                    <div class="levels-scroll-container">
+                        <div class="levels-grid" id="levelsGrid">
+            `;
+            
+            for (let i = 1; i <= config.maxLevel; i++) {
+                const levelCard = createLevelCardHTML(category, i, currentUnlockedLevel);
+                html += levelCard;
+            }
+            
+            html += `
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            container.innerHTML = html;
+            
+            setTimeout(() => {
+                document.querySelectorAll('.level-card:not(.locked):not(.completed)').forEach(card => {
+                    const level = parseInt(card.getAttribute('data-level'));
+                    card.addEventListener('click', () => selectLevel(level));
+                });
+                
+                const scrollContainer = document.querySelector('.levels-scroll-container');
+                const targetLevel = Math.min(currentUnlockedLevel, config.maxLevel);
+                if (scrollContainer && targetLevel > 1) {
+                    setTimeout(() => {
+                        const levelCard = document.querySelector(`.level-card[data-level="${targetLevel}"]`);
+                        if (levelCard) {
+                            const scrollPosition = levelCard.offsetLeft - 50;
+                            scrollContainer.scrollTo({
+                                left: scrollPosition,
+                                behavior: 'smooth'
+                            });
+                        }
+                    }, 100);
+                }
+            }, 100);
+        }
+
+        function createLevelCardHTML(category, levelNumber, currentUnlockedLevel) {
+            const config = QUIZ_CONFIG[category];
+            const categoryProgress = userProgress.categories[category];
+            const score = categoryProgress.scores[levelNumber] || 0;
+            const isCompleted = score === 10;
+            const isUnlocked = levelNumber <= currentUnlockedLevel;
+            const isCurrentLevel = levelNumber === currentUnlockedLevel;
+            
+            const cooldownKey = `${category}${levelNumber}`;
+            const cooldownEnd = levelCooldowns[cooldownKey];
+            const now = Date.now();
+            const isOnCooldown = cooldownEnd && cooldownEnd > now;
+            
+            let colorClass = getLevelColorClass(category, levelNumber);
+            
+            let statusHTML = '';
+            let buttonHTML = '';
+            let extraClasses = '';
+            
+            if (isCompleted) {
+                extraClasses = 'completed';
+                statusHTML = '<div class="level-status">SELESAI</div>';
+            } else if (!isUnlocked) {
+                extraClasses = 'locked';
+                if (levelNumber === currentUnlockedLevel + 1) {
+                    statusHTML = '<div class="level-status">LEVEL TERKUNCI<br>SELESAIKAN LEVEL ' + (levelNumber - 1) + '</div>';
+                } else {
+                    statusHTML = '<div class="level-status">TERKUNCI</div>';
+                }
+            } else if (isOnCooldown) {
+                extraClasses = 'locked';
+                const remainingMinutes = Math.ceil((cooldownEnd - now) / 60000);
+                statusHTML = `<div class="level-status">COBA LAGI<br>${remainingMinutes}m</div>`;
+            } else {
+                buttonHTML = `
+                    <button class="btn-start ${isCurrentLevel ? '' : 'btn-retry'}" 
+                            onclick="selectLevel(${levelNumber})">
+                        ${isCurrentLevel ? 'MULAI' : 'COBA LAGI'}
+                    </button>
+                `;
+            }
+            
+            return `
+                <div class="level-card ${colorClass} ${extraClasses}" data-level="${levelNumber}">
+                    <div class="level-number">LEVEL ${levelNumber}</div>
+                    <div class="level-difficulty">${config.name}</div>
+                    <div class="level-reward">${formatNumber(config.rewardPerQuestion * 10)} GEO</div>
+                    <div class="level-life">${config.lifeCost} LIFE</div>
+                    ${score > 0 ? `<div style="font-size: 0.9rem; margin: 5px 0;">SCORE: ${score}/10</div>` : ''}
+                    ${statusHTML}
+                    ${buttonHTML}
+                </div>
+            `;
+        }
+
+        function getLevelColorClass(category, levelNumber) {
+            if (category === 'UH') {
+                if (levelNumber <= 20) return 'easy-card';
+                else if (levelNumber <= 40) return 'medium-card';
+                else if (levelNumber <= 60) return 'hard-card';
+                else if (levelNumber <= 80) return 'very-hard-card';
+                else return 'ultimate-hard-card';
+            } else {
+                return `${QUIZ_CONFIG[category].color}-card`;
+            }
+        }
+
+        function selectLevel(levelNumber) {
+            currentLevel = levelNumber;
+            const config = QUIZ_CONFIG[currentCategory];
+            const categoryProgress = userProgress.categories[currentCategory];
+            const score = categoryProgress.scores[levelNumber] || 0;
+            
+            const cooldownKey = `${currentCategory}${levelNumber}`;
+            const cooldownEnd = levelCooldowns[cooldownKey];
+            const now = Date.now();
+            
+            if (cooldownEnd && cooldownEnd > now) {
+                const remainingMinutes = Math.ceil((cooldownEnd - now) / 60000);
+                document.getElementById('cooldownMessage').textContent = 
+                    `Level ini terkunci selama ${remainingMinutes} menit. Silakan coba lagi nanti.`;
+                document.getElementById('cooldownModal').style.display = 'flex';
+                return;
+            }
+            
+            const questionsForLevel = allQuestions.filter(q => 
+                q.category === currentCategory && q.level === currentLevel
+            );
+            
+            console.log(`Found ${questionsForLevel.length} questions for ${currentCategory} level ${currentLevel}`);
+            
+            if (questionsForLevel.length === 0) {
+                showWarningModal("Soal Tidak Tersedia", 
+                    `Belum ada soal untuk ${config.name} Level ${levelNumber}. Silakan coba level lain.`);
+                return;
+            }
+            
+            showLevelDetail(levelNumber, config, score, questionsForLevel.length);
+        }
+
+        function showLevelDetail(levelNumber, config, currentScore, availableQuestions) {
+            const container = document.getElementById('levelDetailContent');
+            const lifeBalance = userFirestoreData.lifeBalance || 0;
+            const hasEnoughLife = lifeBalance >= config.lifeCost;
+            
+            let html = `
+                <div class="card detail-card">
+                    <h2 class="detail-title">Level ${levelNumber}</h2>
+                    <p class="detail-category">${config.name}</p>
+                    
+                    ${currentScore > 0 ? `
+                        <div style="background: rgba(144, 238, 144, 0.2); padding: 10px; border-radius: 8px; margin-bottom: 15px;">
+                            <strong>Skor Terakhir:</strong> ${currentScore}/10
+                        </div>
+                    ` : ''}
+                    
+                    <div class="detail-info">
+                        <div class="info-item">
+                            <div class="info-label">Soal Tersedia</div>
+                            <div class="info-value">${availableQuestions}</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Reward Total</div>
+                            <div class="info-value">${formatNumber(config.rewardPerQuestion * 10)} GEO</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Life Dibutuhkan</div>
+                            <div class="info-value">${config.lifeCost}</div>
+                        </div>
+                    </div>
+                    
+                    ${!hasEnoughLife ? `
+                        <div style="background: rgba(255, 99, 71, 0.1); padding: 12px; border-radius: 8px; margin: 15px 0; color: #FF6347;">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <strong> LIFE Tidak Cukup:</strong> Anda membutuhkan ${config.lifeCost} LIFE. Anda memiliki ${lifeBalance} LIFE.
+                        </div>
+                    ` : ''}
+                    
+                    <div class="warning-box">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <strong>Peringatan:</strong> JANGAN PERNAH berpindah tab browser atau meminimalkan window selama mengerjakan soal. Jika melanggar, semua reward yang dikerjakan sebelumnya tidak akan diberikan dan LIFE tetap berkurang.
+                    </div>
+                    
+                    <button class="btn-primary" id="btnStartLevel" onclick="startLevel()" ${!hasEnoughLife ? 'disabled' : ''}>
+                        ${hasEnoughLife ? 'MULAI LEVEL' : 'LIFE TIDAK CUKUP'}
+                    </button>
+                </div>
+            `;
+            
+            container.innerHTML = html;
+        }
+
+        function goBackToCategories() {
+            showTab('tabCategories');
+        }
+
+        // ============================
+        // FUNGSI PENGERJAAN SOAL
+        // ============================
+        async function startLevel() {
+            const config = QUIZ_CONFIG[currentCategory];
+            const lifeBalance = userFirestoreData.lifeBalance || 0;
+            
+            if (lifeBalance < config.lifeCost) {
+                showWarningModal("LIFE Tidak Cukup", 
+                    `Anda membutuhkan ${config.lifeCost} LIFE untuk memulai level ini. 
+                    Anda memiliki ${lifeBalance} LIFE.`);
+                return;
+            }
+            
+            const questionsForLevel = allQuestions.filter(q => 
+                q.category === currentCategory && q.level === currentLevel
+            );
+            
+            if (questionsForLevel.length < 10) {
+                showWarningModal("Soal Tidak Cukup", 
+                    `Hanya tersedia ${questionsForLevel.length} soal untuk level ini. Minimal 10 soal diperlukan.`);
+                return;
+            }
+            
+            // Kurangi LIFE di Firestore
+            const newLife = await updateLifeInFirestore(-config.lifeCost);
+            if (newLife === null) {
+                showWarningModal("Error", "Gagal mengurangi LIFE. Silakan coba lagi.");
+                return;
+            }
+            
+            // Update UI dengan data baru
+            userFirestoreData.lifeBalance = newLife;
+            updateUIFromFirestore();
+            
+            currentQuestions = questionsForLevel
+                .sort(() => Math.random() - 0.5)
+                .slice(0, 10);
+            
+            remainingTime = config.timePerQuestion;
+            updateTimerDisplay();
+            
+            userAnswers = [];
+            currentQuestionIndex = 0;
+            selectedOption = null;
+            
+            showQuestion(currentQuestionIndex);
+            startTimer();
+            showTab('tabQuiz');
+        }
+
+        function showQuestion(index) {
+            if (index >= currentQuestions.length) {
+                finishQuiz();
+                return;
+            }
+            
+            const question = currentQuestions[index];
+            const config = QUIZ_CONFIG[currentCategory];
+            
+            document.getElementById('questionInfo').textContent = `SOAL ${index + 1}/${currentQuestions.length}`;
+            document.getElementById('categoryInfo').textContent = config.name;
+            document.getElementById('quizQuestion').textContent = question.question;
+            
+            const optionsGrid = document.getElementById('optionsGrid');
+            optionsGrid.innerHTML = '';
+            
+            const optionLetters = ['A', 'B', 'C', 'D'];
+            optionLetters.forEach((letter, idx) => {
+                const optionBtn = document.createElement('button');
+                optionBtn.className = 'option-btn';
+                optionBtn.setAttribute('data-option', letter);
+                optionBtn.setAttribute('data-index', idx);
+                optionBtn.innerHTML = `
+                    <div class="option-letter">${letter}</div>
+                    <div class="option-text">${question.options[idx]}</div>
+                `;
+                
+                optionBtn.addEventListener('click', function() {
+                    if (this.classList.contains('selected') || isSubmitting) return;
+                    
+                    document.querySelectorAll('.option-btn').forEach(b => {
+                        b.classList.remove('selected');
+                    });
+                    
+                    this.classList.add('selected');
+                    selectedOption = this.getAttribute('data-option');
+                    document.getElementById('btnNextQuestion').disabled = false;
+                });
+                
+                optionsGrid.appendChild(optionBtn);
+            });
+            
+            selectedOption = null;
+            document.getElementById('btnNextQuestion').disabled = true;
+            remainingTime = config.timePerQuestion;
+            updateTimerDisplay();
+        }
+
+        function nextQuestion() {
+        if (currentQuestionIndex >= currentQuestions.length) {
+    return;
+}
+            if (selectedOption === null || isSubmitting) return;
+            
+            const currentQuestion = currentQuestions[currentQuestionIndex];
+            if (!currentQuestion || !currentQuestion.answer) {
+                console.error("Current question or answer is undefined!");
+                return;
+            }
+            
+            userAnswers.push({
+                questionIndex: currentQuestionIndex,
+                selectedOption: selectedOption,
+                correctOption: currentQuestion.answer,
+                isCorrect: selectedOption === currentQuestion.answer
+            });
+            
+            currentQuestionIndex++;
+            
+            if (currentQuestionIndex < currentQuestions.length) {
+                showQuestion(currentQuestionIndex);
+            } else {
+                finishQuiz();
+            }
+        }
+
+        function startTimer() {
+            if (quizTimer) clearInterval(quizTimer);
+            
+            quizTimer = setInterval(() => {
+                remainingTime--;
+                updateTimerDisplay();
+                
+                if (remainingTime <= 0) {
+                    clearInterval(quizTimer);
+                    
+                    const currentQuestion = currentQuestions[currentQuestionIndex];
+                    if (currentQuestion && currentQuestion.answer) {
+                        if (selectedOption === null) {
+                            userAnswers.push({
+                                questionIndex: currentQuestionIndex,
+                                selectedOption: null,
+                                correctOption: currentQuestion.answer,
+                                isCorrect: false
+                            });
+                        }
+                    }
+                    
+                    currentQuestionIndex++;
+                    
+                    if (currentQuestionIndex < currentQuestions.length) {
+                        showQuestion(currentQuestionIndex);
+                        startTimer();
+                    } else {
+                        finishQuiz();
+                    }
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const timerElement = document.getElementById('quizTimer');
+            if (timerElement) {
+                timerElement.textContent = remainingTime;
+                
+                if (remainingTime <= 10) {
+                    timerElement.style.color = '#FF6347';
+                    timerElement.style.background = 'rgba(255, 99, 71, 0.2)';
+                } else {
+                    timerElement.style.color = '#87CEEB';
+                    timerElement.style.background = 'rgba(135, 206, 235, 0.1)';
+                }
+            }
+        }
+
+        function finishQuiz() {
+            clearInterval(quizTimer);
+            
+            const correctAnswers = userAnswers.filter(answer => answer.isCorrect).length;
+            const totalQuestions = userAnswers.length;
+            const score = correctAnswers;
+            
+            updateUserProgress(score);
+            showResult(score, totalQuestions);
+            showTab('tabResult');
+        }
+
+        function updateUserProgress(score) {
+        
+        if (!userProgress.highestLevel) {
+    userProgress.highestLevel = {
+        category: currentCategory,
+        level: 1
+    };
+}
+
+if (!currentLevel) {
+    console.error("currentLevel undefined");
+    return;
+}
+        
+            const categoryProgress = userProgress.categories[currentCategory];
+            
+            categoryProgress.scores[currentLevel] = score;
+            
+            if (score === 10 && currentLevel >= categoryProgress.currentLevel) {
+                categoryProgress.currentLevel = Math.min(currentLevel + 1, QUIZ_CONFIG[currentCategory].maxLevel);
+                
+                if (currentLevel > userProgress.highestLevel.level) {
+                    userProgress.highestLevel = {
+                        category: currentCategory,
+                        level: currentLevel
+                    };
+                }
+                
+                const cooldownKey = `${currentCategory}${currentLevel}`;
+                delete levelCooldowns[cooldownKey];
+            } else if (score < 10) {
+                const cooldownKey = `${currentCategory}${currentLevel}`;
+                const cooldownEnd = Date.now() + (5 * 60 * 1000);
+                levelCooldowns[cooldownKey] = cooldownEnd;
+            }
+            
+            saveProgress();
+            saveCooldowns();
+            updateHighestLevel();
+        }
+
+        function showResult(score, totalQuestions) {
+            const config = QUIZ_CONFIG[currentCategory];
+            const rewardPerQuestion = config.rewardPerQuestion;
+            const totalReward = score * rewardPerQuestion;
+            
+            document.getElementById('resultCategory').textContent = config.name;
+            document.getElementById('resultScore').textContent = `${score}/${totalQuestions}`;
+            document.getElementById('resultReward').textContent = `+${formatNumber(totalReward)} GEO`;
+            
+            const resultIcon = document.getElementById('resultIcon');
+            const resultTitle = document.getElementById('resultTitle');
+            const resultMessage = document.getElementById('resultMessage');
+            
+            if (score === 10) {
+                resultIcon.innerHTML = '<i class="fas fa-trophy success-icon"></i>';
+                resultTitle.textContent = "SEMPURNA!";
+                resultMessage.textContent = 
+                    "Kerja luar biasa! Anda telah menyelesaikan level ini dengan sempurna. Level berikutnya sekarang terbuka!";
+            } else if (score >= 7) {
+                resultIcon.innerHTML = '<i class="fas fa-star success-icon"></i>';
+                resultTitle.textContent = "KERJA BAGUS!";
+                resultMessage.textContent = 
+                    "Hasil yang baik! Namun untuk membuka level berikutnya, Anda harus mencapai skor 10/10. Coba lagi nanti!";
+            } else if (score >= 5) {
+                resultIcon.innerHTML = '<i class="fas fa-check-circle average-icon"></i>';
+                resultTitle.textContent = "LUMAYAN";
+                resultMessage.textContent = 
+                    "Anda perlu berlatih lebih banyak. Level ini akan terkunci selama 5 menit. Coba lagi setelah cooldown!";
+            } else {
+                resultIcon.innerHTML = '<i class="fas fa-times-circle fail-icon"></i>';
+                resultTitle.textContent = "SAYANG SEKALI";
+                resultMessage.textContent = 
+                    "Jangan menyerah! Setiap kegagalan adalah pembelajaran. Level ini akan terkunci selama 5 menit. Coba lagi nanti!";
+            }
+        }
+
+        // ============================
+        // CLAIM REWARD FUNCTION (FIREBASE)
+        // ============================
+        async function claimReward() {
+            if (isSubmitting) return;
+            
+            isSubmitting = true;
+            document.getElementById('btnClaimReward').disabled = true;
+            document.getElementById('btnClaimReward').innerHTML = '<i class="fas fa-spinner fa-spin"></i> MENGKLAIM...';
+            
+            try {
+                // Hitung reward
+                const correctAnswers = userAnswers.filter(answer => answer.isCorrect).length;
+                const config = QUIZ_CONFIG[currentCategory];
+                const totalReward = correctAnswers * config.rewardPerQuestion;
+                
+                console.log(`Claiming reward: ${totalReward} GEO`);
+                
+                // Update GEO di Firestore menggunakan transaction
+                const success = await updateGeoInFirestore(totalReward);
+                
+                if (success) {
+                    // Update UI
+                    updateUIFromFirestore();
+                    
+                    // Tampilkan modal sukses
+                    document.getElementById('successTitle').textContent = "Reward Diklaim!";
+                    document.getElementById('successMessage').textContent = 
+                        `Selamat! Anda mendapatkan ${formatNumber(totalReward)} GEO. 
+                        Saldo GEO Anda sekarang: ${formatNumber(userFirestoreData.geoBalance)} GEO.`;
+                    document.getElementById('successModal').style.display = 'flex';
+                    
+                    // Kembali ke kategori setelah beberapa detik
+                    setTimeout(() => {
+                        goBackToCategories();
+                        document.getElementById('successModal').style.display = 'none';
+                    }, 3000);
+                }
+            } catch (error) {
+                console.error("Error claiming reward:", error);
+                showWarningModal("Error", "Gagal mengklaim reward. Silakan coba lagi.");
+            } finally {
+                isSubmitting = false;
+                document.getElementById('btnClaimReward').disabled = false;
+                document.getElementById('btnClaimReward').innerHTML = 'KLAIM REWARD';
+            }
+        }
+
+        function goBackToLevels() {
+            generateLevelCards(currentCategory);
+            showTab('tabLevelDetail');
+        }
+
+        // ============================
+        // FUNGSI MODAL & PESAN
+        // ============================
+        function showWarningModal(title, message) {
+            document.getElementById('warningTitle').textContent = title;
+            document.getElementById('warningMessage').textContent = message;
+            document.getElementById('warningModal').style.display = 'flex';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+            
+            if (modalId === 'errorModal') {
+                showTab('tabCategories');
+            }
+        }
+
+        // ============================
+        // FUNGSI DETECTION VISIBILITY
+        // ============================
+        function setupVisibilityChange() {
+            document.addEventListener('visibilitychange', function() {
+                if (document.hidden) {
+                    if (document.getElementById('tabQuiz').classList.contains('active')) {
+                        document.getElementById('errorModal').style.display = 'flex';
+                        clearInterval(quizTimer);
+                        currentQuestionIndex = 0;
+                        userAnswers = [];
+                        selectedOption = null;
+                    }
+                }
+            });
+            
+            window.addEventListener('blur', function() {
+                if (!document.hidden) {
+                    if (document.getElementById('tabQuiz').classList.contains('active')) {
+                        document.getElementById('errorModal').style.display = 'flex';
+                        clearInterval(quizTimer);
+                        currentQuestionIndex = 0;
+                        userAnswers = [];
+                        selectedOption = null;
+                    }
+                }
+            });
+        }
+
+        // ============================
+        // FUNGSI HELPER
+        // ============================
+        function formatNumber(num) {
+            return num.toFixed(1).replace('.', ',');
+        }
+    </script>
+</body>
+</html>

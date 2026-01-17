@@ -1,0 +1,2136 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panduan - KuizTown</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #5F729F;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255, 192, 203, 0.08) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(255, 192, 203, 0.08) 0%, transparent 20%),
+                radial-gradient(circle at 50% 50%, rgba(255, 192, 203, 0.05) 0%, transparent 30%);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* Geometric Pattern Background */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(30deg, rgba(255, 192, 203, 0.05) 12%, transparent 12.5%, transparent 87%, rgba(255, 192, 203, 0.05) 87.5%, rgba(255, 192, 203, 0.05)),
+                linear-gradient(150deg, rgba(255, 192, 203, 0.05) 12%, transparent 12.5%, transparent 87%, rgba(255, 192, 203, 0.05) 87.5%, rgba(255, 192, 203, 0.05)),
+                linear-gradient(30deg, rgba(255, 192, 203, 0.05) 12%, transparent 12.5%, transparent 87%, rgba(255, 192, 203, 0.05) 87.5%, rgba(255, 192, 203, 0.05)),
+                linear-gradient(150deg, rgba(255, 192, 203, 0.05) 12%, transparent 12.5%, transparent 87%, rgba(255, 192, 203, 0.05) 87.5%, rgba(255, 192, 203, 0.05)),
+                linear-gradient(60deg, rgba(255, 192, 203, 0.08) 25%, transparent 25.5%, transparent 75%, rgba(255, 192, 203, 0.08) 75%, rgba(255, 192, 203, 0.08)),
+                linear-gradient(60deg, rgba(255, 192, 203, 0.08) 25%, transparent 25.5%, transparent 75%, rgba(255, 192, 203, 0.08) 75%, rgba(255, 192, 203, 0.08));
+            background-size: 80px 140px;
+            background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
+            opacity: 0.3;
+            z-index: -1;
+        }
+        
+        /* Container */
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 0 15px 100px;
+        }
+        
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            margin-bottom: 10px;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo-icon {
+            font-size: 28px;
+            background: linear-gradient(135deg, #9b59b6, #3498db);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .logo-text {
+            font-size: 20px;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .back-btn {
+            color: white;
+            font-size: 22px;
+            cursor: pointer;
+            text-decoration: none;
+            background: rgba(255, 255, 255, 0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(-3px);
+        }
+        
+        /* Page Title */
+        .page-title {
+            color: white;
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .page-title i {
+            color: #87CEEB;
+        }
+        
+        /* Guide Menu */
+        .guide-menu {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        @media (min-width: 768px) {
+            .guide-menu {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        .menu-item {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            text-decoration: none;
+            color: #444;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 140px;
+        }
+        
+        .menu-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            background: white;
+        }
+        
+        .menu-icon {
+            font-size: 32px;
+            margin-bottom: 12px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #87CEEB, #5F729F);
+            color: white;
+        }
+        
+        .menu-text {
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 5px;
+        }
+        
+        .menu-desc {
+            font-size: 0.8rem;
+            color: #666;
+            opacity: 0.8;
+        }
+        
+        /* Quick Info Cards */
+        .quick-info {
+            margin-bottom: 30px;
+        }
+        
+        .info-title {
+            color: white;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .info-title i {
+            color: #87CEEB;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+        
+        .info-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .info-label {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .info-value {
+            font-weight: 700;
+            color: #2563eb;
+            font-size: 1.1rem;
+        }
+        
+        /* Separator */
+        .separator {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            margin: 25px 0;
+        }
+        
+        /* Modal Styles */
+        .guide-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .modal-content {
+            background: linear-gradient(135deg, #ffffff, #f8faff);
+            border-radius: 20px;
+            max-width: 800px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            animation: modalSlideIn 0.4s ease-out;
+        }
+        
+        @keyframes modalSlideIn {
+            from { opacity: 0; transform: translateY(50px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        
+        .modal-header {
+            background: linear-gradient(135deg, #87CEEB, #5F729F);
+            color: white;
+            padding: 25px;
+            border-radius: 20px 20px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .close-modal {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .close-modal:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+        
+        .modal-body {
+            padding: 30px;
+        }
+        
+        .section {
+            margin-bottom: 30px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .section-title {
+            font-size: 1.3rem;
+            color: #333;
+            margin-bottom: 15px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section-title i {
+            color: #87CEEB;
+        }
+        
+        .section-content {
+            color: #555;
+            line-height: 1.7;
+        }
+        
+        .section-content p {
+            margin-bottom: 15px;
+        }
+        
+        .highlight {
+            color: #2563eb;
+            font-weight: 600;
+            background: rgba(37, 99, 235, 0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+        
+        .note-box {
+            background: linear-gradient(135deg, rgba(135, 206, 235, 0.1), rgba(95, 114, 159, 0.1));
+            border-left: 4px solid #87CEEB;
+            padding: 18px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+        }
+        
+        .note-title {
+            font-weight: 600;
+            color: #2563eb;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .warning-box {
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(255, 107, 107, 0.05));
+            border-left: 4px solid #ff6b6b;
+            padding: 18px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+        }
+        
+        .warning-title {
+            font-weight: 600;
+            color: #ff6b6b;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .step-list {
+            margin: 20px 0 20px 25px;
+        }
+        
+        .step-list li {
+            margin-bottom: 12px;
+            padding-left: 8px;
+            position: relative;
+        }
+        
+        .step-list li:before {
+            content: "✓";
+            position: absolute;
+            left: -25px;
+            color: #87CEEB;
+            font-weight: bold;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            margin: 20px 0;
+            border-radius: 10px;
+            border: 1px solid #eee;
+        }
+        
+        .info-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 500px;
+        }
+        
+        .info-table th {
+            background: linear-gradient(135deg, #87CEEB, #5F729F);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .info-table td {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .info-table tr:nth-child(even) {
+            background: rgba(135, 206, 235, 0.05);
+        }
+        
+        .info-table tr:hover {
+            background: rgba(135, 206, 235, 0.1);
+        }
+        
+        .quiz-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .quiz-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .quiz-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
+        }
+        
+        .quiz-card.easy { border-color: #90EE90; }
+        .quiz-card.medium { border-color: #FFD700; }
+        .quiz-card.hard { border-color: #FFA500; }
+        .quiz-card.very-hard { border-color: #FF6347; }
+        .quiz-card.ultimate { border-color: #DC143C; }
+        
+        .quiz-category {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+        
+        .quiz-reward {
+            color: #2563eb;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .quiz-life {
+            color: #ff6b6b;
+            font-size: 0.9rem;
+        }
+        
+        .quiz-timer {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        /* Footer Navigation */
+        .nav-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            padding: 12px 0;
+            display: flex;
+            justify-content: space-around;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+            z-index: 1000;
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #666;
+            transition: all 0.3s ease;
+            flex: 1;
+            padding: 5px 0;
+        }
+        
+        .nav-item.active {
+            color: #87CEEB;
+        }
+        
+        .nav-icon {
+            font-size: 20px;
+            margin-bottom: 3px;
+        }
+        
+        .nav-text {
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        
+        /* Responsive */
+        @media (min-width: 768px) {
+            .container {
+                max-width: 700px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .guide-menu {
+                grid-template-columns: 1fr;
+            }
+            
+            .menu-item {
+                min-height: 120px;
+            }
+            
+            .modal-body {
+                padding: 20px;
+            }
+            
+            .modal-header {
+                padding: 20px;
+            }
+        }
+        
+        /* Scrollbar Styling */
+        .modal-content::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .modal-content::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        
+        .modal-content::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #87CEEB, #5F729F);
+            border-radius: 10px;
+        }
+        
+        .modal-content::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #5F729F, #87CEEB);
+        }
+        
+        /* Progress Indicator */
+        .progress-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            margin: 20px 0;
+        }
+        
+        .progress-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .progress-dot.active {
+            background: #87CEEB;
+            transform: scale(1.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="logo-container">
+                <i class="fas fa-shapes logo-icon"></i>
+                <span class="logo-text">KuizTown</span>
+            </div>
+            <a href="dashboard.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+        </header>
+        
+        <!-- Page Title -->
+        <h1 class="page-title">
+            <i class="fas fa-book-open"></i> Panduan Lengkap KuizTown
+        </h1>
+        
+        <!-- Quick Info Section -->
+        <div class="quick-info">
+            <h2 class="info-title">
+                <i class="fas fa-bolt"></i> Info Penting
+            </h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-label"><i class="fas fa-seedling"></i> Nilai Tukar GEO</div>
+                    <div class="info-value">1 GEO = 585 IDR</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-label"><i class="fas fa-heart"></i> Maksimal LIFE</div>
+                    <div class="info-value">10 LIFE</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-label"><i class="fas fa-clock"></i> Klaim LIFE</div>
+                    <div class="info-value">1 LIFE / 1 jam</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-label"><i class="fas fa-users"></i> Syarat Withdraw</div>
+                    <div class="info-value">3 Referral Baru</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="separator"></div>
+        
+        <!-- Guide Menu -->
+        <h2 class="info-title" style="margin-bottom: 20px;">
+            <i class="fas fa-compass"></i> Pilih Panduan
+        </h2>
+        <div class="guide-menu">
+            <!-- Menu Item 1 -->
+            <div class="menu-item" data-guide="guide1">
+                <div class="menu-icon">
+                    <i class="fas fa-info-circle"></i>
+                </div>
+                <div class="menu-text">Pengenalan KuizTown</div>
+                <div class="menu-desc">Apa itu platform kami</div>
+            </div>
+            
+            <!-- Menu Item 2 -->
+            <div class="menu-item" data-guide="guide2">
+                <div class="menu-icon">
+                    <i class="fas fa-seedling"></i>
+                </div>
+                <div class="menu-text">Sistem GEO & LIFE</div>
+                <div class="menu-desc">Mata uang dan sistem nyawa</div>
+            </div>
+            
+            <!-- Menu Item 3 -->
+            <div class="menu-item" data-guide="guide3">
+                <div class="menu-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <div class="menu-text">Panduan Kuis Lengkap</div>
+                <div class="menu-desc">Cara main dan strategi</div>
+            </div>
+            
+            <!-- Menu Item 4 -->
+            <div class="menu-item" data-guide="guide4">
+                <div class="menu-icon">
+                    <i class="fas fa-tasks"></i>
+                </div>
+                <div class="menu-text">Sistem Tugas</div>
+                <div class="menu-desc">Cara dapat reward dari tugas</div>
+            </div>
+            
+            <!-- Menu Item 5 -->
+            <div class="menu-item" data-guide="guide5">
+                <div class="menu-icon">
+                    <i class="fas fa-user-friends"></i>
+                </div>
+                <div class="menu-text">Program Referral</div>
+                <div class="menu-desc">Dapatkan bonus undang teman</div>
+            </div>
+            
+            <!-- Menu Item 6 -->
+            <div class="menu-item" data-guide="guide6">
+                <div class="menu-icon">
+                    <i class="fas fa-wallet"></i>
+                </div>
+                <div class="menu-text">Withdraw & Penarikan</div>
+                <div class="menu-desc">Tarik dana ke rekening</div>
+            </div>
+            
+            <!-- Menu Item 7 -->
+            <div class="menu-item" data-guide="guide7">
+                <div class="menu-icon">
+                    <i class="fas fa-user-cog"></i>
+                </div>
+                <div class="menu-text">Kelola Akun</div>
+                <div class="menu-desc">Profil dan keamanan</div>
+            </div>
+            
+            <!-- Menu Item 8 -->
+            <div class="menu-item" data-guide="guide8">
+                <div class="menu-icon">
+                    <i class="fas fa-question-circle"></i>
+                </div>
+                <div class="menu-text">FAQ & Solusi</div>
+                <div class="menu-desc">Pertanyaan umum</div>
+            </div>
+            
+            <!-- Menu Item 9 -->
+            <div class="menu-item" data-guide="guide9">
+                <div class="menu-icon">
+                    <i class="fas fa-gavel"></i>
+                </div>
+                <div class="menu-text">Peraturan Platform</div>
+                <div class="menu-desc">Ketentuan dan aturan</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer Navigation -->
+    <nav class="nav-footer">
+        <a href="dashboard.html" class="nav-item">
+            <i class="fas fa-home nav-icon"></i>
+            <span class="nav-text">Home</span>
+        </a>
+        <a href="quiz.html" class="nav-item">
+            <i class="fas fa-brain nav-icon"></i>
+            <span class="nav-text">Quiz</span>
+        </a>
+        <a href="tugas.html" class="nav-item">
+            <i class="fas fa-tasks nav-icon"></i>
+            <span class="nav-text">Tugas</span>
+        </a>
+        <a href="referral.html" class="nav-item">
+            <i class="fas fa-user-friends nav-icon"></i>
+            <span class="nav-text">Referral</span>
+        </a>
+        <a href="profil.html" class="nav-item">
+            <i class="fas fa-user nav-icon"></i>
+            <span class="nav-text">Profil</span>
+        </a>
+    </nav>
+    
+    <!-- Guide 1 Modal: Pengenalan KuizTown -->
+    <div id="guide1" class="guide-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">
+                    <i class="fas fa-info-circle"></i> Pengenalan KuizTown
+                </h2>
+                <button class="close-modal" onclick="closeGuide('guide1')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="section">
+                    <h3 class="section-title"><i class="fas fa-rocket"></i> Apa itu KuizTown?</h3>
+                    <div class="section-content">
+                        <p><span class="highlight">KuizTown</span> adalah platform edukasi inovatif yang menggabungkan konsep pembelajaran dengan sistem reward <i>play-to-earn</i>. Kami percaya bahwa belajar bisa menjadi pengalaman yang menyenangkan dan menguntungkan.</p>
+                        
+                        <div class="note-box">
+                            <div class="note-title">
+                                <i class="fas fa-lightbulb"></i> Filosofi Kami
+                            </div>
+                            <p>"Play. Think. Earn." bukan hanya slogan, tapi filosofi inti platform kami. Setiap interaksi di KuizTown dirancang untuk merangsang pemikiran kritis sambil memberikan nilai tambah bagi pengguna.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3 class="section-title"><i class="fas fa-bullseye"></i> Tujuan Platform</h3>
+                    <div class="section-content">
+                        <p>KuizTown hadir dengan beberapa tujuan utama:</p>
+                        <ul class="step-list">
+                            <li><strong>Edukasi yang Menyenangkan:</strong> Menyediakan konten pendidikan dalam format yang interaktif dan engaging</li>
+                            <li><strong>Pengembangan Skill:</strong> Meningkatkan kemampuan berpikir kritis, problem-solving, dan pengetahuan umum</li>
+                            <li><strong>Ekonomi Digital:</strong> Memberikan kesempatan untuk mendapatkan penghasilan tambahan melalui pengetahuan</li>
+                            <li><strong>Komunitas Pembelajar:</strong> Membangun komunitas yang saling mendukung dalam proses belajar</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3 class="section-title"><i class="fas fa-users"></i> Untuk Siapa KuizTown?</h3>
+                    <div class="section-content">
+                        <div class="info-grid">
+                            <div class="info-card">
+                                <div class="info-label"><i class="fas fa-graduation-cap"></i> Pelajar/Mahasiswa</div>
+                                <div class="info-value">Usia 13+ tahun</div>
+                            </div>
+                            <div class="info-card">
+                                <div class="info-label"><i class="fas fa-briefcase"></i> Profesional</div>
+                                <div class="info-value">Pengembangan skill</div>
+                            </div>
+                            <div class="info-card">
+                                <div class="info-label"><i class="fas fa-home"></i> Ibu Rumah Tangga</div>
+                                <div class="info-value">Penghasilan tambahan</div>
+                            </div>
+                            <div class="info-card">
+                                <div class="info-label"><i class="fas fa-chart-line"></i> Pencari Peluang</div>
+                                <div class="info-value">Online earning</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Guide 2 Modal: Sistem GEO & LIFE -->
+    <div id="guide2" class="guide-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">
+                    <i class="fas fa-seedling"></i> Sistem GEO & LIFE
+                </h2>
+                <button class="close-modal" onclick="closeGuide('guide2')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="section">
+                    <h3 class="section-title"><i class="fas fa-coins"></i> Apa itu GEO?</h3>
+                    <div class="section-content">
+                        <p><span class="highlight">GEO (Global Education Opportunity)</span> adalah mata uang virtual utama di KuizTown yang memiliki nilai tukar tetap terhadap Rupiah.</p>
+                        
+                        <div class="table-container">
+                            <table class="info-table">
+                                <thead>
+                                    <tr>
+                                        <th>Aspek</th>
+                                        <th>Detail</th>
+                                        <th>Nilai</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Nilai Tukar</td>
+                                        <td>1 GEO terhadap IDR</td>
+                                        <td>585 IDR</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Bonus Pendaftaran</td>
+                                        <td>Untuk pengguna baru</td>
+                                        <td>9 GEO</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Withdraw Minimum</td>
+                                        <td>Penarikan minimum</td>
+                                        <td>10 GEO</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Masa Berlaku</td>
+                                        <td>Kadaluarsa GEO</td>
+                                        <td>Tidak ada</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3 class="section-title"><i class="fas fa-heartbeat"></i> Apa itu LIFE?</h3>
+                    <div class="section-content">
+                        <p><span class="highlight">LIFE</span> adalah sistem "bahan bakar" yang digunakan untuk mengakses kuis di platform. LIFE memiliki karakteristik khusus:</p>
+                        
+                        <div class="warning-box">
+                            <div class="warning-title">
+                                <i class="fas fa-exclamation-triangle"></i> Mekanisme Klaim LIFE
+                            </div>
+                            <p><strong>PENTING:</strong> Timer 1 jam untuk klaim LIFE dihitung dari <strong>waktu pengurangan LIFE terakhir</strong> (saat memulai kuis), bukan dari waktu klaim terakhir. Sistem memonitor setiap pengurangan LIFE untuk menentukan kapan LIFE baru bisa diklaim.</p>
+                        </div>
+                        
+                        <div class="info-grid">
+                            <div class="info-card">
+                                <div class="info-label"><i class="fas fa-tachometer-alt"></i> Maksimal LIFE</div>
+                                <div class="info-value">10 LIFE</div>
+                            </div>
+                            <div class="info-card">
+                                <div class="info-label"><i class="fas fa-clock"></i> Cooldown Klaim</div>
+                                <div class="info-value">1 jam per LIFE</div>
+                            </div>
+                            <div class="info-card">
+                                <div class="info-label"><i class="fas fa-gift"></i> Bonus Pendaftaran</div>
+                                <div class="info-value">10 LIFE</div>
+                            </div>
+                            <div class="info-card">
+                                <div class="info-label"><i class="fas fa-redo"></i> Regenerasi</div>
+                                <div class="info-value">Otomatis (1 jam)</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3 class="section-title"><i class="fas fa-sync-alt"></i> Cara Mendapatkan GEO & LIFE</h3>
+                    <div class="section-content">
+                        <p>Ada beberapa cara untuk mendapatkan GEO dan LIFE di KuizTown:</p>
+                        
+                        <div class="table-container">
+                            <table class="info-table">
+                                <thead>
+                                    <tr>
+                                        <th>Sumber</th>
+                                        <th>GEO</th>
+                                        <th>LIFE</th>
+                                        <th>Keterangan</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Pendaftaran Baru</td>
+                                        <td>9 GEO</td>
+                                        <td>10 LIFE</td>
+                                        <td>Sekali saat registrasi</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Mengerjakan Kuis</td>
+                                        <td>0,2 - 1,0 GEO/soal</td>
+                                        <td>- LIFE</td>
+                                        <td>Tergantung kategori</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Menyelesaikan Tugas</td>
+                                        <td>0 - 50 GEO</td>
+                                        <td>0 - 10 LIFE</td>
+                                        <td>Tergantung tugas</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Program Referral</td>
+                                        <td>0,1 GEO/orang</td>
+                                        <td>1 LIFE/orang</td>
+                                        <td>Per referral berhasil</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Klaim Harian</td>
+                                        <td>0,5 GEO/hari</td>
+                                        <td>-</td>
+                                        <td>Login streak 7 hari</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Guide 3 Modal: Panduan Kuis Lengkap -->
+    <div id="guide3" class="guide-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">
+                    <i class="fas fa-brain"></i> Panduan Kuis Lengkap
+                </h2>
+                <button class="close-modal" onclick="closeGuide('guide3')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="section">
+                    <h3 class="section-title"><i class="fas fa-layer-group"></i> Struktur Kuis KuizTown</h3>
+                    <div class="section-content">
+                        <p>KuizTown memiliki sistem kuis yang terstruktur dengan 5 kategori kesulitan, masing-masing dengan 100 level:</p>
+                        
+                        <div class="quiz-grid">
+                            <div class="quiz-card easy">
+                                <div class="quiz-category">EASY</div>
+                                <div class="quiz-reward">0,2 GEO / soal</div>
+                                <div class="quiz-life">1 LIFE / level</div>
+                                <div class="quiz-timer">60 detik / soal</div>
+                            </div>
+                            <div class="quiz-card medium">
+                                <div class="quiz-category">MEDIUM</div>
+                                <div class="quiz-reward">0,4 GEO / soal</div>
+                                <div class="quiz-life">2 LIFE / level</div>
+                                <div class="quiz-timer">50 detik / soal</div>
+                            </div>
+                            <div class="quiz-card hard">
+                                <div class="quiz-category">HARD</div>
+                                <div class="quiz-reward">0,6 GEO / soal</div>
+                                <div class="quiz-life">3 LIFE / level</div>
+                                <div class="quiz-timer">40 detik / soal</div>
+                            </div>
+                            <div class="quiz-card very-hard">
+                                <div class="quiz-category">VERY HARD</div>
+                                <div class="quiz-reward">0,8 GEO / soal</div>
+                                <div class="quiz-life">4 LIFE / level</div>
+                                <div class="quiz-timer">30 detik / soal</div>
+                            </div>
+                            <div class="quiz-card ultimate">
+                                <div class="quiz-category">ULTIMATE HARD</div>
+                                <div class="quiz-reward">1,0 GEO / soal</div>
+                                <div class="quiz-life">5 LIFE / level</div>
+                                <div class="quiz-timer">25 detik / soal</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3 class="section-title"><i class="fas fa-lock-open"></i> Sistem Unlock Level</h3>
+                    <div class="section-content">
+                        <p>Sistem progresi di KuizTown menggunakan mekanisme unlock berjenjang:</p>
+                        
+                        <div class="note-box">
+                            <div class="note-title">
+                                <i class="fas fa-key"></i> Aturan Unlock
+                            </div>
+                            <p><strong>Level 1</strong> di setiap kategori selalu terbuka. Untuk membuka <strong>Level N</strong> (dimana N>1), Anda harus mencapai skor sempurna <strong>10/10</strong> pada <strong>Level N-1</strong> di kategori yang sama.</p>
+                        </div>
+                        
+                        <ul class="step-list">
+                            <li><strong>Level Selesai:</strong> Skor 10/10 → Level terkunci selamanya dengan status "SELESAI"</li>
+                            <li><strong>Level Gagal:</strong> Skor < 10/10 → Level terkunci 5 menit, setelah itu tombol "COBA LAGI" muncul</li>
+                            <li><strong>Level Terkunci:</strong> Belum memenuhi syarat → Pesan "LEVEL TERKUNCI. SELESAIKAN LEVEL [SEBELUMNYA]"</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3 class="section-title"><i class="fas fa-gamepad"></i> Langkah-Langkah Mengerjakan Kuis</h3>
+                    <div class="section-content">
+                        <ol class="step-list">
+                            <li><strong>Pilih Kategori:</strong> Buka halaman Quiz dan pilih kategori yang sesuai dengan kemampuan Anda</li>
+                            <li><strong>Pilih Level:</strong> Pilih level yang tersedia (Level 1 selalu terbuka untuk kategori baru)</li>
+                            <li><strong>Periksa Biaya:</strong> Setiap level membutuhkan LIFE tertentu sesuai kategori</li>
+                            <li><strong>Mulai Kuis:</strong> Klik "MULAI" → LIFE akan langsung berkurang</li>
+                            <li><strong>Baca Soal:</strong> Setiap soal memiliki timer sesuai kategori (25-60 detik)</li>
+                            <li><strong>Pilih Jawaban:</strong> Klik satu jawaban (A, B, C, atau D) → tidak bisa diubah</li>
+                            <li><strong>Lanjutkan:</strong> Klik "NEXT" untuk pindah ke soal berikutnya</li>
+                            <li><strong>Selesaikan:</strong> Setelah 10 soal, sistem akan menghitung skor</li>
+                            <li><strong>Klaim Reward:</strong> Klik "KLAIM REWARD" untuk menerima GEO sesuai jumlah jawaban benar</li>
+                        </ol>
+                        
+                        <div class="warning-box">
+                            <div class="warning-title">
+                                <i class="fas fa-exclamation-triangle"></i> Peringatan Penting
+                            </div>
+                            <p><strong>JANGAN PERNAH:</strong> Berpindah tab browser, membuka aplikasi lain, atau meminimalkan window selama pengerjaan soal. Sistem akan mendeteksi dan otomatis mengarahkan Anda ke halaman utama Quiz dengan pesan: "ATURAN DI LANGGAR. SEMUA REWARD YANG DIKERJAKAN SEBELUMNYA TIDAK AKAN DIBERIKAN DAN SALDO LIFE TETAP BERKURANG."</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3 class="section-title"><i class="fas fa-chart-line"></i> Strategi Mengerjakan Kuis</h3>
+                    <div class="section-content">
+                        <p>Berikut strategi untuk memaksimalkan hasil dari kuis:</p>
+                        
+                        <div class="info-grid">
+                            <div class="info-card">
+                                <div class="info-label"><i class="fas fa-sort-amount-up"></i> Mulai dari Easy</div>
+                                <div class="info-value">Bangun dasar</div>
+                            </div>
+                            <div class="info-card">
+                                <div class="info-label"><i class="fas fa-crosshairs"></i> Fokus 10/10</div>
+                                <div class="info-value">Unlock level berikutnya</div>
+                            </div>
+                            <div class="info-card">
+                                <div class="info-label"><i class="fas fa-clock"></i> Manajemen Waktu</div>
+                                <div class="info-value">Jangan terburu-buru</div>
+                            </div>
+                            <div class="info-card">
+                                <div class="info-label"><i class="fas fa-heart"></i> Cek LIFE</div>
+                                <div class="info-value">Pastikan cukup</div>
+                            </div>
+                        </div>
+                        
+                        <div class="note-box">
+                            <div class="note-title">
+                                <i class="fas fa-lightbulb"></i> Tips Expert
+                            </div>
+                            <p><strong>Gunakan 70% waktu untuk membaca soal dengan teliti</strong>. Banyak kesalahan terjadi karena kurang teliti membaca, bukan karena tidak tahu jawabannya. Jika ragu, eliminasi jawaban yang jelas salah terlebih dahulu.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Guide 4 Modal: Sistem Tugas -->
+    <div id="guide4" class="guide-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">
+                    <i class="fas fa-tasks"></i> Sistem Tugas KuizTown
+                </h2>
+                <button class="close-modal" onclick="closeGuide('guide4')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="section">
+                    <h3 class="section-title"><i class="fas fa-clipboard-list"></i> Apa itu Tugas di KuizTown?</h3>
+                    <div class="section-content">
+                        <p><span class="highlight">Tugas</span> adalah misi khusus yang dibuat oleh Admin untuk memberikan alternatif cara mendapatkan GEO dan LIFE selain dari kuis. Tugas biasanya melibatkan aktivitas sederhana di platform lain.</p>
+                        
+                        <div class="note-box">
+                            <div class="note-title">
+                                <i class="fas fa-info-circle"></i> Karakteristik Tugas
+                            </div>
+                            <p>Tugas memiliki reward yang bervariasi, bisa berupa <strong>GEO saja</strong>, <strong>LIFE saja</strong>, atau <strong>kombinasi keduanya</strong>. Reward tugas biasanya lebih besar dibandingkan kuis per level, namun membutuhkan waktu pengerjaan yang lebih lama.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3 class="section-title"><i class="fas fa-list-ol"></i> Jenis-Jenis Tugas</h3>
+                    <div class="section-content">
+                        <div class="table-container">
+                            <table class="info-table">
+                                <thead>
+                                    <tr>
+                                        <th>Jenis Tugas</th>
+                                        <th>Contoh Aktivitas</th>
+                                        <th>Reward Rata-rata</th>
+                                        <th>Waktu Review</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Social Media</td>
+                                        <td>Follow, Like, Share, Comment</td>
+                                        <td>2-10 GEO</td>
+                                        <td>1-2 hari</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Website Visit</td>
+                                        <td>Kunjungi website, baca artikel</td>
+                                        <td>1-5 GEO</td>
+                                        <td>1-3 hari</td>
+                                    </tr>
+                                    <tr>
+                                        <td>App Install</td>
+                                        <td>Instal aplikasi, buka 3 hari</td>
+                                        <td>10-30 GEO</td>
+                                        <td>3-7 hari</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Survey/Form</td>
+                                        <td>Isi survey, form pendaftaran</td>
+                                        <td>5-20 GEO</td>
+                                        <td>2-5 hari</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Video Watch</td>
+                                        <td>Tonton video, like, subscribe</td>
+                                        <td>3-15 GEO</td>
+                                        <td>1-3 hari</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3 class="section-title"><i class="fas fa-play-circle"></i> Proses Mengerjakan Tugas</h3>
+                    <div class="section-content">
+                        <ol class="step-list">
+                            <li><strong>Pilih Tugas:</strong> Buka halaman Tugas → pilih tugas yang tersedia</li>
+                            <li><strong>Baca Instruksi:</strong> Pelajari deskripsi, instruksi, dan syarat tugas dengan teliti</li>
+                            <li><strong>Ambil Tugas:</strong> Klik "AMBIL TUGAS" → tugas akan masuk ke daftar aktif Anda</li>
+                            <li><strong>Ikuti Instruksi:</strong> Lakukan sesuai petunjuk (kunjungi link, install app, dll)</li>
+                            <li><strong>Siapkan Bukti:</strong> Screenshot/screen record sebagai bukti pengerjaan</li>
+                            <li><strong>Upload Bukti:</strong> Klik "SUBMIT BUKTI" → upload gambar ke sistem ImgBB</li>
+                            <li><strong>Tambah Catatan:</strong> Isi field catatan jika diperlukan (opsional tapi disarankan)</li>
+                            <li><strong>Kirim Tugas:</strong> Klik "KIRIM TUGAS" → status berubah menjadi PENDING</li>
+                            <li><strong>Tunggu Review:</strong> Admin akan mereview dalam 1-3 hari kerja</li>
+                            <li><strong>Terima Reward:</strong> Jika APPROVE, reward otomatis masuk ke akun</li>
+                        </ol>
+                        
+                        <div class="warning-box">
+                            <div class="warning-title">
+                                <i class="fas fa-exclamation-triangle"></i> Tips Upload Bukti
+                            </div>
+                            <p><strong>Pastikan bukti jelas dan lengkap:</strong> Tangkapan layar harus menunjukkan seluruh informasi yang diminta. Untuk tugas install app, bukti harus menunjukkan aplikasi terinstal dan dibuka. Untuk tugas social media, bukti harus menunjukkan username/akun Anda.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3 class="section-title"><i class="fas fa-history"></i> Status Tugas</h3>
+                    <div class="section-content">
+                        <div class="info-grid">
+                            <div class="info-card">
+                                <div class="info-label" style="color: #FFA500;"><i class="fas fa-clock"></i> PENDING</div>
+                                <div class="info-value">Menunggu review</div>
+                                <div style="font-size: 0.8rem; color: #666;">1-3 hari kerja</div>
+                            </div>
+                            <div class="info-card">
+                                <div class="info-label" style="color: #90EE90;"><i class="fas fa-check-circle"></i> APPROVE</div>
+                                <div class="info-value">Disetujui</div>
+                                <div style="font-size: 0.8rem; color: #666;">Reward dikirim</div>
+                            </div>
+                            <div class="info-card">
+                                <div class="info-label" style="color: #ff6b6b;"><i class="fas fa-times-circle"></i> REJECT</td>
+                                <div class="info-value">Ditolak</div>
+                                <div style="font-size: 0.8rem; color: #666;">Cek alasan</div>
+                            </div>
+                            <div class="info-card">
+                                <div class="info-label" style="color: #3498db;"><i class="fas fa-play-circle"></i> AVAILABLE</div>
+                                <div class="info-value">Tersedia</div>
+                                <div style="font-size: 0.8rem; color: #666;">Bisa diambil</div>
+                            </div>
+                        </div>
+                        
+                        <div class="note-box">
+                            <div class="note-title">
+                                <i class="fas fa-redo"></i> Jika Tugas Ditolak
+                            </div>
+                            <p>Jika tugas Anda ditolak (REJECT), Anda bisa mengajukan banding dengan menghubungi Customer Service melalui WhatsApp. Siapkan bukti tambahan dan penjelasan mengapa Anda merasa tugas sudah dikerjakan dengan benar.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Guide 5 Modal: Program Referral -->
+    <div id="guide5" class="guide-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">
+                    <i class="fas fa-user-friends"></i> Program Referral
+                </h2>
+                <button class="close-modal" onclick="closeGuide('guide5')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="section">
+                    <h3 class="section-title"><i class="fas fa-handshake"></i> Apa itu Program Referral?</h3>
+                    <div class="section-content">
+                        <p><span class="highlight">Program Referral</span> adalah sistem di mana Anda mendapatkan reward ketika berhasil mengajak teman untuk bergabung dengan KuizTown menggunakan kode/link referral Anda.</p>
+                        
+                        <div class="note-box">
+                            <div class="note-title">
+                                <i class="fas fa-gift"></i> Reward Referral
+                            </div>
+                            <p>Setiap 1 teman yang berhasil mendaftar menggunakan kode/link referral Anda akan memberikan reward berupa:</p>
+                            <ul>
+                                <li><strong>0,1 GEO</strong> - langsung masuk ke saldo GEO Anda</li>
+                                <li><strong>1 LIFE</strong> - langsung masuk ke saldo LIFE Anda</li>
+                            </ul>
+                            <p>Reward diberikan secara instan setelah teman Anda menyelesaikan registrasi.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3 class="section-title"><i class="fas fa-link"></i> Cara Mengundang Teman</h3>
+                    <div class="section-content">
+                        <ol class="step-list">
+                            <li><strong>Dapatkan Kode Referral:</strong> Buka halaman Referral → catat kode referral unik Anda</li>
+                            <li><strong>Salin Link:</strong> Klik "SALIN LINK" untuk menyalin link referral lengkap</li>
+                            <li><strong>Bagikan:</strong> Bagikan link melalui WhatsApp, Telegram, Facebook, atau media lainnya</li>
+                            <li><strong>Instruksikan Teman:</strong> Minta teman untuk mendaftar menggunakan link tersebut</li>
+                            <li><strong>Teman Daftar:</strong> Teman harus mengisi kode referral Anda saat registrasi (otomatis terisi jika pakai link)</li>
+                            <li><strong>Verifikasi:</strong> Pastikan teman verifikasi email dan login minimal 1 kali</li>
+                            <li><strong>Terima Reward:</strong> Reward otomatis masuk ke akun Anda setelah semua syarat terpenuhi</li>
+                        </ol>
+                        
+                        <div class="warning-box">
+                            <div class="warning-title">
+                                <i class="fas fa-exclamation-triangle"></i> Syarat Referral Valid
+                            </div>
+                            <p>Referral hanya dianggap valid jika:</p>
+                            <ul>
+                                <li>Teman mendaftar menggunakan link/kode referral Anda</li>
+                                <li>Teman menyelesaikan seluruh proses registrasi</li>
+                                <li>Teman verifikasi email yang digunakan</li>
+                                <li>Teman login setidaknya 1 kali setelah registrasi</li>
+                                <li>Akun teman tidak melanggar aturan platform</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3 class="section-title"><i class="fas fa-chart-bar"></i> Statistik & Tracking</h3>
+                    <div class="section-content">
+                        <p>Di halaman Referral, Anda bisa melacak progress program referral Anda:</p>
+                        
+                        <div class="info-grid">
+                            <div class="info-card">
+                                <div class="info-label"><i class="fas fa-user-plus"></i> Total Diundang</div>
+                                <div class="info-value" id="referralCount">0 orang</div>
+                            </div>
+                            <div class="info-card">
+                                <div class="info-label"><i class="fas fa-seedling"></i> GEO dari Referral</div>
+                                <div class="info-value" id="referralGeo">0,0 GEO</div>
+                            </div>
+                            <div class="info-card">
+                                <div class="info-label"><i class="fas fa-heart"></i> LIFE dari Referral</div>
+                                <div class="info-value" id="referralLife">0 LIFE</div>
+                            </div>
+                            <div class="info-card">
+                                <div class="info-label"><i class="fas fa-check-circle"></i> Referral Valid</div>
+                                <div class="info-value" id="validReferral">0 orang</div>
+                            </div>
+                        </div>
+                        
+                        <p><strong>Format Link Referral:</strong> <code>https://kuiztown.com/daftar.html?ref=KODEANDA123</code></p>
+                        
+                        <div class="note-box">
+                            <div class="note-title">
+                                <i class="fas fa-money-check-alt"></i> Penting untuk Withdraw
+                            </div>
+                            <p><strong>Referral adalah syarat wajib untuk withdraw!</strong> Untuk melakukan penarikan pertama, Anda harus memiliki minimal <strong>3 referral baru</strong> yang belum pernah digunakan untuk memenuhi syarat withdraw sebelumnya. Referral yang sudah dipakai tidak bisa digunakan lagi untuk syarat withdraw selanjutnya.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3 class="section-title"><i class="fas fa-lightbulb"></i> Tips Sukses Referral</h3>
+                    <div class="section-content">
+                        <div class="quiz-grid">
+                            <div class="quiz-card">
+                                <div class="quiz-category">Jelaskan Benefit</div>
+                                <div class="quiz-life">Sampaikan keuntungan bergabung</div>
+                            </div>
+                            <div class="quiz-card">
+                                <div class="quiz-category">Bantu Daftar</div>
+                                <div class="quiz-life">Bimbing proses registrasi</div>
+                            </div>
+                            <div class="quiz-card">
+                                <div class="quiz-category">Follow Up</div>
+                                <div class="quiz-life">Pastikan teman aktif</div>
+                            </div>
+                            <div class="quiz-card">
+                                <div class="quiz-category">Komunitas</div>
+                                <div class="quiz-life">Buat grup belajar bersama</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Guide 6 Modal: Withdraw & Penarikan -->
+    <div id="guide6" class="guide-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">
+                    <i class="fas fa-wallet"></i> Withdraw & Penarikan
+                </h2>
+                <button class="close-modal" onclick="closeGuide('guide6')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="section">
+                    <h3 class="section-title"><i class="fas fa-money-bill-wave"></i> Syarat Penarikan</h3>
+                    <div class="section-content">
+                        <p>Sebelum melakukan withdraw, pastikan Anda memenuhi semua syarat berikut:</p>
+                        
+                        <div class="warning-box">
+                            <div class="warning-title">
+                                <i class="fas fa-exclamation-triangle"></i> SYARAT WAJIB
+                            </div>
+                            <ol class="step-list">
+                                <li><strong>Saldo GEO mencukupi:</strong> Minimal 10 GEO untuk penarikan pertama, selanjutnya sesuai ketentuan</li>
+                                <li><strong>Memiliki 3 referral baru:</strong> 3 teman yang berhasil diundang dan belum pernah digunakan untuk syarat withdraw sebelumnya</li>
+                                <li><strong>Akun aktif:</strong> Tidak dalam status banned atau suspend</li>
+                                <li><strong>Data lengkap:</strong> Nama rekening/akun dan nomor rekening/akun valid</li>
+                                <li><strong>Verifikasi:</strong> Email terverifikasi dan nomor telepon jika diperlukan</li>
+                            </ol>
+                        </div>
+                        
+                        <div class="note-box">
+                            <div class="note-title">
+                                <i class="fas fa-info-circle"></i> Sistem Referral untuk Withdraw
+                            </div>
+                            <p><strong>Contoh:</strong> User A memiliki 5 referral. Untuk withdraw pertama, 3 referral terpakai. Untuk withdraw kedua, user harus menunggu hingga memiliki 1 referral baru lagi (total 6 referral, dengan 3 di antaranya *belum pernah dipakai* untuk syarat withdraw). Referral yang sudah dipakai tidak dapat digunakan kembali.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3 class="section-title"><i class="fas fa-calculator"></i> Perhitungan Withdraw</h3>
+                    <div class="section-content">
+                        <p>Nilai tukar GEO terhadap IDR adalah tetap:</p>
+                        
+                        <div class="info-card" style="text-align: center; margin: 20px 0; padding: 25px;">
+                            <div style="font-size: 2rem; font-weight: 700; color: #2563eb; margin-bottom: 10px;">
+                                1 GEO = 585 IDR
+                            </div>
+                            <div style="font-size: 0.9rem; color: #666;">
+                                Nilai tukar tetap, tidak berubah
+                            </div>
+                        </div>
+                        
+                        <div class="table-container">
+                            <table class="info-table">
+                                <thead>
+                                    <tr>
+                                        <th>Nominal GEO</th>
+                                        <th>Konversi ke IDR</th>
+                                        <th>Biaya Admin</th>
+                                        <th>Diterima</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>10 GEO</td>
+                                        <td>5.850 IDR</td>
+                                        <td>500 IDR</td>
+                                        <td>5.350 IDR</td>
+                                    </tr>
+                                    <tr>
+                                        <td>50 GEO</td>
+                                        <td>29.250 IDR</td>
+                                        <td>1.000 IDR</td>
+                                        <td>28.250 IDR</td>
+                                    </tr>
+                                    <tr>
+                                        <td>100 GEO</td>
+                                        <td>58.500 IDR</td>
+                                        <td>2.000 IDR</td>
+                                        <td>56.500 IDR</td>
+                                    </tr>
+                                    <tr>
+                                        <td>200 GEO</td>
+                                        <td>117.000 IDR</td>
+                                        <td>3.000 IDR</td>
+                                        <td>114.000 IDR</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <p><strong>Catatan:</strong> Biaya admin bervariasi tergantung metode pembayaran dan nominal. Detail biaya akan ditampilkan sebelum konfirmasi withdraw.</p>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3 class="section-title"><i class="fas fa-credit-card"></i> Metode Penarikan</h3>
+                    <div class="section-content">
+                        <p>KuizTown mendukung berbagai metode penarikan:</p>
+                        
+                        <div class="quiz-grid">
+                            <div class="quiz-card">
+                                <div class="quiz-category">Bank Transfer</div>
+                                <div class="quiz-life">BCA, BRI, Mandiri, BNI</div>
+                                <div class="quiz-timer">1-2 hari kerja</div>
+                            </div>
+                            <div class="quiz-card">
+                                <div class="quiz-category">E-Wallet</div>
+                                <div class="quiz-life">DANA, OVO, GoPay</div>
+                                <div class="quiz-timer">Instan - 24 jam</div>
+                            </div>
+                            <div class="quiz-card">
+                                <div class="quiz-category">Pulsa</div>
+                                <div class="quiz-life">Telkomsel, XL, Indosat</div>
+                                <div class="quiz-timer">Instan</div>
+                            </div>
+                            <div class="quiz-card">
+                                <div class="quiz-category">E-Money</div>
+                                <div class="quiz-life">LinkAja, ShopeePay</div>
+                                <div class="quiz-timer">1-24 jam</div>
+                            </div>
+                        </div>
+                        
+                        <div class="note-box">
+                            <div class="note-title">
+                                <i class="fas fa-clock"></i> Waktu Proses
+                            </div>
+                            <p><strong>Bank Transfer:</strong> 1-3 hari kerja (tergantung bank)<br>
+                            <strong>E-Wallet:</strong> Instan - 24 jam (tergantung provider)<br>
+                            <strong>Pulsa:</strong> Instan (max 5 menit)<br>
+                            <strong>Weekend/Hari Libur:</strong> Proses dilanjutkan hari kerja berikutnya</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3 class="section-title"><i class="fas fa-list-alt"></i> Proses Withdraw</h3>
+                    <div class="section-content">
+                        <ol class="step-list">
+                            <li><strong>Buka Halaman Withdraw:</strong> Dari dashboard, klik tombol Withdraw atau buka halaman Withdraw</li>
+                            <li><strong>Isi Form:</strong> 
+                                <ul>
+                                    <li>Nominal penarikan (dalam GEO)</li>
+                                    <li>Pilih metode (Bank/E-Wallet)</li>
+                                    <li>Pilih provider (BCA, DANA, dll)</li>
+                                    <li>Nama pemilik rekening/akun</li>
+                                    <li>Nomor rekening/akun</li>
+                                    <li>Catatan untuk admin (opsional)</li>
+                                </ul>
+                            </li>
+                            <li><strong>Konfirmasi:</strong> Sistem akan menampilkan ringkasan dan biaya admin</li>
+                            <li><strong>Submit:</strong> Klik "KONFIRMASI PENARIKAN"</li>
+                            <li><strong>Tunggu Review:</strong> Status berubah menjadi PENDING, admin akan review dalam 24 jam</li>
+                            <li><strong>Proses:</strong> Jika APPROVE, dana akan diproses sesuai metode</li>
+                            <li><strong>Selesai:</strong> Status berubah menjadi SUCCESS, dana masuk ke rekening/akun Anda</li>
+                        </ol>
+                        
+                        <div class="warning-box">
+                            <div class="warning-title">
+                                <i class="fas fa-exclamation-triangle"></i> Alasan Penolakan Withdraw
+                            </div>
+                            <p>Withdraw mungkin ditolak jika:</p>
+                            <ul>
+                                <li>Data tidak valid (nama/nomor tidak sesuai)</li>
+                                <li>Saldo tidak mencukupi setelah dipotong biaya admin</li>
+                                <li>Syarat referral tidak terpenuhi</li>
+                                <li>Akun terdeteksi kecurangan</li>
+                                <li>Multiple account terdeteksi</li>
+                                <li>Pelanggaran aturan platform</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Guide 7 Modal: Kelola Akun -->
+    <div id="guide7" class="guide-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">
+                    <i class="fas fa-user-cog"></i> Kelola Akun & Keamanan
+                </h2>
+                <button class="close-modal" onclick="closeGuide('guide7')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="section">
+                    <h3 class="section-title"><i class="fas fa-user-circle"></i> Profil & Identitas</h3>
+                    <div class="section-content">
+                        <p>Kelola informasi profil Anda untuk pengalaman yang lebih personal:</p>
+                        
+                        <div class="info-grid">
+                            <div class="info-card">
+                                <div class="info-label"><i class="fas fa-camera"></i> Foto Profil</div>
+                                <div class="info-value">Upload ke ImgBB</div>
+                            </div>
+                            <div class="info-card">
+                                <div class="info-label"><i class="fas fa-user-tag"></i> Username</div>
+                                <div class="info-value">Dapat diubah 1x/bulan</div>
+                            </div>
+                            <div class="info-card">
+                                <div class="info-label"><i class="fas fa-phone"></i> No. Telepon</div>
+                                <div class="info-value">Verifikasi OTP</div>
+                            </div>
+                            <div class="info-card">
+                                <div class="info-label"><i class="fas fa-envelope"></i> Email</div>
+                                <div class="info-value">Verifikasi wajib</div>
+                            </div>
+                        </div>
+                        
+                        <div class="note-box">
+                            <div class="note-title">
+                                <i class="fas fa-image"></i> Upload Foto Profil
+                            </div>
+                            <p>Foto profil diupload ke sistem ImgBB dengan API Key khusus. Pastikan foto sesuai ketentuan: format JPG/PNG, maksimal 2MB, tidak mengandung konten tidak pantas. Foto akan otomatis di-compress untuk optimasi performa.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3 class="section-title"><i class="fas fa-shield-alt"></i> Keamanan Akun</h3>
+                    <div class="section-content">
+                        <p>Lindungi akun Anda dengan langkah-langkah keamanan berikut:</p>
+                        
+                        <div class="warning-box">
+                            <div class="warning-title">
+                                <i class="fas fa-key"></i> Password & Login
+                            </div>
+                            <ul class="step-list">
+                                <li><strong>Gunakan password kuat:</strong> Kombinasi huruf besar/kecil, angka, simbol</li>
+                                <li><strong>Jangan bagikan login:</strong> Satu device untuk satu akun saja</li>
+                                <li><strong>Logout dari perangkat lain:</strong> Fitur logout semua session tersedia</li>
+                                <li><strong>Waspada phishing:</strong> Hanya login melalui kuiztown.com</li>
+                                <li><strong>Verifikasi 2 langkah:</strong> Aktifkan jika tersedia</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="info-grid">
+                            <div class="info-card">
+                                <div class="info-label"><i class="fas fa-redo"></i> Reset Password</div>
+                                <div class="info-value">Via email</div>
+                            </div>
+                            <div class="info-card">
+                                <div class="info-label"><i class="fas fa-history"></i> Riwayat Login</div>
+                                <div class="info-value">Cek perangkat</div>
+                            </div>
+                            <div class="info-card">
+                                <div class="info-label"><i class="fas fa-bell"></i> Notifikasi</div>
+                                <div class="info-value">Aktifkan semua</div>
+                            </div>
+                            <div class="info-card">
+                                <div class="info-label"><i class="fas fa-user-lock"></i> Session</div>
+                                <div class="info-value">Kelola aktifitas</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3 class="section-title"><i class="fas fa-cogs"></i> Pengaturan Akun</h3>
+                    <div class="section-content">
+                        <p>Customize pengalaman Anda dengan pengaturan berikut:</p>
+                        
+                        <div class="table-container">
+                            <table class="info-table">
+                                <thead>
+                                    <tr>
+                                        <th>Pengaturan</th>
+                                        <th>Fungsi</th>
+                                        <th>Lokasi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Notifikasi</td>
+                                        <td>Email & push notification</td>
+                                        <td>Profil → Pengaturan</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Privasi</td>
+                                        <td>Atur visibilitas profil</td>
+                                        <td>Profil → Privasi</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Bahasa</td>
+                                        <td>Pilih bahasa interface</td>
+                                        <td>Profil → Umum</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tema</td>
+                                        <td>Light/Dark mode</td>
+                                        <td>Profil → Tampilan</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Auto-logout</td>
+                                        <td>Waktu inaktif otomatis</td>
+                                        <td>Profil → Keamanan</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3 class="section-title"><i class="fas fa-ban"></i> Akun Banned & Suspensi</h3>
+                    <div class="section-content">
+                        <div class="warning-box">
+                            <div class="warning-title">
+                                <i class="fas fa-gavel"></i> Penyebab Akun Banned
+                            </div>
+                            <ul class="step-list">
+                                <li><strong>Multiple account:</strong> Satu perangkat hanya untuk satu akun</li>
+                                <li><strong>Kecurangan:</strong> Bot, cheat, exploit bug</li>
+                                <li><strong>Pelanggaran aturan:</strong> Melanggar ketentuan platform</li>
+                                <li><strong>Penipuan:</strong> Data palsu, withdraw ilegal</li>
+                                <li><strong>Spam:</strong> Mengirim spam ke pengguna lain</li>
+                                <li><strong>Konten tidak pantas:</strong> Foto profil, nama, dll</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="note-box">
+                            <div class="note-title">
+                                <i class="fas fa-question-circle"></i> Jika Akun Banned
+                            </div>
+                            <p>Jika akun Anda dibanned, Anda akan diarahkan ke halaman banned.html. Untuk banding, hubungi Customer Service melalui WhatsApp dengan menyertakan bukti dan penjelasan. Proses banding membutuhkan waktu 3-7 hari kerja.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Guide 8 Modal: FAQ & Solusi -->
+    <div id="guide8" class="guide-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">
+                    <i class="fas fa-question-circle"></i> FAQ & Solusi Masalah
+                </h2>
+                <button class="close-modal" onclick="closeGuide('guide8')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="section">
+                    <h3 class="section-title"><i class="fas fa-life-ring"></i> FAQ Umum</h3>
+                    <div class="section-content">
+                        <div class="faq-item" data-faq="faq1">
+                            <div class="faq-question">
+                                <span>Berapa lama waktu review tugas oleh admin?</span>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Admin biasanya mereview tugas dalam <strong>1-3 hari kerja</strong>. Jika lebih dari 3 hari, Anda bisa menghubungi Customer Service. Weekend dan hari libur tidak dihitung sebagai hari kerja.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item" data-faq="faq2">
+                            <div class="faq-question">
+                                <span>Kenapa LIFE saya tidak bisa diklaim padahal sudah 1 jam?</span>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Timer 1 jam dihitung dari <strong>waktu pengurangan LIFE terakhir</strong> (saat memulai kuis), bukan dari waktu klaim terakhir. Cek apakah LIFE sudah 10 (maksimal). Jika sudah 10, tidak bisa diklaim lagi hingga ada pengurangan.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item" data-faq="faq3">
+                            <div class="faq-question">
+                                <span>Apa yang terjadi jika keluar saat mengerjakan kuis?</span>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Sistem akan otomatis mendeteksi dan menghentikan kuis. Anda akan diarahkan ke halaman utama quiz dengan pesan: "ATURAN DI LANGGAR. SEMUA REWARD YANG DIKERJAKAN SEBELUMNYA TIDAK AKAN DIBERIKAN DAN SALDO LIFE TETAP BERKURANG."</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item" data-faq="faq4">
+                            <div class="faq-question">
+                                <span>Bagaimana cara mengganti foto profil?</span>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Buka halaman Profil → klik foto profil → pilih "Ubah Foto" → upload foto baru → sistem akan mengupload ke ImgBB → foto otomatis tersimpan. Format: JPG/PNG, maksimal 2MB.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3 class="section-title"><i class="fas fa-exclamation-triangle"></i> Masalah Teknis</h3>
+                    <div class="section-content">
+                        <div class="faq-item" data-faq="faq5">
+                            <div class="faq-question">
+                                <span>Website tidak bisa diakses / error</span>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="faq-answer">
+                                <ol>
+                                    <li>Cek koneksi internet Anda</li>
+                                    <li>Clear cache dan cookies browser</li>
+                                    <li>Coba browser berbeda (Chrome, Firefox)</li>
+                                    <li>Restart perangkat Anda</li>
+                                    <li>Cek status maintenance di halaman utama</li>
+                                    <li>Jika masih error, hubungi CS</li>
+                                </ol>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item" data-faq="faq6">
+                            <div class="faq-question">
+                                <span>Tidak menerima email verifikasi</span>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="faq-answer">
+                                <ol>
+                                    <li>Cek folder spam/promosi</li>
+                                    <li>Pastikan email benar saat registrasi</li>
+                                    <li>Request ulang email verifikasi</li>
+                                    <li>Tunggu 5-10 menit</li>
+                                    <li>Coba email provider berbeda (Gmail disarankan)</li>
+                                    <li>Hubungi CS jika tetap tidak menerima</li>
+                                </ol>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item" data-faq="faq7">
+                            <div class="faq-question">
+                                <span>Reward tidak masuk setelah menyelesaikan kuis</span>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="faq-answer">
+                                <ol>
+                                    <li>Pastikan Anda mengklik "KLAIM REWARD"</li>
+                                    <li>Refresh halaman dashboard</li>
+                                    <li>Cek riwayat transaksi</li>
+                                    <li>Logout dan login ulang</li>
+                                    <li>Tunggu 5-10 menit (terkadang delay)</li>
+                                    <li>Jika masih tidak muncul, hubungi CS dengan screenshot bukti</li>
+                                </ol>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item" data-faq="faq8">
+                            <div class="faq-question">
+                                <span>Lupa password dan tidak bisa reset</span>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="faq-answer">
+                                <ol>
+                                    <li>Pastikan email yang dimasukkan sama dengan saat registrasi</li>
+                                    <li>Cek folder spam untuk email reset</li>
+                                    <li>Gunakan fitur "Lupa Password" di halaman login</li>
+                                    <li>Jika email tidak terdaftar, mungkin salah email</li>
+                                    <li>Hubungi CS dengan bukti kepemilikan akun</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3 class="section-title"><i class="fas fa-phone-alt"></i> Kontak & Bantuan</h3>
+                    <div class="section-content">
+                        <div class="note-box">
+                            <div class="note-title">
+                                <i class="fas fa-headset"></i> Customer Service
+                            </div>
+                            <p>Untuk bantuan lebih lanjut, hubungi Customer Service kami:</p>
+                            <ul>
+                                <li><strong>WhatsApp:</strong> 083161274382 (hanya via tombol di halaman CS)</li>
+                                <li><strong>Jam Operasional:</strong> Senin - Jumat, 09:00 - 17:00 WIB</li>
+                                <li><strong>Respon Time:</strong> Maksimal 24 jam pada hari kerja</li>
+                                <li><strong>Siapkan:</strong> Email akun, username, dan bukti masalah</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="warning-box">
+                            <div class="warning-title">
+                                <i class="fas fa-exclamation-circle"></i> Jangan Bagikan Data Sensitif
+                            </div>
+                            <p><strong>CS TIDAK AKAN PERNAH meminta:</strong> Password akun Anda, OTP, PIN bank, atau informasi sensitif lainnya. Waspada penipuan mengatasnamakan CS KuizTown.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Guide 9 Modal: Peraturan Platform -->
+    <div id="guide9" class="guide-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">
+                    <i class="fas fa-gavel"></i> Peraturan & Ketentuan Platform
+                </h2>
+                <button class="close-modal" onclick="closeGuide('guide9')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="section">
+                    <h3 class="section-title"><i class="fas fa-user-check"></i> Aturan Umum Pengguna</h3>
+                    <div class="section-content">
+                        <div class="warning-box">
+                            <div class="warning-title">
+                                <i class="fas fa-ban"></i> Larangan Umum
+                            </div>
+                            <ul class="step-list">
+                                <li><strong>Multi Account:</strong> Satu perangkat hanya untuk satu akun</li>
+                                <li><strong>Kecurangan:</strong> Bot, script, cheat, exploit bug</li>
+                                <li><strong>Data Palsu:</strong> Identitas, bukti tugas, informasi akun</li>
+                                <li><strong>Penipuan:</strong> Denganraw ilegal, manipulasi sistem</li>
+                                <li><strong>Spam:</strong> Pesan, komentar, atau aktivitas spam</li>
+                                <li><strong>Konten Ilegal:</strong> NSFW, SARA, ujaran kebencian</li>
+                                <li><strong>Peretasan:</strong> Mencoba akses akun orang lain</li>
+                                <li><strong>Plagiarisme:</strong> Menyalin jawaban atau konten</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="note-box">
+                            <div class="note-title">
+                                <i class="fas fa-balance-scale"></i> Sanksi Pelanggaran
+                            </div>
+                            <p>Pelanggaran aturan akan dikenai sanksi bertahap:<br>
+                            1. <strong>Peringatan</strong> (untuk pelanggaran ringan)<br>
+                            2. <strong>Suspensi sementara</strong> (1-7 hari)<br>
+                            3. <strong>Pemblokiran akun</strong> (permanen)<br>
+                            4. <strong>Pemblokiran IP</strong> (untuk pelanggaran berat)</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3 class="section-title"><i class="fas fa-file-contract"></i> Kebijakan Withdraw</h3>
+                    <div class="section-content">
+                        <div class="table-container">
+                            <table class="info-table">
+                                <thead>
+                                    <tr>
+                                        <th>Aspek</th>
+                                        <th>Ketentuan</th>
+                                        <th>Keterangan</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Minimal Withdraw</td>
+                                        <td>10 GEO</td>
+                                        <td>Penarikan pertama</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Syarat Referral</td>
+                                        <td>3 referral baru</td>
+                                        <td>Belum pernah dipakai</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Maksimal Withdraw</td>
+                                        <td>500 GEO/hari</td>
+                                        <td>Untuk semua metode</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Verifikasi Data</td>
+                                        <td>Wajib lengkap</td>
+                                        <td>Nama & nomor valid</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Biaya Admin</td>
+                                        <td>Tergantung metode</td>
+                                        <td>Ditampilkan sebelum konfirmasi</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Waktu Proses</td>
+                                        <td>1-3 hari kerja</td>
+                                        <td>Tergantung metode</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div class="warning-box">
+                            <div class="warning-title">
+                                <i class="fas fa-exclamation-triangle"></i> Pembatalan Withdraw
+                            </div>
+                            <p>Withdraw dapat dibatalkan oleh sistem jika:<br>
+                            1. <strong>Data tidak valid</strong> (nama/nomor tidak sesuai)<br>
+                            2. <strong>Syarat tidak terpenuhi</strong> (saldo/referral)<br>
+                            3. <strong>Terdeteksi kecurangan</strong> (multi account, dll)<br>
+                            4. <strong>Permintaan berulang</strong> (spam withdraw)<br>
+                            5. <strong>Pelanggaran aturan</strong> selama proses</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3 class="section-title"><i class="fas fa-database"></i> Kebijakan Privasi & Data</h3>
+                    <div class="section-content">
+                        <div class="note-box">
+                            <div class="note-title">
+                                <i class="fas fa-shield-alt"></i> Perlindungan Data
+                            </div>
+                            <p>KuizTown berkomitmen melindungi data pengguna:<br>
+                            1. <strong>Data pribadi</strong> disimpan terenkripsi di server Firebase<br>
+                            2. <strong>Password</strong> di-hash menggunakan algoritma kuat<br>
+                            3. <strong>Transaksi keuangan</strong> dicatat dan diproteksi<br>
+                            4. <strong>Data tidak dijual</strong> ke pihak ketiga<br>
+                            5. <strong>Hak penghapusan data</strong> tersedia via permintaan ke CS</p>
+                        </div>
+                        
+                        <div class="warning-box">
+                            <div class="warning-title">
+                                <i class="fas fa-cookie"></i> Cookie & Tracking
+                            </div>
+                            <p>KuizTown menggunakan cookie untuk:<br>
+                            1. <strong>Autentikasi session</strong> (login tetap aktif)<br>
+                            2. <strong>Preferensi pengguna</strong> (tema, bahasa)<br>
+                            3. <strong>Analytics</strong> (perbaikan fitur)<br>
+                            4. <strong>Keamanan</strong> (deteksi aktivitas mencurigakan)<br>
+                            Anda dapat mengatur cookie melalui pengaturan browser.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3 class="section-title"><i class="fas fa-exchange-alt"></i> Perubahan Ketentuan</h3>
+                    <div class="section-content">
+                        <div class="note-box">
+                            <div class="note-title">
+                                <i class="fas fa-bullhorn"></i> Pemberitahuan Perubahan
+                            </div>
+                            <p>KuizTown berhak mengubah ketentuan platform dengan pemberitahuan sebelumnya melalui:<br>
+                            1. <strong>Notifikasi in-app</strong> (wajib dibaca)<br>
+                            2. <strong>Email</strong> ke alamat terdaftar<br>
+                            3. <strong>Pengumuman di website</strong> (halaman utama/panduan)<br>
+                            4. <strong>Media sosial resmi</strong> (jika ada)<br>
+                            Perubahan berlaku 7 hari setelah pemberitahuan.</p>
+                        </div>
+                        
+                        <div class="warning-box">
+                            <div class="warning-title">
+                                <i class="fas fa-handshake"></i> Persetujuan Pengguna
+                            </div>
+                            <p>Dengan menggunakan platform KuizTown, Anda menyetujui:<br>
+                            1. <strong>Seluruh ketentuan</strong> yang berlaku<br>
+                            2. <strong>Perubahan ketentuan</strong> di masa depan<br>
+                            3. <strong>Penggunaan data</strong> sesuai kebijakan privasi<br>
+                            4. <strong>Sanksi</strong> jika melanggar aturan<br>
+                            5. <strong>Yurisdiksi hukum</strong> Indonesia</p>
+                        </div>
+                        
+                        <div style="text-align: center; margin-top: 30px; padding: 20px; background: rgba(135, 206, 235, 0.1); border-radius: 10px;">
+                            <p style="font-style: italic; color: #666;">"KuizTown berkomitmen menciptakan lingkungan belajar yang aman, adil, dan menguntungkan bagi semua pengguna. Mari bersama menjaga integritas platform."</p>
+                            <p style="margin-top: 10px; font-weight: 600; color: #2563eb;">- Tim KuizTown</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Guide Modal Functions
+        function openGuide(guideId) {
+            document.getElementById(guideId).style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeGuide(guideId) {
+            document.getElementById(guideId).style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Close modal when clicking outside
+        window.addEventListener('click', function(event) {
+            const modals = document.querySelectorAll('.guide-modal');
+            modals.forEach(modal => {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        });
+        
+        // Toggle FAQ in guide 8
+        function toggleFaq(element) {
+            element.classList.toggle('active');
+        }
+        
+        // Setup semua event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Setup menu item click events
+            const menuItems = document.querySelectorAll('.menu-item');
+            menuItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const guideId = this.getAttribute('data-guide');
+                    if (guideId) {
+                        openGuide(guideId);
+                    }
+                });
+            });
+            
+            // Setup FAQ toggles in guide 8
+            const faqItems = document.querySelectorAll('#guide8 .faq-item');
+            faqItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                });
+            });
+            
+            // Setup close modal buttons
+            const closeButtons = document.querySelectorAll('.close-modal');
+            closeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const modal = this.closest('.guide-modal');
+                    if (modal) {
+                        modal.style.display = 'none';
+                        document.body.style.overflow = 'auto';
+                    }
+                });
+            });
+            
+            // Back button functionality
+            document.querySelector('.back-btn').addEventListener('click', function(e) {
+                e.preventDefault();
+                window.history.back();
+            });
+            
+            // Close modals with Escape key
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape') {
+                    const modals = document.querySelectorAll('.guide-modal');
+                    modals.forEach(modal => {
+                        if (modal.style.display === 'flex') {
+                            modal.style.display = 'none';
+                            document.body.style.overflow = 'auto';
+                        }
+                    });
+                }
+            });
+            
+            // Load sample data for referral stats
+            loadSampleData();
+        });
+        
+        // Load sample data (in production, this would come from Firebase)
+        function loadSampleData() {
+            // This is sample data - in production, fetch from Firebase
+            document.getElementById('referralCount').textContent = '12 orang';
+            document.getElementById('referralGeo').textContent = '1,2 GEO';
+            document.getElementById('referralLife').textContent = '12 LIFE';
+            document.getElementById('validReferral').textContent = '10 orang';
+        }
+        
+        // Prevent scrolling when modal is open
+        function disableScroll() {
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function enableScroll() {
+            document.body.style.overflow = 'auto';
+        }
+    </script>
+</body>
+</html>

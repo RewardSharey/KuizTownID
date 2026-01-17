@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - KuizTown</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyB9DCc6rCmeXl0O3CCLYe6zUmfByfRz428",
+            authDomain: "kuiztown.firebaseapp.com",
+            projectId: "kuiztown",
+            storageBucket: "kuiztown.firebasestorage.app",
+            messagingSenderId: "334081803913",
+            appId: "1:334081803913:web:84899b42961e12f538a858"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        
+        // Ekspor ke global scope
+        window.firebaseAuth = auth;
+        window.firebaseSignIn = signInWithEmailAndPassword;
+        window.firebaseSendPasswordReset = sendPasswordResetEmail;
+    </script>
+    <style>
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #5F729F;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255, 192, 203, 0.08) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(255, 192, 203, 0.08) 0%, transparent 20%),
+                radial-gradient(circle at 50% 50%, rgba(255, 192, 203, 0.05) 0%, transparent 30%);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Geometric Pattern Background */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(30deg, rgba(255, 192, 203, 0.05) 12%, transparent 12.5%, transparent 87%, rgba(255, 192, 203, 0.05) 87.5%, rgba(255, 192, 203, 0.05)),
+                linear-gradient(150deg, rgba(255, 192, 203, 0.05) 12%, transparent 12.5%, transparent 87%, rgba(255, 192, 203, 0.05) 87.5%, rgba(255, 192, 203, 0.05)),
+                linear-gradient(30deg, rgba(255, 192, 203, 0.05) 12%, transparent 12.5%, transparent 87%, rgba(255, 192, 203, 0.05) 87.5%, rgba(255, 192, 203, 0.05)),
+                linear-gradient(150deg, rgba(255, 192, 203, 0.05) 12%, transparent 12.5%, transparent 87%, rgba(255, 192, 203, 0.05) 87.5%, rgba(255, 192, 203, 0.05)),
+                linear-gradient(60deg, rgba(255, 192, 203, 0.08) 25%, transparent 25.5%, transparent 75%, rgba(255, 192, 203, 0.08) 75%, rgba(255, 192, 203, 0.08)),
+                linear-gradient(60deg, rgba(255, 192, 203, 0.08) 25%, transparent 25.5%, transparent 75%, rgba(255, 192, 203, 0.08) 75%, rgba(255, 192, 203, 0.08));
+            background-size: 80px 140px;
+            background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
+            opacity: 0.3;
+            z-index: -1;
+        }
+        
+        /* Container */
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        /* Header */
+        header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 0;
+            margin-bottom: 20px;
+            animation: fadeInDown 0.8s ease-out;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo-icon {
+            font-size: 32px;
+            background: linear-gradient(135deg, #9b59b6, #3498db);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Form Container */
+        .form-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            animation: fadeInUp 0.8s ease-out 0.3s both;
+        }
+        
+        .form-title {
+            font-size: 1.8rem;
+            color: #333;
+            text-align: center;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .form-subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 0.95rem;
+        }
+        
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #444;
+            font-size: 0.95rem;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e1e1e1;
+            border-radius: 10px;
+            font-size: 16px;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+            background-color: #fff;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #87CEEB;
+            box-shadow: 0 0 0 3px rgba(135, 206, 235, 0.2);
+        }
+        
+        .password-container {
+            position: relative;
+        }
+        
+        .toggle-password {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #666;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        
+        /* Forgot Password Link */
+        .forgot-password {
+            text-align: right;
+            margin-top: -10px;
+            margin-bottom: 20px;
+        }
+        
+        .forgot-password a {
+            color: #87CEEB;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .forgot-password a:hover {
+            color: #5F729F;
+            text-decoration: underline;
+        }
+        
+        /* Button */
+        .btn {
+            width: 100%;
+            padding: 16px;
+            font-size: 18px;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            margin-top: 10px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #87CEEB, #5F729F);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(135, 206, 235, 0.4);
+        }
+        
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Register Link */
+        .register-link {
+            text-align: center;
+            margin-top: 25px;
+            color: #666;
+            font-size: 0.95rem;
+        }
+        
+        .register-link a {
+            color: #87CEEB;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        
+        .register-link a:hover {
+            color: #5F729F;
+            text-decoration: underline;
+        }
+        
+        /* Footer */
+        footer {
+            padding: 20px 0;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.85rem;
+            margin-top: 20px;
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            animation: modalFadeIn 0.3s ease-out;
+        }
+        
+        .modal-icon {
+            font-size: 50px;
+            margin-bottom: 20px;
+        }
+        
+        .success .modal-icon {
+            color: #90EE90;
+        }
+        
+        .error .modal-icon {
+            color: #ff6b6b;
+        }
+        
+        .info .modal-icon {
+            color: #87CEEB;
+        }
+        
+        .modal-title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .modal-message {
+            color: #666;
+            margin-bottom: 25px;
+        }
+        
+        .modal-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e1e1e1;
+            border-radius: 10px;
+            font-size: 16px;
+            margin-bottom: 20px;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .modal-input:focus {
+            outline: none;
+            border-color: #87CEEB;
+            box-shadow: 0 0 0 3px rgba(135, 206, 235, 0.2);
+        }
+        
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+        
+        .modal-btn {
+            padding: 12px 25px;
+            background: linear-gradient(135deg, #87CEEB, #5F729F);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 1;
+        }
+        
+        .modal-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(135, 206, 235, 0.4);
+        }
+        
+        .modal-btn-secondary {
+            background: #f0f0f0;
+            color: #666;
+        }
+        
+        .modal-btn-secondary:hover {
+            background: #e0e0e0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+        
+        .shake {
+            animation: shake 0.5s ease-in-out;
+        }
+        
+        /* Responsive */
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .form-container {
+                padding: 25px 20px;
+            }
+            
+            .form-title {
+                font-size: 1.5rem;
+            }
+            
+            .modal-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="logo-container">
+                <i class="fas fa-shapes logo-icon"></i>
+                <span class="logo-text">KuizTown</span>
+            </div>
+        </header>
+
+        <!-- Form Login -->
+        <main class="form-container">
+            <h1 class="form-title">Masuk ke KuizTown</h1>
+            <p class="form-subtitle">Selamat datang kembali! Ayo lanjutkan petualangan kuis Anda.</p>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" id="email" class="form-input" placeholder="contoh@email.com" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password" class="form-label">Password</label>
+                    <div class="password-container">
+                        <input type="password" id="password" class="form-input" placeholder="Masukkan password" required>
+                        <button type="button" class="toggle-password" id="togglePassword">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="forgot-password">
+                    <a href="#" id="forgotPasswordLink">Lupa Sandi?</a>
+                </div>
+                
+                <button type="submit" class="btn btn-primary" id="submitBtn">
+                    <i class="fas fa-sign-in-alt"></i> Masuk
+                </button>
+            </form>
+            
+            <div class="register-link">
+                Belum punya akun? <a href="daftar.html">Daftar di sini</a>
+            </div>
+        </main>
+        
+        <footer>
+            &copy; 2023 KuizTown. Play. Think. Earn.
+        </footer>
+    </div>
+    
+    <!-- Modal Success -->
+    <div id="successModal" class="modal">
+        <div class="modal-content success">
+            <i class="fas fa-check-circle modal-icon"></i>
+            <h2 class="modal-title">Login Berhasil!</h2>
+            <p class="modal-message">Selamat datang kembali di KuizTown.</p>
+            <button class="modal-btn" id="goToDashboard">Lanjut ke Dashboard</button>
+        </div>
+    </div>
+    
+    <!-- Modal Error -->
+    <div id="errorModal" class="modal">
+        <div class="modal-content error">
+            <i class="fas fa-exclamation-circle modal-icon"></i>
+            <h2 class="modal-title" id="errorTitle">Login Gagal</h2>
+            <p class="modal-message" id="errorMessage">Email atau password salah.</p>
+            <button class="modal-btn" id="closeErrorModal">Tutup</button>
+        </div>
+    </div>
+    
+    <!-- Modal Lupa Password -->
+    <div id="forgotPasswordModal" class="modal">
+        <div class="modal-content info">
+            <i class="fas fa-key modal-icon"></i>
+            <h2 class="modal-title">Lupa Password</h2>
+            <p class="modal-message">Masukkan email Anda untuk mendapatkan link reset password.</p>
+            <input type="email" id="resetEmail" class="modal-input" placeholder="contoh@email.com">
+            <div class="modal-buttons">
+                <button class="modal-btn" id="sendResetEmail">Kirim Link Reset</button>
+                <button class="modal-btn modal-btn-secondary" id="closeForgotModal">Batal</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal Reset Email Sent -->
+    <div id="resetSentModal" class="modal">
+        <div class="modal-content success">
+            <i class="fas fa-paper-plane modal-icon"></i>
+            <h2 class="modal-title">Email Terkirim!</h2>
+            <p class="modal-message">Link reset password telah dikirim ke email Anda. Silakan cek inbox atau spam folder.</p>
+            <button class="modal-btn" id="closeResetSentModal">Tutup</button>
+        </div>
+    </div>
+
+    <script>
+        // Toggle password visibility
+        document.getElementById('togglePassword').addEventListener('click', function() {
+            const passwordInput = document.getElementById('password');
+            const icon = this.querySelector('i');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        });
+        
+        // Open forgot password modal
+        document.getElementById('forgotPasswordLink').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('forgotPasswordModal').style.display = 'flex';
+        });
+        
+        // Form submission
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            
+            // Validation
+            if (!email || !password) {
+                showError('Data Tidak Lengkap', 'Harap isi email dan password.');
+                return;
+            }
+            
+            // Disable submit button
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Memproses...';
+            
+            try {
+                // Login with Firebase Authentication
+                await window.firebaseSignIn(window.firebaseAuth, email, password);
+                
+                // Show success modal
+                showSuccess();
+                
+                // In a real implementation, you would save user session to localStorage
+                // and update last login timestamp in Firestore
+                localStorage.setItem('kuiztown_user', email);
+                
+            } catch (error) {
+                // Handle errors
+                let errorMessage = 'Email atau password salah.';
+                
+                switch (error.code) {
+                    case 'auth/invalid-email':
+                        errorMessage = 'Format email tidak valid.';
+                        break;
+                    case 'auth/user-disabled':
+                        errorMessage = 'Akun ini telah dinonaktifkan. Hubungi customer service.';
+                        break;
+                    case 'auth/user-not-found':
+                        errorMessage = 'Email tidak terdaftar.';
+                        break;
+                    case 'auth/wrong-password':
+                        errorMessage = 'Password salah.';
+                        break;
+                    case 'auth/too-many-requests':
+                        errorMessage = 'Terlalu banyak percobaan login. Coba lagi nanti.';
+                        break;
+                    case 'auth/network-request-failed':
+                        errorMessage = 'Gagal terhubung ke jaringan. Periksa koneksi internet Anda.';
+                        break;
+                }
+                
+                showError('Login Gagal', errorMessage);
+                
+                // Re-enable submit button
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Masuk';
+            }
+        });
+        
+        // Send reset password email
+        document.getElementById('sendResetEmail').addEventListener('click', async function() {
+            const email = document.getElementById('resetEmail').value.trim();
+            
+            if (!email) {
+                document.getElementById('resetEmail').classList.add('shake');
+                setTimeout(() => document.getElementById('resetEmail').classList.remove('shake'), 500);
+                return;
+            }
+            
+            const sendBtn = this;
+            sendBtn.disabled = true;
+            sendBtn.textContent = 'Mengirim...';
+            
+            try {
+                await window.firebaseSendPasswordReset(window.firebaseAuth, email);
+                
+                // Close forgot password modal
+                document.getElementById('forgotPasswordModal').style.display = 'none';
+                
+                // Show success modal
+                document.getElementById('resetSentModal').style.display = 'flex';
+                
+            } catch (error) {
+                let errorMessage = 'Gagal mengirim email reset.';
+                
+                if (error.code === 'auth/user-not-found') {
+                    errorMessage = 'Email tidak terdaftar.';
+                } else if (error.code === 'auth/invalid-email') {
+                    errorMessage = 'Format email tidak valid.';
+                }
+                
+                showError('Gagal Mengirim Email', errorMessage);
+                sendBtn.disabled = false;
+                sendBtn.textContent = 'Kirim Link Reset';
+            }
+        });
+        
+        // Modal functions
+        function showSuccess() {
+            document.getElementById('successModal').style.display = 'flex';
+        }
+        
+        function showError(title, message) {
+            document.getElementById('errorTitle').textContent = title;
+            document.getElementById('errorMessage').textContent = message;
+            document.getElementById('errorModal').style.display = 'flex';
+        }
+        
+        // Close modals
+        document.getElementById('goToDashboard').addEventListener('click', function() {
+            // Redirect to dashboard
+            window.location.href = 'dashboard.html';
+        });
+        
+        document.getElementById('closeErrorModal').addEventListener('click', function() {
+            document.getElementById('errorModal').style.display = 'none';
+        });
+        
+        document.getElementById('closeForgotModal').addEventListener('click', function() {
+            document.getElementById('forgotPasswordModal').style.display = 'none';
+            document.getElementById('resetEmail').value = '';
+            document.getElementById('sendResetEmail').disabled = false;
+            document.getElementById('sendResetEmail').textContent = 'Kirim Link Reset';
+        });
+        
+        document.getElementById('closeResetSentModal').addEventListener('click', function() {
+            document.getElementById('resetSentModal').style.display = 'none';
+        });
+        
+        // Close modals when clicking outside
+        window.addEventListener('click', function(event) {
+            const modals = ['successModal', 'errorModal', 'forgotPasswordModal', 'resetSentModal'];
+            
+            modals.forEach(modalId => {
+                const modal = document.getElementById(modalId);
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                    
+                    // Reset forgot password modal
+                    if (modalId === 'forgotPasswordModal') {
+                        document.getElementById('resetEmail').value = '';
+                        document.getElementById('sendResetEmail').disabled = false;
+                        document.getElementById('sendResetEmail').textContent = 'Kirim Link Reset';
+                    }
+                }
+            });
+        });
+        
+        // Check if user is already logged in
+        document.addEventListener('DOMContentLoaded', function() {
+            if (localStorage.getItem('kuiztown_user')) {
+                window.location.href = 'dashboard.html';
+            }
+        });
+        
+        // Enter key to submit login form
+        document.getElementById('password').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.getElementById('loginForm').dispatchEvent(new Event('submit'));
+            }
+        });
+    </script>
+</body>
+</html>

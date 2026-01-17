@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Referral - KuizTown</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Semua CSS tetap sama seperti sebelumnya... */
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #5F729F;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255, 192, 203, 0.08) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(255, 192, 203, 0.08) 0%, transparent 20%),
+                radial-gradient(circle at 50% 50%, rgba(255, 192, 203, 0.05) 0%, transparent 30%);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* Geometric Pattern Background */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(30deg, rgba(255, 192, 203, 0.05) 12%, transparent 12.5%, transparent 87%, rgba(255, 192, 203, 0.05) 87.5%, rgba(255, 192, 203, 0.05)),
+                linear-gradient(150deg, rgba(255, 192, 203, 0.05) 12%, transparent 12.5%, transparent 87%, rgba(255, 192, 203, 0.05) 87.5%, rgba(255, 192, 203, 0.05)),
+                linear-gradient(30deg, rgba(255, 192, 203, 0.05) 12%, transparent 12.5%, transparent 87%, rgba(255, 192, 203, 0.05) 87.5%, rgba(255, 192, 203, 0.05)),
+                linear-gradient(150deg, rgba(255, 192, 203, 0.05) 12%, transparent 12.5%, transparent 87%, rgba(255, 192, 203, 0.05) 87.5%, rgba(255, 192, 203, 0.05)),
+                linear-gradient(60deg, rgba(255, 192, 203, 0.08) 25%, transparent 25.5%, transparent 75%, rgba(255, 192, 203, 0.08) 75%, rgba(255, 192, 203, 0.08)),
+                linear-gradient(60deg, rgba(255, 192, 203, 0.08) 25%, transparent 25.5%, transparent 75%, rgba(255, 192, 203, 0.08) 75%, rgba(255, 192, 203, 0.08));
+            background-size: 80px 140px;
+            background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
+            opacity: 0.3;
+            z-index: -1;
+        }
+        
+        /* Container */
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 0 15px 80px;
+        }
+        
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            margin-bottom: 10px;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo-icon {
+            font-size: 28px;
+            background: linear-gradient(135deg, #9b59b6, #3498db);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .logo-text {
+            font-size: 20px;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .back-btn {
+            color: white;
+            font-size: 22px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .back-btn:hover {
+            transform: translateX(-3px);
+        }
+        
+        /* Loading Skeleton */
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+            border-radius: 8px;
+        }
+        
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        
+        .skeleton-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .skeleton-title {
+            width: 120px;
+            height: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .skeleton-code {
+            width: 150px;
+            height: 30px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        
+        .skeleton-link {
+            width: 100%;
+            height: 20px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        
+        .skeleton-button {
+            width: 100%;
+            height: 40px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+        
+        .skeleton-stat {
+            width: 60px;
+            height: 30px;
+            margin: 10px auto;
+            border-radius: 5px;
+        }
+        
+        .skeleton-friend {
+            width: 100%;
+            height: 60px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        
+        /* Card Styles */
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .card-title {
+            font-size: 1.1rem;
+            color: #444;
+            margin-bottom: 15px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .card-title i {
+            color: #87CEEB;
+        }
+        
+        /* Welcome Section */
+        .welcome-card {
+            background: linear-gradient(135deg, rgba(150, 200, 230, 0.8), rgba(180, 220, 240, 0.75));
+            color: white;
+            text-align: center;
+        }
+        
+        .welcome-card .card-title {
+            color: black+gray ;
+            justify-content: center;
+        }
+        
+        .welcome-text {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #5F729F+blue;
+        }
+        
+        .welcome-subtext {
+            font-size: 0.95rem;
+            opacity: 0.9;
+            line-height: 1.5;
+            color: gray;
+        }
+        
+        /* Referral Code Card */
+        .referral-card {
+            border-left: 5px solid #FFD700;
+        }
+        
+        .referral-code-container {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 2px dashed #87CEEB;
+        }
+        
+        .referral-label {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .referral-value {
+            font-weight: 700;
+            color: #333;
+            word-break: break-all;
+            font-size: 1.3rem;
+            letter-spacing: 1px;
+        }
+        
+        .referral-link-container {
+            background: rgba(135, 206, 235, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            word-break: break-all;
+        }
+        
+        .referral-link {
+            color: #5F729F;
+            font-weight: 500;
+            text-decoration: none;
+        }
+        
+        .referral-link:hover {
+            text-decoration: underline;
+        }
+        
+        .referral-actions {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        /* Button Styles */
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #87CEEB, #5F729F);
+            color: white;
+            flex: 1;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(135, 206, 235, 0.3);
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.9);
+            color: #5F729F;
+            border: 1px solid rgba(135, 206, 235, 0.3);
+        }
+        
+        .btn-secondary:hover {
+            background: white;
+            transform: translateY(-2px);
+        }
+        
+        .btn-social {
+            flex: 1;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .btn-whatsapp {
+            background: #25D366;
+            color: white;
+        }
+        
+        .btn-telegram {
+            background: #0088cc;
+            color: white;
+        }
+        
+        .btn-facebook {
+            background: #1877F2;
+            color: white;
+        }
+        
+        .btn-instagram {
+            background: linear-gradient(45deg, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D);
+            color: white;
+        }
+        
+        .btn-social:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+        
+        /* Stats Card */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .stat-item {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            border: 1px solid rgba(135, 206, 235, 0.3);
+        }
+        
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #5F729F;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 0.8rem;
+            color: #666;
+        }
+        
+        /* Friends List */
+        .friends-list {
+            max-height: 200px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+        
+        .friend-item {
+            padding: 12px 15px;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s ease;
+        }
+        
+        .friend-item:hover {
+            background: rgba(135, 206, 235, 0.05);
+        }
+        
+        .friend-item:last-child {
+            border-bottom: none;
+        }
+        
+        .friend-info {
+            flex: 1;
+        }
+        
+        .friend-name {
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 3px;
+        }
+        
+        .friend-time {
+            font-size: 0.85rem;
+            color: #666;
+        }
+        
+        .friend-reward {
+            font-weight: 600;
+            color: #90EE90;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 30px 20px;
+        }
+        
+        .empty-icon {
+            font-size: 50px;
+            color: rgba(135, 206, 235, 0.5);
+            margin-bottom: 15px;
+        }
+        
+        .empty-title {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        .empty-desc {
+            color: #999;
+            font-size: 0.9rem;
+            max-width: 250px;
+            margin: 0 auto;
+            line-height: 1.4;
+        }
+        
+        /* Rules Card */
+        .rules-list {
+            padding-left: 20px;
+        }
+        
+        .rules-list li {
+            margin-bottom: 10px;
+            color: #666;
+            line-height: 1.5;
+        }
+        
+        .highlight {
+            color: #5F729F;
+            font-weight: 600;
+        }
+        
+        /* Separator */
+        .separator {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            margin: 20px 0;
+        }
+        
+        /* Footer Navigation */
+        .nav-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            padding: 12px 0;
+            display: flex;
+            justify-content: space-around;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+            z-index: 1000;
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #666;
+            transition: all 0.3s ease;
+            flex: 1;
+            padding: 5px 0;
+        }
+        
+        .nav-item.active {
+            color: #87CEEB;
+        }
+        
+        .nav-icon {
+            font-size: 20px;
+            margin-bottom: 3px;
+        }
+        
+        .nav-text {
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            padding: 25px;
+            border-radius: 15px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            animation: modalFadeIn 0.3s ease-out;
+        }
+        
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+        
+        .modal-icon {
+            font-size: 50px;
+            margin-bottom: 20px;
+        }
+        
+        .success .modal-icon {
+            color: #90EE90;
+        }
+        
+        .error .modal-icon {
+            color: #ff6b6b;
+        }
+        
+        .modal-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .modal-message {
+            color: #666;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+        
+        .modal-btn {
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #87CEEB, #5F729F);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .modal-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(135, 206, 235, 0.4);
+        }
+        
+        /* Responsive */
+        @media (min-width: 768px) {
+            .container {
+                max-width: 600px;
+            }
+            
+            .referral-actions {
+                flex-direction: row;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            
+            .referral-actions {
+                flex-direction: column;
+            }
+            
+           .fas.fa-gift color{
+           color : black;
+           }
+            .btn-social {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Skeleton Loading -->
+        <div id="skeletonLoading">
+            <div class="skeleton-card">
+                <div class="skeleton skeleton-title"></div>
+                <div class="skeleton skeleton-code"></div>
+                <div class="skeleton skeleton-link"></div>
+                <div class="skeleton skeleton-button"></div>
+            </div>
+            
+            <div class="separator"></div>
+            
+            <div class="skeleton-card">
+                <div class="skeleton skeleton-title"></div>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="skeleton skeleton-stat"></div>
+                        <div class="skeleton" style="width: 40px; height: 15px; margin: 0 auto;"></div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="skeleton skeleton-stat"></div>
+                        <div class="skeleton" style="width: 40px; height: 15px; margin: 0 auto;"></div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="skeleton skeleton-stat"></div>
+                        <div class="skeleton" style="width: 40px; height: 15px; margin: 0 auto;"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="separator"></div>
+            
+            <div class="skeleton-card">
+                <div class="skeleton skeleton-title"></div>
+                <div class="skeleton skeleton-friend"></div>
+                <div class="skeleton skeleton-friend"></div>
+                <div class="skeleton skeleton-friend"></div>
+            </div>
+        </div>
+        
+        <!-- Content Area (Initially Hidden) -->
+        <div id="contentArea" style="display: none;">
+            <!-- Header -->
+            <header>
+                <div class="logo-container">
+                    <i class="fas fa-shapes logo-icon"></i>
+                    <span class="logo-text">KuizTown</span>
+                </div>
+                <div class="back-btn" id="backButton">
+                    <i class="fas fa-arrow-left"></i>
+                </div>
+            </header>
+            
+            <!-- Welcome Card -->
+            <div class="card welcome-card">
+                <h2 class="card-title">
+                    <i class="fas fa-gift color"></i> Program Referral
+                </h2>
+                <div class="welcome-text">
+                    Dapatkan GEO & LIFE Tambahan!
+                </div>
+                <div class="welcome-subtext">
+                    Undang teman Anda untuk bergabung dengan KuizTown dan dapatkan reward setiap kali mereka berhasil mendaftar!
+                </div>
+            </div>
+            
+            <div class="separator"></div>
+            
+            <!-- Referral Code & Link Card -->
+            <div class="card referral-card">
+                <h2 class="card-title">
+                    <i class="fas fa-user-friends"></i> Kode Referral Anda
+                </h2>
+                
+                <div class="referral-code-container">
+                    <div class="referral-label">KODE REFERRAL:</div>
+                    <div class="referral-value" id="referralCode">Loading...</div>
+                </div>
+                
+                <div class="referral-link-container">
+                    <div class="referral-label">LINK REFERRAL:</div>
+                    <a href="#" class="referral-link" id="referralLink">Loading...</a>
+                </div>
+                
+                <div class="referral-actions">
+                    <button class="btn btn-primary" id="copyLinkBtn">
+                        <i class="fas fa-copy"></i> SALIN LINK
+                    </button>
+                    <button class="btn btn-secondary" id="shareOptionsBtn">
+                        <i class="fas fa-share-alt"></i> BAGIKAN
+                    </button>
+                </div>
+            </div>
+            
+            <div class="separator"></div>
+            
+            <!-- Statistics Card -->
+            <div class="card">
+                <h2 class="card-title">
+                    <i class="fas fa-chart-line"></i> Statistik Referral
+                </h2>
+                
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value" id="totalReferrals">0</div>
+                        <div class="stat-label">Teman Diundang</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="totalGeoEarned">0,0</div>
+                        <div class="stat-label">GEO Diperoleh</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="totalLifeEarned">0</div>
+                        <div class="stat-label">LIFE Diperoleh</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="separator"></div>
+            
+            <!-- Friends List Card -->
+            <div class="card">
+                <h2 class="card-title">
+                    <i class="fas fa-users"></i> Teman yang Diundang
+                </h2>
+                
+                <div class="friends-list" id="friendsList">
+                    <!-- Friends will be dynamically added here -->
+                </div>
+                
+                <!-- Empty State -->
+                <div id="noFriends" class="empty-state">
+                    <div class="empty-icon">
+                        <i class="fas fa-user-friends"></i>
+                    </div>
+                    <h3 class="empty-title">Belum Ada Teman</h3>
+                    <p class="empty-desc">
+                        Anda belum mengundang teman. Bagikan link referral Anda untuk mulai mendapatkan reward!
+                    </p>
+                </div>
+            </div>
+            
+            <div class="separator"></div>
+            
+            <!-- Share Options Card -->
+            <div class="card">
+                <h2 class="card-title">
+                    <i class="fas fa-share-square"></i> Bagikan Ke:
+                </h2>
+                
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
+                    <button class="btn btn-social btn-whatsapp" id="whatsappBtn">
+                        <i class="fab fa-whatsapp"></i> WhatsApp
+                    </button>
+                    <button class="btn btn-social btn-telegram" id="telegramBtn">
+                        <i class="fab fa-telegram"></i> Telegram
+                    </button>
+                    <button class="btn btn-social btn-facebook" id="facebookBtn">
+                        <i class="fab fa-facebook"></i> Facebook
+                    </button>
+                    <button class="btn btn-social btn-instagram" id="instagramBtn">
+                        <i class="fab fa-instagram"></i> Instagram
+                    </button>
+                </div>
+            </div>
+            
+            <div class="separator"></div>
+            
+            <!-- Rules Card -->
+            <div class="card">
+                <h2 class="card-title">
+                    <i class="fas fa-info-circle"></i> Aturan Program Referral
+                </h2>
+                
+                <ul class="rules-list">
+                    <li>Setiap <span class="highlight">1 teman yang berhasil diundang</span> akan memberikan reward kepada Anda berupa <span class="highlight">0,1 GEO dan 1 LIFE</span></li>
+                    <li>Teman harus mendaftar menggunakan <span class="highlight">kode/link referral Anda</span> untuk dihitung sebagai referral sukses</li>
+                    <li>Reward akan langsung dikreditkan ke akun Anda setelah teman berhasil mendaftar</li>
+                    <li>Referral yang sudah digunakan untuk memenuhi syarat withdraw <span class="highlight">tidak dapat digunakan kembali</span></li>
+                    <li>Untuk melakukan withdraw, Anda harus memiliki minimal <span class="highlight">3 referral baru</span> yang belum pernah digunakan</li>
+                    <li>Setiap akun hanya boleh menggunakan satu kode referral saat pendaftaran</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer Navigation -->
+    <nav class="nav-footer">
+        <a href="dashboard.html" class="nav-item">
+            <i class="fas fa-home nav-icon"></i>
+            <span class="nav-text">Home</span>
+        </a>
+        <a href="quiz.html" class="nav-item">
+            <i class="fas fa-brain nav-icon"></i>
+            <span class="nav-text">Quiz</span>
+        </a>
+        <a href="tugas.html" class="nav-item">
+            <i class="fas fa-tasks nav-icon"></i>
+            <span class="nav-text">Tugas</span>
+        </a>
+        <a href="referral.html" class="nav-item active">
+            <i class="fas fa-user-friends nav-icon"></i>
+            <span class="nav-text">Referral</span>
+        </a>
+        <a href="profil.html" class="nav-item">
+            <i class="fas fa-user nav-icon"></i>
+            <span class="nav-text">Profil</span>
+        </a>
+    </nav>
+    
+    <!-- Success Modal -->
+    <div id="successModal" class="modal">
+        <div class="modal-content success">
+            <i class="fas fa-check-circle modal-icon"></i>
+            <h2 class="modal-title">Berhasil!</h2>
+            <p class="modal-message" id="successMessage">Link referral berhasil disalin ke clipboard.</p>
+            <button class="modal-btn" id="closeSuccessModal">Tutup</button>
+        </div>
+    </div>
+    
+    <!-- Error Modal -->
+    <div id="errorModal" class="modal">
+        <div class="modal-content error">
+            <i class="fas fa-exclamation-circle modal-icon"></i>
+            <h2 class="modal-title">Terjadi Kesalahan</h2>
+            <p class="modal-message" id="errorMessage">Gagal memuat data. Silakan coba lagi.</p>
+            <button class="modal-btn" id="closeErrorModal">Tutup</button>
+        </div>
+    </div>
+
+    <!-- Firebase Script -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
+        import { getFirestore, doc, getDoc, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
+
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyB9DCc6rCmeXl0O3CCLYe6zUmfByfRz428",
+            authDomain: "kuiztown.firebaseapp.com",
+            projectId: "kuiztown",
+            storageBucket: "kuiztown.firebasestorage.app",
+            messagingSenderId: "334081803913",
+            appId: "1:334081803913:web:84899b42961e12f538a858"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // Data referral user
+        let userData = null;
+        let referralStats = {
+            totalReferrals: 0,
+            totalGeoEarned: 0,
+            totalLifeEarned: 0,
+            friends: []
+        };
+        let currentReferralLink = "";
+
+        // Inisialisasi aplikasi
+        document.addEventListener('DOMContentLoaded', function() {
+            // Setup event listeners
+            setupEventListeners();
+            
+            // Setup auth listener
+            setupAuthListener();
+        });
+
+        // Setup semua event listeners
+        function setupEventListeners() {
+            // Back button
+            document.getElementById('backButton').addEventListener('click', () => {
+                window.location.href = 'dashboard.html';
+            });
+            
+            // Copy link button
+            document.getElementById('copyLinkBtn').addEventListener('click', copyReferralLink);
+            
+            // Share options button
+            document.getElementById('shareOptionsBtn').addEventListener('click', () => {
+                // Tidak ada modal share, langsung ke button
+            });
+            
+            // Social media buttons
+            document.getElementById('whatsappBtn').addEventListener('click', () => shareToWhatsApp());
+            document.getElementById('telegramBtn').addEventListener('click', () => shareToTelegram());
+            document.getElementById('facebookBtn').addEventListener('click', () => shareToFacebook());
+            document.getElementById('instagramBtn').addEventListener('click', () => shareToInstagram());
+            
+            // Close modals
+            document.getElementById('closeSuccessModal').addEventListener('click', () => {
+                document.getElementById('successModal').style.display = 'none';
+            });
+            
+            document.getElementById('closeErrorModal').addEventListener('click', () => {
+                document.getElementById('errorModal').style.display = 'none';
+            });
+            
+            // Close modal when clicking outside
+            window.addEventListener('click', function(event) {
+                const modals = ['successModal', 'errorModal'];
+                
+                modals.forEach(modalId => {
+                    const modal = document.getElementById(modalId);
+                    if (modal && event.target === modal) {
+                        modal.style.display = 'none';
+                    }
+                });
+            });
+        }
+
+        // Setup authentication listener
+        function setupAuthListener() {
+            onAuthStateChanged(auth, async (user) => {
+                if (user) {
+                    // User is logged in, load data
+                    await loadUserData(user.uid);
+                    await loadReferralData(user.uid);
+                } else {
+                    // User is not logged in, redirect to login
+                    window.location.href = 'login.html';
+                }
+            });
+        }
+
+        // Load user data dari Firestore
+        async function loadUserData(userId) {
+            try {
+                const userDoc = await getDoc(doc(db, "users", userId));
+                
+                if (userDoc.exists()) {
+                    userData = userDoc.data();
+                    
+                    // Update referral code
+                    document.getElementById('referralCode').textContent = userData.referralCode || "KODE123ABC";
+                    
+                    // Update referral link
+                    updateReferralLink(userData.referralCode);
+                    
+                } else {
+                    console.error("User data not found");
+                    showError("Data user tidak ditemukan");
+                }
+            } catch (error) {
+                console.error("Error loading user data:", error);
+                showError("Gagal memuat data user");
+            }
+        }
+
+        // Load referral data dari Firestore
+        async function loadReferralData(userId) {
+            try {
+                // Reset stats
+                referralStats = {
+                    totalReferrals: 0,
+                    totalGeoEarned: 0,
+                    totalLifeEarned: 0,
+                    friends: []
+                };
+
+                // Query untuk mendapatkan semua user yang diundang oleh user ini
+                const referralsQuery = query(
+                    collection(db, "users"),
+                    where("referralFrom", "==", userId)
+                );
+
+                const querySnapshot = await getDocs(referralsQuery);
+                
+                referralStats.totalReferrals = querySnapshot.size;
+                
+                // Hitung total reward sesuai spesifikasi
+                // Setiap referral berhasil = 0.1 GEO + 1 LIFE
+                referralStats.totalGeoEarned = referralStats.totalReferrals * 0.1;
+                referralStats.totalLifeEarned = referralStats.totalReferrals * 1;
+
+                // Process each referred user
+                const friendsPromises = querySnapshot.docs.map(async (docSnap) => {
+                    const friendData = docSnap.data();
+                    
+                    // Format waktu pendaftaran (HH:MM)
+                    let timeFormatted = "Waktu tidak tersedia";
+                    if (friendData.createdAt) {
+                        const date = friendData.createdAt.toDate();
+                        timeFormatted = date.toLocaleTimeString('id-ID', {
+                            hour: '2-digit',
+                            minute: '2-digit',
+                            hour12: false
+                        });
+                    }
+                    
+                    return {
+                        username: friendData.username || "Unknown",
+                        time: timeFormatted,
+                        geoEarned: 0.1,
+                        lifeEarned: 1,
+                        createdAt: friendData.createdAt || new Date()
+                    };
+                });
+
+                // Wait for all promises
+                referralStats.friends = await Promise.all(friendsPromises);
+                
+                // Sort friends by creation date (newest first)
+                referralStats.friends.sort((a, b) => {
+                    const dateA = a.createdAt?.toDate ? a.createdAt.toDate() : new Date(a.createdAt);
+                    const dateB = b.createdAt?.toDate ? b.createdAt.toDate() : new Date(b.createdAt);
+                    return dateB - dateA;
+                });
+
+                // Update UI dengan data REAL
+                updateReferralUI();
+
+                // Hide skeleton, show content
+                document.getElementById('skeletonLoading').style.display = 'none';
+                document.getElementById('contentArea').style.display = 'block';
+
+            } catch (error) {
+                console.error("Error loading referral data:", error);
+                showError("Gagal memuat data referral");
+            }
+        }
+
+        // Update referral link dengan domain yang benar
+        function updateReferralLink(referralCode) {
+            const domain = window.location.hostname || 'kuiztown.com';
+            currentReferralLink = `https://${domain}/daftar.html?ref=${referralCode}`;
+            
+            const linkElement = document.getElementById('referralLink');
+            linkElement.textContent = currentReferralLink;
+            linkElement.href = currentReferralLink;
+        }
+
+        // Update UI dengan data REAL
+        function updateReferralUI() {
+            // Update statistics
+            document.getElementById('totalReferrals').textContent = referralStats.totalReferrals;
+            document.getElementById('totalGeoEarned').textContent = 
+                referralStats.totalGeoEarned.toLocaleString('id-ID', {
+                    minimumFractionDigits: 1,
+                    maximumFractionDigits: 1
+                });
+            document.getElementById('totalLifeEarned').textContent = referralStats.totalLifeEarned;
+
+            // Update friends list
+            updateFriendsList();
+        }
+
+        // Update friends list dengan data REAL
+        function updateFriendsList() {
+            const friendsList = document.getElementById('friendsList');
+            const noFriends = document.getElementById('noFriends');
+
+            if (referralStats.friends.length === 0) {
+                friendsList.style.display = 'none';
+                noFriends.style.display = 'block';
+                return;
+            }
+
+            noFriends.style.display = 'none';
+            friendsList.style.display = 'block';
+            friendsList.innerHTML = '';
+
+            // Tampilkan maksimal 10 teman terbaru
+            const recentFriends = referralStats.friends.slice(0, 10);
+
+            recentFriends.forEach(friend => {
+                const friendItem = document.createElement('div');
+                friendItem.className = 'friend-item';
+                friendItem.innerHTML = `
+                    <div class="friend-info">
+                        <div class="friend-name">${friend.username}</div>
+                        <div class="friend-time">${friend.time}</div>
+                    </div>
+                    <div class="friend-reward">
+                        <i class="fas fa-seedling"></i> +${friend.geoEarned.toLocaleString('id-ID', {
+                            minimumFractionDigits: 1,
+                            maximumFractionDigits: 1
+                        })} GEO
+                        <span style="margin-left: 10px;"><i class="fas fa-heart"></i> +${friend.lifeEarned} LIFE</span>
+                    </div>
+                `;
+                friendsList.appendChild(friendItem);
+            });
+
+            // Jika ada lebih dari 10 teman, tambahkan info
+            if (referralStats.friends.length > 10) {
+                const moreInfo = document.createElement('div');
+                moreInfo.style.textAlign = 'center';
+                moreInfo.style.padding = '10px';
+                moreInfo.style.color = '#666';
+                moreInfo.style.fontSize = '0.9rem';
+                moreInfo.innerHTML = `+${referralStats.friends.length - 10} teman lainnya`;
+                friendsList.appendChild(moreInfo);
+            }
+        }
+
+        // Copy referral link to clipboard
+        function copyReferralLink() {
+            if (!currentReferralLink) {
+                showError("Link referral tidak tersedia");
+                return;
+            }
+            
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(currentReferralLink).then(() => {
+                    showSuccess('Link referral berhasil disalin ke clipboard!');
+                }).catch(err => {
+                    console.error('Failed to copy: ', err);
+                    fallbackCopyText(currentReferralLink);
+                });
+            } else {
+                fallbackCopyText(currentReferralLink);
+            }
+        }
+document.getElementById('shareOptionsBtn').addEventListener('click', () => {
+    document.getElementById('whatsappBtn').scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+    });
+});
+        // Fallback copy method untuk browser lama
+        function fallbackCopyText(text) {
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            textArea.style.position = 'fixed';
+            textArea.style.left = '-999999px';
+            textArea.style.top = '-999999px';
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            
+            try {
+                document.execCommand('copy');
+                showSuccess('Link referral berhasil disalin ke clipboard!');
+            } catch (err) {
+                console.error('Fallback copy failed: ', err);
+                showError('Gagal menyalin link. Silakan salin manual.');
+            }
+            
+            document.body.removeChild(textArea);
+        }
+
+        // Share functions untuk berbagai platform
+        function shareToWhatsApp() {
+            if (!currentReferralLink) {
+                showError("Link referral tidak tersedia");
+                return;
+            }
+            
+            const text = `Yuk join KuizTown! Main kuis, dapatkan uang. Daftar dengan link ini: ${currentReferralLink}`;
+            window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+        }
+        
+        function shareToTelegram() {
+            if (!currentReferralLink) {
+                showError("Link referral tidak tersedia");
+                return;
+            }
+            
+            const text = `Yuk join KuizTown! Main kuis, dapatkan uang. Daftar dengan link ini: ${currentReferralLink}`;
+            window.open(`https://t.me/share/url?url=${encodeURIComponent(currentReferralLink)}&text=${encodeURIComponent(text)}`, '_blank');
+        }
+        
+        function shareToFacebook() {
+            if (!currentReferralLink) {
+                showError("Link referral tidak tersedia");
+                return;
+            }
+            
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentReferralLink)}`, '_blank', 'width=600,height=400');
+        }
+        
+        function shareToInstagram() {
+            if (!currentReferralLink) {
+                showError("Link referral tidak tersedia");
+                return;
+            }
+            
+            // Instagram tidak support direct sharing, jadi beri instruksi
+            const message = `Untuk membagikan ke Instagram:\n\n1. Buka Instagram\n2. Buat post/story baru\n3. Tambahkan teks:\n\nYuk join KuizTown! Daftar di: ${currentReferralLink}\n\n#KuizTown #EarnMoney #QuizGame`;
+            alert(message);
+        }
+
+        // Show success modal
+        function showSuccess(message) {
+            const successModal = document.getElementById('successModal');
+            if (successModal) {
+                document.getElementById('successMessage').textContent = message;
+                successModal.style.display = 'flex';
+            }
+        }
+
+        // Show error modal
+        function showError(message) {
+            const errorModal = document.getElementById('errorModal');
+            if (errorModal) {
+                document.getElementById('errorMessage').textContent = message;
+                errorModal.style.display = 'flex';
+            }
+        }
+    </script>
+</body>
+</html>

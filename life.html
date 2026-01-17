@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LIFE - KuizTown</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Reset & Base Styles - SAMA PERSIS DENGAN DASHBOARD */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #5F729F;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255, 192, 203, 0.08) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(255, 192, 203, 0.08) 0%, transparent 20%),
+                radial-gradient(circle at 50% 50%, rgba(255, 192, 203, 0.05) 0%, transparent 30%);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* Geometric Pattern Background - SAMA */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(30deg, rgba(255, 192, 203, 0.05) 12%, transparent 12.5%, transparent 87%, rgba(255, 192, 203, 0.05) 87.5%, rgba(255, 192, 203, 0.05)),
+                linear-gradient(150deg, rgba(255, 192, 203, 0.05) 12%, transparent 12.5%, transparent 87%, rgba(255, 192, 203, 0.05) 87.5%, rgba(255, 192, 203, 0.05)),
+                linear-gradient(30deg, rgba(255, 192, 203, 0.05) 12%, transparent 12.5%, transparent 87%, rgba(255, 192, 203, 0.05) 87.5%, rgba(255, 192, 203, 0.05)),
+                linear-gradient(150deg, rgba(255, 192, 203, 0.05) 12%, transparent 12.5%, transparent 87%, rgba(255, 192, 203, 0.05) 87.5%, rgba(255, 192, 203, 0.05)),
+                linear-gradient(60deg, rgba(255, 192, 203, 0.08) 25%, transparent 25.5%, transparent 75%, rgba(255, 192, 203, 0.08) 75%, rgba(255, 192, 203, 0.08)),
+                linear-gradient(60deg, rgba(255, 192, 203, 0.08) 25%, transparent 25.5%, transparent 75%, rgba(255, 192, 203, 0.08) 75%, rgba(255, 192, 203, 0.08));
+            background-size: 80px 140px;
+            background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
+            opacity: 0.3;
+            z-index: -1;
+        }
+        
+        /* Container */
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 0 15px 30px;
+        }
+        
+        /* Header */
+        .header {
+            display: flex;
+            align-items: center;
+            padding: 20px 0 15px;
+            position: relative;
+        }
+        
+        .back-btn {
+            color: white;
+            font-size: 22px;
+            text-decoration: none;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo-icon {
+            font-size: 24px;
+            background: linear-gradient(135deg, #9b59b6, #3498db);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .logo-text {
+            font-size: 18px;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Card Styles - SAMA DENGAN DASHBOARD */
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .card-title {
+            font-size: 1.1rem;
+            color: #444;
+            margin-bottom: 15px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .card-title i {
+            color: #87CEEB;
+        }
+        
+        /* LIFE Balance Card - DESIGN DARI DASHBOARD */
+        .life-balance-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+        }
+        
+        .life-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .life-amount {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #444;
+        }
+        
+        .life-max {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .life-progress {
+            height: 10px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+        
+        .life-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #87CEEB, #5F729F);
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+        
+        .claim-life-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #87CEEB, #5F729F);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .claim-life-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(135, 206, 235, 0.3);
+        }
+        
+        .claim-life-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        /* TIMER STYLES - SAMA DENGAN DASHBOARD */
+        .life-timer-container {
+            margin-top: 10px;
+            padding: 10px;
+            background: rgba(135, 206, 235, 0.1);
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .life-status {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .life-countdown {
+            font-family: monospace;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #2563eb;
+            letter-spacing: 2px;
+            padding: 5px 10px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 5px;
+            display: inline-block;
+        }
+        
+        /* Info Sections */
+        .info-section {
+            margin-top: 25px;
+        }
+        
+        .info-section h3 {
+            font-size: 1.1rem;
+            color: #444;
+            margin-bottom: 15px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* Info Content - CARD STYLE */
+        .info-content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .info-list {
+            list-style-type: none;
+        }
+        
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .info-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .info-icon {
+            color: #87CEEB;
+            font-size: 1.2rem;
+            margin-right: 12px;
+            margin-top: 2px;
+            min-width: 24px;
+        }
+        
+        .info-text {
+            flex: 1;
+        }
+        
+        .info-text h4 {
+            font-size: 1rem;
+            color: #2c3e50;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        
+        .info-text p {
+            font-size: 0.9rem;
+            color: #666;
+            line-height: 1.5;
+        }
+        
+        /* How It Works */
+        .how-it-works {
+            margin-top: 25px;
+        }
+        
+        .steps-container {
+            display: grid;
+            gap: 15px;
+        }
+        
+        .step {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            padding: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+            position: relative;
+            padding-left: 50px;
+        }
+        
+        .step-number {
+            position: absolute;
+            left: 15px;
+            top: 15px;
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, #87CEEB, #5F729F);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+        
+        .step-title {
+            font-size: 1rem;
+            color: #2c3e50;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        
+        .step-desc {
+            font-size: 0.9rem;
+            color: #666;
+            line-height: 1.5;
+        }
+        
+        /* Contact Section - CARD STYLE */
+        .contact-section {
+            margin-top: 30px;
+            text-align: center;
+        }
+        
+        .contact-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 25px 20px;
+            margin-top: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .contact-icon {
+            font-size: 2.5rem;
+            color: #FFD700;
+            margin-bottom: 15px;
+        }
+        
+        .contact-title {
+            font-size: 1.2rem;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .contact-message {
+            font-size: 0.95rem;
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        
+        .whatsapp-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 25px;
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
+        }
+        
+        .whatsapp-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4);
+        }
+        
+        /* Rules Section - CARD STYLE */
+        .rules-section {
+            margin-top: 30px;
+        }
+        
+        .rules-list {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .rule-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .rule-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .rule-bullet {
+            color: #FFC0CB;
+            font-size: 1rem;
+            margin-right: 10px;
+            margin-top: 2px;
+            min-width: 20px;
+        }
+        
+        .rule-text {
+            font-size: 0.9rem;
+            color: #666;
+            line-height: 1.5;
+        }
+        
+        .rule-text strong {
+            color: #2c3e50;
+        }
+        
+        /* Modal Styles - SAMA DENGAN DASHBOARD */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            padding: 25px;
+            border-radius: 15px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            animation: modalFadeIn 0.3s ease-out;
+        }
+        
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+        
+        .modal-icon {
+            font-size: 50px;
+            margin-bottom: 20px;
+        }
+        
+        .success .modal-icon {
+            color: #90EE90;
+        }
+        
+        .warning .modal-icon {
+            color: #f39c12;
+        }
+        
+        .modal-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .modal-message {
+            color: #666;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+        
+        .modal-btn {
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #87CEEB, #5F729F);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .modal-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(135, 206, 235, 0.4);
+        }
+        
+        /* Separator - SAMA DENGAN DASHBOARD */
+        .separator {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            margin: 20px 0;
+        }
+        
+        /* Skeleton Loading - SAMA DENGAN DASHBOARD */
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+            border-radius: 8px;
+        }
+        
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        
+        .skeleton-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .skeleton-title {
+            width: 120px;
+            height: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .skeleton-large {
+            width: 150px;
+            height: 40px;
+            margin: 10px auto;
+        }
+        
+        .skeleton-life {
+            height: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+        }
+        
+        .skeleton-button {
+            height: 45px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .skeleton-timer {
+            height: 25px;
+            width: 120px;
+            margin: 10px auto;
+            border-radius: 5px;
+        }
+        
+        .skeleton-info {
+            height: 80px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        
+        /* Responsive */
+        @media (min-width: 768px) {
+            .container {
+                max-width: 600px;
+            }
+            
+            .steps-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .life-amount {
+                font-size: 1.5rem;
+            }
+            
+            .life-countdown {
+                font-size: 1rem;
+                letter-spacing: 1px;
+            }
+            
+            .claim-life-btn {
+                padding: 12px;
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header dengan tombol kembali -->
+        <div class="header">
+            <a href="dashboard.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+            <div class="logo-container">
+                <i class="fas fa-shapes logo-icon"></i>
+                <span class="logo-text">LIFE</span>
+            </div>
+        </div>
+        
+        <!-- Skeleton Loading -->
+        <div id="skeletonLoading">
+            <!-- LIFE Balance Skeleton -->
+            <div class="skeleton-card">
+                <div class="skeleton skeleton-title"></div>
+                <div class="life-info">
+                    <div class="skeleton" style="width: 40px; height: 30px;"></div>
+                    <div class="skeleton" style="width: 30px; height: 20px;"></div>
+                </div>
+                <div class="skeleton skeleton-life"></div>
+                <div class="skeleton skeleton-button"></div>
+                <div class="skeleton skeleton-timer"></div>
+            </div>
+            
+            <!-- Info Section Skeleton -->
+            <div class="skeleton-card">
+                <div class="skeleton skeleton-title"></div>
+                <div class="skeleton skeleton-info"></div>
+                <div class="skeleton skeleton-info"></div>
+            </div>
+            
+            <!-- Contact Section Skeleton -->
+            <div class="skeleton-card">
+                <div class="skeleton skeleton-title"></div>
+                <div class="skeleton skeleton-large"></div>
+                <div class="skeleton skeleton-button"></div>
+            </div>
+        </div>
+        
+        <!-- Content -->
+        <div id="content" style="display: none;">
+            <!-- LIFE Balance Card -->
+            <div class="card life-balance-card">
+                <h2 class="card-title">
+                    <i class="fas fa-heart"></i> LIFE
+                </h2>
+                <div class="life-info">
+                    <div class="life-amount" id="lifeBalance">0</div>
+                    <div class="life-max">MAX 10</div>
+                </div>
+                <div class="life-progress">
+                    <div class="life-progress-fill" id="lifeProgress" style="width: 0%"></div>
+                </div>
+                <button class="claim-life-btn" id="claimLifeBtn" disabled>
+                    <i class="fas fa-gift"></i> KLAIM LIFE
+                </button>
+                <!-- TIMER CONTAINER -->
+                <div class="life-timer-container" id="lifeTimerContainer">
+                    <div class="life-status" id="lifeStatus">Loading...</div>
+                    <div class="life-countdown" id="lifeCountdown">00 - 00 - 00</div>
+                </div>
+            </div>
+            
+            <div class="separator"></div>
+            
+            <!-- Apa Itu LIFE? -->
+            <div class="info-section">
+                <h3><i class="fas fa-info-circle"></i> Apa Itu LIFE?</h3>
+                <div class="info-content">
+                    <ul class="info-list">
+                        <li class="info-item">
+                            <div class="info-icon">
+                                <i class="fas fa-fire"></i>
+                            </div>
+                            <div class="info-text">
+                                <h4>Sumber Daya Utama</h4>
+                                <p>LIFE berfungsi sebagai "bahan bakar" untuk memainkan kuis di KuizTown. Setiap percobaan mengerjakan level kuis akan mengonsumsi sejumlah LIFE sesuai dengan tingkat kesulitan.</p>
+                            </div>
+                        </li>
+                        <li class="info-item">
+                            <div class="info-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="info-text">
+                                <h4>Sistem Regenerasi</h4>
+                                <p>LIFE dapat diklaim secara gratis setiap 1 jam, dengan syarat jumlah LIFE saat ini kurang dari 10. Sistem menghitung 1 jam dari setiap pengurangan LIFE.</p>
+                            </div>
+                        </li>
+                        <li class="info-item">
+                            <div class="info-icon">
+                                <i class="fas fa-trophy"></i>
+                            </div>
+                            <div class="info-text">
+                                <h4>Cara Mendapatkan</h4>
+                                <p>Selain klaim waktu, LIFE juga dapat diperoleh dari: Program referral, menyelesaikan tugas, dan bonus pendaftaran.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Butuh LIFE Lebih? -->
+            <div class="contact-section">
+                <h3><i class="fas fa-question-circle"></i> Butuh LIFE Lebih?</h3>
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <div class="contact-title">LIFE Tambahan Tersedia</div>
+                    <div class="contact-message">
+                        LIFE juga tersedia untuk dibeli jika Anda membutuhkan lebih banyak untuk bermain kuis. Hubungi Admin kami untuk informasi pembelian LIFE.
+                    </div>
+                    <a href="https://wa.me/6283161274382?text=Halo%20Admin%20KuizTown,%20saya%20ingin%20bertanya%20tentang%20pembelian%20LIFE" 
+                       class="whatsapp-btn" target="_blank">
+                        <i class="fab fa-whatsapp"></i> Hubungi Admin
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Cara Kerja Klaim LIFE -->
+            <div class="how-it-works">
+                <h3><i class="fas fa-cogs"></i> Cara Kerja Klaim LIFE</h3>
+                <div class="steps-container">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-title">Gunakan LIFE untuk Quiz</div>
+                        <div class="step-desc">Setiap kali Anda menggunakan LIFE untuk mengerjakan quiz, sistem mencatat waktu pengurangan tersebut.</div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-title">Tunggu 1 Jam</div>
+                        <div class="step-desc">Sistem menghitung 1 jam dari waktu pengurangan LIFE terakhir Anda.</div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-title">Klaim LIFE</div>
+                        <div class="step-desc">Setelah 1 jam berlalu, Anda dapat mengklaim 1 LIFE selama jumlah LIFE kurang dari 10.</div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div class="step-title">Repeat</div>
+                        <div class="step-desc">Proses berulang setiap kali Anda menggunakan LIFE. Sistem menghitung per pengurangan, bukan per klaim.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Butuh LIFE Lebih? -->
+            <div class="contact-section">
+                <h3><i class="fas fa-question-circle"></i> Butuh LIFE Lebih?</h3>
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <div class="contact-title">LIFE Tambahan Tersedia</div>
+                    <div class="contact-message">
+                        LIFE juga tersedia untuk dibeli jika Anda membutuhkan lebih banyak untuk bermain kuis. Hubungi Admin kami untuk informasi pembelian LIFE.
+                    </div>
+                    <a href="https://wa.me/6283161274382?text=Halo%20Admin%20KuizTown,%20saya%20ingin%20bertanya%20tentang%20pembelian%20LIFE" 
+                       class="whatsapp-btn" target="_blank">
+                        <i class="fab fa-whatsapp"></i> Hubungi Admin
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Aturan & Peringatan -->
+            <div class="rules-section">
+                <h3><i class="fas fa-exclamation-triangle"></i> Aturan & Peringatan</h3>
+                <div class="rules-list">
+                    <div class="rule-item">
+                        <div class="rule-bullet">•</div>
+                        <div class="rule-text">
+                            <strong>Maksimum 10 LIFE:</strong> Anda tidak dapat memiliki lebih dari 10 LIFE sekaligus.
+                        </div>
+                    </div>
+                    <div class="rule-item">
+                        <div class="rule-bullet">•</div>
+                        <div class="rule-text">
+                            <strong>Cooldown 1 jam:</strong> Setiap LIFE dapat diklaim kembali setelah 1 jam dari pengurangan terakhir.
+                        </div>
+                    </div>
+                    <div class="rule-item">
+                        <div class="rule-bullet">•</div>
+                        <div class="rule-text">
+                            <strong>Sistem perhitungan:</strong> Timer dihitung berdasarkan waktu pengurangan LIFE, bukan waktu klaim terakhir.
+                        </div>
+                    </div>
+                    <div class="rule-item">
+                        <div class="rule-bullet">•</div>
+                        <div class="rule-text">
+                            <strong>Tidak dapat ditarik:</strong> LIFE adalah sumber daya untuk bermain kuis dan tidak dapat ditarik menjadi uang tunai.
+                        </div>
+                    </div>
+                    <div class="rule-item">
+                        <div class="rule-bullet">•</div>
+                        <div class="rule-text">
+                            <strong>Bonus pendaftaran:</strong> Setiap pengguna baru mendapatkan 10 LIFE sebagai bonus pendaftaran.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Success Modal -->
+    <div id="successModal" class="modal">
+        <div class="modal-content success">
+            <i class="fas fa-check-circle modal-icon"></i>
+            <h2 class="modal-title">LIFE Berhasil Diklaim!</h2>
+            <p class="modal-message" id="successMessage">1 LIFE telah ditambahkan ke akun Anda.</p>
+            <button class="modal-btn" id="closeSuccessModal">Tutup</button>
+        </div>
+    </div>
+    
+    <!-- Error Modal -->
+    <div id="errorModal" class="modal">
+        <div class="modal-content warning">
+            <i class="fas fa-exclamation-circle modal-icon"></i>
+            <h2 class="modal-title">Tidak Dapat Mengklaim</h2>
+            <p class="modal-message" id="errorMessage">Anda belum dapat mengklaim LIFE saat ini.</p>
+            <button class="modal-btn" id="closeErrorModal">Tutup</button>
+        </div>
+    </div>
+
+    <script>
+        // ============================================
+        // LIFE SYSTEM - Menggunakan Logika Dashboard
+        // ============================================
+        
+        // Konstanta
+        const MAX_LIFE = 10;
+        const COOLDOWN_HOURS = 1; // 1 jam cooldown
+        const COOLDOWN_MS = COOLDOWN_HOURS * 60 * 60 * 1000; // 1 jam dalam milidetik
+        
+        // State
+        let cachedUserData = null;
+        let lifeCountdownInterval = null;
+        let isLifeSystemInitialized = false;
+        
+        // Inisialisasi aplikasi
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load data dari localStorage jika ada
+            const cachedData = localStorage.getItem('kuiztown_user_data');
+            if (cachedData) {
+                cachedUserData = JSON.parse(cachedData);
+                updateLifeUIFromCache();
+            }
+
+            // Load Firebase lalu auth
+            loadFirebase().then(() => {
+                setupAuthListener();
+            });
+
+            // Setup event listeners untuk LIFE claim
+            document.getElementById('claimLifeBtn').addEventListener('click', claimLife);
+            document.getElementById('closeSuccessModal').addEventListener('click', function() {
+                document.getElementById('successModal').style.display = 'none';
+            });
+            document.getElementById('closeErrorModal').addEventListener('click', function() {
+                document.getElementById('errorModal').style.display = 'none';
+            });
+        });
+        
+        // Load Firebase dengan deferred loading
+        async function loadFirebase() {
+            try {
+                // Load Firebase SDK secara dinamis
+                const firebaseScript = document.createElement('script');
+                firebaseScript.type = 'module';
+                firebaseScript.textContent = `
+                    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
+                    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
+                    import { getFirestore, doc, getDoc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
+
+                    const firebaseConfig = {
+                        apiKey: "AIzaSyB9DCc6rCmeXl0O3CCLYe6zUmfByfRz428",
+                        authDomain: "kuiztown.firebaseapp.com",
+                        projectId: "kuiztown",
+                        storageBucket: "kuiztown.firebasestorage.app",
+                        messagingSenderId: "334081803913",
+                        appId: "1:334081803913:web:84899b42961e12f538a858"
+                    };
+
+                    const app = initializeApp(firebaseConfig);
+                    const auth = getAuth(app);
+                    const db = getFirestore(app);
+                    
+                    window.firebaseAuth = auth;
+                    window.firebaseOnAuthStateChanged = onAuthStateChanged;
+                    window.firebaseDb = db;
+                    window.firebaseDoc = doc;
+                    window.firebaseGetDoc = getDoc;
+                    window.firebaseUpdateDoc = updateDoc;
+                    window.firebaseServerTimestamp = serverTimestamp;
+                `;
+                document.head.appendChild(firebaseScript);
+                
+                // Tunggu Firebase selesai load
+                await new Promise(resolve => {
+                    const checkFirebase = setInterval(() => {
+                        if (window.firebaseAuth) {
+                            clearInterval(checkFirebase);
+                            resolve();
+                        }
+                    }, 100);
+                });
+                
+            } catch (error) {
+                console.error("Error loading Firebase:", error);
+                showErrorModal("Koneksi Terputus", "Menggunakan data offline. Beberapa fitur mungkin terbatas.");
+            }
+        }
+        
+        // Setup authentication listener
+        function setupAuthListener() {
+            if (!window.firebaseOnAuthStateChanged) return;
+
+            window.firebaseOnAuthStateChanged(window.firebaseAuth, async (user) => {
+                if (user) {
+                    // Load data dari Firestore
+                    await loadUserData(user.uid);
+                    
+                    // Inisialisasi sistem LIFE hanya sekali
+                    if (!isLifeSystemInitialized) {
+                        initializeLifeSystem();
+                        isLifeSystemInitialized = true;
+                    }
+                } else {
+                    window.location.href = 'login.html';
+                }
+            });
+        }
+        
+        // Tampilkan data dari cache terlebih dahulu
+        function updateLifeUIFromCache() {
+            if (!cachedUserData) return;
+            
+            // Sembunyikan skeleton, tampilkan konten
+            document.getElementById('skeletonLoading').style.display = 'none';
+            document.getElementById('content').style.display = 'block';
+            
+            // Update UI dengan cached data
+            updateLifeUI(cachedUserData);
+        }
+        
+        // Load user data dari Firestore
+        async function loadUserData(userId) {
+            try {
+                if (!window.firebaseGetDoc || !window.firebaseDoc || !window.firebaseDb) return;
+                
+                const userDoc = await window.firebaseGetDoc(window.firebaseDoc(window.firebaseDb, "users", userId));
+                
+                if (userDoc.exists()) {
+                    const freshData = userDoc.data();
+                    
+                    // Cache data baru
+                    localStorage.setItem('kuiztown_user_data', JSON.stringify(freshData));
+                    cachedUserData = freshData;
+                    
+                    // Update UI dengan data baru
+                    updateLifeUIFromCache();
+                    
+                } else {
+                    console.error("User data not found");
+                    // Jika data tidak ditemukan, tetap pakai cached data
+                    if (!cachedUserData) {
+                        window.location.href = 'login.html';
+                    }
+                }
+            } catch (error) {
+                console.error("Error loading user data:", error);
+                // Jika error, tetap pakai cached data
+                if (!cachedUserData) {
+                    showErrorModal("Gagal memuat data", "Silakan coba lagi nanti.");
+                }
+            }
+        }
+        
+        // Inisialisasi sistem LIFE
+        function initializeLifeSystem() {
+            // Hentikan interval sebelumnya jika ada
+            if (lifeCountdownInterval) {
+                clearInterval(lifeCountdownInterval);
+            }
+            
+            // Mulai countdown timer
+            lifeCountdownInterval = setInterval(updateLifeUI, 1000);
+            
+            // Update UI pertama kali
+            updateLifeUI();
+        }
+        
+        // Update LIFE UI berdasarkan data saat ini
+        function updateLifeUI() {
+            if (!cachedUserData) return;
+            
+            const currentLife = cachedUserData.lifeBalance || 0;
+            
+            // Update tampilan LIFE balance
+            document.getElementById('lifeBalance').textContent = currentLife;
+            document.getElementById('lifeProgress').style.width = `${(currentLife / MAX_LIFE) * 100}%`;
+            
+            // CASE A: LIFE >= 10 (FULL)
+            if (currentLife >= MAX_LIFE) {
+                document.getElementById('claimLifeBtn').disabled = true;
+                document.getElementById('claimLifeBtn').innerHTML = '<i class="fas fa-check"></i> LIFE PENUH';
+                document.getElementById('lifeStatus').textContent = "LIFE penuh";
+                document.getElementById('lifeCountdown').style.display = 'none';
+                return;
+            }
+            
+            // Periksa cooldown
+            const lastReductionTime = cachedUserData.lastLifeReduction;
+            
+            // Jika belum ada lastLifeReduction, berarti siap klaim
+            if (!lastReductionTime) {
+                document.getElementById('claimLifeBtn').disabled = false;
+                document.getElementById('claimLifeBtn').innerHTML = '<i class="fas fa-heart"></i> KLAIM LIFE';
+                document.getElementById('lifeStatus').textContent = "LIFE siap diklaim";
+                document.getElementById('lifeCountdown').style.display = 'none';
+                return;
+            }
+            
+            // Hitung waktu cooldown
+            const lastTime = lastReductionTime.toDate ? lastReductionTime.toDate().getTime() : new Date(lastReductionTime).getTime();
+            const currentTime = Date.now();
+            const elapsedTime = currentTime - lastTime;
+            const remainingTime = COOLDOWN_MS - elapsedTime;
+            
+            // CASE B: MASIH COOLDOWN
+            if (remainingTime > 0) {
+                document.getElementById('claimLifeBtn').disabled = true;
+                document.getElementById('claimLifeBtn').innerHTML = '<i class="fas fa-clock"></i> TUNGGU';
+                document.getElementById('lifeStatus').textContent = "Cooldown:";
+                document.getElementById('lifeCountdown').style.display = 'inline-block';
+                
+                // Format HH - MM - SS
+                const hours = Math.floor(remainingTime / (1000 * 60 * 60));
+                const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+                
+                document.getElementById('lifeCountdown').textContent = 
+                    `${hours.toString().padStart(2, '0')} - ${minutes.toString().padStart(2, '0')} - ${seconds.toString().padStart(2, '0')}`;
+            
+            // CASE C: COOLDOWN SUDAH HABIS
+            } else {
+                document.getElementById('claimLifeBtn').disabled = false;
+                document.getElementById('claimLifeBtn').innerHTML = '<i class="fas fa-heart"></i> KLAIM LIFE';
+                document.getElementById('lifeStatus').textContent = "LIFE siap diklaim";
+                document.getElementById('lifeCountdown').style.display = 'none';
+            }
+        }
+        
+        // Klaim LIFE
+        async function claimLife() {
+            if (!cachedUserData || !window.firebaseAuth || !window.firebaseAuth.currentUser) {
+                showErrorModal("Tidak Dapat Mengklaim", "Sistem belum siap. Silakan coba lagi.");
+                return;
+            }
+            
+            const claimBtn = document.getElementById('claimLifeBtn');
+            const currentLife = cachedUserData.lifeBalance || 0;
+            
+            // Validasi
+            if (currentLife >= MAX_LIFE) {
+                showErrorModal("LIFE Penuh", "LIFE Anda sudah penuh.");
+                return;
+            }
+            
+            try {
+                // Disable button dan tampilkan loading
+                claimBtn.disabled = true;
+                claimBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> MENGKLAIM...';
+                
+                const uid = window.firebaseAuth.currentUser.uid;
+                const userRef = window.firebaseDoc(window.firebaseDb, "users", uid);
+                
+                // Tambah LIFE +1
+                const newLife = currentLife + 1;
+                
+                // Update Firestore dengan serverTimestamp
+                await window.firebaseUpdateDoc(userRef, {
+                    lifeBalance: newLife,
+                    lastLifeReduction: window.firebaseServerTimestamp()
+                });
+                
+                // Update cache lokal
+                cachedUserData.lifeBalance = newLife;
+                cachedUserData.lastLifeReduction = new Date(); // Simpan waktu lokal untuk UI
+                localStorage.setItem('kuiztown_user_data', JSON.stringify(cachedUserData));
+                
+                // Update UI
+                updateLifeUI();
+                
+                // Tampilkan modal sukses
+                document.getElementById('successMessage').textContent = '1 LIFE berhasil ditambahkan!';
+                document.getElementById('successModal').style.display = 'flex';
+                
+            } catch (error) {
+                console.error("Error claiming LIFE:", error);
+                showErrorModal("Gagal Klaim", "Terjadi kesalahan saat mengklaim LIFE. Silakan coba lagi.");
+                
+                // Reset button state
+                claimBtn.disabled = false;
+                claimBtn.innerHTML = '<i class="fas fa-heart"></i> KLAIM LIFE';
+            }
+        }
+        
+        // Helper function untuk modal error
+        function showErrorModal(title, message) {
+            document.getElementById('errorMessage').textContent = `${title}: ${message}`;
+            document.getElementById('errorModal').style.display = 'flex';
+        }
+        
+        // Close modals when clicking outside
+        window.addEventListener('click', function(event) {
+            const modals = ['successModal', 'errorModal'];
+            modals.forEach(modalId => {
+                const modal = document.getElementById(modalId);
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        });
+        
+        // Cleanup saat halaman ditutup
+        window.addEventListener('beforeunload', function() {
+            if (lifeCountdownInterval) {
+                clearInterval(lifeCountdownInterval);
+            }
+        });
+        
+        // Periodic sync dengan server (setiap 30 detik)
+        setInterval(async () => {
+            if (window.firebaseAuth && window.firebaseAuth.currentUser && window.firebaseGetDoc) {
+                try {
+                    const userDoc = await window.firebaseGetDoc(
+                        window.firebaseDoc(window.firebaseDb, "users", window.firebaseAuth.currentUser.uid)
+                    );
+                    
+                    if (userDoc.exists()) {
+                        const freshData = userDoc.data();
+                        
+                        // Check jika ada perubahan pada data LIFE
+                        const cachedLife = cachedUserData?.lifeBalance || 0;
+                        const freshLife = freshData.lifeBalance || 0;
+                        
+                        const cachedTime = cachedUserData?.lastLifeReduction;
+                        const freshTime = freshData.lastLifeReduction;
+                        
+                        // Convert timestamps untuk perbandingan
+                        const cachedTimeMs = cachedTime?.toDate ? cachedTime.toDate().getTime() : new Date(cachedTime).getTime();
+                        const freshTimeMs = freshTime?.toDate ? freshTime.toDate().getTime() : new Date(freshTime).getTime();
+                        
+                        if (cachedLife !== freshLife || cachedTimeMs !== freshTimeMs) {
+                            cachedUserData = freshData;
+                            localStorage.setItem('kuiztown_user_data', JSON.stringify(freshData));
+                            updateLifeUI();
+                        }
+                    }
+                } catch (error) {
+                    console.error("Sync error:", error);
+                }
+            }
+        }, 30000);
+    </script>
+</body>
+</html>

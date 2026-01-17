@@ -1,0 +1,1388 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil - KuizTown</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Reset & Base Styles - SAMA PERSIS DENGAN DASHBOARD */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #5F729F;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255, 192, 203, 0.08) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(255, 192, 203, 0.08) 0%, transparent 20%),
+                radial-gradient(circle at 50% 50%, rgba(255, 192, 203, 0.05) 0%, transparent 30%);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* Geometric Pattern Background - SAMA */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(30deg, rgba(255, 192, 203, 0.05) 12%, transparent 12.5%, transparent 87%, rgba(255, 192, 203, 0.05) 87.5%, rgba(255, 192, 203, 0.05)),
+                linear-gradient(150deg, rgba(255, 192, 203, 0.05) 12%, transparent 12.5%, transparent 87%, rgba(255, 192, 203, 0.05) 87.5%, rgba(255, 192, 203, 0.05)),
+                linear-gradient(30deg, rgba(255, 192, 203, 0.05) 12%, transparent 12.5%, transparent 87%, rgba(255, 192, 203, 0.05) 87.5%, rgba(255, 192, 203, 0.05)),
+                linear-gradient(150deg, rgba(255, 192, 203, 0.05) 12%, transparent 12.5%, transparent 87%, rgba(255, 192, 203, 0.05) 87.5%, rgba(255, 192, 203, 0.05)),
+                linear-gradient(60deg, rgba(255, 192, 203, 0.08) 25%, transparent 25.5%, transparent 75%, rgba(255, 192, 203, 0.08) 75%, rgba(255, 192, 203, 0.08)),
+                linear-gradient(60deg, rgba(255, 192, 203, 0.08) 25%, transparent 25.5%, transparent 75%, rgba(255, 192, 203, 0.08) 75%, rgba(255, 192, 203, 0.08));
+            background-size: 80px 140px;
+            background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
+            opacity: 0.3;
+            z-index: -1;
+        }
+        
+        /* Container */
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 0 15px 20px;
+        }
+        
+        /* Header */
+        .header {
+            display: flex;
+            align-items: center;
+            padding: 20px 0 15px;
+            position: relative;
+        }
+        
+        .back-btn {
+            color: white;
+            font-size: 22px;
+            text-decoration: none;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo-icon {
+            font-size: 24px;
+            background: linear-gradient(135deg, #9b59b6, #3498db);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .logo-text {
+            font-size: 18px;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Card Styles - SAMA */
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .card-title {
+            font-size: 1.1rem;
+            color: #444;
+            margin-bottom: 15px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .card-title i {
+            color: #87CEEB;
+        }
+        
+        /* Separator */
+        .separator {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            margin: 20px 0;
+        }
+        
+        /* Profile Section */
+        .profile-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        
+        .profile-avatar {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 15px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid #87CEEB;
+            box-shadow: 0 4px 15px rgba(135, 206, 235, 0.3);
+            cursor: pointer;
+        }
+        
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .avatar-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #87CEEB, #9b59b6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 40px;
+        }
+        
+        .avatar-upload-btn {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background: #87CEEB;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        .username {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .user-email {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        /* Badge Section */
+        .badge-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+        
+        .badge {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #333;
+            padding: 8px 15px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            box-shadow: 0 3px 10px rgba(255, 215, 0, 0.3);
+        }
+        
+        .level-badge {
+            background: linear-gradient(135deg, #87CEEB, #5F729F);
+            color: white;
+        }
+        
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .stat-item {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .stat-label {
+            font-size: 0.8rem;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .stat-value {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #333;
+        }
+        
+        .stat-value.geo {
+            color: #2ecc71;
+        }
+        
+        .stat-value.life {
+            color: #e74c3c;
+        }
+        
+        /* Info List */
+        .info-list {
+            margin-top: 15px;
+        }
+        
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .info-item:last-child {
+            border-bottom: none;
+        }
+        
+        .info-label {
+            font-weight: 500;
+            color: #444;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .info-value {
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .info-value.referral {
+            color: #3498db;
+            font-size: 0.9rem;
+            background: rgba(52, 152, 219, 0.1);
+            padding: 4px 10px;
+            border-radius: 5px;
+        }
+        
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 20px;
+        }
+        
+        .action-btn {
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .action-btn.primary {
+            background: linear-gradient(135deg, #87CEEB, #5F729F);
+            color: white;
+            box-shadow: 0 5px 15px rgba(135, 206, 235, 0.3);
+        }
+        
+        .action-btn.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(135, 206, 235, 0.4);
+        }
+        
+        .action-btn.secondary {
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .action-btn.secondary:hover {
+            background: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .action-btn.danger {
+            background: rgba(231, 76, 60, 0.1);
+            color: #e74c3c;
+            border: 1px solid rgba(231, 76, 60, 0.2);
+        }
+        
+        .action-btn.danger:hover {
+            background: rgba(231, 76, 60, 0.15);
+        }
+        
+        /* Modal Styles - SAMA DENGAN DASHBOARD */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            padding: 25px;
+            border-radius: 15px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            animation: modalFadeIn 0.3s ease-out;
+        }
+        
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+        
+        .modal-icon {
+            font-size: 50px;
+            margin-bottom: 20px;
+        }
+        
+        .success .modal-icon {
+            color: #2ecc71;
+        }
+        
+        .warning .modal-icon {
+            color: #f39c12;
+        }
+        
+        .modal-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .modal-message {
+            color: #666;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+        
+        .modal-form {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #444;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+        }
+        
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .modal-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .modal-btn.primary {
+            background: linear-gradient(135deg, #87CEEB, #5F729F);
+            color: white;
+        }
+        
+        .modal-btn.secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+        
+        .modal-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        /* Footer Navigation - SAMA */
+        .nav-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            padding: 12px 0;
+            display: flex;
+            justify-content: space-around;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+            z-index: 1000;
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #666;
+            transition: all 0.3s ease;
+            flex: 1;
+            padding: 5px 0;
+        }
+        
+        .nav-item.active {
+            color: #87CEEB;
+        }
+        
+        .nav-icon {
+            font-size: 20px;
+            margin-bottom: 3px;
+        }
+        
+        .nav-text {
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        
+        /* Responsive */
+        @media (min-width: 768px) {
+            .container {
+                max-width: 600px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <a href="dashboard.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+            <div class="logo-container">
+                <i class="fas fa-shapes logo-icon"></i>
+                <span class="logo-text">PROFIL</span>
+            </div>
+        </div>
+        
+        <!-- Profile Info -->
+        <div class="card">
+            <div class="profile-header">
+                <div class="profile-avatar" id="avatarContainer">
+                    <div class="avatar-placeholder">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="avatar-upload-btn" id="uploadAvatarBtn">
+                        <i class="fas fa-camera"></i>
+                    </div>
+                </div>
+                <h1 class="username" id="usernameDisplay">Loading...</h1>
+                <p class="user-email" id="emailDisplay">Loading...</p>
+                
+                <div class="badge-container">
+                    <div class="badge">
+                        <i class="fas fa-medal"></i>
+                        <span id="badgeRank">PEMULA</span>
+                    </div>
+                    <div class="badge level-badge">
+                        <i class="fas fa-chart-line"></i>
+                        <span id="highestLevel">EASY - LV1</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="separator"></div>
+            
+            <!-- Quick Stats -->
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-label">Saldo GEO</div>
+                    <div class="stat-value geo" id="geoBalance">0,0</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">LIFE Saat Ini</div>
+                    <div class="stat-value life" id="lifeBalance">0/10</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Total GEO Diperoleh</div>
+                    <div class="stat-value" id="totalGeoEarned">0,0</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">LIFE Digunakan</div>
+                    <div class="stat-value" id="totalLifeUsed">0</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Account Information -->
+        <div class="card">
+            <h2 class="card-title">
+                <i class="fas fa-user-cog"></i> Informasi Akun
+            </h2>
+            
+            <div class="info-list">
+                <div class="info-item">
+                    <span class="info-label">
+                        <i class="fas fa-user"></i> Username
+                    </span>
+                    <span class="info-value" id="usernameInfo">-</span>
+                </div>
+                
+                <div class="info-item">
+                    <span class="info-label">
+                        <i class="fas fa-envelope"></i> Email
+                    </span>
+                    <span class="info-value" id="emailInfo">-</span>
+                </div>
+                
+                <div class="info-item">
+                    <span class="info-label">
+                        <i class="fas fa-phone"></i> Nomor Telepon
+                    </span>
+                    <span class="info-value" id="phoneInfo">Belum diatur</span>
+                </div>
+                
+                <div class="info-item">
+                    <span class="info-label">
+                        <i class="fas fa-code"></i> Kode Referral
+                    </span>
+                    <span class="info-value referral" id="referralCode">-</span>
+                </div>
+                
+                <div class="info-item">
+                    <span class="info-label">
+                        <i class="fas fa-user-plus"></i> Diundang Oleh
+                    </span>
+                    <span class="info-value" id="invitedBy">-</span>
+                </div>
+                
+                <div class="info-item">
+                    <span class="info-label">
+                        <i class="fas fa-calendar-alt"></i> Bergabung Sejak
+                    </span>
+                    <span class="info-value" id="joinDate">-</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Account Management -->
+        <div class="card">
+            <h2 class="card-title">
+                <i class="fas fa-tools"></i> Kelola Akun
+            </h2>
+            
+            <div class="action-buttons">
+                <button class="action-btn secondary" id="changePasswordBtn">
+                    <i class="fas fa-key"></i> Ubah Kata Sandi
+                </button>
+                
+                <button class="action-btn secondary" id="changeUsernameBtn">
+                    <i class="fas fa-edit"></i> Ubah Username
+                </button>
+                
+                <button class="action-btn secondary" id="changePhoneBtn">
+                    <i class="fas fa-phone-alt"></i> Atur Nomor Telepon
+                </button>
+            </div>
+        </div>
+        
+        <!-- Logout Button -->
+        <div class="action-buttons">
+            <button class="action-btn danger" id="logoutBtn">
+                <i class="fas fa-sign-out-alt"></i> Keluar dari Akun
+            </button>
+        </div>
+    </div>
+    
+    <!-- Footer Navigation -->
+    <nav class="nav-footer">
+        <a href="dashboard.html" class="nav-item">
+            <i class="fas fa-home nav-icon"></i>
+            <span class="nav-text">Home</span>
+        </a>
+        <a href="quiz.html" class="nav-item">
+            <i class="fas fa-brain nav-icon"></i>
+            <span class="nav-text">Quiz</span>
+        </a>
+        <a href="tugas.html" class="nav-item">
+            <i class="fas fa-tasks nav-icon"></i>
+            <span class="nav-text">Tugas</span>
+        </a>
+        <a href="referral.html" class="nav-item">
+            <i class="fas fa-user-friends nav-icon"></i>
+            <span class="nav-text">Referral</span>
+        </a>
+        <a href="profil.html" class="nav-item active">
+            <i class="fas fa-user nav-icon"></i>
+            <span class="nav-text">Profil</span>
+        </a>
+    </nav>
+    
+    <!-- Avatar Upload Modal -->
+    <div id="avatarModal" class="modal">
+        <div class="modal-content">
+            <i class="fas fa-camera modal-icon"></i>
+            <h2 class="modal-title">Ubah Foto Profil</h2>
+            <p class="modal-message">Pilih gambar untuk diunggah sebagai foto profil Anda.</p>
+            
+            <div class="modal-form">
+                <div class="form-group">
+                    <label class="form-label">Pilih Gambar</label>
+                    <input type="file" id="avatarFile" class="form-input" accept="image/*">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Pratinjau</label>
+                    <div id="avatarPreview" style="width: 100px; height: 100px; margin: 10px auto; border-radius: 50%; overflow: hidden; background: #f0f0f0; display: none;">
+                        <img id="previewImage" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-buttons">
+                <button class="modal-btn secondary" id="cancelAvatarBtn">Batal</button>
+                <button class="modal-btn primary" id="saveAvatarBtn">Unggah</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Change Password Modal -->
+    <div id="passwordModal" class="modal">
+        <div class="modal-content">
+            <i class="fas fa-key modal-icon"></i>
+            <h2 class="modal-title">Ubah Kata Sandi</h2>
+            <p class="modal-message">Masukkan kata sandi lama dan baru untuk mengubah kata sandi Anda.</p>
+            
+            <div class="modal-form">
+                <div class="form-group">
+                    <label class="form-label">Kata Sandi Lama</label>
+                    <input type="password" id="oldPassword" class="form-input" placeholder="Masukkan kata sandi lama">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Kata Sandi Baru</label>
+                    <input type="password" id="newPassword" class="form-input" placeholder="Masukkan kata sandi baru">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Konfirmasi Kata Sandi Baru</label>
+                    <input type="password" id="confirmPassword" class="form-input" placeholder="Konfirmasi kata sandi baru">
+                </div>
+            </div>
+            
+            <div class="modal-buttons">
+                <button class="modal-btn secondary" id="cancelPasswordBtn">Batal</button>
+                <button class="modal-btn primary" id="savePasswordBtn">Simpan</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Change Username Modal -->
+    <div id="usernameModal" class="modal">
+        <div class="modal-content">
+            <i class="fas fa-edit modal-icon"></i>
+            <h2 class="modal-title">Ubah Username</h2>
+            <p class="modal-message">Masukkan username baru untuk akun Anda.</p>
+            
+            <div class="modal-form">
+                <div class="form-group">
+                    <label class="form-label">Username Baru</label>
+                    <input type="text" id="newUsername" class="form-input" placeholder="Masukkan username baru">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Konfirmasi Password</label>
+                    <input type="password" id="usernamePassword" class="form-input" placeholder="Masukkan password untuk konfirmasi">
+                </div>
+            </div>
+            
+            <div class="modal-buttons">
+                <button class="modal-btn secondary" id="cancelUsernameBtn">Batal</button>
+                <button class="modal-btn primary" id="saveUsernameBtn">Simpan</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Change Phone Modal -->
+    <div id="phoneModal" class="modal">
+        <div class="modal-content">
+            <i class="fas fa-phone-alt modal-icon"></i>
+            <h2 class="modal-title">Atur Nomor Telepon</h2>
+            <p class="modal-message">Masukkan nomor telepon untuk keamanan akun Anda.</p>
+            
+            <div class="modal-form">
+                <div class="form-group">
+                    <label class="form-label">Nomor Telepon</label>
+                    <input type="tel" id="newPhone" class="form-input" placeholder="Contoh: 081234567890" value="">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Konfirmasi Password</label>
+                    <input type="password" id="phonePassword" class="form-input" placeholder="Masukkan password untuk konfirmasi">
+                </div>
+            </div>
+            
+            <div class="modal-buttons">
+                <button class="modal-btn secondary" id="cancelPhoneBtn">Batal</button>
+                <button class="modal-btn primary" id="savePhoneBtn">Simpan</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Success Modal -->
+    <div id="successModal" class="modal">
+        <div class="modal-content success">
+            <i class="fas fa-check-circle modal-icon"></i>
+            <h2 class="modal-title">Berhasil!</h2>
+            <p class="modal-message" id="successMessage">Perubahan berhasil disimpan.</p>
+            <button class="modal-btn primary" id="closeSuccessModal">Tutup</button>
+        </div>
+    </div>
+    
+    <!-- Error Modal -->
+    <div id="errorModal" class="modal">
+        <div class="modal-content warning">
+            <i class="fas fa-exclamation-circle modal-icon"></i>
+            <h2 class="modal-title">Terjadi Kesalahan</h2>
+            <p class="modal-message" id="errorMessage">Gagal menyimpan perubahan.</p>
+            <button class="modal-btn primary" id="closeErrorModal">Tutup</button>
+        </div>
+    </div>
+
+    <script>
+        // Data pengguna (akan diambil dari Firebase)
+        let userData = null;
+        let currentUser = null;
+
+        // Inisialisasi halaman
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load data dari localStorage jika ada
+            const cachedData = localStorage.getItem('kuiztown_user_data');
+            if (cachedData) {
+                userData = JSON.parse(cachedData);
+                updateProfileUI();
+            }
+
+            // Setup event listeners
+            setupEventListeners();
+            
+            // Inisialisasi Firebase dan load data
+            initializeProfile();
+        });
+
+        // Setup semua event listeners
+        function setupEventListeners() {
+            // Avatar upload
+            document.getElementById('uploadAvatarBtn').addEventListener('click', openAvatarModal);
+            document.getElementById('avatarFile').addEventListener('change', previewAvatar);
+            document.getElementById('cancelAvatarBtn').addEventListener('click', closeAvatarModal);
+            document.getElementById('saveAvatarBtn').addEventListener('click', uploadAvatar);
+            
+            // Change password
+            document.getElementById('changePasswordBtn').addEventListener('click', openPasswordModal);
+            document.getElementById('cancelPasswordBtn').addEventListener('click', closePasswordModal);
+            document.getElementById('savePasswordBtn').addEventListener('click', changePassword);
+            
+            // Change username
+            document.getElementById('changeUsernameBtn').addEventListener('click', openUsernameModal);
+            document.getElementById('cancelUsernameBtn').addEventListener('click', closeUsernameModal);
+            document.getElementById('saveUsernameBtn').addEventListener('click', changeUsername);
+            
+            // Change phone
+            document.getElementById('changePhoneBtn').addEventListener('click', openPhoneModal);
+            document.getElementById('cancelPhoneBtn').addEventListener('click', closePhoneModal);
+            document.getElementById('savePhoneBtn').addEventListener('click', changePhone);
+            
+            // Logout
+            document.getElementById('logoutBtn').addEventListener('click', logoutUser);
+            
+            // Close modals
+            document.getElementById('closeSuccessModal').addEventListener('click', function() {
+                document.getElementById('successModal').style.display = 'none';
+            });
+            
+            document.getElementById('closeErrorModal').addEventListener('click', function() {
+                document.getElementById('errorModal').style.display = 'none';
+            });
+            
+            // Close modals when clicking outside
+            window.addEventListener('click', function(event) {
+                const modals = ['avatarModal', 'passwordModal', 'usernameModal', 'phoneModal', 'successModal', 'errorModal'];
+                modals.forEach(modalId => {
+                    const modal = document.getElementById(modalId);
+                    if (event.target === modal) {
+                        modal.style.display = 'none';
+                    }
+                });
+            });
+        }
+
+        // Inisialisasi profil dengan Firebase
+        async function initializeProfile() {
+            try {
+                // Load Firebase SDK
+                const firebaseScript = document.createElement('script');
+                firebaseScript.type = 'module';
+                firebaseScript.textContent = `
+                    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
+                    import { getAuth, onAuthStateChanged, signOut, updatePassword, reauthenticateWithCredential, EmailAuthProvider } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
+                    import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
+
+                    const firebaseConfig = {
+                        apiKey: "AIzaSyB9DCc6rCmeXl0O3CCLYe6zUmfByfRz428",
+                        authDomain: "kuiztown.firebaseapp.com",
+                        projectId: "kuiztown",
+                        storageBucket: "kuiztown.firebasestorage.app",
+                        messagingSenderId: "334081803913",
+                        appId: "1:334081803913:web:84899b42961e12f538a858"
+                    };
+
+                    const app = initializeApp(firebaseConfig);
+                    const auth = getAuth(app);
+                    const db = getFirestore(app);
+                    
+                    window.firebaseApp = app;
+                    window.firebaseAuth = auth;
+                    window.firebaseOnAuthStateChanged = onAuthStateChanged;
+                    window.firebaseSignOut = signOut;
+                    window.firebaseUpdatePassword = updatePassword;
+                    window.firebaseReauthenticate = reauthenticateWithCredential;
+                    window.firebaseEmailAuthProvider = EmailAuthProvider;
+                    window.firebaseDb = db;
+                    window.firebaseDoc = doc;
+                    window.firebaseGetDoc = getDoc;
+                    window.firebaseUpdateDoc = updateDoc;
+                `;
+                document.head.appendChild(firebaseScript);
+                
+                // Tunggu Firebase selesai load
+                await new Promise(resolve => {
+                    const checkFirebase = setInterval(() => {
+                        if (window.firebaseAuth) {
+                            clearInterval(checkFirebase);
+                            resolve();
+                        }
+                    }, 100);
+                });
+                
+                // Setup auth listener
+                window.firebaseOnAuthStateChanged(window.firebaseAuth, async (user) => {
+                    if (user) {
+                        currentUser = user;
+                        await loadUserData(user.uid);
+                    } else {
+                        window.location.href = 'login.html';
+                    }
+                });
+                
+            } catch (error) {
+                console.error("Error loading Firebase:", error);
+                showError("Koneksi Terputus", "Menggunakan data offline. Beberapa fitur mungkin terbatas.");
+            }
+        }
+
+        // Load user data dari Firestore
+        async function loadUserData(userId) {
+            try {
+                if (!window.firebaseGetDoc || !window.firebaseDoc || !window.firebaseDb) return;
+                
+                const userDoc = await window.firebaseGetDoc(window.firebaseDoc(window.firebaseDb, "users", userId));
+                
+                if (userDoc.exists()) {
+                    userData = userDoc.data();
+                    
+                    // Simpan ke cache
+                    localStorage.setItem('kuiztown_user_data', JSON.stringify(userData));
+                    
+                    // Update UI
+                    updateProfileUI();
+                    
+                } else {
+                    console.error("User data not found");
+                }
+            } catch (error) {
+                console.error("Error loading user data:", error);
+            }
+        }
+
+        // Update UI dengan data pengguna
+        function updateProfileUI() {
+            if (!userData) return;
+            
+            // Profile info
+            document.getElementById('usernameDisplay').textContent = userData.username || 'User';
+            document.getElementById('emailDisplay').textContent = userData.email || 'user@example.com';
+            
+            // Badges
+            document.getElementById('badgeRank').textContent = userData.rank || 'PEMULA';
+            document.getElementById('highestLevel').textContent = userData.highestLevel || 'EASY - LV1';
+            
+            // Stats
+            const geoBalance = userData.geoBalance || 0;
+            document.getElementById('geoBalance').textContent = geoBalance.toLocaleString('id-ID', {
+                minimumFractionDigits: 1,
+                maximumFractionDigits: 1
+            });
+            
+            const lifeBalance = userData.lifeBalance || 0;
+            document.getElementById('lifeBalance').textContent = `${lifeBalance}/10`;
+            
+            document.getElementById('totalGeoEarned').textContent = (userData.totalGeoEarned || 0).toLocaleString('id-ID', {
+                minimumFractionDigits: 1,
+                maximumFractionDigits: 1
+            });
+            
+            document.getElementById('totalLifeUsed').textContent = userData.totalLifeUsed || 0;
+            
+            // Account info
+            document.getElementById('usernameInfo').textContent = userData.username || '-';
+            document.getElementById('emailInfo').textContent = userData.email || '-';
+            document.getElementById('phoneInfo').textContent = userData.phone || 'Belum diatur';
+            document.getElementById('referralCode').textContent = userData.referralCode || '-';
+            document.getElementById('invitedBy').textContent = userData.invitedBy || '-';
+            
+            // Join date
+            if (userData.createdAt) {
+                const date = userData.createdAt.toDate ? userData.createdAt.toDate() : new Date(userData.createdAt);
+                document.getElementById('joinDate').textContent = date.toLocaleDateString('id-ID', {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric'
+                });
+            } else {
+                document.getElementById('joinDate').textContent = '-';
+            }
+            
+            // Avatar
+            if (userData.avatarUrl) {
+                const avatarContainer = document.getElementById('avatarContainer');
+                avatarContainer.innerHTML = `
+                    <img src="${userData.avatarUrl}" alt="Profile Avatar" style="width: 100%; height: 100%; object-fit: cover;">
+                    <div class="avatar-upload-btn" id="uploadAvatarBtn">
+                        <i class="fas fa-camera"></i>
+                    </div>
+                `;
+                document.getElementById('uploadAvatarBtn').addEventListener('click', openAvatarModal);
+            }
+        }
+
+        // Avatar functions
+        function openAvatarModal() {
+            document.getElementById('avatarModal').style.display = 'flex';
+        }
+
+        function closeAvatarModal() {
+            document.getElementById('avatarModal').style.display = 'none';
+            document.getElementById('avatarFile').value = '';
+            document.getElementById('avatarPreview').style.display = 'none';
+        }
+
+        function previewAvatar() {
+            const fileInput = document.getElementById('avatarFile');
+            const preview = document.getElementById('avatarPreview');
+            const previewImage = document.getElementById('previewImage');
+            
+            if (fileInput.files && fileInput.files[0]) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    previewImage.src = e.target.result;
+                    preview.style.display = 'block';
+                }
+                
+                reader.readAsDataURL(fileInput.files[0]);
+            }
+        }
+
+        async function uploadAvatar() {
+            const fileInput = document.getElementById('avatarFile');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                showError("Peringatan", "Silakan pilih gambar terlebih dahulu.");
+                return;
+            }
+            
+            // Validasi ukuran file (max 2MB)
+            if (file.size > 2 * 1024 * 1024) {
+                showError("File Terlalu Besar", "Ukuran gambar maksimal 2MB.");
+                return;
+            }
+            
+            try {
+                // Simulasi upload ke ImgBB API
+                document.getElementById('saveAvatarBtn').innerHTML = '<i class="fas fa-spinner fa-spin"></i> MENGUNGGAH...';
+                document.getElementById('saveAvatarBtn').disabled = true;
+                
+                // Di sini seharusnya upload ke ImgBB API
+                // Untuk demo, kita simulasikan saja
+                await new Promise(resolve => setTimeout(resolve, 1500));
+                
+                // Update data pengguna
+                if (userData && window.firebaseUpdateDoc && currentUser) {
+                    // URL gambar dari ImgBB (simulasi)
+                    const avatarUrl = `https://i.imgur.com/placeholder.jpg?t=${Date.now()}`;
+                    
+                    // Update Firestore
+                    await window.firebaseUpdateDoc(
+                        window.firebaseDoc(window.firebaseDb, "users", currentUser.uid),
+                        { avatarUrl: avatarUrl }
+                    );
+                    
+                    // Update cache lokal
+                    userData.avatarUrl = avatarUrl;
+                    localStorage.setItem('kuiztown_user_data', JSON.stringify(userData));
+                    
+                    // Update UI
+                    const avatarContainer = document.getElementById('avatarContainer');
+                    avatarContainer.innerHTML = `
+                        <img src="${avatarUrl}" alt="Profile Avatar" style="width: 100%; height: 100%; object-fit: cover;">
+                        <div class="avatar-upload-btn" id="uploadAvatarBtn">
+                            <i class="fas fa-camera"></i>
+                        </div>
+                    `;
+                    document.getElementById('uploadAvatarBtn').addEventListener('click', openAvatarModal);
+                    
+                    // Tampilkan pesan sukses
+                    showSuccess("Foto profil berhasil diubah!");
+                    closeAvatarModal();
+                }
+                
+            } catch (error) {
+                console.error("Error uploading avatar:", error);
+                showError("Gagal Mengunggah", "Terjadi kesalahan saat mengunggah gambar.");
+            } finally {
+                document.getElementById('saveAvatarBtn').innerHTML = 'Unggah';
+                document.getElementById('saveAvatarBtn').disabled = false;
+            }
+        }
+
+        // Password functions
+        function openPasswordModal() {
+            document.getElementById('passwordModal').style.display = 'flex';
+            // Clear form
+            document.getElementById('oldPassword').value = '';
+            document.getElementById('newPassword').value = '';
+            document.getElementById('confirmPassword').value = '';
+        }
+
+        function closePasswordModal() {
+            document.getElementById('passwordModal').style.display = 'none';
+        }
+
+        async function changePassword() {
+            const oldPassword = document.getElementById('oldPassword').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            // Validasi
+            if (!oldPassword || !newPassword || !confirmPassword) {
+                showError("Data Tidak Lengkap", "Harap isi semua field.");
+                return;
+            }
+            
+            if (newPassword !== confirmPassword) {
+                showError("Password Tidak Cocok", "Password baru dan konfirmasi password tidak cocok.");
+                return;
+            }
+            
+            if (newPassword.length < 6) {
+                showError("Password Terlalu Pendek", "Password minimal 6 karakter.");
+                return;
+            }
+            
+            try {
+                document.getElementById('savePasswordBtn').innerHTML = '<i class="fas fa-spinner fa-spin"></i> MENYIMPAN...';
+                document.getElementById('savePasswordBtn').disabled = true;
+                
+                // Update password di Firebase
+                if (window.firebaseUpdatePassword && currentUser) {
+                    // Re-authenticate dulu
+                    const credential = window.firebaseEmailAuthProvider.credential(
+                        currentUser.email,
+                        oldPassword
+                    );
+                    
+                    await window.firebaseReauthenticate(currentUser, credential);
+                    
+                    // Update password
+                    await window.firebaseUpdatePassword(currentUser, newPassword);
+                    
+                    // Tampilkan pesan sukses
+                    showSuccess("Password berhasil diubah!");
+                    closePasswordModal();
+                } else {
+                    showError("Sistem Tidak Tersedia", "Fitur ini tidak tersedia saat ini.");
+                }
+                
+            } catch (error) {
+                console.error("Error changing password:", error);
+                
+                if (error.code === 'auth/wrong-password') {
+                    showError("Password Salah", "Password lama yang Anda masukkan salah.");
+                } else if (error.code === 'auth/weak-password') {
+                    showError("Password Lemah", "Password terlalu lemah. Gunakan kombinasi yang lebih kuat.");
+                } else {
+                    showError("Gagal Mengubah Password", "Terjadi kesalahan saat mengubah password.");
+                }
+            } finally {
+                document.getElementById('savePasswordBtn').innerHTML = 'Simpan';
+                document.getElementById('savePasswordBtn').disabled = false;
+            }
+        }
+
+        // Username functions
+        function openUsernameModal() {
+            document.getElementById('usernameModal').style.display = 'flex';
+            // Set current username
+            document.getElementById('newUsername').value = userData?.username || '';
+            document.getElementById('usernamePassword').value = '';
+        }
+
+        function closeUsernameModal() {
+            document.getElementById('usernameModal').style.display = 'none';
+        }
+
+        async function changeUsername() {
+            const newUsername = document.getElementById('newUsername').value.trim();
+            const password = document.getElementById('usernamePassword').value;
+            
+            if (!newUsername) {
+                showError("Username Kosong", "Harap masukkan username baru.");
+                return;
+            }
+            
+            if (!password) {
+                showError("Password Kosong", "Harap masukkan password untuk konfirmasi.");
+                return;
+            }
+            
+            try {
+                document.getElementById('saveUsernameBtn').innerHTML = '<i class="fas fa-spinner fa-spin"></i> MENYIMPAN...';
+                document.getElementById('saveUsernameBtn').disabled = true;
+                
+                // Validasi password dulu
+                if (window.firebaseReauthenticate && currentUser) {
+                    const credential = window.firebaseEmailAuthProvider.credential(
+                        currentUser.email,
+                        password
+                    );
+                    
+                    await window.firebaseReauthenticate(currentUser, credential);
+                    
+                    // Update username di Firestore
+                    if (window.firebaseUpdateDoc) {
+                        await window.firebaseUpdateDoc(
+                            window.firebaseDoc(window.firebaseDb, "users", currentUser.uid),
+                            { username: newUsername }
+                        );
+                        
+                        // Update cache lokal
+                        userData.username = newUsername;
+                        localStorage.setItem('kuiztown_user_data', JSON.stringify(userData));
+                        
+                        // Update UI
+                        updateProfileUI();
+                        
+                        // Tampilkan pesan sukses
+                        showSuccess("Username berhasil diubah!");
+                        closeUsernameModal();
+                    }
+                } else {
+                    showError("Sistem Tidak Tersedia", "Fitur ini tidak tersedia saat ini.");
+                }
+                
+            } catch (error) {
+                console.error("Error changing username:", error);
+                
+                if (error.code === 'auth/wrong-password') {
+                    showError("Password Salah", "Password yang Anda masukkan salah.");
+                } else {
+                    showError("Gagal Mengubah Username", "Terjadi kesalahan saat mengubah username.");
+                }
+            } finally {
+                document.getElementById('saveUsernameBtn').innerHTML = 'Simpan';
+                document.getElementById('saveUsernameBtn').disabled = false;
+            }
+        }
+
+        // Phone functions
+        function openPhoneModal() {
+            document.getElementById('phoneModal').style.display = 'flex';
+            // Set current phone if exists
+            document.getElementById('newPhone').value = userData?.phone || '';
+            document.getElementById('phonePassword').value = '';
+        }
+
+        function closePhoneModal() {
+            document.getElementById('phoneModal').style.display = 'none';
+        }
+
+        async function changePhone() {
+            const newPhone = document.getElementById('newPhone').value.trim();
+            const password = document.getElementById('phonePassword').value;
+            
+            if (!password) {
+                showError("Password Kosong", "Harap masukkan password untuk konfirmasi.");
+                return;
+            }
+            
+            // Validasi nomor telepon (opsional)
+            if (newPhone && !/^[0-9]{10,15}$/.test(newPhone)) {
+                showError("Nomor Telepon Tidak Valid", "Harap masukkan nomor telepon yang valid.");
+                return;
+            }
+            
+            try {
+                document.getElementById('savePhoneBtn').innerHTML = '<i class="fas fa-spinner fa-spin"></i> MENYIMPAN...';
+                document.getElementById('savePhoneBtn').disabled = true;
+                
+                // Validasi password dulu
+                if (window.firebaseReauthenticate && currentUser) {
+                    const credential = window.firebaseEmailAuthProvider.credential(
+                        currentUser.email,
+                        password
+                    );
+                    
+                    await window.firebaseReauthenticate(currentUser, credential);
+                    
+                    // Update phone di Firestore
+                    if (window.firebaseUpdateDoc) {
+                        await window.firebaseUpdateDoc(
+                            window.firebaseDoc(window.firebaseDb, "users", currentUser.uid),
+                            { phone: newPhone || null }
+                        );
+                        
+                        // Update cache lokal
+                        userData.phone = newPhone || null;
+                        localStorage.setItem('kuiztown_user_data', JSON.stringify(userData));
+                        
+                        // Update UI
+                        updateProfileUI();
+                        
+                        // Tampilkan pesan sukses
+                        showSuccess("Nomor telepon berhasil diubah!");
+                        closePhoneModal();
+                    }
+                } else {
+                    showError("Sistem Tidak Tersedia", "Fitur ini tidak tersedia saat ini.");
+                }
+                
+            } catch (error) {
+                console.error("Error changing phone:", error);
+                
+                if (error.code === 'auth/wrong-password') {
+                    showError("Password Salah", "Password yang Anda masukkan salah.");
+                } else {
+                    showError("Gagal Mengubah Nomor Telepon", "Terjadi kesalahan saat mengubah nomor telepon.");
+                }
+            } finally {
+                document.getElementById('savePhoneBtn').innerHTML = 'Simpan';
+                document.getElementById('savePhoneBtn').disabled = false;
+            }
+        }
+
+        // Logout function
+        async function logoutUser() {
+            if (confirm("Apakah Anda yakin ingin keluar dari akun?")) {
+                try {
+                    if (window.firebaseSignOut) {
+                        await window.firebaseSignOut(window.firebaseAuth);
+                    }
+                    
+                    // Clear cache
+                    localStorage.removeItem('kuiztown_user_data');
+                    
+                    // Redirect ke login
+                    window.location.href = 'login.html';
+                } catch (error) {
+                    console.error("Error logging out:", error);
+                    showError("Gagal Keluar", "Terjadi kesalahan saat mencoba keluar.");
+                }
+            }
+        }
+
+        // Helper functions
+        function showSuccess(message) {
+            document.getElementById('successMessage').textContent = message;
+            document.getElementById('successModal').style.display = 'flex';
+        }
+
+        function showError(title, message) {
+            document.getElementById('errorMessage').textContent = `${title}: ${message}`;
+            document.getElementById('errorModal').style.display = 'flex';
+        }
+    </script>
+</body>
+</html>

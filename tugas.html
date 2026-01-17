@@ -1,0 +1,1591 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tugas - KuizTown</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #5F729F;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255, 192, 203, 0.08) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(255, 192, 203, 0.08) 0%, transparent 20%),
+                radial-gradient(circle at 50% 50%, rgba(255, 192, 203, 0.05) 0%, transparent 30%);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* Geometric Pattern Background */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(30deg, rgba(255, 192, 203, 0.05) 12%, transparent 12.5%, transparent 87%, rgba(255, 192, 203, 0.05) 87.5%, rgba(255, 192, 203, 0.05)),
+                linear-gradient(150deg, rgba(255, 192, 203, 0.05) 12%, transparent 12.5%, transparent 87%, rgba(255, 192, 203, 0.05) 87.5%, rgba(255, 192, 203, 0.05)),
+                linear-gradient(30deg, rgba(255, 192, 203, 0.05) 12%, transparent 12.5%, transparent 87%, rgba(255, 192, 203, 0.05) 87.5%, rgba(255, 192, 203, 0.05)),
+                linear-gradient(150deg, rgba(255, 192, 203, 0.05) 12%, transparent 12.5%, transparent 87%, rgba(255, 192, 203, 0.05) 87.5%, rgba(255, 192, 203, 0.05)),
+                linear-gradient(60deg, rgba(255, 192, 203, 0.08) 25%, transparent 25.5%, transparent 75%, rgba(255, 192, 203, 0.08) 75%, rgba(255, 192, 203, 0.08)),
+                linear-gradient(60deg, rgba(255, 192, 203, 0.08) 25%, transparent 25.5%, transparent 75%, rgba(255, 192, 203, 0.08) 75%, rgba(255, 192, 203, 0.08));
+            background-size: 80px 140px;
+            background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
+            opacity: 0.3;
+            z-index: -1;
+        }
+        
+        /* Container */
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 0 15px 80px; /* Padding bottom untuk nav bar */
+        }
+        
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            margin-bottom: 10px;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo-icon {
+            font-size: 28px;
+            background: linear-gradient(135deg, #9b59b6, #3498db);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .logo-text {
+            font-size: 20px;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .notification-icon {
+            color: white;
+            font-size: 22px;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: #ff6b6b;
+            color: white;
+            font-size: 12px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Tab Navigation */
+        .tab-nav {
+            display: flex;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tab-btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            background: transparent;
+            font-weight: 600;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .tab-btn.active {
+            background: linear-gradient(135deg, #87CEEB, #5F729F);
+            color: white;
+        }
+        
+        .tab-btn:hover:not(.active) {
+            background: rgba(135, 206, 235, 0.1);
+        }
+        
+        /* Tab Content */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Skeleton Loading */
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+            border-radius: 8px;
+        }
+        
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        
+        .skeleton-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .skeleton-title {
+            width: 120px;
+            height: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .skeleton-text {
+            width: 100%;
+            height: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        
+        .skeleton-reward {
+            width: 80px;
+            height: 25px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        
+        .skeleton-button {
+            width: 100%;
+            height: 40px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+        
+        /* Card Styles */
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .card-title {
+            font-size: 1.1rem;
+            color: #444;
+            margin-bottom: 15px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .card-title i {
+            color: #87CEEB;
+        }
+        
+        /* User Info Card */
+        .user-info-card {
+            background: linear-gradient(135deg, rgba(135, 206, 235, 0.9), rgba(90, 200, 250, 0.9));
+            color: white;
+        }
+        
+        .user-info-card .card-title {
+            color: white;
+        }
+        
+        .user-info-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .user-stat {
+            text-align: center;
+            flex: 1;
+        }
+        
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        /* Task Card */
+        .task-card {
+            border-left: 5px solid #87CEEB;
+            transition: transform 0.3s ease;
+        }
+        
+        .task-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .task-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+        
+        .task-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .task-desc {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        
+        .task-reward {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(144, 238, 144, 0.2);
+            color: #2e8b57;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-right: 10px;
+        }
+        
+        .task-reward.life {
+            background: rgba(255, 192, 203, 0.2);
+            color: #d87093;
+        }
+        
+        .task-status {
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .status-pending {
+            background: rgba(255, 215, 0, 0.2);
+            color: #b8860b;
+        }
+        
+        .status-approved {
+            background: rgba(144, 238, 144, 0.2);
+            color: #2e8b57;
+        }
+        
+        .status-rejected {
+            background: rgba(255, 105, 105, 0.2);
+            color: #dc143c;
+        }
+        
+        .task-actions {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+        }
+        
+        /* Button Styles */
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #87CEEB, #5F729F);
+            color: white;
+            flex: 1;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(135, 206, 235, 0.3);
+        }
+        
+        .btn-secondary {
+            background: rgba(135, 206, 235, 0.1);
+            color: #5F729F;
+            border: 1px solid rgba(135, 206, 235, 0.3);
+            flex: 1;
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(135, 206, 235, 0.2);
+        }
+        
+        .btn-sm {
+            padding: 8px 15px;
+            font-size: 0.9rem;
+        }
+        
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+        
+        /* Task Detail Form */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #444;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            transition: border 0.3s ease;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: #87CEEB;
+            box-shadow: 0 0 0 3px rgba(135, 206, 235, 0.2);
+        }
+        
+        textarea.form-control {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .link-preview {
+            background: rgba(135, 206, 235, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .link-preview a {
+            color: #5F729F;
+            font-weight: 500;
+            text-decoration: none;
+            word-break: break-all;
+        }
+        
+        .link-preview a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Upload Area */
+        .upload-area {
+            border: 2px dashed #87CEEB;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            background: rgba(135, 206, 235, 0.05);
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .upload-area:hover {
+            background: rgba(135, 206, 235, 0.1);
+        }
+        
+        .upload-icon {
+            font-size: 40px;
+            color: #87CEEB;
+            margin-bottom: 15px;
+        }
+        
+        .upload-text {
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        .upload-subtext {
+            color: #999;
+            font-size: 0.9rem;
+        }
+        
+        .preview-image {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: 10px;
+            margin-top: 15px;
+            display: none;
+        }
+        
+        /* Footer Navigation */
+        .nav-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            padding: 12px 0;
+            display: flex;
+            justify-content: space-around;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+            z-index: 1000;
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #666;
+            transition: all 0.3s ease;
+            flex: 1;
+            padding: 5px 0;
+        }
+        
+        .nav-item.active {
+            color: #87CEEB;
+        }
+        
+        .nav-icon {
+            font-size: 20px;
+            margin-bottom: 3px;
+        }
+        
+        .nav-text {
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        
+        /* Separator */
+        .separator {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            margin: 20px 0;
+        }
+        
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
+        .empty-icon {
+            font-size: 60px;
+            color: rgba(135, 206, 235, 0.5);
+            margin-bottom: 20px;
+        }
+        
+        .empty-title {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        .empty-desc {
+            color: #999;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            padding: 25px;
+            border-radius: 15px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            animation: modalFadeIn 0.3s ease-out;
+        }
+        
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+        
+        .modal-icon {
+            font-size: 50px;
+            margin-bottom: 20px;
+        }
+        
+        .success .modal-icon {
+            color: #90EE90;
+        }
+        
+        .error .modal-icon {
+            color: #ff6b6b;
+        }
+        
+        .modal-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .modal-message {
+            color: #666;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+        
+        .modal-btn {
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #87CEEB, #5F729F);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .modal-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(135, 206, 235, 0.4);
+        }
+        
+        /* Responsive */
+        @media (min-width: 768px) {
+            .container {
+                max-width: 600px;
+            }
+            
+            .user-info-stats {
+                justify-content: space-around;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .task-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .task-status {
+                margin-top: 10px;
+            }
+            
+            .upload-area {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="logo-container">
+                <i class="fas fa-shapes logo-icon"></i>
+                <span class="logo-text">KuizTown</span>
+            </div>
+            <div class="notification-icon">
+                <i class="fas fa-bell"></i>
+                <span class="notification-badge" id="taskNotification">0</span>
+            </div>
+        </header>
+        
+        <!-- Tab Navigation -->
+        <div class="tab-nav">
+            <button class="tab-btn active" data-tab="tasks">
+                <i class="fas fa-tasks"></i> Tugas
+            </button>
+            <button class="tab-btn" data-tab="history">
+                <i class="fas fa-history"></i> Riwayat
+            </button>
+        </div>
+        
+        <!-- Skeleton Loading -->
+        <div id="skeletonLoading">
+            <div class="skeleton-card">
+                <div class="skeleton skeleton-title"></div>
+                <div class="skeleton-text"></div>
+                <div class="skeleton-text" style="width: 80%;"></div>
+                <div class="skeleton-reward"></div>
+                <div class="skeleton-button"></div>
+            </div>
+            
+            <div class="skeleton-card">
+                <div class="skeleton skeleton-title"></div>
+                <div class="skeleton-text"></div>
+                <div class="skeleton-text" style="width: 80%;"></div>
+                <div class="skeleton-reward"></div>
+                <div class="skeleton-button"></div>
+            </div>
+            
+            <div class="skeleton-card">
+                <div class="skeleton skeleton-title"></div>
+                <div class="skeleton-text"></div>
+                <div class="skeleton-text" style="width: 80%;"></div>
+                <div class="skeleton-reward"></div>
+                <div class="skeleton-button"></div>
+            </div>
+        </div>
+        
+        <!-- Tab Content: Tugas Aktif -->
+        <div id="tasksTab" class="tab-content active">
+            <!-- User Info Card -->
+            <div class="card user-info-card">
+                <h2 class="card-title">
+                    <i class="fas fa-user-check"></i> Info Anda
+                </h2>
+                <div class="user-info-stats">
+                    <div class="user-stat">
+                        <div class="stat-value" id="currentLife">0</div>
+                        <div class="stat-label">LIFE</div>
+                    </div>
+                    <div class="user-stat">
+                        <div class="stat-value" id="currentGeo">0,0</div>
+                        <div class="stat-label">GEO</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="separator"></div>
+            
+            <!-- Welcome Section -->
+            <div class="card">
+                <h2 class="card-title">
+                    <i class="fas fa-hand-sparkles"></i> Selamat Datang di Tugas!
+                </h2>
+                <p style="color: #666; line-height: 1.6;">
+                    Selesaikan tugas dari admin dan dapatkan reward berupa GEO atau LIFE. 
+                    Pastikan untuk mengikuti instruksi dengan benar dan upload bukti yang sesuai.
+                </p>
+            </div>
+            
+            <div class="separator"></div>
+            
+            <!-- Active Tasks -->
+            <h2 class="card-title" style="color: white; margin-bottom: 15px;">
+                <i class="fas fa-list-check"></i> Tugas Aktif
+            </h2>
+            <div id="activeTasksList">
+                <!-- Active tasks will be dynamically added here -->
+            </div>
+            
+            <!-- Empty State for Active Tasks -->
+            <div id="noActiveTasks" class="empty-state" style="display: none;">
+                <div class="empty-icon">
+                    <i class="fas fa-clipboard-check"></i>
+                </div>
+                <h3 class="empty-title">Tidak Ada Tugas Aktif</h3>
+                <p class="empty-desc">
+                    Saat ini tidak ada tugas yang tersedia. 
+                    Silakan cek kembali nanti atau hubungi admin.
+                </p>
+            </div>
+        </div>
+        
+        <!-- Tab Content: Riwayat Tugas -->
+        <div id="historyTab" class="tab-content">
+            <h2 class="card-title" style="color: white; margin-bottom: 15px;">
+                <i class="fas fa-history"></i> Riwayat Tugas
+            </h2>
+            <div id="taskHistoryList">
+                <!-- Task history will be dynamically added here -->
+            </div>
+            
+            <!-- Empty State for History -->
+            <div id="noTaskHistory" class="empty-state" style="display: none;">
+                <div class="empty-icon">
+                    <i class="fas fa-scroll"></i>
+                </div>
+                <h3 class="empty-title">Belum Ada Riwayat</h3>
+                <p class="empty-desc">
+                    Anda belum menyelesaikan tugas apapun. 
+                    Coba selesaikan tugas dari daftar "Tugas Aktif".
+                </p>
+            </div>
+        </div>
+        
+        <!-- Tab Content: Detail Tugas -->
+        <div id="taskDetailTab" class="tab-content">
+            <!-- Back Button -->
+            <div style="margin-bottom: 20px;">
+                <button id="backToTasksBtn" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Kembali ke Tugas
+                </button>
+            </div>
+            
+            <!-- Task Detail -->
+            <div class="card">
+                <h2 class="card-title" id="detailTaskTitle">
+                    <i class="fas fa-tasks"></i> Loading...
+                </h2>
+                <p id="detailTaskDesc" style="color: #666; line-height: 1.6; margin-bottom: 20px;">
+                    Memuat deskripsi tugas...
+                </p>
+                
+                <div class="link-preview" id="taskLinkPreview" style="display: none;">
+                    <strong><i class="fas fa-link"></i> Link Tujuan:</strong><br>
+                    <a href="#" target="_blank" id="taskLink">Loading...</a>
+                </div>
+                
+                <div id="taskInstructions" style="background: #f9f9f9; padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+                    <strong><i class="fas fa-info-circle"></i> Instruksi:</strong><br>
+                    <p id="instructionText" style="margin-top: 10px; color: #555;">
+                        Memuat instruksi...
+                    </p>
+                </div>
+                
+                <div style="display: flex; gap: 15px; margin-bottom: 20px;">
+                    <div class="task-reward" id="geoRewardBadge" style="display: none;">
+                        <i class="fas fa-seedling"></i> +0,0 GEO
+                    </div>
+                    <div class="task-reward life" id="lifeRewardBadge" style="display: none;">
+                        <i class="fas fa-heart"></i> +0 LIFE
+                    </div>
+                </div>
+                
+                <div class="separator"></div>
+                
+                <!-- Upload Bukti -->
+                <h3 class="card-title" style="font-size: 1rem;">
+                    <i class="fas fa-camera"></i> Upload Bukti Tugas
+                </h3>
+                
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                    </div>
+                    <div class="upload-text">
+                        Klik atau seret file gambar ke sini
+                    </div>
+                    <div class="upload-subtext">
+                        Format: JPG, PNG (Maks. 5MB)
+                    </div>
+                    <input type="file" id="proofUpload" accept="image/*" style="display: none;">
+                    <img id="proofPreview" class="preview-image" alt="Preview Bukti">
+                </div>
+                
+                <!-- Catatan -->
+                <div class="form-group">
+                    <label class="form-label" for="taskNotes">
+                        <i class="fas fa-sticky-note"></i> Catatan (Opsional)
+                    </label>
+                    <textarea class="form-control" id="taskNotes" 
+                              placeholder="Tambahkan catatan untuk admin..."></textarea>
+                </div>
+                
+                <!-- Submit Button -->
+                <button id="submitTaskBtn" class="btn btn-primary" disabled>
+                    <i class="fas fa-paper-plane"></i> KIRIM TUGAS
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer Navigation -->
+    <nav class="nav-footer">
+        <a href="dashboard.html" class="nav-item">
+            <i class="fas fa-home nav-icon"></i>
+            <span class="nav-text">Home</span>
+        </a>
+        <a href="quiz.html" class="nav-item">
+            <i class="fas fa-brain nav-icon"></i>
+            <span class="nav-text">Quiz</span>
+        </a>
+        <a href="tugas.html" class="nav-item active">
+            <i class="fas fa-tasks nav-icon"></i>
+            <span class="nav-text">Tugas</span>
+        </a>
+        <a href="referral.html" class="nav-item">
+            <i class="fas fa-user-friends nav-icon"></i>
+            <span class="nav-text">Referral</span>
+        </a>
+        <a href="profil.html" class="nav-item">
+            <i class="fas fa-user nav-icon"></i>
+            <span class="nav-text">Profil</span>
+        </a>
+    </nav>
+    
+    <!-- Success Modal -->
+    <div id="successModal" class="modal">
+        <div class="modal-content success">
+            <i class="fas fa-check-circle modal-icon"></i>
+            <h2 class="modal-title">Tugas Terkirim!</h2>
+            <p class="modal-message">
+                Tugas Anda telah dikirim ke admin. Tunggu beberapa saat untuk admin mereview hasil tugas Anda.
+            </p>
+            <button class="modal-btn" id="closeSuccessModal">OK</button>
+        </div>
+    </div>
+    
+    <!-- Error Modal -->
+    <div id="errorModal" class="modal">
+        <div class="modal-content error">
+            <i class="fas fa-exclamation-circle modal-icon"></i>
+            <h2 class="modal-title">Terjadi Kesalahan</h2>
+            <p class="modal-message" id="errorMessage">
+                Terjadi kesalahan saat memproses permintaan.
+            </p>
+            <button class="modal-btn" id="closeErrorModal">Tutup</button>
+        </div>
+    </div>
+
+    <script>
+        // Cache untuk data user dan tugas
+        let cachedUserData = null;
+        let currentTasks = [];
+        let taskHistory = [];
+        let currentTaskId = null;
+        let proofImageUrl = null;
+        
+        // Inisialisasi aplikasi
+        document.addEventListener('DOMContentLoaded', async function() {
+            // Cek apakah user sudah login dari localStorage
+            const cachedData = localStorage.getItem('kuiztown_user_data');
+            if (cachedData) {
+                cachedUserData = JSON.parse(cachedData);
+                // Tampilkan data cached terlebih dahulu (instan)
+                updateUserInfoFromCache();
+            }
+            
+            // Load Firebase dengan deferred loading
+            await loadFirebase();
+            
+            // Setup authentication listener
+            setupAuthListener();
+            
+            // Setup event listeners
+            setupEventListeners();
+        });
+        
+        // Load Firebase dengan deferred loading
+        async function loadFirebase() {
+            try {
+                // Load Firebase SDK secara dinamis
+                const firebaseScript = document.createElement('script');
+                firebaseScript.type = 'module';
+                firebaseScript.textContent = `
+                    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
+                    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
+                    import { getFirestore, doc, getDoc, collection, getDocs, addDoc, updateDoc } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
+
+                    const firebaseConfig = {
+                        apiKey: "AIzaSyB9DCc6rCmeXl0O3CCLYe6zUmfByfRz428",
+                        authDomain: "kuiztown.firebaseapp.com",
+                        projectId: "kuiztown",
+                        storageBucket: "kuiztown.firebasestorage.app",
+                        messagingSenderId: "334081803913",
+                        appId: "1:334081803913:web:84899b42961e12f538a858"
+                    };
+
+                    const app = initializeApp(firebaseConfig);
+                    const auth = getAuth(app);
+                    const db = getFirestore(app);
+                    
+                    window.firebaseApp = app;
+                    window.firebaseAuth = auth;
+                    window.firebaseOnAuthStateChanged = onAuthStateChanged;
+                    window.firebaseDb = db;
+                    window.firebaseDoc = doc;
+                    window.firebaseGetDoc = getDoc;
+                    window.firebaseCollection = collection;
+                    window.firebaseGetDocs = getDocs;
+                    window.firebaseAddDoc = addDoc;
+                    window.firebaseUpdateDoc = updateDoc;
+                    
+                    console.log("Firebase loaded successfully");
+                `;
+                document.head.appendChild(firebaseScript);
+                
+                // Tunggu Firebase selesai load
+                await new Promise(resolve => {
+                    const checkFirebase = setInterval(() => {
+                        if (window.firebaseAuth) {
+                            clearInterval(checkFirebase);
+                            resolve();
+                        }
+                    }, 100);
+                });
+                
+            } catch (error) {
+                console.error("Error loading Firebase:", error);
+                showErrorModal("Koneksi Terputus", "Menggunakan data offline. Beberapa fitur mungkin terbatas.");
+                loadSampleTasks(); // Load sample data jika Firebase gagal
+            }
+        }
+        
+        // Setup authentication listener
+        function setupAuthListener() {
+            if (!window.firebaseOnAuthStateChanged) return;
+            
+            window.firebaseOnAuthStateChanged(window.firebaseAuth, async (user) => {
+                if (user) {
+                    // User is logged in, load fresh data
+                    await loadUserData(user.uid);
+                    await loadTasksData(user.uid);
+                } else {
+                    // User is not logged in, redirect to login
+                    window.location.href = 'login.html';
+                }
+            });
+        }
+        
+        // Setup event listeners
+        function setupEventListeners() {
+            // Tab navigation
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const tabId = btn.getAttribute('data-tab');
+                    switchTab(tabId);
+                });
+            });
+            
+            // Back to tasks button
+            document.getElementById('backToTasksBtn').addEventListener('click', () => {
+                switchTab('tasks');
+                resetTaskDetail();
+            });
+            
+            // Upload area click
+            document.getElementById('uploadArea').addEventListener('click', () => {
+                document.getElementById('proofUpload').click();
+            });
+            
+            // File upload change
+            document.getElementById('proofUpload').addEventListener('change', handleFileUpload);
+            
+            // Submit task button
+            document.getElementById('submitTaskBtn').addEventListener('click', submitTask);
+            
+            // Close modals
+            document.getElementById('closeSuccessModal').addEventListener('click', () => {
+                document.getElementById('successModal').style.display = 'none';
+                switchTab('tasks');
+            });
+            
+            document.getElementById('closeErrorModal').addEventListener('click', () => {
+                document.getElementById('errorModal').style.display = 'none';
+            });
+            
+            // Close modals when clicking outside
+            window.addEventListener('click', function(event) {
+                const modals = ['successModal', 'errorModal'];
+                
+                modals.forEach(modalId => {
+                    const modal = document.getElementById(modalId);
+                    if (event.target === modal) {
+                        modal.style.display = 'none';
+                    }
+                });
+            });
+        }
+        
+        // Tampilkan data user dari cache
+        function updateUserInfoFromCache() {
+            if (!cachedUserData) return;
+            
+            document.getElementById('currentLife').textContent = cachedUserData.lifeBalance || 0;
+            
+            const geoBalance = cachedUserData.geoBalance || 0;
+            document.getElementById('currentGeo').textContent = geoBalance.toLocaleString('id-ID', {
+                minimumFractionDigits: 1,
+                maximumFractionDigits: 1
+            });
+        }
+        
+        // Load user data dari Firestore
+        async function loadUserData(userId) {
+            try {
+                const userDoc = await window.firebaseGetDoc(window.firebaseDoc(window.firebaseDb, "users", userId));
+                
+                if (userDoc.exists()) {
+                    const freshData = userDoc.data();
+                    
+                    // Cache data baru
+                    localStorage.setItem('kuiztown_user_data', JSON.stringify(freshData));
+                    cachedUserData = freshData;
+                    
+                    // Update UI dengan data baru
+                    updateUserInfoFromCache();
+                    
+                } else {
+                    console.error("User data not found");
+                }
+            } catch (error) {
+                console.error("Error loading user data:", error);
+            }
+        }
+        
+        // Load tasks data
+        async function loadTasksData(userId) {
+            try {
+                // Load active tasks
+                const tasksSnapshot = await window.firebaseGetDocs(
+                    window.firebaseCollection(window.firebaseDb, "tasks")
+                );
+                
+                currentTasks = [];
+                tasksSnapshot.forEach(doc => {
+                    const task = doc.data();
+                    task.id = doc.id;
+                    if (task.status === 'active') {
+                        currentTasks.push(task);
+                    }
+                });
+                
+                // Load task history for this user
+                const historySnapshot = await window.firebaseGetDocs(
+                    window.firebaseCollection(window.firebaseDb, "taskSubmissions")
+                );
+                
+                taskHistory = [];
+                historySnapshot.forEach(doc => {
+                    const submission = doc.data();
+                    if (submission.userId === userId) {
+                        submission.id = doc.id;
+                        taskHistory.push(submission);
+                    }
+                });
+                
+                // Update UI
+                updateTasksUI();
+                
+            } catch (error) {
+                console.error("Error loading tasks:", error);
+                loadSampleTasks(); // Load sample data jika error
+            }
+        }
+        
+        // Load sample tasks (fallback)
+        function loadSampleTasks() {
+            // Hide skeleton
+            document.getElementById('skeletonLoading').style.display = 'none';
+            
+            // Sample active tasks
+            currentTasks = [
+                {
+                    id: 'task1',
+                    title: 'Follow Instagram KuizTown',
+                    description: 'Follow akun Instagram resmi KuizTown dan screenshot buktinya.',
+                    instructions: '1. Buka Instagram\n2. Cari @kuiztown.official\n3. Follow akun tersebut\n4. Screenshot halaman profil yang sudah di-follow',
+                    link: 'https://instagram.com',
+                    geoReward: 5.0,
+                    lifeReward: 0,
+                    status: 'active'
+                },
+                {
+                    id: 'task2',
+                    title: 'Subscribe YouTube Channel',
+                    description: 'Subscribe channel YouTube KuizTown dan like video terbaru.',
+                    instructions: '1. Buka YouTube\n2. Cari "KuizTown Official"\n3. Subscribe channel\n4. Like video terbaru\n5. Screenshot bukti subscribe dan like',
+                    link: 'https://youtube.com',
+                    geoReward: 8.0,
+                    lifeReward: 2,
+                    status: 'active'
+                },
+                {
+                    id: 'task3',
+                    title: 'Share di Facebook',
+                    description: 'Bagikan link KuizTown di Facebook dengan tag 3 teman.',
+                    instructions: '1. Buka Facebook\n2. Buat post berisi link KuizTown\n3. Tag 3 teman Anda\n4. Screenshot post yang sudah dibuat',
+                    link: 'https://facebook.com',
+                    geoReward: 3.0,
+                    lifeReward: 1,
+                    status: 'active'
+                }
+            ];
+            
+            // Sample task history
+            taskHistory = [
+                {
+                    id: 'hist1',
+                    taskTitle: 'Join Telegram Group',
+                    status: 'approved',
+                    geoReward: 2.0,
+                    lifeReward: 0,
+                    submittedAt: '2023-10-15 14:30'
+                },
+                {
+                    id: 'hist2',
+                    taskTitle: 'Like Facebook Page',
+                    status: 'rejected',
+                    geoReward: 0,
+                    lifeReward: 0,
+                    submittedAt: '2023-10-10 09:15'
+                }
+            ];
+            
+            // Update UI
+            updateTasksUI();
+        }
+        
+        // Update tasks UI
+        function updateTasksUI() {
+            // Hide skeleton
+            document.getElementById('skeletonLoading').style.display = 'none';
+            
+            // Update notification badge
+            document.getElementById('taskNotification').textContent = currentTasks.length;
+            
+            // Update active tasks list
+            updateActiveTasksList();
+            
+            // Update task history list
+            updateTaskHistoryList();
+            
+            // Update user info
+            updateUserInfoFromCache();
+        }
+        
+        // Update active tasks list
+        function updateActiveTasksList() {
+            const container = document.getElementById('activeTasksList');
+            container.innerHTML = '';
+            
+            if (currentTasks.length === 0) {
+                document.getElementById('noActiveTasks').style.display = 'block';
+                return;
+            }
+            
+            document.getElementById('noActiveTasks').style.display = 'none';
+            
+            currentTasks.forEach(task => {
+                const taskCard = createTaskCard(task);
+                container.appendChild(taskCard);
+            });
+        }
+        
+        // Create task card element
+        function createTaskCard(task) {
+            const card = document.createElement('div');
+            card.className = 'card task-card';
+            
+            // Format reward badges
+            let rewardBadges = '';
+            if (task.geoReward > 0) {
+                rewardBadges += `<span class="task-reward"><i class="fas fa-seedling"></i> +${task.geoReward.toLocaleString('id-ID', {minimumFractionDigits: 1, maximumFractionDigits: 1})} GEO</span>`;
+            }
+            if (task.lifeReward > 0) {
+                rewardBadges += `<span class="task-reward life"><i class="fas fa-heart"></i> +${task.lifeReward} LIFE</span>`;
+            }
+            
+            card.innerHTML = `
+                <div class="task-header">
+                    <div>
+                        <div class="task-title">${task.title}</div>
+                        <div class="task-desc">${task.description}</div>
+                    </div>
+                </div>
+                <div>
+                    ${rewardBadges}
+                </div>
+                <div class="task-actions">
+                    <button class="btn btn-primary" data-task-id="${task.id}">
+                        <i class="fas fa-play"></i> AMBIL TUGAS
+                    </button>
+                </div>
+            `;
+            
+            // Add event listener to the button
+            const actionBtn = card.querySelector('button');
+            actionBtn.addEventListener('click', () => {
+                openTaskDetail(task.id);
+            });
+            
+            return card;
+        }
+        
+        // Update task history list
+        function updateTaskHistoryList() {
+            const container = document.getElementById('taskHistoryList');
+            container.innerHTML = '';
+            
+            if (taskHistory.length === 0) {
+                document.getElementById('noTaskHistory').style.display = 'block';
+                return;
+            }
+            
+            document.getElementById('noTaskHistory').style.display = 'none';
+            
+            taskHistory.forEach(submission => {
+                const historyCard = createHistoryCard(submission);
+                container.appendChild(historyCard);
+            });
+        }
+        
+        // Create history card element
+        function createHistoryCard(submission) {
+            const card = document.createElement('div');
+            card.className = 'card task-card';
+            
+            // Status class and text
+            let statusClass = '';
+            let statusText = '';
+            let rewardText = '';
+            
+            switch(submission.status) {
+                case 'approved':
+                    statusClass = 'status-approved';
+                    statusText = 'APPROVE';
+                    if (submission.geoReward > 0) {
+                        rewardText = `+${submission.geoReward.toLocaleString('id-ID', {minimumFractionDigits: 1, maximumFractionDigits: 1})} GEO`;
+                    }
+                    if (submission.lifeReward > 0) {
+                        if (rewardText) rewardText += ' & ';
+                        rewardText += `+${submission.lifeReward} LIFE`;
+                    }
+                    break;
+                case 'rejected':
+                    statusClass = 'status-rejected';
+                    statusText = 'REJECT';
+                    rewardText = '<i class="fas fa-times"></i>';
+                    break;
+                case 'pending':
+                    statusClass = 'status-pending';
+                    statusText = 'PENDING';
+                    break;
+            }
+            
+            // Format date
+            const date = new Date(submission.submittedAt);
+            const formattedDate = date.toLocaleDateString('id-ID', {
+                day: 'numeric',
+                month: 'short',
+                year: 'numeric'
+            });
+            
+            card.innerHTML = `
+                <div class="task-header">
+                    <div>
+                        <div class="task-title">${submission.taskTitle}</div>
+                        <div class="task-desc">Disubmit pada ${formattedDate}</div>
+                    </div>
+                    <div class="task-status ${statusClass}">${statusText}</div>
+                </div>
+                <div>
+                    ${rewardText ? `<span class="task-reward">${rewardText}</span>` : ''}
+                </div>
+            `;
+            
+            return card;
+        }
+        
+        // Switch between tabs
+        function switchTab(tabId) {
+            // Update tab buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('data-tab') === tabId) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            // Update tab content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            document.getElementById(tabId + 'Tab').classList.add('active');
+        }
+        
+        // Open task detail
+        function openTaskDetail(taskId) {
+            const task = currentTasks.find(t => t.id === taskId);
+            if (!task) return;
+            
+            currentTaskId = taskId;
+            
+            // Update task detail UI
+            document.getElementById('detailTaskTitle').innerHTML = `<i class="fas fa-tasks"></i> ${task.title}`;
+            document.getElementById('detailTaskDesc').textContent = task.description;
+            document.getElementById('instructionText').innerHTML = task.instructions.replace(/\n/g, '<br>');
+            
+            // Update link
+            if (task.link) {
+                document.getElementById('taskLinkPreview').style.display = 'block';
+                const linkElement = document.getElementById('taskLink');
+                linkElement.href = task.link;
+                linkElement.textContent = task.link;
+            } else {
+                document.getElementById('taskLinkPreview').style.display = 'none';
+            }
+            
+            // Update rewards
+            if (task.geoReward > 0) {
+                document.getElementById('geoRewardBadge').style.display = 'inline-flex';
+                document.getElementById('geoRewardBadge').innerHTML = 
+                    `<i class="fas fa-seedling"></i> +${task.geoReward.toLocaleString('id-ID', {minimumFractionDigits: 1, maximumFractionDigits: 1})} GEO`;
+            } else {
+                document.getElementById('geoRewardBadge').style.display = 'none';
+            }
+            
+            if (task.lifeReward > 0) {
+                document.getElementById('lifeRewardBadge').style.display = 'inline-flex';
+                document.getElementById('lifeRewardBadge').innerHTML = 
+                    `<i class="fas fa-heart"></i> +${task.lifeReward} LIFE`;
+            } else {
+                document.getElementById('lifeRewardBadge').style.display = 'none';
+            }
+            
+            // Switch to task detail tab
+            document.getElementById('taskDetailTab').classList.add('active');
+            document.querySelectorAll('.tab-content').forEach(content => {
+                if (content.id !== 'taskDetailTab') {
+                    content.classList.remove('active');
+                }
+            });
+            
+            // Reset upload area
+            resetUploadArea();
+        }
+        
+        // Reset task detail form
+        function resetTaskDetail() {
+            proofImageUrl = null;
+            resetUploadArea();
+            document.getElementById('taskNotes').value = '';
+            document.getElementById('submitTaskBtn').disabled = true;
+        }
+        
+        // Handle file upload
+        function handleFileUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            // Check file size (max 5MB)
+            if (file.size > 5 * 1024 * 1024) {
+                showErrorModal('File Terlalu Besar', 'Ukuran file maksimal 5MB');
+                return;
+            }
+            
+            // Check file type
+            if (!file.type.match('image.*')) {
+                showErrorModal('Format Tidak Valid', 'Hanya file gambar yang diperbolehkan');
+                return;
+            }
+            
+            // Simulate upload process
+            simulateImageUpload(file);
+        }
+        
+        // Simulate image upload (in real app, upload to ImgBB)
+        function simulateImageUpload(file) {
+            const reader = new FileReader();
+            const uploadArea = document.getElementById('uploadArea');
+            const previewImage = document.getElementById('proofPreview');
+            const submitBtn = document.getElementById('submitTaskBtn');
+            
+            // Show loading state
+            uploadArea.innerHTML = `
+                <div class="upload-icon">
+                    <i class="fas fa-spinner fa-spin"></i>
+                </div>
+                <div class="upload-text">
+                    Mengupload...
+                </div>
+            `;
+            
+            reader.onload = function(e) {
+                // Simulate upload delay
+                setTimeout(() => {
+                    // In real app, this would be the ImgBB URL
+                    proofImageUrl = e.target.result;
+                    
+                    // Update upload area
+                    uploadArea.innerHTML = `
+                        <div class="upload-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="upload-text">
+                            Upload Berhasil
+                        </div>
+                        <div class="upload-subtext">
+                            ${file.name}
+                        </div>
+                        <img id="proofPreview" class="preview-image" src="${proofImageUrl}" alt="Preview Bukti">
+                    `;
+                    
+                    // Show preview
+                    previewImage.style.display = 'block';
+                    
+                    // Enable submit button
+                    submitBtn.disabled = false;
+                    
+                }, 1500);
+            };
+            
+            reader.readAsDataURL(file);
+        }
+        
+        // Reset upload area
+        function resetUploadArea() {
+            const uploadArea = document.getElementById('uploadArea');
+            const previewImage = document.getElementById('proofPreview');
+            
+            uploadArea.innerHTML = `
+                <div class="upload-icon">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                </div>
+                <div class="upload-text">
+                    Klik atau seret file gambar ke sini
+                </div>
+                <div class="upload-subtext">
+                    Format: JPG, PNG (Maks. 5MB)
+                </div>
+                <input type="file" id="proofUpload" accept="image/*" style="display: none;">
+                <img id="proofPreview" class="preview-image" alt="Preview Bukti">
+            `;
+            
+            previewImage.style.display = 'none';
+            
+            // Re-attach event listener
+            document.getElementById('uploadArea').addEventListener('click', () => {
+                document.getElementById('proofUpload').click();
+            });
+            
+            document.getElementById('proofUpload').addEventListener('change', handleFileUpload);
+        }
+        
+        // Submit task
+        async function submitTask() {
+            if (!proofImageUrl) {
+                showErrorModal('Bukti Diperlukan', 'Harap upload bukti gambar terlebih dahulu');
+                return;
+            }
+            
+            const submitBtn = document.getElementById('submitTaskBtn');
+            const taskNotes = document.getElementById('taskNotes').value;
+            
+            // Disable button and show loading
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> MENGIRIM...';
+            
+            try {
+                // Simulate API call delay
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                // Add to task history locally
+                const task = currentTasks.find(t => t.id === currentTaskId);
+                if (task) {
+                    const newSubmission = {
+                        userId: 'current-user-id',
+                        taskId: currentTaskId,
+                        taskTitle: task.title,
+                        status: 'pending',
+                        geoReward: task.geoReward,
+                        lifeReward: task.lifeReward,
+                        proofUrl: proofImageUrl,
+                        notes: taskNotes,
+                        submittedAt: new Date().toISOString()
+                    };
+                    
+                    taskHistory.unshift(newSubmission);
+                    updateTaskHistoryList();
+                    
+                    // Remove from active tasks
+                    currentTasks = currentTasks.filter(t => t.id !== currentTaskId);
+                    updateActiveTasksList();
+                    
+                    // Show success modal
+                    document.getElementById('successModal').style.display = 'flex';
+                    
+                    // Reset form
+                    resetTaskDetail();
+                }
+                
+            } catch (error) {
+                console.error("Error submitting task:", error);
+                showErrorModal("Gagal Mengirim", "Terjadi kesalahan saat mengirim tugas. Silakan coba lagi.");
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> KIRIM TUGAS';
+            }
+        }
+        
+        // Show error modal
+        function showErrorModal(title, message) {
+            document.getElementById('errorMessage').textContent = message;
+            document.getElementById('errorModal').style.display = 'flex';
+        }
+    </script>
+</body>
+</html>

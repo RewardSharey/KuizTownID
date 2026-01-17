@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Riwayat - KuizTown</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #5F729F;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255, 192, 203, 0.08) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(255, 192, 203, 0.08) 0%, transparent 20%),
+                radial-gradient(circle at 50% 50%, rgba(255, 192, 203, 0.05) 0%, transparent 30%);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* Geometric Pattern Background */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(30deg, rgba(255, 192, 203, 0.05) 12%, transparent 12.5%, transparent 87%, rgba(255, 192, 203, 0.05) 87.5%, rgba(255, 192, 203, 0.05)),
+                linear-gradient(150deg, rgba(255, 192, 203, 0.05) 12%, transparent 12.5%, transparent 87%, rgba(255, 192, 203, 0.05) 87.5%, rgba(255, 192, 203, 0.05)),
+                linear-gradient(30deg, rgba(255, 192, 203, 0.05) 12%, transparent 12.5%, transparent 87%, rgba(255, 192, 203, 0.05) 87.5%, rgba(255, 192, 203, 0.05)),
+                linear-gradient(150deg, rgba(255, 192, 203, 0.05) 12%, transparent 12.5%, transparent 87%, rgba(255, 192, 203, 0.05) 87.5%, rgba(255, 192, 203, 0.05)),
+                linear-gradient(60deg, rgba(255, 192, 203, 0.08) 25%, transparent 25.5%, transparent 75%, rgba(255, 192, 203, 0.08) 75%, rgba(255, 192, 203, 0.08)),
+                linear-gradient(60deg, rgba(255, 192, 203, 0.08) 25%, transparent 25.5%, transparent 75%, rgba(255, 192, 203, 0.08) 75%, rgba(255, 192, 203, 0.08));
+            background-size: 80px 140px;
+            background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
+            opacity: 0.3;
+            z-index: -1;
+        }
+        
+        /* Container */
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 0 15px 40px; /* Padding bottom tanpa nav bar */
+        }
+        
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            margin-bottom: 10px;
+        }
+        
+        .back-btn {
+            color: white;
+            font-size: 22px;
+            cursor: pointer;
+            text-decoration: none;
+            background: none;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo-icon {
+            font-size: 28px;
+            background: linear-gradient(135deg, #9b59b6, #3498db);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .logo-text {
+            font-size: 20px;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .page-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #fff;
+            text-align: center;
+            flex: 1;
+        }
+        
+        /* Skeleton Loading */
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+            border-radius: 8px;
+        }
+        
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        
+        .skeleton-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .skeleton-title {
+            width: 120px;
+            height: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .skeleton-filter {
+            width: 100%;
+            height: 40px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+        }
+        
+        .skeleton-history-item {
+            width: 100%;
+            height: 80px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+        }
+        
+        /* Card Styles */
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .card-title {
+            font-size: 1.1rem;
+            color: #444;
+            margin-bottom: 15px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .card-title i {
+            color: #87CEEB;
+        }
+        
+        /* Filter Tabs */
+        .filter-tabs {
+            display: flex;
+            background: rgba(135, 206, 235, 0.1);
+            border-radius: 10px;
+            padding: 5px;
+            margin-bottom: 20px;
+            gap: 5px;
+        }
+        
+        .filter-tab {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            background: transparent;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .filter-tab.active {
+            background: #87CEEB;
+            color: white;
+            box-shadow: 0 2px 8px rgba(135, 206, 235, 0.3);
+        }
+        
+        .filter-tab:hover:not(.active) {
+            background: rgba(135, 206, 235, 0.2);
+        }
+        
+        /* History List */
+        .history-list {
+            max-height: 500px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+        
+        .history-item {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            border: 1px solid #f0f0f0;
+            transition: all 0.3s ease;
+        }
+        
+        .history-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-color: #87CEEB;
+        }
+        
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .history-title {
+            font-weight: 600;
+            color: #333;
+            font-size: 0.95rem;
+        }
+        
+        .history-date {
+            font-size: 0.8rem;
+            color: #888;
+        }
+        
+        .history-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .history-info {
+            font-size: 0.85rem;
+            color: #666;
+        }
+        
+        .history-reward {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #32CD32;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .history-status {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            gap: 5px;
+        }
+        
+        .status-success {
+            background: rgba(144, 238, 144, 0.1);
+            color: #90EE90;
+        }
+        
+        .status-pending {
+            background: rgba(255, 165, 0, 0.1);
+            color: #FFA500;
+        }
+        
+        .status-reject {
+            background: rgba(255, 99, 71, 0.1);
+            color: #FF6347;
+        }
+        
+        /* Ikon berdasarkan tipe */
+        .history-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            font-size: 16px;
+        }
+        
+        .icon-quiz {
+            background: rgba(135, 206, 235, 0.1);
+            color: #87CEEB;
+        }
+        
+        .icon-task {
+            background: rgba(255, 192, 203, 0.1);
+            color: #FFC0CB;
+        }
+        
+        .icon-withdraw {
+            background: rgba(144, 238, 144, 0.1);
+            color: #90EE90;
+        }
+        
+        /* Item layout */
+        .history-item-content {
+            display: flex;
+            align-items: center;
+        }
+        
+        .history-text-content {
+            flex: 1;
+        }
+        
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
+        .empty-icon {
+            font-size: 60px;
+            color: rgba(135, 206, 235, 0.4);
+            margin-bottom: 15px;
+        }
+        
+        .empty-title {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        .empty-desc {
+            color: #999;
+            font-size: 0.9rem;
+            max-width: 250px;
+            margin: 0 auto;
+            line-height: 1.4;
+        }
+        
+        /* Loading Overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 3000;
+            color: white;
+            font-size: 1.2rem;
+        }
+        
+        /* Separator */
+        .separator {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            margin: 20px 0;
+        }
+        
+        /* Scrollbar Styling */
+        .history-list::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .history-list::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+        
+        .history-list::-webkit-scrollbar-thumb {
+            background: rgba(135, 206, 235, 0.5);
+            border-radius: 10px;
+        }
+        
+        .history-list::-webkit-scrollbar-thumb:hover {
+            background: rgba(135, 206, 235, 0.7);
+        }
+        
+        /* Responsive */
+        @media (min-width: 768px) {
+            .container {
+                max-width: 600px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .history-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+            
+            .history-details {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+            
+            .history-status {
+                margin-top: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay" style="display: none;">
+        <div style="text-align: center;">
+            <i class="fas fa-spinner fa-spin" style="font-size: 3rem; margin-bottom: 20px;"></i>
+            <p>Memuat riwayat...</p>
+        </div>
+    </div>
+    
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <button class="back-btn" onclick="window.location.href='dashboard.html'">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <div class="page-title">HISTORI</div>
+            <div style="width: 40px;"></div> <!-- Spacer untuk alignment -->
+        </header>
+        
+        <!-- Skeleton Loading -->
+        <div id="skeletonLoading">
+            <div class="skeleton-card">
+                <div class="skeleton skeleton-title"></div>
+                <div class="skeleton skeleton-filter"></div>
+                <div class="skeleton skeleton-history-item"></div>
+                <div class="skeleton skeleton-history-item"></div>
+                <div class="skeleton skeleton-history-item"></div>
+            </div>
+        </div>
+        
+        <!-- Content Area -->
+        <div id="contentArea" style="display: none;">
+            <!-- Filter Tabs -->
+            <div class="card">
+                <h2 class="card-title">
+                    <i class="fas fa-history"></i> Riwayat Aktivitas
+                </h2>
+                
+                <div class="filter-tabs">
+                    <button class="filter-tab active" data-filter="all">Semua</button>
+                    <button class="filter-tab" data-filter="quiz">Quiz</button>
+                    <button class="filter-tab" data-filter="tugas">Tugas</button>
+                    <button class="filter-tab" data-filter="withdraw">Withdraw</button>
+                </div>
+            </div>
+            
+            <div class="separator"></div>
+            
+            <!-- History List -->
+            <div class="card">
+                <div class="history-list" id="historyList">
+                    <!-- History items will be loaded here -->
+                </div>
+                
+                <!-- Empty State -->
+                <div id="noHistory" class="empty-state">
+                    <div class="empty-icon">
+                        <i class="fas fa-history"></i>
+                    </div>
+                    <h3 class="empty-title">Belum Ada Aktivitas</h3>
+                    <p class="empty-desc">
+                        Anda belum memiliki riwayat aktivitas. Mulailah main kuis atau kerjakan tugas!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
+        import { getFirestore, collection, query, where, getDocs, orderBy } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
+
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyB9DCc6rCmeXl0O3CCLYe6zUmfByfRz428",
+            authDomain: "kuiztown.firebaseapp.com",
+            projectId: "kuiztown",
+            storageBucket: "kuiztown.firebasestorage.app",
+            messagingSenderId: "334081803913",
+            appId: "1:334081803913:web:84899b42961e12f538a858"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // Variables
+        let currentUser = null;
+        let currentFilter = 'all';
+        let allHistory = [];
+
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', function() {
+            setupEventListeners();
+            setupAuthListener();
+        });
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Filter tabs
+            document.querySelectorAll('.filter-tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Update active tab
+                    document.querySelectorAll('.filter-tab').forEach(t => {
+                        t.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                    
+                    // Update filter and refresh list
+                    currentFilter = this.getAttribute('data-filter');
+                    displayHistory();
+                });
+            });
+        }
+
+        // Setup authentication listener
+        function setupAuthListener() {
+            onAuthStateChanged(auth, async (user) => {
+                if (user) {
+                    currentUser = user;
+                    await loadHistoryData(user.uid);
+                } else {
+                    window.location.href = 'login.html';
+                }
+            });
+        }
+
+        // Load history data from Firestore
+        async function loadHistoryData(userId) {
+            showLoading(true);
+            
+            try {
+                allHistory = [];
+                
+                // Load quiz history
+                await loadQuizHistory(userId);
+                
+                // Load task history
+                await loadTaskHistory(userId);
+                
+                // Load withdraw history
+                await loadWithdrawHistory(userId);
+                
+                // Sort all history by date (newest first)
+                allHistory.sort((a, b) => {
+                    const dateA = a.timestamp?.toDate ? a.timestamp.toDate() : new Date(a.timestamp || 0);
+                    const dateB = b.timestamp?.toDate ? b.timestamp.toDate() : new Date(b.timestamp || 0);
+                    return dateB - dateA;
+                });
+                
+                // Hide skeleton and show content
+                document.getElementById('skeletonLoading').style.display = 'none';
+                document.getElementById('contentArea').style.display = 'block';
+                
+                // Display history
+                displayHistory();
+                
+            } catch (error) {
+                console.error("Error loading history data:", error);
+                showEmptyState("Gagal memuat riwayat. Silakan coba lagi.");
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        // Load quiz history
+        async function loadQuizHistory(userId) {
+            try {
+                // Note: In a real implementation, you should store quiz history in Firestore
+                // For now, we'll use localStorage as a fallback
+                const quizHistory = JSON.parse(localStorage.getItem(`kuiztown_quiz_history_${userId}`)) || [];
+                
+                quizHistory.forEach(quiz => {
+                    allHistory.push({
+                        type: 'quiz',
+                        title: `Quiz - Level ${quiz.level} Kategori ${getCategoryName(quiz.category)}`,
+                        details: `Score: ${quiz.score}/10`,
+                        reward: `${quiz.reward.toFixed(1).replace('.', ',')} GEO`,
+                        date: formatDate(quiz.date),
+                        timestamp: new Date(quiz.date),
+                        status: 'completed'
+                    });
+                });
+                
+            } catch (error) {
+                console.error("Error loading quiz history:", error);
+            }
+        }
+
+        // Load task history
+        async function loadTaskHistory(userId) {
+            try {
+                const tasksQuery = query(
+                    collection(db, "user_tasks"),
+                    where("userId", "==", userId),
+                    orderBy("submittedAt", "desc")
+                );
+                
+                const querySnapshot = await getDocs(tasksQuery);
+                
+                querySnapshot.forEach(doc => {
+                    const task = doc.data();
+                    allHistory.push({
+                        type: 'tugas',
+                        title: `Tugas - ${task.taskTitle || 'Task'}`,
+                        details: task.taskDescription || '',
+                        reward: task.reward ? `${parseFloat(task.reward).toFixed(1).replace('.', ',')} GEO` : '',
+                        date: formatDate(task.submittedAt),
+                        timestamp: task.submittedAt,
+                        status: task.status?.toLowerCase() || 'pending'
+                    });
+                });
+                
+            } catch (error) {
+                console.error("Error loading task history:", error);
+            }
+        }
+
+        // Load withdraw history
+        async function loadWithdrawHistory(userId) {
+            try {
+                const withdrawQuery = query(
+                    collection(db, "withdrawals"),
+                    where("userId", "==", userId),
+                    orderBy("createdAt", "desc")
+                );
+                
+                const querySnapshot = await getDocs(withdrawQuery);
+                
+                querySnapshot.forEach(doc => {
+                    const withdrawal = doc.data();
+                    allHistory.push({
+                        type: 'withdraw',
+                        title: `Withdraw - ${withdrawal.amount?.toFixed(1).replace('.', ',')} GEO`,
+                        details: `${withdrawal.method === 'bank' ? 'BANK' : 'E-WALLET'} - ${withdrawal.methodDetail || ''}`,
+                        reward: '', // No reward for withdraw
+                        date: formatDate(withdrawal.createdAt),
+                        timestamp: withdrawal.createdAt,
+                        status: withdrawal.status?.toLowerCase() || 'pending'
+                    });
+                });
+                
+            } catch (error) {
+                console.error("Error loading withdraw history:", error);
+            }
+        }
+
+        // Display history based on current filter
+        function displayHistory() {
+            const historyList = document.getElementById('historyList');
+            const noHistory = document.getElementById('noHistory');
+            
+            // Filter history
+            const filteredHistory = allHistory.filter(item => {
+                if (currentFilter === 'all') return true;
+                return item.type === currentFilter;
+            });
+            
+            if (filteredHistory.length === 0) {
+                historyList.style.display = 'none';
+                noHistory.style.display = 'block';
+                return;
+            }
+            
+            noHistory.style.display = 'none';
+            historyList.style.display = 'block';
+            historyList.innerHTML = '';
+            
+            // Display filtered history
+            filteredHistory.forEach(item => {
+                const historyItem = createHistoryItem(item);
+                historyList.appendChild(historyItem);
+            });
+        }
+
+        // Create history item element
+        function createHistoryItem(item) {
+            const div = document.createElement('div');
+            div.className = 'history-item';
+            
+            // Determine icon and color based on type
+            let iconClass = '';
+            let icon = '';
+            let statusClass = '';
+            let statusText = '';
+            
+            switch(item.type) {
+                case 'quiz':
+                    iconClass = 'icon-quiz';
+                    icon = 'fas fa-brain';
+                    statusClass = 'status-success';
+                    statusText = 'SELESAI';
+                    break;
+                case 'tugas':
+                    iconClass = 'icon-task';
+                    icon = 'fas fa-tasks';
+                    if (item.status === 'approved') {
+                        statusClass = 'status-success';
+                        statusText = 'APPROVE';
+                    } else if (item.status === 'rejected') {
+                        statusClass = 'status-reject';
+                        statusText = 'REJECT';
+                    } else {
+                        statusClass = 'status-pending';
+                        statusText = 'PENDING';
+                    }
+                    break;
+                case 'withdraw':
+                    iconClass = 'icon-withdraw';
+                    icon = 'fas fa-money-bill-wave';
+                    if (item.status === 'approved') {
+                        statusClass = 'status-success';
+                        statusText = 'APPROVE';
+                    } else if (item.status === 'rejected') {
+                        statusClass = 'status-reject';
+                        statusText = 'REJECT';
+                    } else {
+                        statusClass = 'status-pending';
+                        statusText = 'PENDING';
+                    }
+                    break;
+            }
+            
+            div.innerHTML = `
+                <div class="history-item-content">
+                    <div class="history-icon ${iconClass}">
+                        <i class="${icon}"></i>
+                    </div>
+                    <div class="history-text-content">
+                        <div class="history-header">
+                            <div class="history-title">${item.title}</div>
+                            <div class="history-date">${item.date}</div>
+                        </div>
+                        <div class="history-details">
+                            <div class="history-info">${item.details}</div>
+                            ${item.reward ? `
+                                <div class="history-reward">
+                                    <i class="fas fa-seedling"></i> ${item.reward}
+                                </div>
+                            ` : ''}
+                        </div>
+                        <div class="history-status ${statusClass}">
+                            <i class="fas fa-circle" style="font-size: 8px;"></i> ${statusText}
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            return div;
+        }
+
+        // Helper function to get category name
+        function getCategoryName(categoryCode) {
+            const categories = {
+                'E': 'Easy',
+                'M': 'Medium',
+                'H': 'Hard',
+                'VH': 'Very Hard',
+                'UH': 'Ultimate Hard'
+            };
+            return categories[categoryCode] || categoryCode;
+        }
+
+        // Helper function to format date
+        function formatDate(dateObj) {
+            if (!dateObj) return 'Tanggal tidak tersedia';
+            
+            try {
+                const date = dateObj.toDate ? dateObj.toDate() : new Date(dateObj);
+                
+                // Format: DD MMM YYYY, HH:MM
+                const day = date.getDate().toString().padStart(2, '0');
+                const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+                const month = monthNames[date.getMonth()];
+                const year = date.getFullYear();
+                const hours = date.getHours().toString().padStart(2, '0');
+                const minutes = date.getMinutes().toString().padStart(2, '0');
+                
+                return `${day} ${month} ${year}, ${hours}:${minutes}`;
+            } catch (error) {
+                console.error("Error formatting date:", error);
+                return 'Tanggal tidak valid';
+            }
+        }
+
+        // Show/hide loading overlay
+        function showLoading(show) {
+            document.getElementById('loadingOverlay').style.display = show ? 'flex' : 'none';
+        }
+
+        // Show empty state with custom message
+        function showEmptyState(message) {
+            const noHistory = document.getElementById('noHistory');
+            const historyList = document.getElementById('historyList');
+            
+            if (noHistory && message) {
+                noHistory.querySelector('.empty-title').textContent = message;
+            }
+            
+            document.getElementById('skeletonLoading').style.display = 'none';
+            document.getElementById('contentArea').style.display = 'block';
+            historyList.style.display = 'none';
+            noHistory.style.display = 'block';
+        }
+
+        // Simulate some initial data for demo purposes
+        function createDemoHistory() {
+            const demoHistory = [
+                {
+                    type: 'quiz',
+                    title: 'Quiz - Level 1 Kategori Easy',
+                    details: 'Score: 8/10',
+                    reward: '+1,6 GEO',
+                    date: '15 Mar 2024, 14:30',
+                    timestamp: new Date('2024-03-15T14:30:00'),
+                    status: 'completed'
+                },
+                {
+                    type: 'tugas',
+                    title: 'Tugas - Follow Instagram',
+                    details: 'Status: APPROVE',
+                    reward: '+5,0 GEO',
+                    date: '14 Mar 2024, 10:15',
+                    timestamp: new Date('2024-03-14T10:15:00'),
+                    status: 'approved'
+                },
+                {
+                    type: 'withdraw',
+                    title: 'Withdraw - 100,0 GEO',
+                    details: 'BANK - BCA',
+                    reward: '',
+                    date: '13 Mar 2024, 16:45',
+                    timestamp: new Date('2024-03-13T16:45:00'),
+                    status: 'pending'
+                },
+                {
+                    type: 'quiz',
+                    title: 'Quiz - Level 2 Kategori Easy',
+                    details: 'Score: 10/10',
+                    reward: '+2,0 GEO',
+                    date: '12 Mar 2024, 09:20',
+                    timestamp: new Date('2024-03-12T09:20:00'),
+                    status: 'completed'
+                },
+                {
+                    type: 'tugas',
+                    title: 'Tugas - Subscribe YouTube',
+                    details: 'Status: REJECT',
+                    reward: '',
+                    date: '11 Mar 2024, 13:10',
+                    timestamp: new Date('2024-03-11T13:10:00'),
+                    status: 'rejected'
+                }
+            ];
+            
+            return demoHistory;
+        }
+
+        // Fallback function if Firestore data is not available
+        function loadFallbackHistory() {
+            allHistory = createDemoHistory();
+            
+            // Hide skeleton and show content
+            document.getElementById('skeletonLoading').style.display = 'none';
+            document.getElementById('contentArea').style.display = 'block';
+            
+            // Display history
+            displayHistory();
+        }
+    </script>
+</body>
+</html>
