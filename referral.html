@@ -843,6 +843,13 @@
 
     <!-- Firebase Script -->
     <script type="module">
+    window.onerror = function(message, source, lineno, colno, error) {
+    alert(
+        "ERROR:\n" +
+        message +
+        "\nLine: " + lineno
+    );
+};
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
         import { getFirestore, doc, getDoc, collection, query, where, getDocs, orderBy } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
@@ -932,8 +939,8 @@
             onAuthStateChanged(auth, async (user) => {
                 if (user) {
                     // User is logged in, load data
-                    await loadUserData(user.uid);
-                    await loadReferralData(user.uid);
+                    const referralCode = await loadUserData(user.uid);
+await loadReferralData(user.uid, referralCode);
                 } else {
                     // User is not logged in, redirect to login
                     window.location.href = 'login.html';
@@ -966,80 +973,100 @@
             }
         }
 
-        // Load referral data dari Firestore
-        async function loadReferralData(userId) {
-            try {
-                // Reset stats
-                referralStats = {
-                    totalReferrals: 0,
-                    totalGeoEarned: 0,
-                    totalLifeEarned: 0,
-                    friends: []
-                };
+        async function loadReferralData(userId, referralCode) {
+    try {
+        // Reset stats
+        referralStats = {
+            totalReferrals: 0,
+            totalGeoEarned: 0,
+            totalLifeEarned: 0,
+            friends: []
+        };
 
-                // Query untuk mendapatkan semua user yang diundang oleh user ini
-                // PERHATIAN: Ini mencari user dengan field "referredBy" yang sama dengan userId
-                const referralsQuery = query(
-                    collection(db, "users"),
-                    where("referredBy", "==", userId),
-                    orderBy("createdAt", "desc")
-                );
+        let allReferrals = [];
 
-                const querySnapshot = await getDocs(referralsQuery);
-                
-                // Data REAL dari database
-                referralStats.totalReferrals = querySnapshot.size;
-                
-                // Hitung total reward sesuai spesifikasi
-                // Setiap referral berhasil = 0.1 GEO + 1 LIFE
-                referralStats.totalGeoEarned = referralStats.totalReferrals * 0.1;
-                referralStats.totalLifeEarned = referralStats.totalReferrals * 1;
+        // QUERY 1: Cari berdasarkan userId (untuk user baru)
+        const qByUid = query(
+            collection(db, "users"),
+            where("referredBy", "==", userId)
+        );
+        const snapUid = await getDocs(qByUid);
+        
+        if (!snapUid.empty) {
+            allReferrals = [...allReferrals, ...snapUid.docs];
+        }
 
-                // Process each referred user
-                const friendsPromises = querySnapshot.docs.map(async (docSnap) => {
-                    const friendData = docSnap.data();
-                    
-                    // Format waktu pendaftaran (DD/MM/YYYY HH:MM)
-                    let timeFormatted = "Waktu tidak tersedia";
-                    if (friendData.createdAt) {
-                        const date = friendData.createdAt.toDate
-                            ? friendData.createdAt.toDate()
-                            : new Date(friendData.createdAt);
-                        
-                        timeFormatted = date.toLocaleDateString('id-ID', {
-                            day: '2-digit',
-                            month: 'short',
-                            year: 'numeric',
-                            hour: '2-digit',
-                            minute: '2-digit',
-                            hour12: false
-                        });
-                    }
-                    
-                    return {
-                        username: friendData.username || "Teman",
-                        time: timeFormatted,
-                        geoEarned: 0.1,
-                        lifeEarned: 1,
-                        createdAt: friendData.createdAt || new Date()
-                    };
-                });
-
-                // Wait for all promises
-                referralStats.friends = await Promise.all(friendsPromises);
-
-                // Update UI dengan data REAL
-                updateReferralUI();
-
-                // Hide skeleton, show content
-                document.getElementById('skeletonLoading').style.display = 'none';
-                document.getElementById('contentArea').style.display = 'block';
-
-            } catch (error) {
-                console.error("Error loading referral data:", error);
-                showError("Gagal memuat data referral");
+        // QUERY 2: Cari berdasarkan referralCode (untuk user lama)
+        if (referralCode) {
+            const qByCode = query(
+                collection(db, "users"),
+                where("referredBy", "==", referralCode)
+            );
+            const snapCode = await getDocs(qByCode);
+            
+            if (!snapCode.empty) {
+                // Filter untuk menghindari duplikat
+                const existingIds = allReferrals.map(doc => doc.id);
+                const newDocs = snapCode.docs.filter(doc => !existingIds.includes(doc.id));
+                allReferrals = [...allReferrals, ...newDocs];
             }
         }
+
+        // Proses hasil gabungan
+        referralStats.totalReferrals = allReferrals.length;
+        
+        // Hitung total reward
+        referralStats.totalGeoEarned = referralStats.totalReferrals * 0.1;
+        referralStats.totalLifeEarned = referralStats.totalReferrals * 1;
+
+        // Process each referred user
+        const friendsPromises = allReferrals.map(async (docSnap) => {
+            const friendData = docSnap.data();
+            
+            // Format waktu
+            let timeFormatted = "Waktu tidak tersedia";
+            if (friendData.createdAt) {
+                const date = friendData.createdAt.toDate 
+                    ? friendData.createdAt.toDate()
+                    : new Date(friendData.createdAt);
+                
+                timeFormatted = date.toLocaleDateString('id-ID', {
+                    day: '2-digit',
+                    month: 'short',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: false
+                });
+            }
+            
+            return {
+                username: friendData.username || friendData.email?.split('@')[0] || "Teman",
+                time: timeFormatted,
+                geoEarned: 0.1,
+                lifeEarned: 1,
+                createdAt: friendData.createdAt || new Date()
+            };
+        });
+
+        referralStats.friends = await Promise.all(friendsPromises);
+        
+        // Sort by date
+        referralStats.friends.sort((a, b) => {
+            return new Date(b.createdAt) - new Date(a.createdAt);
+        });
+
+        updateReferralUI();
+        
+        // Hide skeleton, show content
+        document.getElementById('skeletonLoading').style.display = 'none';
+        document.getElementById('contentArea').style.display = 'block';
+
+    } catch (error) {
+        console.error("Error loading referral data:", error);
+        showError("Gagal memuat data referral");
+    }
+}
 
         // Update referral link dengan domain yang benar
         function updateReferralLink(referralCode) {
