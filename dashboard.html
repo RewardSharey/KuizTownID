@@ -3,10 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KuizTown - Sedang Maintenance</title>
+    <title>Dashboard - KuizTown</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* ============================================
+           RESET & BASE STYLES (WARNA UTAMA TETAP SAMA)
+           ============================================ */
         * {
             margin: 0;
             padding: 0;
@@ -15,170 +18,2435 @@
         
         body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #5F729F 0%, #3a4a7a 100%);
+            line-height: 1.6;
+            color: #333;
+            background-color: #5F729F;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255, 192, 203, 0.08) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(255, 192, 203, 0.08) 0%, transparent 20%),
+                radial-gradient(circle at 50% 50%, rgba(255, 192, 203, 0.05) 0%, transparent 30%);
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            text-align: center;
-            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
         }
         
-        .maintenance-container {
-            max-width: 800px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 25px;
-            padding: 40px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+        /* Geometric Pattern Background */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(30deg, rgba(255, 192, 203, 0.05) 12%, transparent 12.5%, transparent 87%, rgba(255, 192, 203, 0.05) 87.5%, rgba(255, 192, 203, 0.05)),
+                linear-gradient(150deg, rgba(255, 192, 203, 0.05) 12%, transparent 12.5%, transparent 87%, rgba(255, 192, 203, 0.05) 87.5%, rgba(255, 192, 203, 0.05)),
+                linear-gradient(30deg, rgba(255, 192, 203, 0.05) 12%, transparent 12.5%, transparent 87%, rgba(255, 192, 203, 0.05) 87.5%, rgba(255, 192, 203, 0.05)),
+                linear-gradient(150deg, rgba(255, 192, 203, 0.05) 12%, transparent 12.5%, transparent 87%, rgba(255, 192, 203, 0.05) 87.5%, rgba(255, 192, 203, 0.05)),
+                linear-gradient(60deg, rgba(255, 192, 203, 0.08) 25%, transparent 25.5%, transparent 75%, rgba(255, 192, 203, 0.08) 75%, rgba(255, 192, 203, 0.08)),
+                linear-gradient(60deg, rgba(255, 192, 203, 0.08) 25%, transparent 25.5%, transparent 75%, rgba(255, 192, 203, 0.08) 75%, rgba(255, 192, 203, 0.08));
+            background-size: 80px 140px;
+            background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
+            opacity: 0.3;
+            z-index: -1;
         }
         
-        .logo {
+        /* ============================================
+           LAYOUT & CONTAINER
+           ============================================ */
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 0 15px 100px;
+        }
+        
+        /* ============================================
+           HEADER (WARNA & LOGO TETAP SAMA)
+           ============================================ */
+        header {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
-            gap: 15px;
-            margin-bottom: 30px;
+            padding: 20px 0 15px;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
         
         .logo-icon {
-            font-size: 50px;
-            color: #87CEEB;
+            font-size: 28px;
+            background: linear-gradient(135deg, #9b59b6, #3498db);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         
         .logo-text {
-            font-size: 32px;
+            font-size: 20px;
             font-weight: 700;
+            color: #fff;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .notification-icon {
             color: white;
+            font-size: 22px;
+            cursor: pointer;
+            position: relative;
+            transition: transform 0.3s ease;
         }
         
-        .maintenance-icon {
-            font-size: 100px;
-            margin: 30px 0;
-            color: #FFD700;
+        .notification-icon:hover {
+            transform: scale(1.1);
         }
         
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: #ff6b6b;
             color: white;
+            font-size: 12px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            animation: pulse 2s infinite;
         }
         
-        .subtitle {
-            font-size: 1.2rem;
-            margin-bottom: 40px;
-            opacity: 0.9;
-            line-height: 1.6;
+        /* ============================================
+           SKELETON LOADING (OPTIMIZED)
+           ============================================ */
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+            border-radius: 8px;
         }
         
-        .maintenance-message {
-            background: rgba(255, 255, 255, 0.15);
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        
+        .skeleton-card {
+            background: rgba(255, 255, 255, 0.95);
             border-radius: 15px;
-            padding: 25px;
-            margin: 30px 0;
-            border-left: 5px solid #87CEEB;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
         
-        .maintenance-message h3 {
-            font-size: 1.3rem;
+        .skeleton-title {
+            width: 120px;
+            height: 20px;
             margin-bottom: 15px;
-            color: #87CEEB;
         }
         
-        .maintenance-message p {
-            line-height: 1.8;
+        .skeleton-large {
+            width: 150px;
+            height: 40px;
+            margin: 10px auto;
+        }
+        
+        .skeleton-medium {
+            width: 100px;
+            height: 20px;
+            margin: 5px auto 15px;
+        }
+        
+        .skeleton-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .skeleton-button {
+            flex: 1;
+            height: 40px;
+            border-radius: 10px;
+        }
+        
+        .skeleton-life {
+            height: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+        }
+        
+        .skeleton-menu-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .skeleton-menu-item {
+            height: 80px;
+            border-radius: 12px;
+        }
+        
+        .skeleton-referral {
+            height: 60px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .skeleton-activity {
+            height: 60px;
+            border-radius: 8px;
             margin-bottom: 10px;
         }
         
-        .info-box {
-            background: rgba(255, 215, 0, 0.1);
-            border: 2px solid #FFD700;
-            border-radius: 15px;
-            padding: 20px;
+        #skeletonLoading {
+            animation: fadeIn 0.3s ease;
+        }
+        
+        /* ============================================
+           CARD STYLES (DESIGN DIROMBAK TAPI WARNA TETAP)
+           ============================================ */
+        .card {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            border-radius: 18px;
+            padding: 22px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            animation: fadeIn 0.5s ease-out;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .card-title {
+            font-size: 1.1rem;
+            color: #444;
+            margin-bottom: 18px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .card-title i {
+            color: #87CEEB;
+            font-size: 1.2rem;
+        }
+        
+        /* ============================================
+           GEO BALANCE CARD (DESIGN REFRESHED)
+           ============================================ */
+        .geo-balance-card {
+            background: linear-gradient(
+                135deg,
+                rgba(159, 211, 232, 0.9),
+                rgba(168, 224, 194, 0.9)
+            );
+            border-radius: 20px;
+            padding: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .geo-balance-card::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(
+                circle,
+                rgba(255, 255, 255, 0.1) 0%,
+                transparent 70%
+            );
+        }
+        
+        .geo-amount {
+            font-size: 3.2rem;
+            font-weight: 800;
+            margin: 10px 0 5px;
+            text-align: center;
+            color: #020617;
+            letter-spacing: 0.3px;
+            text-shadow: 0 2px 4px rgba(255, 255, 255, 0.3);
+        }
+        
+        .geo-conversion {
+            font-size: 0.9rem;
+            text-align: center;
+            color: #1e293b;
+            margin-bottom: 20px;
+            font-weight: 500;
+            opacity: 0.9;
+        }
+        
+        .geo-actions {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .geo-actions .btn {
+            flex: 1;
+            height: 48px;
+            border-radius: 14px;
+            font-weight: 600;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .geo-actions .btn-primary {
+            background: rgba(255, 255, 255, 0.95);
+            color: #2563eb;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .geo-actions .btn-secondary {
+            background: rgba(255, 255, 255, 0.6);
+            color: #0f172a;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .geo-actions .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* ============================================
+           LIFE BALANCE CARD (SISTEM TETAP SAMA)
+           ============================================ */
+        .life-balance-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(240, 249, 255, 0.95));
+            border: 1px solid rgba(135, 206, 235, 0.2);
+        }
+        
+        .life-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .life-amount {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #444;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .life-amount i {
+            color: #ff6b8b;
+        }
+        
+        .life-max {
+            color: #666;
+            font-size: 0.9rem;
+            font-weight: 500;
+            background: rgba(135, 206, 235, 0.1);
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+        
+        .life-progress-container {
             margin: 20px 0;
         }
         
-        .info-box h3 {
-            color: #FFD700;
-            margin-bottom: 10px;
+        .life-progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 0.85rem;
+            color: #666;
         }
         
-        .coming-soon {
-            margin-top: 30px;
-            font-size: 1.5rem;
-            color: #FFD700;
+        .life-progress {
+            height: 12px;
+            background-color: rgba(135, 206, 235, 0.2);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        
+        .life-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #87CEEB, #5F729F);
+            border-radius: 6px;
+            transition: width 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .life-progress-fill::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.3),
+                transparent
+            );
+            animation: shimmer 2s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        .claim-life-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #87CEEB, #5F729F);
+            color: white;
+            border: none;
+            border-radius: 12px;
             font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 1rem;
+            margin-top: 15px;
         }
         
-        .footer {
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        .claim-life-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(135, 206, 235, 0.4);
+        }
+        
+        .claim-life-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+        
+        /* ============================================
+           TIMER STYLES
+           ============================================ */
+        .life-timer-container {
+            margin-top: 15px;
+            padding: 12px;
+            background: rgba(135, 206, 235, 0.1);
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid rgba(135, 206, 235, 0.2);
+        }
+        
+        .life-status {
             font-size: 0.9rem;
-            opacity: 0.8;
+            color: #666;
+            margin-bottom: 8px;
+            font-weight: 500;
         }
         
-        @media (max-width: 768px) {
-            .maintenance-container {
-                padding: 25px;
+        .life-countdown {
+            font-family: 'Courier New', monospace;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #2563eb;
+            letter-spacing: 2px;
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            display: inline-block;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* ============================================
+           MENU GRID (DESIGN REFRESHED)
+           ============================================ */
+        .menu-section-title {
+            color: white;
+            font-size: 1.2rem;
+            margin: 25px 0 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+        
+        .menu-item {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 14px;
+            padding: 20px 10px;
+            text-align: center;
+            text-decoration: none;
+            color: #444;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100px;
+        }
+        
+        .menu-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            background: white;
+        }
+        
+        .menu-icon {
+            font-size: 26px;
+            margin-bottom: 10px;
+            color: #87CEEB;
+            height: 40px;
+            width: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(135, 206, 235, 0.1);
+            border-radius: 50%;
+        }
+        
+        .menu-text {
+            font-weight: 600;
+            font-size: 0.85rem;
+            line-height: 1.3;
+        }
+        
+        /* ============================================
+           REWARD CODE CARD
+           ============================================ */
+        .reward-card {
+            background: linear-gradient(135deg, rgba(253, 230, 138, 0.9), rgba(245, 158, 11, 0.9));
+            cursor: pointer;
+            color: #1f2937;
+            box-shadow: 0 8px 20px rgba(245, 158, 11, 0.2);
+            border: none;
+        }
+        
+        .reward-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(245, 158, 11, 0.3);
+        }
+        
+        .reward-card-content {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .reward-icon-container {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+        
+        .reward-info {
+            flex: 1;
+        }
+        
+        .reward-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 4px;
+        }
+        
+        .reward-desc {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+        
+        .reward-arrow {
+            font-size: 16px;
+            opacity: 0.7;
+            transition: transform 0.3s ease;
+        }
+        
+        .reward-card:hover .reward-arrow {
+            transform: translateX(5px);
+        }
+        
+        /* ============================================
+           REFERRAL CARD (DESIGN REFRESHED)
+           ============================================ */
+        .referral-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(240, 249, 255, 0.95));
+        }
+        
+        .referral-code-container {
+            background: #ffffff;
+            border-radius: 14px;
+            padding: 16px;
+            margin-bottom: 18px;
+            border: 1px solid rgba(37, 99, 235, 0.15);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .referral-code-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #87CEEB, #5F729F);
+        }
+        
+        .referral-label {
+            font-size: 0.8rem;
+            color: #6b7280;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .referral-value {
+            font-weight: 700;
+            color: #2563eb;
+            word-break: break-all;
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .referral-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .referral-actions .btn {
+            flex: 1;
+            padding: 14px;
+            font-size: 0.95rem;
+            border-radius: 12px;
+            border: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .referral-actions .btn-primary {
+            background: linear-gradient(135deg, #2563eb, #1e40af);
+            color: white;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+        }
+        
+        .referral-actions .btn-secondary {
+            background: rgba(37, 99, 235, 0.1);
+            color: #2563eb;
+            border: 1px solid rgba(37, 99, 235, 0.2);
+        }
+        
+        .referral-actions .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(37, 99, 235, 0.25);
+        }
+        
+        /* ============================================
+           PROGRESS CARD (DESIGN REFRESHED)
+           ============================================ */
+        .progress-section {
+            margin: 25px 0;
+        }
+        
+        .progress-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .progress-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #60a5fa, #3b82f6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 16px;
+            box-shadow: 0 6px 15px rgba(59, 130, 246, 0.4);
+            flex-shrink: 0;
+        }
+        
+        .progress-title span {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: white;
+            display: block;
+            margin-bottom: 2px;
+        }
+        
+        .progress-title small {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .progress-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+        }
+        
+        .progress-item {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 14px;
+            padding: 16px 12px;
+            text-align: center;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: transform 0.3s ease;
+        }
+        
+        .progress-item:hover {
+            transform: translateY(-2px);
+        }
+        
+        .progress-item small {
+            display: block;
+            font-size: 0.8rem;
+            color: #64748b;
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+        
+        .progress-item strong {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #0f172a;
+            display: block;
+        }
+        
+        /* ============================================
+           SEPARATOR
+           ============================================ */
+        .separator {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            margin: 25px 0;
+        }
+        
+        /* Footer Navigation - KONSISTENSI WAJIB */
+        .nav-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            padding: 12px 0;
+            display: flex;
+            justify-content: space-around;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+            z-index: 1000;
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #666;
+            transition: all 0.3s ease;
+            flex: 1;
+            padding: 5px 0;
+        }
+        
+        .nav-item.active {
+            color: #87CEEB;
+        }
+        
+        .nav-icon {
+            font-size: 20px;
+            margin-bottom: 3px;
+        }
+        
+        .nav-text {
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        
+        /* ============================================
+           DASHBOARD FOOTER QUOTE
+           ============================================ */
+        .dashboard-footer {
+            margin-top: 20px;
+            padding: 20px 0 120px;
+            text-align: center;
+        }
+        
+        .footer-quote {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: white;
+            margin-bottom: 8px;
+            line-height: 1.5;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+        
+        .footer-copy {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        /* ============================================
+           MODALS (NOTIFICATION, SHARE, REWARD, SUCCESS)
+           ============================================ */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(4px);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .modal-content {
+            background: linear-gradient(180deg, #ffffff, #f8fafc);
+            width: 90%;
+            max-width: 400px;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+            animation: modalPop 0.3s ease;
+        }
+        
+        @keyframes modalPop {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+        
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .modal-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #1f2937;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #6b7280;
+            cursor: pointer;
+            padding: 5px;
+            line-height: 1;
+        }
+        
+        .modal-body {
+            padding: 20px;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+        
+        /* ============================================
+           NOTIFICATION MODAL
+           ============================================ */
+        .notification-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .notification-item {
+            background: #f9fafb;
+            border-radius: 12px;
+            padding: 16px;
+            border-left: 4px solid #87CEEB;
+            transition: background 0.3s ease;
+        }
+        
+        .notification-item:hover {
+            background: #f3f4f6;
+        }
+        
+        .notification-item.unread {
+            background: #eff6ff;
+            border-left-color: #2563eb;
+        }
+        
+        .notification-title {
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 6px;
+            font-size: 0.95rem;
+        }
+        
+        .notification-desc {
+            font-size: 0.85rem;
+            color: #6b7280;
+            line-height: 1.5;
+            margin-bottom: 8px;
+        }
+        
+        .notification-time {
+            font-size: 0.75rem;
+            color: #9ca3af;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .notification-empty {
+            text-align: center;
+            padding: 40px 20px;
+            color: #9ca3af;
+        }
+        
+        .notification-empty i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            opacity: 0.3;
+        }
+        
+        /* ============================================
+           SHARE MODAL
+           ============================================ */
+        .share-modal-content {
+            text-align: center;
+        }
+        
+        .share-modal-desc {
+            font-size: 0.9rem;
+            color: #6b7280;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        
+        .share-link-box {
+            background: rgba(37, 99, 235, 0.08);
+            border: 1px solid rgba(37, 99, 235, 0.15);
+            padding: 14px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            color: #1e40af;
+            word-break: break-all;
+            margin-bottom: 20px;
+            font-family: 'Courier New', monospace;
+            font-weight: 500;
+        }
+        
+        .share-primary-btn {
+            width: 100%;
+            padding: 14px;
+            border-radius: 12px;
+            border: none;
+            font-weight: 600;
+            background: linear-gradient(135deg, #2563eb, #1e40af);
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .share-primary-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+        }
+        
+        .share-social-row {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .share-social-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            cursor: pointer;
+            color: white;
+            transition: transform 0.3s ease;
+        }
+        
+        .share-social-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        .share-social-btn.wa { background: linear-gradient(135deg, #25D366, #128C7E); }
+        .share-social-btn.tg { background: linear-gradient(135deg, #229ED9, #0088cc); }
+        .share-social-btn.fb { background: linear-gradient(135deg, #1877F2, #0d5cb6); }
+        
+        /* ============================================
+           REWARD MODAL
+           ============================================ */
+        .reward-input-container {
+            background: rgba(37, 99, 235, 0.08);
+            border: 2px solid rgba(37, 99, 235, 0.2);
+            padding: 5px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            transition: border-color 0.3s ease;
+        }
+        
+        .reward-input-container:focus-within {
+            border-color: #2563eb;
+        }
+        
+        .reward-code-input {
+            width: 100%;
+            border: none;
+            background: transparent;
+            outline: none;
+            text-align: center;
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #1e3a8a;
+            padding: 12px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .reward-code-input::placeholder {
+            color: #9ca3af;
+            font-weight: normal;
+            letter-spacing: normal;
+        }
+        
+        .reward-submit-btn {
+            width: 100%;
+            padding: 16px;
+            border-radius: 12px;
+            border: none;
+            font-weight: 600;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .reward-submit-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(245, 158, 11, 0.3);
+        }
+        
+        .reward-submit-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+        
+        .reward-spinner {
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        /* ============================================
+           SUCCESS MODAL
+           ============================================ */
+        .success-modal-content {
+            text-align: center;
+            padding: 30px;
+        }
+        
+        .success-icon {
+            font-size: 4rem;
+            color: #10b981;
+            margin-bottom: 20px;
+        }
+        
+        .success-message {
+            color: #6b7280;
+            margin-bottom: 25px;
+            line-height: 1.5;
+            font-size: 1rem;
+        }
+        
+        .success-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .success-actions .btn {
+            flex: 1;
+            padding: 14px;
+            border-radius: 12px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .success-actions .btn-primary {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+        }
+        
+        .success-actions .btn-secondary {
+            background: #f3f4f6;
+            color: #6b7280;
+        }
+        
+        .success-actions .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* ============================================
+           TOAST NOTIFICATION
+           ============================================ */
+        .toast {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 14px 22px;
+            border-radius: 14px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+            font-size: 0.95rem;
+            font-weight: 600;
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: toastPop 0.3s ease;
+            max-width: 90%;
+        }
+        
+        @keyframes toastPop {
+            from { opacity: 0; transform: translate(-50%, 20px); }
+            to { opacity: 1; transform: translate(-50%, 0); }
+        }
+        
+        .toast.success {
+            color: #10b981;
+            border-left: 4px solid #10b981;
+        }
+        
+        .toast.error {
+            color: #ef4444;
+            border-left: 4px solid #ef4444;
+        }
+        
+        .toast.warning {
+            color: #f59e0b;
+            border-left: 4px solid #f59e0b;
+        }
+        
+        /* ============================================
+           ANIMATIONS
+           ============================================ */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        /* ============================================
+           RESPONSIVE DESIGN
+           ============================================ */
+        @media (min-width: 768px) {
+            .container {
+                max-width: 600px;
             }
             
-            h1 {
-                font-size: 2rem;
+            .menu-grid {
+                grid-template-columns: repeat(3, 1fr);
             }
             
-            .maintenance-icon {
-                font-size: 70px;
+            .progress-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .geo-amount {
+                font-size: 2.5rem;
             }
             
-            .logo {
-                flex-direction: column;
+            .menu-grid {
                 gap: 10px;
+            }
+            
+            .menu-item {
+                padding: 15px 8px;
+                min-height: 90px;
+            }
+            
+            .menu-icon {
+                font-size: 22px;
+                height: 36px;
+                width: 36px;
+            }
+            
+            .progress-grid {
+                gap: 10px;
+            }
+            
+            .progress-item {
+                padding: 14px 10px;
+            }
+            
+            .progress-item strong {
+                font-size: 1.1rem;
+            }
+            .life-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.add-life-btn-text {
+    background: rgba(135, 206, 235, 0.15);
+    border: 1px solid rgba(135, 206, 235, 0.4);
+    color: #2563eb;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 6px 10px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.add-life-btn-text:hover {
+    background: rgba(135, 206, 235, 0.3);
+    transform: scale(1.05);
+}
+
+.add-life-btn-text:active {
+    transform: scale(0.95);
+}
+            .nav-footer {
+                padding: 10px 0 15px;
+            }
+            
+            .nav-icon {
+                font-size: 20px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="maintenance-container">
-        <div class="logo">
-            <i class="fas fa-brain logo-icon"></i>
-            <span class="logo-text">KuizTown</span>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="logo-container">
+                <i class="fas fa-shapes logo-icon"></i>
+                <span class="logo-text">KuizTown</span>
+            </div>
+            <div class="header-actions">
+                <div class="notification-icon" id="notificationIcon">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge" id="notificationBadge">0</span>
+                </div>
+            </div>
+        </header>
+        
+        <!-- Skeleton Loading -->
+        <div id="skeletonLoading">
+            <div class="skeleton-card">
+                <div class="skeleton skeleton-title"></div>
+                <div class="skeleton skeleton-large"></div>
+                <div class="skeleton skeleton-medium"></div>
+                <div class="skeleton-buttons">
+                    <div class="skeleton skeleton-button"></div>
+                    <div class="skeleton skeleton-button"></div>
+                </div>
+            </div>
+            
+            <div class="separator"></div>
+            
+            <div class="skeleton-card">
+                <div class="skeleton skeleton-title"></div>
+                <div class="life-info">
+                    <div class="skeleton" style="width: 40px; height: 30px;"></div>
+                    <div class="skeleton" style="width: 30px; height: 20px;"></div>
+                </div>
+                <div class="skeleton skeleton-life"></div>
+                <div class="skeleton" style="height: 45px; border-radius: 10px;"></div>
+                <div class="skeleton" style="height: 20px; margin-top: 10px;"></div>
+            </div>
+            
+            <div class="separator"></div>
+            
+            <div style="margin-bottom: 15px;">
+                <div class="skeleton" style="width: 80px; height: 20px; margin-bottom: 15px;"></div>
+                <div class="skeleton-menu-grid">
+                    <div class="skeleton skeleton-menu-item"></div>
+                    <div class="skeleton skeleton-menu-item"></div>
+                    <div class="skeleton skeleton-menu-item"></div>
+                </div>
+            </div>
+            
+            <div class="separator"></div>
+            
+            <div class="skeleton-card">
+                <div class="skeleton skeleton-title"></div>
+                <div class="skeleton skeleton-referral"></div>
+                <div class="skeleton-buttons">
+                    <div class="skeleton skeleton-button"></div>
+                    <div class="skeleton skeleton-button"></div>
+                </div>
+            </div>
         </div>
         
-        <div class="maintenance-icon">
-            <i class="fas fa-tools"></i>
-        </div>
-        
-        <h1>SEDANG DALAM PERBAIKAN</h1>
-        
-        <div class="subtitle">
-            Kami sedang melakukan peningkatan sistem untuk pengalaman yang lebih baik.
-        </div>
-        
-        <div class="maintenance-message">
-            <h3>📢 INFORMASI MAINTENANCE</h3>
-            <p>• Sistem sedang dalam proses upgrade dan optimasi</p>
-            <p>• Semua data user akan tetap aman</p>
-            <p>• Estimasi selesai: 2-3 jam ke depan</p>
-            <p>• Terima kasih atas kesabaran Anda</p>
-        </div>
-        
-        <div class="info-box">
-            <h3>🔄 APA YANG SEDANG DIKERJAKAN?</h3>
-            <p>✓ Upgrade server untuk performa lebih cepat</p>
-            <p>✓ Penambahan fitur-fitur baru</p>
-            <p>✓ Perbaikan bug dan optimasi</p>
-        </div>
-        
-        <div class="coming-soon">
-            Akan segera kembali dengan pengalaman yang lebih baik! ✨
-        </div>
-        
-        <div class="footer">
-            © 2024 KuizTown - Tim Pengembang
+        <!-- Dashboard Content -->
+        <div id="dashboardContent" style="display: none;">
+            <!-- GEO Balance Card -->
+            <div class="card geo-balance-card">
+                <h2 class="card-title">
+                    <i class="fas fa-seedling"></i> Saldo GEO
+                </h2>
+                <div class="geo-amount" id="geoBalance">0,0</div>
+                <div class="geo-conversion" id="geoConversion">≈ 0 IDR</div>
+                <div class="geo-actions">
+                    <button class="btn btn-primary" onclick="window.location.href='withdraw.html'">
+                        <i class="fas fa-wallet"></i> Withdraw
+                    </button>
+                    <button class="btn btn-secondary" onclick="window.location.href='quiz.html'">
+                        <i class="fas fa-play"></i> Main Kuis
+                    </button>
+                </div>
+            </div>
+            
+            <div class="separator"></div>
+            
+            <!-- LIFE Balance Card -->
+            <div class="card life-balance-card">
+                <div class="life-card-header">
+    <h2 class="card-title">
+        <i class="fas fa-heart"></i> LIFE
+    </h2>
+
+    <button class="add-life-btn-text" onclick="openAddLifePage()">
+         TAMBAH LIFE 🩷
+    </button>
+</div>
+                <div class="life-info">
+                    <div class="life-amount">
+                        <i class="fas fa-heart"></i>
+                        <span id="lifeBalance">0</span>
+                    </div>
+                    <div class="life-max">MAX 15</div>
+                </div>
+                <div class="life-progress-container">
+                    <div class="life-progress-label">
+                        <span>Progress LIFE</span>
+                        <span id="lifeProgressText">0%</span>
+                    </div>
+                    <div class="life-progress">
+                        <div class="life-progress-fill" id="lifeProgress" style="width: 0%"></div>
+                    </div>
+                </div>
+                <button class="claim-life-btn" id="claimLifeBtn" disabled>
+                    <i class="fas fa-gift"></i> KLAIM LIFE
+                </button>
+                <div class="life-timer-container" id="lifeTimerContainer">
+                    <div class="life-status" id="lifeStatus">Loading...</div>
+                    <div class="life-countdown" id="lifeCountdown">00 - 00 - 00</div>
+                </div>
+            </div>
+            
+            <div class="separator"></div>
+            
+            <!-- Menu Grid -->
+            <h2 class="menu-section-title">
+                <i class="fas fa-th-large"></i> Menu Utama
+            </h2>
+            <div class="menu-grid">
+                <a href="histori.html" class="menu-item">
+                    <div class="menu-icon">
+                        <i class="fas fa-history"></i>
+                    </div>
+                    <div class="menu-text">HISTORY</div>
+                </a>
+                <a href="cs.html" class="menu-item">
+                    <div class="menu-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <div class="menu-text">CUSTOMER SERVICE</div>
+                </a>
+                <a href="panduan.html" class="menu-item">
+                    <div class="menu-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="menu-text">PANDUAN</div>
+                </a>
+            </div>
+            
+            <!-- Reward Code Card -->
+            <div class="card reward-card" onclick="openRewardModal()">
+                <div class="reward-card-content">
+                    <div class="reward-icon-container">
+                        <i class="fas fa-gift"></i>
+                    </div>
+                    <div class="reward-info">
+                        <div class="reward-title">Kode Hadiah</div>
+                        <div class="reward-desc">Masukkan kode dan klaim bonus</div>
+                    </div>
+                    <div class="reward-arrow">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Referral Card -->
+            <div class="card referral-card">
+                <h2 class="card-title">
+                    <i class="fas fa-user-friends"></i> Undang Teman
+                </h2>
+                <div class="referral-code-container">
+                    <div class="referral-label">Kode Referral Anda:</div>
+                    <div class="referral-value" id="userReferralCode">LOADING...</div>
+                </div>
+                <div class="referral-actions">
+                    <button class="btn btn-primary" id="shareBtn">
+                        <i class="fas fa-share-alt"></i> Bagikan
+                    </button>
+                    <button class="btn btn-secondary" onclick="window.location.href='referral.html'">
+                        <i class="fas fa-info-circle"></i> Info
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Progress Card -->
+            <div class="progress-section">
+                <div class="progress-header">
+                    <div class="progress-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="progress-title">
+                        <span>Progress Kamu</span>
+                        <small>Ringkasan performa akun</small>
+                    </div>
+                </div>
+                <div class="progress-grid">
+                    <div class="progress-item">
+                        <small>Level Tertinggi</small>
+                        <strong id="progressLevel">LV 0</strong>
+                    </div>
+                    <div class="progress-item">
+                        <small>Total GEO</small>
+                        <strong id="progressGeo">0 GEO</strong>
+                    </div>
+                    <div class="progress-item">
+                        <small>LIFE Terpakai</small>
+                        <strong id="progressLifeUsed">0</strong>
+                    </div>
+                    <div class="progress-item">
+                        <small>Quiz Selesai</small>
+                        <strong id="progressQuizDone">0</strong>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+    
+    <!-- Footer Quote -->
+    <footer class="dashboard-footer">
+        <div id="footerQuote" class="footer-quote">
+            "Belajar sambil main, main sambil cuan — cuma di KuizTown."
+        </div>
+        <div class="footer-copy">
+            © 2026 KuizTown. All rights reserved.
+        </div>
+    </footer>
+    
+    <!-- Footer Navigation -->
+<nav class="nav-footer">
+        <a href="dashboard.html" class="nav-item active">
+            <i class="fas fa-home nav-icon"></i>
+            <span class="nav-text">Home</span>
+        </a>
+        <a href="quiz.html" class="nav-item">
+            <i class="fas fa-brain nav-icon"></i>
+            <span class="nav-text">Quiz</span>
+        </a>
+        <a href="tugas.html" class="nav-item">
+            <i class="fas fa-tasks nav-icon"></i>
+            <span class="nav-text">Tugas</span>
+        </a>
+        <a href="referral.html" class="nav-item">
+            <i class="fas fa-user-friends nav-icon"></i>
+            <span class="nav-text">Referral</span>
+        </a>
+        <a href="profil.html" class="nav-item">
+            <i class="fas fa-user nav-icon"></i>
+            <span class="nav-text">Profil</span>
+        </a>
+    </nav>
+    
+    <!-- ============================================
+         MODALS
+    ============================================ -->
+    
+    <!-- Success Modal -->
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <div class="success-modal-content">
+                <i class="fas fa-check-circle success-icon"></i>
+                <h2 class="modal-title">Berhasil!</h2>
+                <p class="success-message" id="successMessage">Life berhasil diklaim.</p>
+                <div class="success-actions">
+                    <button class="btn btn-primary" id="closeSuccessModal">Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Notification Modal -->
+    <div id="notificationModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">
+                    <i class="fas fa-bell"></i> Notifikasi
+                </h2>
+                <button class="modal-close" onclick="closeNotificationModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="notification-list" id="notificationList">
+                    <div class="notification-empty">
+                        <i class="fas fa-bell-slash"></i>
+                        <p>Tidak ada notifikasi</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Share Referral Modal -->
+    <div id="shareModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">
+                    <i class="fas fa-share-alt"></i> Bagikan Referral
+                </h2>
+                <button class="modal-close" onclick="closeShareModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <p class="share-modal-desc">
+                    Salin link referral kamu dan bagikan ke teman:
+                </p>
+                <div class="share-link-box">
+                    <span id="shareReferralLink">-</span>
+                </div>
+                <button id="copyReferralBtn" class="share-primary-btn">
+                    <i class="fas fa-copy"></i> Salin Link
+                </button>
+                <div class="share-social-row">
+                    <button class="share-social-btn wa" onclick="shareToWhatsApp()">
+                        <i class="fab fa-whatsapp"></i>
+                    </button>
+                    <button class="share-social-btn tg" onclick="shareToTelegram()">
+                        <i class="fab fa-telegram"></i>
+                    </button>
+                    <button class="share-social-btn fb" onclick="shareToFacebook()">
+                        <i class="fab fa-facebook"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Reward Modal -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">
+                    <i class="fas fa-gift"></i> Kode Hadiah
+                </h2>
+                <button class="modal-close" onclick="closeRewardModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <p class="share-modal-desc">
+                    Masukkan kode hadiah untuk mendapatkan bonus GEO atau LIFE
+                </p>
+                <div class="reward-input-container">
+                    <input 
+                        type="text"
+                        id="rewardCodeInput"
+                        placeholder="MASUKKAN KODE"
+                        class="reward-code-input"
+                        maxlength="20"
+                    >
+                </div>
+                <button id="rewardSubmitBtn" class="reward-submit-btn" onclick="submitRewardCode()">
+                    <i class="fas fa-paper-plane"></i> Klaim Hadiah
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================
+        // GLOBAL VARIABLES & CONFIGURATION
+        // ============================================
+        let cachedUserData = null;
+        let lifeCountdownInterval = null;
+        let isLifeSystemInitialized = false;
+        let isClaimingReward = false;
+        let firebaseApp = null;
+        let firebaseAuth = null;
+        let firebaseDb = null;
+        
+        // Constants
+        const MAX_LIFE = 15;
+        const COOLDOWN_MINUTES = 15;
+        const COOLDOWN_MS = COOLDOWN_MINUTES * 60 * 1000;
+        const CACHE_TTL = 30 * 1000; // 30 seconds
+        
+        // KuizTown Footer Quotes
+        const footerQuotes = [
+            "Belajar sambil main, main sambil cuan — cuma di KuizTown.",
+            "Setiap jawaban benar hari ini adalah langkah kecil menuju masa depanmu.",
+            "Kalau capek, istirahat sebentar. Tapi jangan berhenti berkembang.",
+            "Kamu bukan kalah, kamu cuma sedang belajar menang.",
+            "Satu kuis lagi, siapa tahu rezekimu ada di soal berikutnya.",
+            "Belajar itu romantis, apalagi kalau hasilnya bikin progres naik.",
+            "Jangan remehkan satu jawaban benar, dampaknya bisa besar.",
+            "KuizTown bukan cuma game, ini tempat kamu upgrade diri.",
+            "Hari boleh berat, tapi target jangan dilepas.",
+            "Yang konsisten biasanya pulang bawa hasil.",
+            "Hari ini salah, besok kamu datang lebih pintar.",
+            "Kamu tidak sendirian, ribuan pemain lain juga sedang berjuang.",
+            "Capek itu wajar, berhenti itu pilihan.",
+            "Main kuis boleh santai, mimpi kamu jangan kecil.",
+            "Pelan-pelan asal jalan lebih baik daripada diam.",
+            "Setiap klik jawab adalah investasi kecil untuk diri kamu.",
+            "KuizTown: salah jadi pelajaran, benar jadi kebanggaan.",
+            "Kalau kamu masih di sini, artinya kamu belum menyerah.",
+            "Hari ini mungkin biasa, tapi progres kamu tidak.",
+            "Belajar adalah investasi paling murah dengan hasil paling mahal.",
+            "Satu level naik, satu langkah lebih dekat ke tujuan.",
+            "Kalah hari ini tidak menentukan masa depanmu.",
+            "Kamu lebih kuat dari soal tersulit yang kamu hadapi.",
+            "Main kuis sambil bangun masa depan, itu baru keren.",
+            "Bandingkan dirimu hari ini dengan kemarin, bukan dengan orang lain.",
+            "Kalau hidup berat, setidaknya progresmu tetap jalan.",
+            "Setiap poin yang kamu dapat adalah hasil usaha kamu sendiri.",
+            "Tidak masalah lambat, asal tidak berhenti.",
+            "KuizTown bukan tempat pamer pintar, tapi tempat jadi lebih pintar.",
+            "Terima kasih sudah berjuang hari ini bersama KuizTown."
+        ];
+        
+        // ============================================
+        // INITIALIZATION
+        // ============================================
+        document.addEventListener('DOMContentLoaded', async function() {
+            // Set random footer quote
+            setRandomFooterQuote();
+            
+            // Load cached data
+            const cachedData = localStorage.getItem('kuiztown_user_data');
+            const cacheTimestamp = localStorage.getItem('kuiztown_cache_timestamp');
+            const now = Date.now();
+            
+            if (cachedData && cacheTimestamp && (now - parseInt(cacheTimestamp)) < CACHE_TTL) {
+                cachedUserData = JSON.parse(cachedData);
+                updateDashboardFromCache();
+            }
+            
+            // Load Firebase
+            await loadFirebaseSDK();
+            
+            // Setup auth listener
+            if (firebaseAuth) {
+                setupAuthListener();
+            } else {
+                showError('Firebase Error', 'Gagal memuat sistem. Silakan refresh halaman.');
+            }
+            
+            // Setup event listeners
+            setupEventListeners();
+        });
+        function openAddLifePage() {
+    window.location.href = "life.html";
+}
+        // ============================================
+        // FIREBASE AUTH & DATA MANAGEMENT
+        // ============================================
+        async function loadFirebaseSDK() {
+            try {
+                const { initializeApp } = await import("https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js");
+                const { getAuth, onAuthStateChanged, signOut } = await import("https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js");
+                const { getFirestore, doc, getDoc, updateDoc, serverTimestamp, runTransaction, collection, query, where, getDocs } = await import("https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js");
+                
+                const firebaseConfig = {
+                    apiKey: "AIzaSyB9DCc6rCmeXl0O3CCLYe6zUmfByfRz428",
+                    authDomain: "kuiztown.firebaseapp.com",
+                    projectId: "kuiztown",
+                    storageBucket: "kuiztown.firebasestorage.app",
+                    messagingSenderId: "334081803913",
+                    appId: "1:334081803913:web:84899b42961e12f538a858"
+                };
+                
+                firebaseApp = initializeApp(firebaseConfig);
+                firebaseAuth = getAuth(firebaseApp);
+                firebaseDb = getFirestore(firebaseApp);
+                
+                // Export functions to window
+                window.firebaseAuth = firebaseAuth;
+                window.firebaseOnAuthStateChanged = onAuthStateChanged;
+                window.firebaseSignOut = signOut;
+                window.firebaseDb = firebaseDb;
+                window.firebaseDoc = doc;
+                window.firebaseGetDoc = getDoc;
+                window.firebaseUpdateDoc = updateDoc;
+                window.firebaseServerTimestamp = serverTimestamp;
+                window.firebaseRunTransaction = runTransaction;
+                window.firebaseCollection = collection;
+                window.firebaseQuery = query;
+                window.firebaseWhere = where;
+                window.firebaseGetDocs = getDocs;
+                
+            } catch (error) {
+                console.error("Firebase load error:", error);
+                showError('Connection Error', 'Gagal terhubung ke server. Gunakan data offline.');
+            }
+        }
+        
+        function setupAuthListener() {
+            if (!window.firebaseOnAuthStateChanged) return;
+            
+            window.firebaseOnAuthStateChanged(firebaseAuth, async (user) => {
+                if (user) {
+                    try {
+                        await loadUserData(user.uid);
+                    } catch (error) {
+                        console.error("Auth state error:", error);
+                        showError('Auth Error', 'Gagal memuat data user. Silakan login ulang.');
+                    }
+                } else {
+                    // Clear cache and redirect to login
+                    localStorage.removeItem("kuiztown_user_data");
+                    localStorage.removeItem("kuiztown_cache_timestamp");
+                    window.location.href = 'login.html';
+                }
+            });
+        }
+        
+        async function loadUserData(userId) {
+            try {
+                const userDoc = await window.firebaseGetDoc(window.firebaseDoc(firebaseDb, "users", userId));
+                
+                if (!userDoc.exists()) {
+                    throw new Error('User data not found');
+                }
+                
+                const freshData = userDoc.data();
+                
+                // Check user status
+                if (freshData.status !== "active") {
+                    await window.firebaseSignOut(firebaseAuth);
+                    localStorage.removeItem("kuiztown_user_data");
+                    localStorage.removeItem("kuiztown_cache_timestamp");
+                    window.location.href = 'banned.html';
+                    return;
+                }
+                
+                // Update cache
+                cachedUserData = freshData;
+                localStorage.setItem('kuiztown_user_data', JSON.stringify(freshData));
+                localStorage.setItem('kuiztown_cache_timestamp', Date.now().toString());
+                
+                // Update UI
+                updateDashboardFromCache();
+                
+                // Initialize life system
+                if (!isLifeSystemInitialized) {
+                    initializeLifeSystem();
+                    isLifeSystemInitialized = true;
+                }
+                
+                // Load notifications
+                loadNotifications();
+                
+            } catch (error) {
+                console.error("Load user data error:", error);
+                
+                // If no cached data, logout
+                if (!cachedUserData) {
+                    await window.firebaseSignOut(firebaseAuth);
+                    localStorage.removeItem("kuiztown_user_data");
+                    localStorage.removeItem("kuiztown_cache_timestamp");
+                    window.location.href = 'login.html';
+                }
+            }
+        }
+        
+        // ============================================
+        // DASHBOARD UI FUNCTIONS
+        // ============================================
+        function updateDashboardFromCache() {
+            if (!cachedUserData) return;
+            
+            // Hide skeleton, show content
+            document.getElementById('skeletonLoading').style.display = 'none';
+            document.getElementById('dashboardContent').style.display = 'block';
+            
+            // Update UI
+            updateDashboardUI(cachedUserData);
+        }
+        
+        function updateDashboardUI(userData) {
+            if (!userData) return;
+            
+            // Format and display GEO balance
+            const geoBalance = userData.geoBalance || 0;
+            const formattedGeo = geoBalance.toLocaleString('id-ID', {
+                minimumFractionDigits: 1,
+                maximumFractionDigits: 1
+            });
+            document.getElementById('geoBalance').textContent = formattedGeo + ' GEO';
+            
+            // Calculate IDR conversion
+            const idrAmount = Math.round(geoBalance * 585);
+            document.getElementById('geoConversion').textContent = `≈ ${idrAmount.toLocaleString('id-ID')} IDR`;
+            
+            // Update progress stats
+            document.getElementById('progressGeo').textContent = formattedGeo + ' GEO';
+            document.getElementById('progressLifeUsed').textContent = userData.totalUsedLife || 0;
+            document.getElementById('progressQuizDone').textContent = userData.totalQuizCompleted || 0;
+            
+            // Update level progress
+            if (userData.levelProgress) {
+                const highestLevel = Math.max(
+                    userData.levelProgress.easy || 0,
+                    userData.levelProgress.medium || 0,
+                    userData.levelProgress.hard || 0,
+                    userData.levelProgress.veryHard || 0,
+                    userData.levelProgress.ultimateHard || 0
+                );
+                document.getElementById('progressLevel').textContent = `LV ${highestLevel}`;
+            }
+            
+            // Update referral code
+            if (userData.referralCode) {
+                document.getElementById('userReferralCode').textContent = userData.referralCode;
+                const domain = window.location.hostname || 'kuiztown.com';
+                document.getElementById('shareReferralLink').textContent = 
+                    `https://${domain}/daftar.html?ref=${userData.referralCode}`;
+            }
+        }
+        
+        // ============================================
+        // LIFE SYSTEM FUNCTIONS
+        // ============================================
+        function initializeLifeSystem() {
+            // Clear existing interval
+            if (lifeCountdownInterval) {
+                clearInterval(lifeCountdownInterval);
+            }
+            
+            // Start countdown timer
+            lifeCountdownInterval = setInterval(updateLifeUI, 1000);
+            
+            // Initial update
+            updateLifeUI();
+        }
+        
+        function updateLifeUI() {
+            if (!cachedUserData) return;
+            
+            const currentLife = cachedUserData.lifeBalance || 0;
+            const progressPercentage = Math.min((currentLife / MAX_LIFE) * 100, 100);
+            
+            // Update LIFE display
+            document.getElementById('lifeBalance').textContent = currentLife;
+            document.getElementById('lifeProgress').style.width = `${progressPercentage}%`;
+            document.getElementById('lifeProgressText').textContent = `${Math.round(progressPercentage)}%`;
+            
+            // Case A: LIFE is full
+            if (currentLife >= MAX_LIFE) {
+                document.getElementById('claimLifeBtn').disabled = true;
+                document.getElementById('claimLifeBtn').innerHTML = '<i class="fas fa-check"></i> LIFE PENUH';
+                document.getElementById('lifeStatus').textContent = "LIFE penuh";
+                document.getElementById('lifeCountdown').style.display = 'none';
+                return;
+            }
+            
+            // Check cooldown
+            const lastReductionTime = cachedUserData.lastLifeReduction;
+            
+            // Case B: No cooldown record (ready to claim)
+            if (!lastReductionTime) {
+                document.getElementById('claimLifeBtn').disabled = false;
+                document.getElementById('claimLifeBtn').innerHTML = '<i class="fas fa-heart"></i> KLAIM LIFE';
+                document.getElementById('lifeStatus').textContent = "LIFE siap diklaim";
+                document.getElementById('lifeCountdown').style.display = 'none';
+                return;
+            }
+            
+            // Calculate cooldown time
+            const lastTime = lastReductionTime.toDate ? 
+                lastReductionTime.toDate().getTime() : 
+                new Date(lastReductionTime).getTime();
+            const currentTime = Date.now();
+            const elapsedTime = currentTime - lastTime;
+            const remainingTime = COOLDOWN_MS - elapsedTime;
+            
+            // Case C: Still in cooldown
+            if (remainingTime > 0) {
+                document.getElementById('claimLifeBtn').disabled = true;
+                document.getElementById('claimLifeBtn').innerHTML = '<i class="fas fa-clock"></i> TUNGGU';
+                document.getElementById('lifeStatus').textContent = "Cooldown:";
+                document.getElementById('lifeCountdown').style.display = 'inline-block';
+                
+                // Format MM - SS
+                const minutes = Math.floor(remainingTime / (1000 * 60));
+                const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+                
+                document.getElementById('lifeCountdown').textContent = 
+                    `${minutes.toString().padStart(2, '0')} - ${seconds.toString().padStart(2, '0')}`;
+            
+            // Case D: Cooldown finished
+            } else {
+                document.getElementById('claimLifeBtn').disabled = false;
+                document.getElementById('claimLifeBtn').innerHTML = '<i class="fas fa-heart"></i> KLAIM LIFE';
+                document.getElementById('lifeStatus').textContent = "LIFE siap diklaim";
+                document.getElementById('lifeCountdown').style.display = 'none';
+            }
+        }
+        
+        async function claimLife() {
+            if (!cachedUserData || !firebaseAuth.currentUser) {
+                showToast('error', 'Silakan login ulang');
+                return;
+            }
+            
+            const claimBtn = document.getElementById('claimLifeBtn');
+            const currentLife = cachedUserData.lifeBalance || 0;
+            
+            // Validation
+            if (currentLife >= MAX_LIFE) {
+                showToast('warning', 'LIFE sudah penuh');
+                return;
+            }
+            
+            try {
+                // Disable button and show loading
+                claimBtn.disabled = true;
+                claimBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> MENGKLAIM...';
+                
+                const uid = firebaseAuth.currentUser.uid;
+                
+                // Use transaction for atomic update
+                await window.firebaseRunTransaction(firebaseDb, async (transaction) => {
+                    const userRef = window.firebaseDoc(firebaseDb, "users", uid);
+                    const userSnap = await transaction.get(userRef);
+                    
+                    if (!userSnap.exists()) {
+                        throw new Error('User not found');
+                    }
+                    
+                    const userData = userSnap.data();
+                    const currentLifeInDb = userData.lifeBalance || 0;
+                    
+                    // Double-check validation
+                    if (currentLifeInDb >= MAX_LIFE) {
+                        throw new Error('LIFE already full');
+                    }
+                    
+                    // Update LIFE balance
+                    const newLife = currentLifeInDb + 1;
+                    
+                    transaction.update(userRef, {
+                        lifeBalance: newLife,
+                        lastLifeReduction: window.firebaseServerTimestamp()
+                    });
+                });
+                
+                // Update cache
+                cachedUserData.lifeBalance = currentLife + 1;
+                cachedUserData.lastLifeReduction = new Date();
+                localStorage.setItem('kuiztown_user_data', JSON.stringify(cachedUserData));
+                
+                // Update UI
+                updateLifeUI();
+                
+                // Show success
+                document.getElementById('successMessage').textContent = '1 LIFE berhasil ditambahkan!';
+                document.getElementById('successModal').style.display = 'flex';
+                
+                showToast('success', 'LIFE berhasil diklaim!');
+                
+            } catch (error) {
+                console.error("Claim LIFE error:", error);
+                showToast('error', 'Gagal mengklaim LIFE. Coba lagi.');
+                
+                // Reset button
+                claimBtn.disabled = false;
+                claimBtn.innerHTML = '<i class="fas fa-heart"></i> KLAIM LIFE';
+            }
+        }
+        
+        // ============================================
+        // REWARD CODE SYSTEM
+        // ============================================
+        async function submitRewardCode() {
+            if (isClaimingReward) return;
+            
+            const code = document.getElementById('rewardCodeInput').value.trim().toUpperCase();
+            const btn = document.getElementById('rewardSubmitBtn');
+            
+            if (!code) {
+                showToast('warning', 'Masukkan kode terlebih dahulu');
+                return;
+            }
+            
+            if (!firebaseAuth.currentUser) {
+                showToast('error', 'Silakan login ulang');
+                return;
+            }
+            
+            // Set claiming flag
+            isClaimingReward = true;
+            
+            // Loading state
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner reward-spinner"></i> Memproses...';
+            
+            const uid = firebaseAuth.currentUser.uid;
+            
+            try {
+                await window.firebaseRunTransaction(firebaseDb, async (transaction) => {
+                    // Get reward code
+                    const codeRef = window.firebaseDoc(firebaseDb, "reward_codes", code);
+                    const userRef = window.firebaseDoc(firebaseDb, "users", uid);
+                    
+                    const codeSnap = await transaction.get(codeRef);
+                    const userSnap = await transaction.get(userRef);
+                    
+                    if (!codeSnap.exists()) {
+                        throw new Error('INVALID');
+                    }
+                    
+                    const codeData = codeSnap.data();
+                    const userData = userSnap.data();
+                    
+                    // Validate reward code
+                    if (!codeData.active) {
+                        throw new Error('USED');
+                    }
+                    
+                    if (codeData.expireAt && Date.now() > codeData.expireAt.toMillis()) {
+                        throw new Error('EXPIRED');
+                    }
+                    
+                    if (codeData.usedCount >= codeData.maxUse) {
+                        throw new Error('USED');
+                    }
+                    
+                    const claimedUsers = codeData.claimedBy || [];
+                    if (claimedUsers.includes(uid)) {
+                        throw new Error('USED');
+                    }
+                    
+                    // Prepare updates
+                    const userUpdate = {};
+                    const rewardText = [];
+                    
+                    // Add GEO reward
+                    if (codeData.rewardGeo > 0) {
+                        userUpdate.geoBalance = (userData.geoBalance || 0) + codeData.rewardGeo;
+                        rewardText.push(`+${codeData.rewardGeo} GEO`);
+                    }
+                    
+                    // Add LIFE reward
+                    if (codeData.rewardLife > 0) {
+                        userUpdate.lifeBalance = (userData.lifeBalance || 0) + codeData.rewardLife;
+                        rewardText.push(`+${codeData.rewardLife} LIFE`);
+                    }
+                    
+                    if (rewardText.length === 0) {
+                        throw new Error('INVALID');
+                    }
+                    
+                    // Update user
+                    transaction.update(userRef, userUpdate);
+                    
+                    // Update reward code
+                    transaction.update(codeRef, {
+                        usedCount: (codeData.usedCount || 0) + 1,
+                        claimedBy: [...claimedUsers, uid]
+                    });
+                    
+                    // Store reward text for success message
+                    window.__lastRewardText = rewardText.join(" & ");
+                });
+                
+                // Success
+                closeRewardModal();
+                
+                document.getElementById('successMessage').innerHTML = 
+                    `<b>${window.__lastRewardText}</b> berhasil masuk ke akun kamu 🎉`;
+                document.getElementById('successModal').style.display = 'flex';
+                
+                // Reload user data
+                await loadUserData(uid);
+                
+                showToast('success', 'Kode hadiah berhasil diklaim!');
+                
+            } catch (error) {
+                console.error("Reward code error:", error);
+                
+                if (error.message === 'USED' || error.message === 'EXPIRED') {
+                    showToast('error', 'Kode sudah digunakan atau expired');
+                } else if (error.message === 'INVALID') {
+                    showToast('error', 'Kode tidak valid');
+                } else {
+                    showToast('error', 'Terjadi kesalahan sistem');
+                }
+                
+            } finally {
+                // Reset states
+                isClaimingReward = false;
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-paper-plane"></i> Klaim Hadiah';
+            }
+        }
+        
+        // ============================================
+        // NOTIFICATION SYSTEM
+        // ============================================
+        async function loadNotifications() {
+            if (!firebaseAuth.currentUser) return;
+            
+            const uid = firebaseAuth.currentUser.uid;
+            
+            try {
+                // Query user's recent history
+                const historyRef = window.firebaseCollection(firebaseDb, "history");
+                const q = window.firebaseQuery(
+                    historyRef,
+                    window.firebaseWhere("uid", "==", uid)
+                );
+                
+                const querySnapshot = await window.firebaseGetDocs(q);
+                const notifications = [];
+                let todayCount = 0;
+                
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    const createdAt = data.createdAt?.toDate ? data.createdAt.toDate() : new Date(data.createdAt);
+                    const now = new Date();
+                    const isToday = createdAt.toDateString() === now.toDateString();
+                    
+                    notifications.push({
+                        id: doc.id,
+                        title: data.type || 'Activity',
+                        description: data.description || 'Tidak ada deskripsi',
+                        time: createdAt,
+                        isToday: isToday
+                    });
+                    
+                    if (isToday) todayCount++;
+                });
+                
+                // Sort by time (newest first)
+                notifications.sort((a, b) => b.time - a.time);
+                
+                // Update badge
+                document.getElementById('notificationBadge').textContent = todayCount;
+                
+                // Update notification modal
+                updateNotificationList(notifications.slice(0, 5)); // Show 5 most recent
+                
+            } catch (error) {
+                console.error("Load notifications error:", error);
+                // Don't show error to user for notifications
+            }
+        }
+        
+        function updateNotificationList(notifications) {
+            const listContainer = document.getElementById('notificationList');
+            
+            if (notifications.length === 0) {
+                listContainer.innerHTML = `
+                    <div class="notification-empty">
+                        <i class="fas fa-bell-slash"></i>
+                        <p>Tidak ada notifikasi</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            listContainer.innerHTML = notifications.map(notif => `
+                <div class="notification-item ${notif.isToday ? 'unread' : ''}">
+                    <div class="notification-title">${notif.title}</div>
+                    <div class="notification-desc">${notif.description}</div>
+                    <div class="notification-time">
+                        <i class="far fa-clock"></i>
+                        ${formatTime(notif.time)}
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function formatTime(date) {
+            const now = new Date();
+            const diffMs = now - date;
+            const diffMins = Math.floor(diffMs / (1000 * 60));
+            const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+            const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+            
+            if (diffMins < 1) return 'Baru saja';
+            if (diffMins < 60) return `${diffMins} menit lalu`;
+            if (diffHours < 24) return `${diffHours} jam lalu`;
+            if (diffDays < 7) return `${diffDays} hari lalu`;
+            
+            return date.toLocaleDateString('id-ID', {
+                day: 'numeric',
+                month: 'short',
+                year: 'numeric'
+            });
+        }
+        
+        // ============================================
+        // SHARE & REFERRAL FUNCTIONS
+        // ============================================
+        function openShareModal() {
+            if (!cachedUserData?.referralCode) {
+                showToast('error', 'Gagal memuat kode referral');
+                return;
+            }
+            
+            const referralCode = cachedUserData.referralCode;
+            const baseUrl = window.location.origin;
+            const link = `${baseUrl}/daftar.html?ref=${referralCode}`;
+            
+            document.getElementById('shareReferralLink').textContent = link;
+            
+            const copyBtn = document.getElementById('copyReferralBtn');
+            copyBtn.onclick = function() {
+                navigator.clipboard.writeText(link).then(() => {
+                    copyBtn.innerHTML = '<i class="fas fa-check"></i> Tersalin';
+                    setTimeout(() => {
+                        copyBtn.innerHTML = '<i class="fas fa-copy"></i> Salin Link';
+                    }, 2000);
+                });
+            };
+            
+            document.getElementById('shareModal').style.display = 'flex';
+        }
+        
+        function shareToWhatsApp() {
+            const link = document.getElementById('shareReferralLink').textContent;
+            const text = `Yuk join KuizTown! Main kuis, dapatkan uang. Daftar dengan link ini: ${link}`;
+            window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+        }
+        
+        function shareToTelegram() {
+            const link = document.getElementById('shareReferralLink').textContent;
+            const text = `Yuk join KuizTown! Main kuis, dapatkan uang. Daftar dengan link ini: ${link}`;
+            window.open(`https://t.me/share/url?url=${encodeURIComponent(link)}&text=${encodeURIComponent(text)}`, '_blank');
+        }
+        
+        function shareToFacebook() {
+            const link = document.getElementById('shareReferralLink').textContent;
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(link)}`, '_blank');
+        }
+        
+        // ============================================
+        // MODAL CONTROL FUNCTIONS
+        // ============================================
+        function openNotificationModal() {
+            document.getElementById('notificationModal').style.display = 'flex';
+        }
+        
+        function closeNotificationModal() {
+            document.getElementById('notificationModal').style.display = 'none';
+        }
+        
+        function closeShareModal() {
+            document.getElementById('shareModal').style.display = 'none';
+        }
+        
+        function openRewardModal() {
+            document.getElementById('rewardModal').style.display = 'flex';
+            document.getElementById('rewardCodeInput').value = '';
+            document.getElementById('rewardCodeInput').focus();
+        }
+        
+        function closeRewardModal() {
+            document.getElementById('rewardModal').style.display = 'none';
+        }
+        
+        // ============================================
+        // UTILITY FUNCTIONS
+        // ============================================
+        function setupEventListeners() {
+            // Life claim
+            document.getElementById('claimLifeBtn').addEventListener('click', claimLife);
+            
+            // Modals close buttons
+            document.getElementById('closeSuccessModal').addEventListener('click', () => {
+                document.getElementById('successModal').style.display = 'none';
+            });
+            
+            // Notification icon
+            document.getElementById('notificationIcon').addEventListener('click', openNotificationModal);
+            
+            // Share button
+            document.getElementById('shareBtn').addEventListener('click', openShareModal);
+            
+            // Close modals on outside click
+            window.addEventListener('click', (event) => {
+                const modals = ['successModal', 'notificationModal', 'shareModal', 'rewardModal'];
+                modals.forEach(modalId => {
+                    const modal = document.getElementById(modalId);
+                    if (event.target === modal) {
+                        modal.style.display = 'none';
+                    }
+                });
+            });
+            
+            // Close modals on escape key
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape') {
+                    const modals = ['notificationModal', 'shareModal', 'rewardModal'];
+                    modals.forEach(modalId => {
+                        const modal = document.getElementById(modalId);
+                        if (modal.style.display === 'flex') {
+                            modal.style.display = 'none';
+                        }
+                    });
+                }
+            });
+        }
+        
+        function showToast(type, text) {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            
+            let icon = 'fa-circle-info';
+            if (type === 'success') icon = 'fa-circle-check';
+            if (type === 'error') icon = 'fa-circle-xmark';
+            if (type === 'warning') icon = 'fa-triangle-exclamation';
+            
+            toast.innerHTML = `<i class="fas ${icon}"></i> ${text}`;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translate(-50%, 20px)';
+                setTimeout(() => toast.remove(), 300);
+            }, 2000);
+        }
+        
+        function showError(title, message) {
+            alert(`${title}: ${message}`);
+        }
+        
+        function setRandomFooterQuote() {
+            const randomIndex = Math.floor(Math.random() * footerQuotes.length);
+            const quoteEl = document.getElementById('footerQuote');
+            
+            if (quoteEl) {
+                quoteEl.textContent = `"${footerQuotes[randomIndex]}"`;
+            }
+        }
+        
+        // ============================================
+        // CLEANUP
+        // ============================================
+        window.addEventListener('beforeunload', () => {
+            if (lifeCountdownInterval) {
+                clearInterval(lifeCountdownInterval);
+            }
+        });
+        
+        // ============================================
+        // GLOBAL EXPORTS (for onclick handlers in HTML)
+        // ============================================
+        window.openRewardModal = openRewardModal;
+        window.closeRewardModal = closeRewardModal;
+        window.submitRewardCode = submitRewardCode;
+        window.shareToWhatsApp = shareToWhatsApp;
+        window.shareToTelegram = shareToTelegram;
+        window.shareToFacebook = shareToFacebook;
+        window.closeShareModal = closeShareModal;
+        window.closeNotificationModal = closeNotificationModal;
+    </script>
 </body>
 </html>
