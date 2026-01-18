@@ -3,53 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daftar - KuizTown</title>
+    <title>Pendaftaran Ditutup - KuizTown</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Firebase SDK -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
-        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
-        import { 
-    getFirestore,
-    doc,
-    setDoc,
-    getDoc,
-    collection,
-    query,
-    where,
-    getDocs,
-    updateDoc
-} from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyB9DCc6rCmeXl0O3CCLYe6zUmfByfRz428",
-            authDomain: "kuiztown.firebaseapp.com",
-            projectId: "kuiztown",
-            storageBucket: "kuiztown.firebasestorage.app",
-            messagingSenderId: "334081803913",
-            appId: "1:334081803913:web:84899b42961e12f538a858"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-        
-        // Ekspor ke global scope
-        window.firebaseAuth = auth;
-        window.firebaseCreateUser = createUserWithEmailAndPassword;
-        window.firebaseDb = db;
-        window.firebaseDoc = doc;
-        window.firebaseSetDoc = setDoc;
-        window.firebaseGetDoc = getDoc;
-        window.firebaseCollection = collection;
-        window.firebaseQuery = query;
-        window.firebaseWhere = where;
-        window.firebaseGetDocs = getDocs;
-        window.firebaseUpdateDoc = updateDoc;
-    </script>
     <style>
-        /* Reset & Base Styles */
         * {
             margin: 0;
             padding: 0;
@@ -58,761 +15,221 @@
         
         body {
             font-family: 'Poppins', sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background-color: #5F729F;
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(255, 192, 203, 0.08) 0%, transparent 20%),
-                radial-gradient(circle at 90% 80%, rgba(255, 192, 203, 0.08) 0%, transparent 20%),
-                radial-gradient(circle at 50% 50%, rgba(255, 192, 203, 0.05) 0%, transparent 30%);
+            background: linear-gradient(135deg, #5F729F 0%, #3a4a7a 100%);
             min-height: 100vh;
-            position: relative;
-            overflow-x: hidden;
             display: flex;
-            flex-direction: column;
-        }
-        
-        /* Geometric Pattern Background */
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                linear-gradient(30deg, rgba(255, 192, 203, 0.05) 12%, transparent 12.5%, transparent 87%, rgba(255, 192, 203, 0.05) 87.5%, rgba(255, 192, 203, 0.05)),
-                linear-gradient(150deg, rgba(255, 192, 203, 0.05) 12%, transparent 12.5%, transparent 87%, rgba(255, 192, 203, 0.05) 87.5%, rgba(255, 192, 203, 0.05)),
-                linear-gradient(30deg, rgba(255, 192, 203, 0.05) 12%, transparent 12.5%, transparent 87%, rgba(255, 192, 203, 0.05) 87.5%, rgba(255, 192, 203, 0.05)),
-                linear-gradient(150deg, rgba(255, 192, 203, 0.05) 12%, transparent 12.5%, transparent 87%, rgba(255, 192, 203, 0.05) 87.5%, rgba(255, 192, 203, 0.05)),
-                linear-gradient(60deg, rgba(255, 192, 203, 0.08) 25%, transparent 25.5%, transparent 75%, rgba(255, 192, 203, 0.08) 75%, rgba(255, 192, 203, 0.08)),
-                linear-gradient(60deg, rgba(255, 192, 203, 0.08) 25%, transparent 25.5%, transparent 75%, rgba(255, 192, 203, 0.08) 75%, rgba(255, 192, 203, 0.08));
-            background-size: 80px 140px;
-            background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
-            opacity: 0.3;
-            z-index: -1;
-        }
-        
-        /* Container */
-        .container {
-            max-width: 500px;
-            margin: 0 auto;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
             padding: 20px;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
         }
         
-        /* Header */
-        header {
+        .maintenance-container {
+            max-width: 800px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .logo {
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px 0;
-            margin-bottom: 20px;
-            animation: fadeInDown 0.8s ease-out;
-        }
-        
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            gap: 15px;
+            margin-bottom: 30px;
         }
         
         .logo-icon {
-            font-size: 32px;
-            background: linear-gradient(135deg, #9b59b6, #3498db);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            font-size: 50px;
+            color: #87CEEB;
         }
         
         .logo-text {
-            font-size: 24px;
+            font-size: 32px;
             font-weight: 700;
-            color: #fff;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        }
-        
-        /* Form Container */
-        .form-container {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            animation: fadeInUp 0.8s ease-out 0.3s both;
-        }
-        
-        .form-title {
-            font-size: 1.8rem;
-            color: #333;
-            text-align: center;
-            margin-bottom: 10px;
-            font-weight: 700;
-        }
-        
-        .form-subtitle {
-            text-align: center;
-            color: #666;
-            margin-bottom: 30px;
-            font-size: 0.95rem;
-        }
-        
-        /* Form Elements */
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        .form-label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            color: #444;
-            font-size: 0.95rem;
-        }
-        
-        .form-input {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid #e1e1e1;
-            border-radius: 10px;
-            font-size: 16px;
-            font-family: 'Poppins', sans-serif;
-            transition: all 0.3s ease;
-            background-color: #fff;
-        }
-        
-        .form-input:focus {
-            outline: none;
-            border-color: #87CEEB;
-            box-shadow: 0 0 0 3px rgba(135, 206, 235, 0.2);
-        }
-        
-        .form-input:disabled {
-            background-color: #f5f5f5;
-            color: #888;
-            cursor: not-allowed;
-        }
-        
-        .password-container {
-            position: relative;
-        }
-        
-        .toggle-password {
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            color: #666;
-            cursor: pointer;
-            font-size: 18px;
-        }
-        
-        .form-info {
-            font-size: 0.85rem;
-            color: #666;
-            margin-top: 5px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        
-        .form-info i {
-            color: #87CEEB;
-        }
-        
-        /* Bonus Info */
-        .bonus-info {
-            background: linear-gradient(135deg, rgba(135, 206, 235, 0.1), rgba(255, 192, 203, 0.1));
-            border-radius: 10px;
-            padding: 15px;
-            margin: 20px 0;
-            border-left: 4px solid #FFD700;
-        }
-        
-        .bonus-title {
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .bonus-title i {
-            color: #FFD700;
-        }
-        
-        .bonus-details {
-            display: flex;
-            gap: 20px;
-            margin-top: 10px;
-        }
-        
-        .bonus-item {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            font-size: 0.9rem;
-        }
-        
-        .geo-icon {
-            color: #90EE90;
-        }
-        
-        .life-icon {
-            color: #87CEEB;
-        }
-        
-        /* Button */
-        .btn {
-            width: 100%;
-            padding: 16px;
-            font-size: 18px;
-            font-weight: 600;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            margin-top: 10px;
-        }
-        
-        .btn-primary {
-            background: linear-gradient(135deg, #87CEEB, #5F729F);
             color: white;
         }
         
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(135, 206, 235, 0.4);
+        .lock-icon {
+            font-size: 100px;
+            margin: 30px 0;
+            color: #FF6B6B;
         }
         
-        .btn-primary:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: white;
         }
         
-        /* Login Link */
-        .login-link {
-            text-align: center;
-            margin-top: 25px;
-            color: #666;
-            font-size: 0.95rem;
+        .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            line-height: 1.6;
         }
         
-        .login-link a {
-            color: #87CEEB;
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.3s ease;
-        }
-        
-        .login-link a:hover {
-            color: #5F729F;
-            text-decoration: underline;
-        }
-        
-        /* Footer */
-        footer {
-            padding: 20px 0;
-            text-align: center;
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 0.85rem;
-            margin-top: 20px;
-        }
-        
-        /* Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .modal-content {
-            background-color: white;
-            padding: 30px;
+        .info-box {
+            background: rgba(255, 107, 107, 0.1);
+            border: 2px solid #FF6B6B;
             border-radius: 15px;
-            max-width: 400px;
-            width: 90%;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            animation: modalFadeIn 0.3s ease-out;
+            padding: 25px;
+            margin: 30px 0;
         }
         
-        .modal-icon {
-            font-size: 50px;
-            margin-bottom: 20px;
+        .info-box h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: #FF6B6B;
         }
         
-        .success .modal-icon {
-            color: #90EE90;
-        }
-        
-        .error .modal-icon {
-            color: #ff6b6b;
-        }
-        
-        .modal-title {
-            font-size: 1.5rem;
+        .info-box p {
+            line-height: 1.8;
             margin-bottom: 10px;
-            color: #333;
         }
         
-        .modal-message {
-            color: #666;
-            margin-bottom: 25px;
+        .features-list {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            text-align: left;
         }
         
-        .modal-btn {
-            padding: 12px 30px;
+        .features-list h3 {
+            color: #87CEEB;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+        
+        .feature-item i {
+            color: #4CAF50;
+            font-size: 20px;
+            width: 30px;
+        }
+        
+        .back-button {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 15px 40px;
             background: linear-gradient(135deg, #87CEEB, #5F729F);
             color: white;
-            border: none;
+            text-decoration: none;
             border-radius: 50px;
             font-weight: 600;
+            font-size: 1.1rem;
+            border: none;
             cursor: pointer;
             transition: all 0.3s ease;
         }
         
-        .modal-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(135, 206, 235, 0.4);
+        .back-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
         
-        /* Animations */
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            font-size: 0.9rem;
+            opacity: 0.8;
         }
         
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        @keyframes modalFadeIn {
-            from {
-                opacity: 0;
-                transform: scale(0.9) translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
-        }
-        
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-            20%, 40%, 60%, 80% { transform: translateX(5px); }
-        }
-        
-        .shake {
-            animation: shake 0.5s ease-in-out;
-        }
-        
-        /* Responsive */
-        @media (max-width: 480px) {
-            .container {
-                padding: 15px;
+        @media (max-width: 768px) {
+            .maintenance-container {
+                padding: 25px;
             }
             
-            .form-container {
-                padding: 25px 20px;
+            h1 {
+                font-size: 2rem;
             }
             
-            .form-title {
-                font-size: 1.5rem;
+            .lock-icon {
+                font-size: 70px;
             }
             
-            .bonus-details {
+            .logo {
                 flex-direction: column;
                 gap: 10px;
+            }
+            
+            .features-list {
+                padding: 15px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Header -->
-        <header>
-            <div class="logo-container">
-                <i class="fas fa-shapes logo-icon"></i>
-                <span class="logo-text">KuizTown</span>
-            </div>
-        </header>
-
-        <!-- Form Pendaftaran -->
-        <main class="form-container">
-            <h1 class="form-title">Daftar Akun KuizTown</h1>
-            <p class="form-subtitle">Bergabunglah dengan komunitas kami dan mulai kumpulkan GEO!</p>
-            
-            <!-- Info Bonus Pendaftaran -->
-            <div class="bonus-info">
-                <div class="bonus-title">
-                    <i class="fas fa-gift"></i> Bonus Pendaftaran
-                </div>
-                <p>Dapatkan bonus langsung setelah mendaftar:</p>
-                <div class="bonus-details">
-                    <div class="bonus-item">
-                        <i class="fas fa-seedling geo-icon"></i>
-                        <span>9 GEO</span>
-                    </div>
-                    <div class="bonus-item">
-                        <i class="fas fa-heart life-icon"></i>
-                        <span>10 LIFE</span>
-                    </div>
-                </div>
-            </div>
-            
-            <form id="registerForm">
-                <div class="form-group">
-                    <label for="username" class="form-label">Username</label>
-                    <input type="text" id="username" class="form-input" placeholder="Masukkan username" required>
-                    <div class="form-info">
-                        <i class="fas fa-info-circle"></i> Username akan ditampilkan di profil Anda
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="email" class="form-label">Email</label>
-                    <input type="email" id="email" class="form-input" placeholder="contoh@email.com" required>
-                    <div class="form-info">
-                        <i class="fas fa-info-circle"></i> Pastikan email aktif untuk verifikasi
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="password" class="form-label">Password</label>
-                    <div class="password-container">
-                        <input type="password" id="password" class="form-input" placeholder="Minimal 6 karakter" required>
-                        <button type="button" class="toggle-password" id="togglePassword">
-                            <i class="fas fa-eye"></i>
-                        </button>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="confirmPassword" class="form-label">Konfirmasi Password</label>
-                    <div class="password-container">
-                        <input type="password" id="confirmPassword" class="form-input" placeholder="Ulangi password" required>
-                        <button type="button" class="toggle-password" id="toggleConfirmPassword">
-                            <i class="fas fa-eye"></i>
-                        </button>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="referralCode" class="form-label">Kode Referral (Opsional)</label>
-                    <input type="text" id="referralCode" class="form-input" placeholder="Masukkan kode referral">
-                    <div class="form-info">
-                        <i class="fas fa-info-circle"></i> Dapatkan bonus tambahan jika mendaftar dengan kode referral
-                    </div>
-                </div>
-                
-                <button type="submit" class="btn btn-primary" id="submitBtn">
-                    <i class="fas fa-user-plus"></i> Daftar Sekarang
-                </button>
-            </form>
-            
-            <div class="login-link">
-                Sudah punya akun? <a href="login.html">Masuk di sini</a>
-            </div>
-        </main>
+    <div class="maintenance-container">
+        <div class="logo">
+            <i class="fas fa-brain logo-icon"></i>
+            <span class="logo-text">KuizTown</span>
+        </div>
         
-        <footer>
-            &copy; 2023 KuizTown. Play. Think. Earn.
-        </footer>
-    </div>
-    
-    <!-- Modal Success -->
-    <div id="successModal" class="modal">
-        <div class="modal-content success">
-            <i class="fas fa-check-circle modal-icon"></i>
-            <h2 class="modal-title">Pendaftaran Berhasil!</h2>
-            <p class="modal-message">Selamat! Akun Anda telah berhasil dibuat. Bonus 9 GEO dan 10 LIFE telah ditambahkan ke akun Anda.</p>
-            <button class="modal-btn" id="goToDashboard">Masuk ke Dashboard</button>
+        <div class="lock-icon">
+            <i class="fas fa-lock"></i>
+        </div>
+        
+        <h1>PENDAFTARAN SEMENTARA DITUTUP</h1>
+        
+        <div class="subtitle">
+            Kami sedang melakukan upgrade sistem. Pendaftaran user baru sementara tidak tersedia.
+        </div>
+        
+        <div class="info-box">
+            <h3>⏳ STATUS SISTEM</h3>
+            <p>• Pendaftaran user baru: <strong>TERTUTUP</strong></p>
+            <p>• Login user yang sudah ada: <strong>TERBUKA</strong></p>
+            <p>• Fitur quiz dan tugas: <strong>AKTIF</strong></p>
+            <p>• Estimasi buka pendaftaran: <strong>1-2 hari lagi</strong></p>
+        </div>
+        
+        <div class="features-list">
+            <h3>✨ FITUR YANG TERSEDIA NANTI</h3>
+            <div class="feature-item">
+                <i class="fas fa-check-circle"></i>
+                <span>Bonus pendaftaran 9 GEO + 10 LIFE</span>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-check-circle"></i>
+                <span>Sistem referral dengan komisi</span>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-check-circle"></i>
+                <span>500+ level quiz dengan berbagai kategori</span>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-check-circle"></i>
+                <span>Tugas harian dengan reward GEO</span>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-check-circle"></i>
+                <span>Withdraw ke bank & e-wallet</span>
+            </div>
+        </div>
+        
+        <button class="back-button" onclick="window.location.href='login.html'">
+            <i class="fas fa-arrow-left"></i> KEMBALI KE LOGIN
+        </button>
+        
+        <div class="footer">
+            © 2024 KuizTown - Pendaftaran akan dibuka kembali segera
         </div>
     </div>
-    
-    <!-- Modal Error -->
-    <div id="errorModal" class="modal">
-        <div class="modal-content error">
-            <i class="fas fa-exclamation-circle modal-icon"></i>
-            <h2 class="modal-title" id="errorTitle">Terjadi Kesalahan</h2>
-            <p class="modal-message" id="errorMessage">Silakan coba lagi atau hubungi customer service.</p>
-            <button class="modal-btn" id="closeErrorModal">Tutup</button>
-        </div>
-    </div>
-
-    <script>
-        // Toggle password visibility
-        document.getElementById('togglePassword').addEventListener('click', function() {
-            const passwordInput = document.getElementById('password');
-            const icon = this.querySelector('i');
-            
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                icon.classList.remove('fa-eye');
-                icon.classList.add('fa-eye-slash');
-            } else {
-                passwordInput.type = 'password';
-                icon.classList.remove('fa-eye-slash');
-                icon.classList.add('fa-eye');
-            }
-        });
-        
-        document.getElementById('toggleConfirmPassword').addEventListener('click', function() {
-            const confirmPasswordInput = document.getElementById('confirmPassword');
-            const icon = this.querySelector('i');
-            
-            if (confirmPasswordInput.type === 'password') {
-                confirmPasswordInput.type = 'text';
-                icon.classList.remove('fa-eye');
-                icon.classList.add('fa-eye-slash');
-            } else {
-                confirmPasswordInput.type = 'password';
-                icon.classList.remove('fa-eye-slash');
-                icon.classList.add('fa-eye');
-            }
-        });
-        
-        // Check URL for referral code
-        document.addEventListener('DOMContentLoaded', function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const refCode = urlParams.get('ref');
-            
-            if (refCode) {
-                document.getElementById('referralCode').value = refCode;
-            }
-        });
-        
-        // Generate unique referral code for new user
-        function generateReferralCode(username) {
-        const timestamp = Date.now().toString().slice(-4);
-            const randomNum = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
-            const code = (username.slice(0, 3) + timestamp + randomNum).toUpperCase();
-            return code.replace(/[^A-Z0-9]/g, '');
-        }
-        
-        // Form submission
-        document.getElementById('registerForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            // Get form values
-            const username = document.getElementById('username').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const password = document.getElementById('password').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
-            const referralCode = document.getElementById('referralCode').value.trim();
-            
-            // Validation
-            if (username.length < 3) {
-                showError('Username terlalu pendek', 'Username harus minimal 3 karakter.');
-                document.getElementById('username').classList.add('shake');
-                setTimeout(() => document.getElementById('username').classList.remove('shake'), 500);
-                return;
-            }
-            
-            if (password.length < 6) {
-                showError('Password terlalu pendek', 'Password harus minimal 6 karakter.');
-                document.getElementById('password').classList.add('shake');
-                setTimeout(() => document.getElementById('password').classList.remove('shake'), 500);
-                return;
-            }
-            
-            if (password !== confirmPassword) {
-                showError('Password tidak cocok', 'Password dan konfirmasi password harus sama.');
-                document.getElementById('confirmPassword').classList.add('shake');
-                setTimeout(() => document.getElementById('confirmPassword').classList.remove('shake'), 500);
-                return;
-            }
-            
-            // Disable submit button
-            const submitBtn = document.getElementById('submitBtn');
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mendaftarkan...';
-            
-            try {
-            let inviterUID = null;
-                // Create user with Firebase Authentication
-                const userCredential = await window.firebaseCreateUser(window.firebaseAuth, email, password);
-                const user = userCredential.user;
-                
-                // Generate referral code for new user
-                const userReferralCode = generateReferralCode(username);
-                // PROSES REFERRAL
-if (referralCode) {
-
-    const q = window.firebaseQuery(
-    window.firebaseCollection(window.firebaseDb, "users"),
-    window.firebaseWhere("referralCode", "==", referralCode)
-);
-
-    const snap = await window.firebaseGetDocs(q);
-
-    if (snap.empty) {
-        showError("Kode Referral Salah", "Kode referral tidak ditemukan.");
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = '<i class="fas fa-user-plus"></i> Daftar Sekarang';
-        return;
-    }
-
-    inviterUID = snap.docs[0].id;
-    const inviterData = snap.docs[0].data();
-
-    const newGeo = (inviterData.geoBalance || 0) + 0.1;
-    const newLife = (inviterData.lifeBalance || 0) + 1;
-
-    await window.firebaseUpdateDoc(
-    window.firebaseDoc(window.firebaseDb, "users", inviterUID),
-    {
-        geoBalance: newGeo,
-        lifeBalance: newLife
-    }
-);
-}                
-                // User data to save in Firestore
-                const userData = {
-                    uid: user.uid,
-                    username: username,
-                    email: email,
-                    geoBalance: 9, // Bonus pendaftaran 9 GEO
-                    lifeBalance: 10, // Bonus pendaftaran 10 LIFE
-                    referralCode: userReferralCode,
-                    referredBy: inviterUID,
-                    levelProgress: {
-                        easy: 0,
-                        medium: 0,
-                        hard: 0,
-                        veryHard: 0,
-                        ultimateHard: 0
-                    },
-                    totalEarnedGeo: 9,
-                    totalUsedLife: 0,
-                    createdAt: new Date().toISOString(),
-                    lastLogin: new Date().toISOString(),
-                    status: 'active',
-                    role: 'user'
-                };
-                
-
-
-
-                // Save user data to Firestore
-                await window.firebaseSetDoc(window.firebaseDoc(window.firebaseDb, "users", user.uid), userData);
-                
-                 // Show success modal
-                showSuccess();
-                
-            } catch (error) {
-
-    console.error("REGISTER ERROR =>", error);
-
-    let errorMessage = error.message || 'Terjadi kesalahan saat mendaftar.';
-                
-    switch (error.code) {
-        case 'auth/email-already-in-use':
-            errorMessage = 'Email ini sudah terdaftar. Gunakan email lain atau lakukan login.';
-            break;
-        case 'auth/invalid-email':
-            errorMessage = 'Format email tidak valid.';
-            break;
-        case 'auth/weak-password':
-            errorMessage = 'Password terlalu lemah. Gunakan password yang lebih kuat.';
-            break;
-        case 'auth/operation-not-allowed':
-            errorMessage = 'Operasi pendaftaran tidak diizinkan. Hubungi administrator.';
-            break;
-        case 'auth/network-request-failed':
-            errorMessage = 'Gagal terhubung ke jaringan. Periksa koneksi internet Anda.';
-            break;
-    }
-
-    showError("Pendaftaran Gagal", errorMessage);
-}
-                
-                
-                
-                // Re-enable submit button
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = '<i class="fas fa-user-plus"></i> Daftar Sekarang';
-            });
-        
-        // Modal functions
-        function showSuccess() {
-            document.getElementById('successModal').style.display = 'flex';
-        }
-        
-        function showError(title, message) {
-            document.getElementById('errorTitle').textContent = title;
-            document.getElementById('errorMessage').textContent = message;
-            document.getElementById('errorModal').style.display = 'flex';
-        }
-        
-        // Close modals
-        document.getElementById('goToDashboard').addEventListener('click', function() {
-            // Redirect to dashboard
-            window.location.href = 'dashboard.html';
-        });
-        
-        document.getElementById('closeErrorModal').addEventListener('click', function() {
-            document.getElementById('errorModal').style.display = 'none';
-        });
-        
-        // Close modals when clicking outside
-        window.addEventListener('click', function(event) {
-            const successModal = document.getElementById('successModal');
-            const errorModal = document.getElementById('errorModal');
-            
-            if (event.target === successModal) {
-                successModal.style.display = 'none';
-            }
-            
-            if (event.target === errorModal) {
-                errorModal.style.display = 'none';
-            }
-        });
-        
-        // Check if user is already logged in
-        document.addEventListener('DOMContentLoaded', function() {
-            // In a real implementation, you would check Firebase auth state
-            // For now, we'll just check localStorage
-            if (localStorage.getItem('kuiztown_user')) {
-                window.location.href = 'dashboard.html';
-            }
-        });
-    </script>
 </body>
 </html>
