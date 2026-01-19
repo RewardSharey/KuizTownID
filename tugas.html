@@ -17,41 +17,45 @@
         body {
             font-family: 'Poppins', sans-serif;
             background: #f8fafc;
-            color: #334155;
+            color: #1e293b;
             min-height: 100vh;
+            overflow-x: hidden;
         }
         
-        /* Container Styles */
+        /* Container */
         .container {
             max-width: 100%;
             margin: 0 auto;
-            padding: 0 15px;
+            padding: 0 15px 20px;
         }
         
-        /* Header Styles */
+        /* Header */
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 0;
-            margin-bottom: 15px;
+            padding: 20px 0 15px;
+            position: sticky;
+            top: 0;
+            background: #f8fafc;
+            z-index: 100;
         }
         
         .logo-container {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
         }
         
         .logo-icon {
-            font-size: 28px;
+            font-size: 24px;
             background: linear-gradient(135deg, #3b82f6, #8b5cf6);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         
         .logo-text {
-            font-size: 22px;
+            font-size: 20px;
             font-weight: 700;
             color: #1e293b;
         }
@@ -59,7 +63,7 @@
         .notification-icon {
             position: relative;
             color: #64748b;
-            font-size: 22px;
+            font-size: 20px;
             cursor: pointer;
         }
         
@@ -69,7 +73,7 @@
             right: -5px;
             background: #ef4444;
             color: white;
-            font-size: 12px;
+            font-size: 11px;
             width: 18px;
             height: 18px;
             border-radius: 50%;
@@ -79,445 +83,454 @@
             font-weight: 600;
         }
         
-        /* Stats Overview */
-        .stats-overview {
-            background: linear-gradient(135deg, #3b82f6, #6366f1);
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 20px;
-            color: white;
-            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.2);
-        }
-        
-        .stats-title {
-            font-size: 16px;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            opacity: 0.9;
-        }
-        
-        .stats-grid {
+        /* Balance Cards */
+        .balance-cards {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-        }
-        
-        .stat-item {
-            text-align: center;
-            padding: 15px 10px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            backdrop-filter: blur(10px);
-        }
-        
-        .stat-value {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 5px;
-        }
-        
-        .stat-label {
-            font-size: 12px;
-            opacity: 0.8;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        
-        /* Filter Tabs */
-        .filter-tabs {
-            display: flex;
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
             margin-bottom: 20px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-            border: 1px solid #e2e8f0;
         }
         
-        .filter-tab {
-            flex: 1;
-            padding: 15px 10px;
-            border: none;
-            background: transparent;
-            font-weight: 500;
-            font-size: 14px;
-            color: #64748b;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            border-bottom: 3px solid transparent;
-        }
-        
-        .filter-tab.active {
-            color: #3b82f6;
-            border-bottom-color: #3b82f6;
-            background: linear-gradient(to bottom, rgba(59, 130, 246, 0.05), transparent);
-        }
-        
-        .filter-tab:hover:not(.active) {
-            color: #475569;
-            background: #f8fafc;
-        }
-        
-        /* Search Bar */
-        .search-container {
-            margin-bottom: 20px;
-            position: relative;
-        }
-        
-        .search-input {
-            width: 100%;
-            padding: 16px 20px;
-            padding-left: 50px;
-            border: none;
-            border-radius: 12px;
-            background: white;
-            font-family: 'Poppins', sans-serif;
-            font-size: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-            border: 1px solid #e2e8f0;
-            transition: all 0.3s ease;
-        }
-        
-        .search-input:focus {
-            outline: none;
-            border-color: #3b82f6;
-            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.15);
-        }
-        
-        .search-icon {
-            position: absolute;
-            left: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #94a3b8;
-            font-size: 18px;
-        }
-        
-        /* Task Cards Section */
-        #tasksSection {
-            display: block;
-        }
-        
-        .task-cards-container {
-            display: grid;
-            gap: 16px;
-            margin-bottom: 80px;
-        }
-        
-        .task-card {
+        .balance-card {
             background: white;
             border-radius: 16px;
-            padding: 20px;
+            padding: 18px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
             border: 1px solid #e2e8f0;
-            transition: all 0.3s ease;
-            cursor: pointer;
         }
         
-        .task-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-            border-color: #cbd5e1;
-        }
-        
-        .task-card-header {
+        .balance-header {
             display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 15px;
-        }
-        
-        .task-card-title {
-            font-size: 17px;
-            font-weight: 600;
-            color: #1e293b;
-            margin-bottom: 5px;
-        }
-        
-        .task-difficulty {
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        
-        .difficulty-easy {
-            background: rgba(34, 197, 94, 0.1);
-            color: #16a34a;
-        }
-        
-        .difficulty-medium {
-            background: rgba(245, 158, 11, 0.1);
-            color: #d97706;
-        }
-        
-        .difficulty-hard {
-            background: rgba(239, 68, 68, 0.1);
-            color: #dc2626;
-        }
-        
-        .task-description {
-            color: #64748b;
-            font-size: 14px;
-            line-height: 1.5;
-            margin-bottom: 15px;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-        
-        .task-meta {
-            display: flex;
-            flex-wrap: wrap;
+            align-items: center;
             gap: 10px;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
         
-        .task-reward {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 600;
-        }
-        
-        .geo-reward {
-            background: rgba(245, 158, 11, 0.1);
-            color: #d97706;
-        }
-        
-        .life-reward {
-            background: rgba(239, 68, 68, 0.1);
-            color: #dc2626;
-        }
-        
-        .slot-info {
-            background: rgba(59, 130, 246, 0.1);
-            color: #2563eb;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 600;
-        }
-        
-        .status-badge {
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-        }
-        
-        .status-pending {
-            background: rgba(245, 158, 11, 0.1);
-            color: #d97706;
-        }
-        
-        .status-approved {
-            background: rgba(34, 197, 94, 0.1);
-            color: #16a34a;
-        }
-        
-        .status-rejected {
-            background: rgba(239, 68, 68, 0.1);
-            color: #dc2626;
-        }
-        
-        .task-actions {
-            display: flex;
-            gap: 10px;
-        }
-        
-        .view-details-btn {
-            background: #3b82f6;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 10px;
-            font-weight: 500;
-            font-size: 14px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.3s ease;
-            flex: 1;
-        }
-        
-        .view-details-btn:hover {
-            background: #2563eb;
-            transform: translateY(-2px);
-        }
-        
-        .view-details-btn:disabled {
-            background: #94a3b8;
-            cursor: not-allowed;
-            transform: none;
-        }
-        
-        /* Task Details Section */
-        #taskDetailsSection {
-            display: none;
-        }
-        
-        .details-container {
-            background: white;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-            border: 1px solid #e2e8f0;
-        }
-        
-        .details-header {
-            background: linear-gradient(135deg, #3b82f6, #6366f1);
-            padding: 25px;
-            color: white;
-            position: relative;
-        }
-        
-        .back-button {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
+        .balance-icon {
             width: 40px;
             height: 40px;
-            border-radius: 50%;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+        
+        .geo-icon {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
             color: white;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
         }
         
-        .back-button:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateX(-3px);
+        .life-icon {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
         }
         
-        .details-title-section {
-            padding-top: 10px;
-            text-align: center;
-        }
-        
-        .task-id-badge {
-            background: rgba(255, 255, 255, 0.2);
-            padding: 6px 15px;
-            border-radius: 20px;
-            font-size: 13px;
-            margin-bottom: 10px;
-            display: inline-block;
-            backdrop-filter: blur(10px);
-        }
-        
-        .details-title {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-        
-        .details-subtitle {
-            opacity: 0.9;
+        .balance-label {
             font-size: 14px;
-        }
-        
-        .details-tabs {
-            display: flex;
-            background: white;
-            border-bottom: 1px solid #e2e8f0;
-        }
-        
-        .details-tab {
-            flex: 1;
-            padding: 20px;
-            border: none;
-            background: transparent;
-            font-weight: 500;
-            font-size: 15px;
             color: #64748b;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border-bottom: 3px solid transparent;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
+            margin-bottom: 2px;
         }
         
-        .details-tab.active {
-            color: #3b82f6;
-            border-bottom-color: #3b82f6;
-            background: linear-gradient(to bottom, rgba(59, 130, 246, 0.05), transparent);
+        .balance-value {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1e293b;
         }
         
-        .tab-content {
-            display: none;
-            padding: 30px;
-        }
-        
-        .tab-content.active {
-            display: block;
-        }
-        
-        /* Info Tab */
-        .info-item {
-            margin-bottom: 25px;
+        /* Info Section */
+        .info-section {
+            background: linear-gradient(135deg, #dbeafe, #e0f2fe);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #bfdbfe;
         }
         
         .info-title {
             font-size: 16px;
             font-weight: 600;
-            color: #1e293b;
+            color: #1e40af;
             margin-bottom: 10px;
             display: flex;
             align-items: center;
             gap: 10px;
         }
         
-        .info-title i {
-            color: #3b82f6;
-            width: 20px;
-        }
-        
         .info-content {
-            background: #f8fafc;
-            padding: 20px;
-            border-radius: 12px;
-            border-left: 4px solid #3b82f6;
+            font-size: 14px;
             color: #475569;
             line-height: 1.6;
         }
         
+        .info-content strong {
+            color: #1e40af;
+        }
+        
+        /* Separator */
+        .separator {
+            height: 1px;
+            background: #e2e8f0;
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        .separator-text {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background: #f8fafc;
+            padding: 0 15px;
+            font-size: 12px;
+            color: #94a3b8;
+            font-weight: 500;
+        }
+        
+        /* Category Tabs */
+        .category-tabs-container {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .category-tabs {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding: 5px 0 15px;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        
+        .category-tabs::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .category-tab {
+            padding: 10px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 25px;
+            background: white;
+            font-size: 14px;
+            font-weight: 500;
+            color: #64748b;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+        }
+        
+        .category-tab.active {
+            border-color: #3b82f6;
+            background: #3b82f6;
+            color: white;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+        }
+        
+        .category-tab:hover:not(.active) {
+            border-color: #cbd5e1;
+        }
+        
+        /* Task Cards */
+        .task-cards-container {
+            display: grid;
+            gap: 16px;
+            margin-bottom: 70px;
+        }
+        
+        .task-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+        
+        .task-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+        }
+        
+        .task-header {
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            padding: 20px;
+            color: white;
+            position: relative;
+        }
+        
+        .task-id {
+            font-size: 12px;
+            opacity: 0.8;
+            margin-bottom: 5px;
+        }
+        
+        .task-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 5px;
+            line-height: 1.3;
+        }
+        
+        .task-difficulty {
+            display: inline-block;
+            padding: 4px 12px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-top: 8px;
+        }
+        
+        .task-body {
+            padding: 20px;
+        }
+        
+        .task-description {
+            color: #475569;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .task-rewards {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .reward-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: #f8fafc;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .reward-icon {
+            font-size: 18px;
+        }
+        
+        .geo-reward .reward-icon {
+            color: #f59e0b;
+        }
+        
+        .life-reward .reward-icon {
+            color: #ef4444;
+        }
+        
+        .reward-text {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1e293b;
+        }
+        
+        .take-task-btn {
+            width: 100%;
+            padding: 10px;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .take-task-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
+        }
+        
+        .take-task-btn:disabled {
+            background: #94a3b8;
+            cursor: not-allowed;
+        }
+        
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            display: none;
+        }
+        
+        .empty-icon {
+            font-size: 60px;
+            color: #cbd5e1;
+            margin-bottom: 20px;
+        }
+        
+        .empty-title {
+            font-size: 18px;
+            color: #64748b;
+            margin-bottom: 10px;
+        }
+        
+        .empty-desc {
+            color: #94a3b8;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+        
+        /* ========== TAB DETAILS ========== */
+        #detailsSection {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #f8fafc;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+        
+        .details-container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 0 15px 30px;
+        }
+        
+        /* Details Header */
+        .details-header {
+            position: sticky;
+            top: 0;
+            background: #f8fafc;
+            padding: 20px 0;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #e2e8f0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .back-button {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: none;
+            border: none;
+            color: #3b82f6;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 8px 0;
+        }
+        
+        .back-button:hover {
+            color: #2563eb;
+        }
+        
+        /* Task Info Header */
+        .task-info-header {
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            border-radius: 20px;
+            padding: 25px;
+            color: white;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .task-info-header::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 150px;
+            height: 150px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+        
+        .task-info-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+        
+        .task-rewards-header {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .reward-header-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+        }
+        
+        /* Details Content */
+        .details-content {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+        
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section-title i {
+            color: #3b82f6;
+        }
+        
+        .description-box {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 12px;
+            color: #475569;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            border-left: 4px solid #3b82f6;
+        }
+        
+        /* Instructions */
         .instructions-list {
             list-style: none;
+            margin-bottom: 25px;
         }
         
         .instructions-list li {
-            padding: 10px 15px;
+            padding: 12px 15px;
             background: white;
             border: 1px solid #e2e8f0;
-            border-radius: 8px;
+            border-radius: 10px;
             margin-bottom: 10px;
             display: flex;
             align-items: flex-start;
             gap: 12px;
+            transition: all 0.2s ease;
+        }
+        
+        .instructions-list li:hover {
+            border-color: #3b82f6;
+            transform: translateX(5px);
         }
         
         .instruction-number {
@@ -534,97 +547,60 @@
             flex-shrink: 0;
         }
         
-        .link-button {
+        /* Link Button */
+        .link-container {
+            margin-bottom: 25px;
+        }
+        
+        .task-link-button {
             display: inline-flex;
             align-items: center;
-            gap: 10px;
-            background: #10b981;
+            gap: 12px;
+            background: linear-gradient(135deg, #10b981, #059669);
             color: white;
-            padding: 12px 24px;
-            border-radius: 10px;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.2);
-        }
-        
-        .link-button:hover {
-            background: #0da271;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3);
-        }
-        
-        /* Rewards Tab */
-        .rewards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 20px;
-        }
-        
-        .reward-card {
-            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+            padding: 16px 30px;
             border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.2);
+        }
+        
+        .task-link-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+        }
+        
+        /* Separator Thin */
+        .separator-thin {
+            height: 2px;
+            background: linear-gradient(to right, transparent, #e2e8f0, transparent);
+            margin: 30px 0;
+        }
+        
+        /* Upload Section */
+        .upload-section {
+            background: #f8fafc;
+            border-radius: 16px;
             padding: 25px;
-            text-align: center;
-            border: 1px solid #e2e8f0;
+            margin-bottom: 20px;
+            border: 2px dashed #cbd5e1;
+            transition: all 0.3s ease;
         }
         
-        .reward-icon {
-            font-size: 32px;
+        .upload-section:hover {
+            border-color: #3b82f6;
+            background: #f0f9ff;
+        }
+        
+        .upload-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1e293b;
             margin-bottom: 15px;
-        }
-        
-        .geo-icon {
-            background: linear-gradient(135deg, #f59e0b, #d97706);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .life-icon {
-            background: linear-gradient(135deg, #ef4444, #dc2626);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .reward-value {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 5px;
-        }
-        
-        .geo-value {
-            color: #d97706;
-        }
-        
-        .life-value {
-            color: #dc2626;
-        }
-        
-        /* Rules Tab */
-        .rules-grid {
-            display: grid;
-            gap: 15px;
-        }
-        
-        .rule-item {
             display: flex;
             align-items: center;
-            gap: 15px;
-            padding: 15px;
-            background: #f8fafc;
-            border-radius: 10px;
-            border-left: 4px solid #3b82f6;
-        }
-        
-        .rule-icon {
-            color: #3b82f6;
-            font-size: 20px;
-            width: 24px;
-        }
-        
-        /* Submit Tab */
-        .upload-container {
-            margin-bottom: 25px;
+            gap: 10px;
         }
         
         .upload-area {
@@ -632,14 +608,15 @@
             border-radius: 12px;
             padding: 40px 20px;
             text-align: center;
-            background: #f8fafc;
+            background: white;
             cursor: pointer;
             transition: all 0.3s ease;
+            margin-bottom: 15px;
         }
         
         .upload-area:hover {
             border-color: #3b82f6;
-            background: #f1f5f9;
+            background: #f0f9ff;
         }
         
         .upload-area.drag-over {
@@ -653,19 +630,20 @@
             margin-bottom: 15px;
         }
         
-        .upload-area:hover .upload-icon {
-            color: #3b82f6;
-        }
-        
         .upload-text {
             font-size: 16px;
             color: #475569;
             margin-bottom: 8px;
+            font-weight: 500;
         }
         
         .upload-subtext {
             color: #94a3b8;
             font-size: 14px;
+        }
+        
+        .file-input {
+            display: none;
         }
         
         .preview-container {
@@ -677,27 +655,27 @@
             position: relative;
             border-radius: 12px;
             overflow: hidden;
-            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
         
         .preview-image {
             width: 100%;
-            max-height: 300px;
+            max-height: 250px;
             object-fit: contain;
             display: block;
         }
         
         .preview-actions {
             position: absolute;
-            top: 15px;
-            right: 15px;
+            top: 10px;
+            right: 10px;
             display: flex;
-            gap: 10px;
+            gap: 8px;
         }
         
         .preview-btn {
-            width: 40px;
-            height: 40px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             border: none;
             background: rgba(0, 0, 0, 0.7);
@@ -714,6 +692,7 @@
             transform: scale(1.1);
         }
         
+        /* Notes Input */
         .notes-container {
             margin-bottom: 25px;
         }
@@ -734,11 +713,11 @@
         
         .notes-input {
             width: 100%;
-            padding: 15px;
+            padding: 16px;
             border: 1px solid #e2e8f0;
-            border-radius: 10px;
+            border-radius: 12px;
             font-family: 'Poppins', sans-serif;
-            font-size: 14px;
+            font-size: 15px;
             resize: vertical;
             min-height: 100px;
             transition: all 0.3s ease;
@@ -750,32 +729,79 @@
             box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
         }
         
-        .submit-section {
-            text-align: center;
+        .notes-hint {
+            color: #94a3b8;
+            font-size: 13px;
+            margin-top: 8px;
+        }
+        /* Footer Navigation - KONSISTENSI WAJIB */
+        .nav-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            padding: 12px 0;
+            display: flex;
+            justify-content: space-around;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+            z-index: 1000;
         }
         
-        .submit-btn {
-            background: linear-gradient(135deg, #10b981, #059669);
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #666;
+            transition: all 0.3s ease;
+            flex: 1;
+            padding: 5px 0;
+        }
+        
+        .nav-item.active {
+            color: #87CEEB;
+        }
+        
+        .nav-icon {
+            font-size: 20px;
+            margin-bottom: 3px;
+        }
+        
+        .nav-text {
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        /* Submit Button */
+        .submit-section {
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .submit-button {
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
             color: white;
             border: none;
             padding: 18px 40px;
-            border-radius: 12px;
-            font-size: 16px;
+            border-radius: 14px;
+            font-size: 17px;
             font-weight: 600;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
             gap: 12px;
             transition: all 0.3s ease;
-            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
         }
         
-        .submit-btn:hover:not(:disabled) {
+        .submit-button:hover:not(:disabled) {
             transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4);
+            box-shadow: 0 12px 30px rgba(59, 130, 246, 0.4);
         }
         
-        .submit-btn:disabled {
+        .submit-button:disabled {
             background: #94a3b8;
             cursor: not-allowed;
             transform: none;
@@ -789,6 +815,47 @@
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
+        }
+        
+        /* Warning Info */
+        .warning-info {
+            background: #fffbeb;
+            border: 1px solid #fde68a;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 25px;
+            color: #92400e;
+        }
+        
+        .warning-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .warning-title i {
+            color: #f59e0b;
+        }
+        
+        .warning-list {
+            list-style: none;
+            padding-left: 5px;
+        }
+        
+        .warning-list li {
+            padding: 5px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        
+        .warning-list li:before {
+            content: '•';
+            color: #f59e0b;
+            font-weight: bold;
         }
         
         /* Error & Success Messages */
@@ -818,126 +885,48 @@
             display: none;
         }
         
-        /* Empty State */
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            display: none;
-        }
-        
-        .empty-icon {
-            font-size: 60px;
-            color: #cbd5e1;
-            margin-bottom: 20px;
-        }
-        
-        .empty-title {
-            font-size: 18px;
-            color: #64748b;
-            margin-bottom: 10px;
-        }
-        
-        .empty-desc {
-            color: #94a3b8;
-            max-width: 300px;
-            margin: 0 auto;
-        }
-        
-        /* Footer Navigation - Hanya tampil di section tasks */
-        .nav-footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: white;
-            border-top: 1px solid #e2e8f0;
-            padding: 12px 0;
-            display: flex;
-            justify-content: space-around;
-            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
-            z-index: 100;
-        }
-        
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-decoration: none;
-            color: #64748b;
-            transition: all 0.3s ease;
-            flex: 1;
-        }
-        
-        .nav-item.active {
-            color: #3b82f6;
-        }
-        
-        .nav-icon {
-            font-size: 20px;
-            margin-bottom: 3px;
-        }
-        
-        .nav-text {
-            font-size: 12px;
-            font-weight: 500;
-        }
-        
-        /* Responsive Design */
+        /* Responsive */
         @media (max-width: 768px) {
-            .container {
-                padding: 0 12px;
+            .balance-cards {
+                grid-template-columns: 1fr;
             }
             
-            .stats-grid {
+            .task-cards-container {
                 grid-template-columns: 1fr;
+            }
+            
+            .task-rewards-header {
+                flex-direction: column;
                 gap: 10px;
             }
             
-            .filter-tab {
-                padding: 12px 8px;
-                font-size: 13px;
-            }
-            
-            .details-tab {
-                padding: 15px 10px;
-                font-size: 14px;
-            }
-            
-            .tab-content {
-                padding: 20px;
-            }
-            
-            .rewards-grid {
-                grid-template-columns: 1fr;
+            .reward-header-item {
+                justify-content: center;
             }
         }
         
         @media (max-width: 480px) {
-            .task-card-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
+            .container, .details-container {
+                padding: 0 12px 20px;
             }
             
-            .task-difficulty {
-                align-self: flex-start;
+            .task-info-header {
+                padding: 20px;
             }
             
-            .details-tabs {
-                flex-wrap: wrap;
+            .details-content {
+                padding: 20px;
             }
             
-            .details-tab {
-                flex: 1 0 50%;
-                padding: 12px 8px;
-                font-size: 13px;
+            .upload-area {
+                padding: 30px 15px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Tasks List Section -->
-    <section id="tasksSection">
+    <!-- ========== TAB UTAMA (Daftar Tugas) ========== -->
+    <section id="mainSection">
         <div class="container">
             <!-- Header -->
             <div class="header">
@@ -947,56 +936,65 @@
                 </div>
                 <div class="notification-icon">
                     <i class="fas fa-bell"></i>
-                    <span class="notification-badge" id="notificationBadge">3</span>
+                    <span class="notification-badge" id="notificationBadge">2</span>
                 </div>
             </div>
             
-            <!-- Stats Overview -->
-            <div class="stats-overview">
-                <div class="stats-title">
-                    <i class="fas fa-chart-line"></i> Statistik Tugas
+            <!-- Balance Cards -->
+            <div class="balance-cards">
+                <div class="balance-card">
+                    <div class="balance-header">
+                        <div class="balance-icon geo-icon">
+                            <i class="fas fa-coins"></i>
+                        </div>
+                        <div>
+                            <div class="balance-label">GEO Balance</div>
+                            <div class="balance-value" id="geoBalance">0.00</div>
+                        </div>
+                    </div>
                 </div>
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <div class="stat-value" id="statActive">0</div>
-                        <div class="stat-label">Tugas Aktif</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value" id="statPending">0</div>
-                        <div class="stat-label">Menunggu</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value" id="statApproved">0</div>
-                        <div class="stat-label">Disetujui</div>
+                
+                <div class="balance-card">
+                    <div class="balance-header">
+                        <div class="balance-icon life-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div>
+                            <div class="balance-label">LIFE Points</div>
+                            <div class="balance-value" id="lifeBalance">0</div>
+                        </div>
                     </div>
                 </div>
             </div>
             
-            <!-- Filter Tabs -->
-            <div class="filter-tabs">
-                <button class="filter-tab active" data-filter="all">
-                    <i class="fas fa-layer-group"></i> Semua
-                </button>
-                <button class="filter-tab" data-filter="active">
-                    <i class="fas fa-bolt"></i> Aktif
-                </button>
-                <button class="filter-tab" data-filter="pending">
-                    <i class="fas fa-clock"></i> Menunggu
-                </button>
-                <button class="filter-tab" data-filter="completed">
-                    <i class="fas fa-check-circle"></i> Selesai
-                </button>
+            <!-- Info Section -->
+            <div class="info-section">
+                <h3 class="info-title">
+                    <i class="fas fa-info-circle"></i> Cara Kerja Tugas
+                </h3>
+                <div class="info-content">
+                    <strong>1. Pilih tugas</strong> yang tersedia<br>
+                    <strong>2. Selesaikan</strong> sesuai instruksi<br>
+                    <strong>3. Upload bukti</strong> screenshot<br>
+                    <strong>4. Dapatkan reward</strong> setelah disetujui admin
+                </div>
             </div>
             
-            <!-- Search -->
-            <div class="search-container">
-                <i class="fas fa-search search-icon"></i>
-                <input type="text" class="search-input" id="searchInput" placeholder="Cari tugas...">
+            <!-- Separator -->
+            <div class="separator">
+                <span class="separator-text">TUGAS TERSEDIA</span>
+            </div>
+            
+            <!-- Category Tabs -->
+            <div class="category-tabs-container">
+                <div class="category-tabs" id="categoryTabs">
+                    <!-- Categories will be loaded here -->
+                </div>
             </div>
             
             <!-- Task Cards -->
             <div id="taskCardsContainer" class="task-cards-container">
-                <!-- Cards will be loaded here -->
+                <!-- Task cards will be loaded here -->
             </div>
             
             <!-- Empty State -->
@@ -1011,152 +1009,109 @@
                 </p>
             </div>
         </div>
-        
-        <!-- Footer Navigation -->
-        <nav class="nav-footer">
-            <a href="dashboard.html" class="nav-item">
-                <i class="fas fa-home nav-icon"></i>
-                <span class="nav-text">Home</span>
-            </a>
-            <a href="quiz.html" class="nav-item">
-                <i class="fas fa-brain nav-icon"></i>
-                <span class="nav-text">Quiz</span>
-            </a>
-            <a href="tugas.html" class="nav-item active">
-                <i class="fas fa-tasks nav-icon"></i>
-                <span class="nav-text">Tugas</span>
-            </a>
-            <a href="referral.html" class="nav-item">
-                <i class="fas fa-user-friends nav-icon"></i>
-                <span class="nav-text">Referral</span>
-            </a>
-            <a href="profil.html" class="nav-item">
-                <i class="fas fa-user nav-icon"></i>
-                <span class="nav-text">Profil</span>
-            </a>
-        </nav>
     </section>
     
-    <!-- Task Details Section -->
-    <section id="taskDetailsSection">
+    <nav id="navFooter" class="nav-footer">
+        <a href="dashboard.html" class="nav-item">
+            <i class="fas fa-home nav-icon"></i>
+            <span class="nav-text">Home</span>
+        </a>
+        <a href="quiz.html" class="nav-item">
+            <i class="fas fa-brain nav-icon"></i>
+            <span class="nav-text">Quiz</span>
+        </a>
+        <a href="tugas.html" class="nav-item active">
+            <i class="fas fa-tasks nav-icon"></i>
+            <span class="nav-text">Tugas</span>
+        </a>
+        <a href="referral.html" class="nav-item">
+            <i class="fas fa-user-friends nav-icon"></i>
+            <span class="nav-text">Referral</span>
+        </a>
+        <a href="profil.html" class="nav-item">
+            <i class="fas fa-user nav-icon"></i>
+            <span class="nav-text">Profil</span>
+        </a>
+    </nav>
+    
+    <!-- ========== TAB DETAILS (Submit Tugas) ========== -->
+    <section id="detailsSection">
         <div class="details-container">
-            <!-- Details Header -->
+            <!-- Header dengan Back Button -->
             <div class="details-header">
-                <button class="back-button" id="backButton">
-                    <i class="fas fa-arrow-left"></i>
-                </button>
-                <div class="details-title-section">
-                    <div class="task-id-badge" id="detailTaskId">TASK-001</div>
-                    <h1 class="details-title" id="detailTaskTitle">Judul Tugas</h1>
-                    <p class="details-subtitle" id="detailTaskSubtitle">Selesaikan untuk mendapatkan reward</p>
+                <div class="header-content">
+                    <button class="back-button" id="backButton">
+                        <i class="fas fa-arrow-left"></i>
+                        Kembali ke Daftar
+                    </button>
                 </div>
             </div>
             
-            <!-- Details Tabs -->
-            <div class="details-tabs">
-                <button class="details-tab active" data-tab="info">
-                    <i class="fas fa-info-circle"></i> Informasi
-                </button>
-                <button class="details-tab" data-tab="rewards">
-                    <i class="fas fa-gift"></i> Hadiah
-                </button>
-                <button class="details-tab" data-tab="rules">
-                    <i class="fas fa-clipboard-check"></i> Aturan
-                </button>
-                <button class="details-tab" data-tab="submit">
-                    <i class="fas fa-paper-plane"></i> Submit
-                </button>
-            </div>
-            
-            <!-- Tab Contents -->
-            <div class="tab-content active" id="tabInfo">
-                <div class="info-item">
-                    <h3 class="info-title">
-                        <i class="fas fa-align-left"></i>
-                        Deskripsi Tugas
-                    </h3>
-                    <div class="info-content" id="infoDescription">
-                        Deskripsi tugas akan muncul di sini...
+            <!-- Task Info Header -->
+            <div class="task-info-header">
+                <div class="task-id" id="detailTaskId">TASK-001</div>
+                <h1 class="task-info-title" id="detailTaskTitle">Judul Tugas</h1>
+                <div class="task-rewards-header">
+                    <div class="reward-header-item">
+                        <i class="fas fa-coins"></i>
+                        <span id="detailGeoReward">0.5 GEO</span>
                     </div>
-                </div>
-                
-                <div class="info-item">
-                    <h3 class="info-title">
-                        <i class="fas fa-list-ol"></i>
-                        Instruksi
-                    </h3>
-                    <ul class="info-content instructions-list" id="infoInstructions">
-                        <!-- Instructions will be loaded here -->
-                    </ul>
-                </div>
-                
-                <div class="info-item">
-                    <h3 class="info-title">
-                        <i class="fas fa-link"></i>
-                        Link Tugas
-                    </h3>
-                    <div class="info-content">
-                        <a href="#" class="link-button" id="infoLink" target="_blank">
-                            <i class="fas fa-external-link-alt"></i>
-                            Kunjungi Tugas
-                        </a>
+                    <div class="reward-header-item">
+                        <i class="fas fa-heart"></i>
+                        <span id="detailLifeReward">1 LIFE</span>
                     </div>
                 </div>
             </div>
             
-            <div class="tab-content" id="tabRewards">
-                <div class="info-item">
-                    <h3 class="info-title">
-                        <i class="fas fa-gift"></i>
-                        Hadiah Penyelesaian
-                    </h3>
-                    <div class="rewards-grid">
-                        <div class="reward-card">
-                            <div class="reward-icon geo-icon">
-                                <i class="fas fa-coins"></i>
-                            </div>
-                            <div class="reward-value geo-value" id="rewardGeo">0.5 GEO</div>
-                            <div class="reward-label">Koin GEO</div>
-                        </div>
-                        <div class="reward-card">
-                            <div class="reward-icon life-icon">
-                                <i class="fas fa-heart"></i>
-                            </div>
-                            <div class="reward-value life-value" id="rewardLife">1 LIFE</div>
-                            <div class="reward-label">Life Point</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="tab-content" id="tabRules">
-                <div class="info-item">
-                    <h3 class="info-title">
-                        <i class="fas fa-clipboard-check"></i>
-                        Aturan Penting
-                    </h3>
-                    <div class="rules-grid" id="rulesList">
-                        <!-- Rules will be loaded here -->
-                    </div>
-                </div>
-            </div>
-            
-            <div class="tab-content" id="tabSubmit">
-                <div class="error-message" id="submitError">
+            <!-- Details Content -->
+            <div class="details-content">
+                <!-- Error & Success Messages -->
+                <div class="error-message" id="errorMessage">
                     <i class="fas fa-exclamation-circle"></i>
                     <span id="errorText">Terjadi kesalahan</span>
                 </div>
                 
-                <div class="success-message" id="submitSuccess">
+                <div class="success-message" id="successMessage">
                     <i class="fas fa-check-circle"></i>
                     <span id="successText">Submission berhasil!</span>
                 </div>
                 
-                <div class="upload-container">
-                    <h3 class="info-title">
-                        <i class="fas fa-camera"></i>
-                        Upload Bukti Screenshot
+                <!-- Deskripsi -->
+                <h3 class="section-title">
+                    <i class="fas fa-align-left"></i> Deskripsi Tugas
+                </h3>
+                <div class="description-box" id="taskDescription">
+                    Deskripsi tugas akan muncul di sini...
+                </div>
+                
+                <!-- Instruksi -->
+                <h3 class="section-title">
+                    <i class="fas fa-list-ol"></i> Instruksi Pengerjaan
+                </h3>
+                <ul class="instructions-list" id="instructionsList">
+                    <!-- Instructions will be loaded here -->
+                </ul>
+                
+                <!-- Link Tugas -->
+                <h3 class="section-title">
+                    <i class="fas fa-link"></i> Tujuan Tugas
+                </h3>
+                <div class="link-container">
+                    <a href="#" class="task-link-button" id="taskLink" target="_blank">
+                        <i class="fas fa-external-link-alt"></i>
+                        Kunjungi Link Tugas
+                    </a>
+                </div>
+                
+                <!-- Separator Thin -->
+                <div class="separator-thin"></div>
+                
+                <!-- Upload Bukti -->
+                <div class="upload-section">
+                    <h3 class="upload-title">
+                        <i class="fas fa-camera"></i> Submit Bukti Screenshot
                     </h3>
+                    
                     <div class="upload-area" id="uploadArea">
                         <div class="upload-icon">
                             <i class="fas fa-cloud-upload-alt"></i>
@@ -1167,7 +1122,7 @@
                         <div class="upload-subtext">
                             Format: JPG, PNG (Maks. 5MB) • Min. 300x300px
                         </div>
-                        <input type="file" id="proofUpload" accept="image/*" style="display: none;">
+                        <input type="file" class="file-input" id="proofUpload" accept="image/*">
                     </div>
                     
                     <div class="preview-container" id="previewContainer">
@@ -1185,22 +1140,41 @@
                     </div>
                 </div>
                 
+                <!-- Catatan -->
                 <div class="notes-container">
                     <label class="notes-label">
-                        <i class="fas fa-sticky-note"></i> Catatan untuk Admin (Opsional)
+                        <i class="fas fa-sticky-note"></i> Catatan (Opsional)
                     </label>
                     <textarea 
                         class="notes-input" 
                         id="taskNotes" 
-                        placeholder="Tambahkan catatan jika diperlukan, misalnya: 'Screenshot diambil pada pukul 14:30' atau info tambahan lainnya..."
+                        placeholder="Tambahkan catatan untuk admin jika diperlukan..."
                     ></textarea>
+                    <div class="notes-hint">
+                        Contoh: "Screenshot diambil pada pukul 14:30" atau "Terdapat kendala di langkah ke-3"
+                    </div>
                 </div>
                 
+                <!-- Submit Button -->
                 <div class="submit-section">
-                    <button class="submit-btn" id="submitButton" disabled>
+                    <button class="submit-button" id="submitButton" disabled>
                         <i class="fas fa-paper-plane"></i>
                         KIRIM SUBMISSION
                     </button>
+                </div>
+                
+                <!-- Warning Info -->
+                <div class="warning-info">
+                    <h4 class="warning-title">
+                        <i class="fas fa-exclamation-triangle"></i> Informasi Penting
+                    </h4>
+                    <ul class="warning-list">
+                        <li>Pastikan screenshot jelas dan memuat seluruh halaman</li>
+                        <li>Review admin membutuhkan waktu 1-3 hari kerja</li>
+                        <li>Jangan gunakan akun ganda atau bot</li>
+                        <li>Tugas yang disetujui akan langsung mendapat reward</li>
+                        <li>Jika ditolak, Anda dapat submit ulang setelah 24 jam</li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -1224,7 +1198,6 @@
             addDoc,
             updateDoc,
             serverTimestamp,
-            onSnapshot,
             orderBy
         } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
         
@@ -1249,35 +1222,29 @@
         let currentTask = null;
         let proofImage = null;
         let isSubmitting = false;
-        let selectedFilter = 'all';
-        let searchTerm = '';
+        let selectedCategory = 'all';
         
-        // DOM Elements
-        const tasksSection = document.getElementById('tasksSection');
-        const taskDetailsSection = document.getElementById('taskDetailsSection');
+        // DOM Elements - Main Section
+        const mainSection = document.getElementById('mainSection');
+        const detailsSection = document.getElementById('detailsSection');
+        const geoBalanceElement = document.getElementById('geoBalance');
+        const lifeBalanceElement = document.getElementById('lifeBalance');
+        const categoryTabs = document.getElementById('categoryTabs');
         const taskCardsContainer = document.getElementById('taskCardsContainer');
         const emptyState = document.getElementById('emptyState');
-        const searchInput = document.getElementById('searchInput');
-        const filterTabs = document.querySelectorAll('.filter-tab');
-        const statActive = document.getElementById('statActive');
-        const statPending = document.getElementById('statPending');
-        const statApproved = document.getElementById('statApproved');
+        const notificationBadge = document.getElementById('notificationBadge');
         
-        // Details Elements
+        // DOM Elements - Details Section
         const backButton = document.getElementById('backButton');
         const detailTaskId = document.getElementById('detailTaskId');
         const detailTaskTitle = document.getElementById('detailTaskTitle');
-        const detailTaskSubtitle = document.getElementById('detailTaskSubtitle');
-        const infoDescription = document.getElementById('infoDescription');
-        const infoInstructions = document.getElementById('infoInstructions');
-        const infoLink = document.getElementById('infoLink');
-        const rewardGeo = document.getElementById('rewardGeo');
-        const rewardLife = document.getElementById('rewardLife');
-        const rulesList = document.getElementById('rulesList');
-        const detailsTabs = document.querySelectorAll('.details-tab');
-        const tabContents = document.querySelectorAll('.tab-content');
+        const detailGeoReward = document.getElementById('detailGeoReward');
+        const detailLifeReward = document.getElementById('detailLifeReward');
+        const taskDescription = document.getElementById('taskDescription');
+        const instructionsList = document.getElementById('instructionsList');
+        const taskLink = document.getElementById('taskLink');
         
-        // Submit Elements
+        // Upload Elements
         const uploadArea = document.getElementById('uploadArea');
         const proofUpload = document.getElementById('proofUpload');
         const previewContainer = document.getElementById('previewContainer');
@@ -1286,9 +1253,11 @@
         const removeImageBtn = document.getElementById('removeImageBtn');
         const taskNotes = document.getElementById('taskNotes');
         const submitButton = document.getElementById('submitButton');
-        const submitError = document.getElementById('submitError');
+        
+        // Message Elements
+        const errorMessage = document.getElementById('errorMessage');
         const errorText = document.getElementById('errorText');
-        const submitSuccess = document.getElementById('submitSuccess');
+        const successMessage = document.getElementById('successMessage');
         const successText = document.getElementById('successText');
         
         // Event Listeners
@@ -1316,6 +1285,10 @@
                 const userDoc = await getDoc(doc(db, 'users', userId));
                 if (userDoc.exists()) {
                     userData = userDoc.data();
+                    
+                    // Update balance display
+                    geoBalanceElement.textContent = (userData.geoBalance || 0).toFixed(2);
+                    lifeBalanceElement.textContent = userData.lifeBalance || 0;
                     
                     // Check if user is banned
                     if (userData.status === 'banned') {
@@ -1350,7 +1323,8 @@
                 
                 console.log(`Loaded ${tasks.length} active tasks`);
                 
-                // Display tasks
+                // Display categories and tasks
+                displayCategories();
                 displayTasks();
                 
             } catch (error) {
@@ -1380,12 +1354,43 @@
                 
                 console.log(`Loaded ${submissions.length} submissions`);
                 
-                // Update stats
-                updateStats();
+                // Update notification badge
+                const pendingCount = submissions.filter(s => s.status === 'pending').length;
+                notificationBadge.textContent = pendingCount;
+                notificationBadge.style.display = pendingCount > 0 ? 'flex' : 'none';
                 
             } catch (error) {
                 console.error('Error loading submissions:', error);
             }
+        }
+        
+        function displayCategories() {
+            // Get unique categories from tasks
+            const categories = ['all', 'social', 'download', 'signup', 'watch', 'other'];
+            const categoryNames = {
+                'all': 'Semua',
+                'social': 'Media Sosial',
+                'download': 'Download',
+                'signup': 'Registrasi',
+                'watch': 'Watch Video',
+                'other': 'Lainnya'
+            };
+            
+            categoryTabs.innerHTML = '';
+            
+            categories.forEach(category => {
+                const tab = document.createElement('button');
+                tab.className = `category-tab ${category === selectedCategory ? 'active' : ''}`;
+                tab.textContent = categoryNames[category];
+                tab.dataset.category = category;
+                tab.addEventListener('click', () => {
+                    selectedCategory = category;
+                    document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    displayTasks();
+                });
+                categoryTabs.appendChild(tab);
+            });
         }
         
         function displayTasks() {
@@ -1396,31 +1401,21 @@
                 return;
             }
             
-            // Filter tasks
-            let filteredTasks = tasks.filter(task => {
-                // Apply status filter
-                const userSubmission = submissions.find(s => s.taskId === task.id);
-                
-                switch(selectedFilter) {
-                    case 'active':
-                        return !userSubmission || userSubmission.status === 'rejected';
-                    case 'pending':
-                        return userSubmission && userSubmission.status === 'pending';
-                    case 'completed':
-                        return userSubmission && (userSubmission.status === 'approved' || userSubmission.status === 'rejected');
-                    case 'all':
-                    default:
-                        return true;
-                }
-            });
-            
-            // Apply search filter
-            if (searchTerm) {
-                filteredTasks = filteredTasks.filter(task => {
-                    return task.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                           task.description.toLowerCase().includes(searchTerm.toLowerCase());
+            // Filter tasks by category
+            let filteredTasks = tasks;
+            if (selectedCategory !== 'all') {
+                // In a real app, tasks would have category field
+                filteredTasks = tasks.filter(task => {
+                    // This is a placeholder - you'll need to add category to your task documents
+                    return true; // Remove this line when adding categories
                 });
             }
+            
+            // Filter out tasks already submitted (except rejected)
+            filteredTasks = filteredTasks.filter(task => {
+                const userSubmission = submissions.find(s => s.taskId === task.id);
+                return !userSubmission || userSubmission.status === 'rejected';
+            });
             
             if (filteredTasks.length === 0) {
                 showEmptyState();
@@ -1439,100 +1434,66 @@
         function createTaskCard(task) {
             const card = document.createElement('div');
             card.className = 'task-card';
-            card.dataset.taskId = task.id;
             
-            // Check user submission status
+            // Check if already submitted
             const userSubmission = submissions.find(s => s.taskId === task.id);
-            const canSubmit = !userSubmission || userSubmission.status === 'rejected';
-            
-            // Difficulty badge
-            const difficulty = task.difficulty || 'medium';
-            const difficultyClass = `difficulty-${difficulty}`;
-            
-            // Slot info
-            const currentSlots = task.currentSlots || 0;
-            const maxSlots = task.maxSlots || 50;
-            const slotStatus = currentSlots >= maxSlots ? 'FULL' : `${currentSlots}/${maxSlots}`;
-            
-            // Status badge
-            let statusBadge = '';
-            if (userSubmission) {
-                const statusClass = `status-${userSubmission.status}`;
-                let statusIcon = '';
-                let statusText = '';
-                
-                switch(userSubmission.status) {
-                    case 'pending':
-                        statusIcon = 'clock';
-                        statusText = 'Menunggu';
-                        break;
-                    case 'approved':
-                        statusIcon = 'check-circle';
-                        statusText = 'Disetujui';
-                        break;
-                    case 'rejected':
-                        statusIcon = 'times-circle';
-                        statusText = 'Ditolak';
-                        break;
-                }
-                
-                statusBadge = `
-                    <span class="status-badge ${statusClass}">
-                        <i class="fas fa-${statusIcon}"></i> ${statusText}
-                    </span>
-                `;
-            }
+            const isSubmitted = userSubmission && userSubmission.status !== 'rejected';
             
             card.innerHTML = `
-                <div class="task-card-header">
-                    <div>
-                        <h3 class="task-card-title">${task.title}</h3>
-                        <span class="task-difficulty ${difficultyClass}">${difficulty.toUpperCase()}</span>
+                <div class="task-header">
+                    <div class="task-id">TASK-${task.id.substring(0, 8).toUpperCase()}</div>
+                    <h2 class="task-title">${task.title}</h2>
+                    <span class="task-difficulty">${(task.difficulty || 'MEDIUM').toUpperCase()}</span>
+                </div>
+                <div class="task-body">
+                    <p class="task-description">${task.description || 'Tidak ada deskripsi'}</p>
+                    
+                    <div class="task-rewards">
+                        ${task.geoReward ? `
+                        <div class="reward-item geo-reward">
+                            <i class="fas fa-coins reward-icon"></i>
+                            <span class="reward-text">+${task.geoReward} GEO</span>
+                        </div>
+                        ` : ''}
+                        
+                        ${task.lifeReward ? `
+                        <div class="reward-item life-reward">
+                            <i class="fas fa-heart reward-icon"></i>
+                            <span class="reward-text">+${task.lifeReward} LIFE</span>
+                        </div>
+                        ` : ''}
                     </div>
-                    ${statusBadge}
-                </div>
-                <p class="task-description">${task.description || 'Tidak ada deskripsi'}</p>
-                <div class="task-meta">
-                    <span class="task-reward geo-reward">
-                        <i class="fas fa-coins"></i> +${task.geoReward || 0} GEO
-                    </span>
-                    ${task.lifeReward ? `
-                    <span class="task-reward life-reward">
-                        <i class="fas fa-heart"></i> +${task.lifeReward} LIFE
-                    </span>
-                    ` : ''}
-                    <span class="slot-info">
-                        <i class="fas fa-users"></i> ${slotStatus}
-                    </span>
-                </div>
-                <div class="task-actions">
-                    <button class="view-details-btn" ${!canSubmit ? 'disabled' : ''}>
-                        <i class="fas fa-eye"></i> 
-                        ${userSubmission ? 'LIHAT STATUS' : 'LIHAT DETAIL'}
+                    
+                    <button class="take-task-btn" ${isSubmitted ? 'disabled' : ''}>
+                        <i class="fas fa-hand-paper"></i>
+                        ${isSubmitted ? 'SUDAH DIAMBIL' : 'AMBIL TUGAS'}
                     </button>
                 </div>
             `;
             
-            // Add click event
-            card.addEventListener('click', (e) => {
-                if (!e.target.closest('.view-details-btn')) return;
-                viewTaskDetails(task);
-            });
+            // Add click event to button
+            const takeBtn = card.querySelector('.take-task-btn');
+            if (!isSubmitted) {
+                takeBtn.addEventListener('click', () => {
+                    openTaskDetails(task);
+                });
+            }
             
             return card;
         }
         
-        function viewTaskDetails(task) {
+        function openTaskDetails(task) {
             currentTask = task;
             
-            // Update details
+            // Update task info
             detailTaskId.textContent = `TASK-${task.id.substring(0, 8).toUpperCase()}`;
             detailTaskTitle.textContent = task.title;
-            detailTaskSubtitle.textContent = task.subtitle || 'Selesaikan untuk mendapatkan reward';
-            infoDescription.textContent = task.description || 'Tidak ada deskripsi';
+            detailGeoReward.textContent = `${task.geoReward || 0} GEO`;
+            detailLifeReward.textContent = `${task.lifeReward || 0} LIFE`;
+            taskDescription.textContent = task.description || 'Tidak ada deskripsi';
             
             // Update instructions
-            infoInstructions.innerHTML = '';
+            instructionsList.innerHTML = '';
             if (task.instruction) {
                 const instructions = task.instruction.split('\n').filter(i => i.trim());
                 instructions.forEach((instruction, index) => {
@@ -1541,97 +1502,67 @@
                         <div class="instruction-number">${index + 1}</div>
                         <span>${instruction.trim()}</span>
                     `;
-                    infoInstructions.appendChild(li);
+                    instructionsList.appendChild(li);
                 });
+            } else {
+                instructionsList.innerHTML = `
+                    <li>
+                        <div class="instruction-number">1</div>
+                        <span>Kunjungi link yang diberikan</span>
+                    </li>
+                    <li>
+                        <div class="instruction-number">2</div>
+                        <span>Selesaikan semua langkah yang diminta</span>
+                    </li>
+                    <li>
+                        <div class="instruction-number">3</div>
+                        <span>Screenshot halaman akhir sebagai bukti</span>
+                    </li>
+                `;
             }
             
             // Update link
             if (task.link) {
-                infoLink.href = task.link;
-                infoLink.style.display = 'inline-flex';
+                taskLink.href = task.link;
+                taskLink.style.display = 'inline-flex';
             } else {
-                infoLink.style.display = 'none';
+                taskLink.style.display = 'none';
             }
             
-            // Update rewards
-            rewardGeo.textContent = `${task.geoReward || 0} GEO`;
-            rewardLife.textContent = `${task.lifeReward || 0} LIFE`;
-            
-            // Update rules
-            rulesList.innerHTML = `
-                <div class="rule-item">
-                    <i class="fas fa-clock rule-icon"></i>
-                    <span>Tugas harus diselesaikan dalam 24 jam setelah dimulai</span>
-                </div>
-                <div class="rule-item">
-                    <i class="fas fa-images rule-icon"></i>
-                    <span>Screenshot harus jelas dan tidak boleh di-edit</span>
-                </div>
-                <div class="rule-item">
-                    <i class="fas fa-ban rule-icon"></i>
-                    <span>Dilarang menggunakan akun ganda atau bot</span>
-                </div>
-                <div class="rule-item">
-                    <i class="fas fa-history rule-icon"></i>
-                    <span>Review admin membutuhkan waktu 1-3 hari kerja</span>
-                </div>
-            `;
-            
-            // Reset submit tab
-            resetSubmitTab();
-            
-            // Hide footer navigation
-            document.querySelector('.nav-footer').style.display = 'none';
+            // Reset form
+            resetSubmitForm();
             
             // Switch to details section
-            tasksSection.style.display = 'none';
-            taskDetailsSection.style.display = 'block';
+            mainSection.style.display = 'none';
+            detailsSection.style.display = 'block';
             
-            // Activate first tab
-            switchTab('info');
+            // Hide messages
+            hideError();
+            hideSuccess();
         }
         
-        function resetSubmitTab() {
-            // Reset form
+        function resetSubmitForm() {
+            // Reset image
             proofImage = null;
             proofPreview.src = '';
             previewContainer.style.display = 'none';
             proofUpload.value = '';
+            
+            // Reset notes
             taskNotes.value = '';
-            submitButton.disabled = true;
             
-            // Hide messages
-            submitError.style.display = 'none';
-            submitSuccess.style.display = 'none';
-            
-            // Check if user has already submitted
+            // Enable/disable submit button
             const userSubmission = submissions.find(s => s.taskId === currentTask.id);
-            if (userSubmission) {
+            if (userSubmission && userSubmission.status !== 'rejected') {
                 submitButton.disabled = true;
                 submitButton.innerHTML = `
-                    <i class="fas fa-${userSubmission.status === 'pending' ? 'clock' : 
-                                      userSubmission.status === 'approved' ? 'check-circle' : 'times-circle'}"></i>
-                    ${userSubmission.status === 'pending' ? 'MENUNGGU REVIEW' : 
-                     userSubmission.status === 'approved' ? 'DISETUJUI' : 'DITOLAK'}
+                    <i class="fas fa-${userSubmission.status === 'pending' ? 'clock' : 'check-circle'}"></i>
+                    ${userSubmission.status === 'pending' ? 'MENUNGGU REVIEW' : 'SUDAH DISETUJUI'}
                 `;
             } else {
-                submitButton.disabled = false;
+                submitButton.disabled = true;
                 submitButton.innerHTML = '<i class="fas fa-paper-plane"></i> KIRIM SUBMISSION';
             }
-        }
-        
-        function updateStats() {
-            const activeCount = tasks.length;
-            const pendingCount = submissions.filter(s => s.status === 'pending').length;
-            const approvedCount = submissions.filter(s => s.status === 'approved').length;
-            
-            statActive.textContent = activeCount;
-            statPending.textContent = pendingCount;
-            statApproved.textContent = approvedCount;
-            
-            // Update notification badge
-            notificationBadge.textContent = pendingCount;
-            notificationBadge.style.display = pendingCount > 0 ? 'flex' : 'none';
         }
         
         function showEmptyState() {
@@ -1640,39 +1571,13 @@
         }
         
         function setupEventListeners() {
-            // Filter tabs
-            filterTabs.forEach(tab => {
-                tab.addEventListener('click', () => {
-                    const filter = tab.dataset.filter;
-                    filterTabs.forEach(t => t.classList.remove('active'));
-                    tab.classList.add('active');
-                    selectedFilter = filter;
-                    displayTasks();
-                });
-            });
-            
-            // Search input
-            searchInput.addEventListener('input', () => {
-                searchTerm = searchInput.value.toLowerCase();
-                displayTasks();
-            });
-            
             // Back button
             backButton.addEventListener('click', () => {
-                taskDetailsSection.style.display = 'none';
-                tasksSection.style.display = 'block';
-                document.querySelector('.nav-footer').style.display = 'flex';
+                detailsSection.style.display = 'none';
+                mainSection.style.display = 'block';
                 
-                // Refresh tasks list
+                // Refresh tasks
                 displayTasks();
-            });
-            
-            // Details tabs
-            detailsTabs.forEach(tab => {
-                tab.addEventListener('click', () => {
-                    const tabName = tab.dataset.tab;
-                    switchTab(tabName);
-                });
             });
             
             // Upload area
@@ -1690,24 +1595,9 @@
             
             // Submit button
             submitButton.addEventListener('click', submitTask);
-        }
-        
-        function switchTab(tabName) {
-            // Update tab buttons
-            detailsTabs.forEach(tab => {
-                tab.classList.remove('active');
-                if (tab.dataset.tab === tabName) {
-                    tab.classList.add('active');
-                }
-            });
             
-            // Update tab contents
-            tabContents.forEach(content => {
-                content.classList.remove('active');
-                if (content.id === `tab${tabName.charAt(0).toUpperCase() + tabName.slice(1)}`) {
-                    content.classList.add('active');
-                }
-            });
+            // Validate form on input
+            taskNotes.addEventListener('input', validateForm);
         }
         
         function handleDragOver(e) {
@@ -1741,7 +1631,7 @@
             try {
                 // Validate file
                 if (!file.type.match('image.*')) {
-                    showError('Hanya file gambar yang diperbolehkan');
+                    showError('Hanya file gambar yang diperbolehkan (JPG, PNG)');
                     return;
                 }
                 
@@ -1749,6 +1639,10 @@
                     showError('Ukuran file maksimal 5MB');
                     return;
                 }
+                
+                // Show loading
+                submitButton.disabled = true;
+                submitButton.innerHTML = '<i class="fas fa-spinner fa-spin loading-spinner"></i> MEMPROSES...';
                 
                 // Process image
                 const reader = new FileReader();
@@ -1762,6 +1656,7 @@
                     proofPreview.src = proofImage.url;
                     previewContainer.style.display = 'block';
                     submitButton.disabled = false;
+                    submitButton.innerHTML = '<i class="fas fa-paper-plane"></i> KIRIM SUBMISSION';
                     
                     hideError();
                 };
@@ -1770,6 +1665,8 @@
             } catch (error) {
                 console.error('Error handling image:', error);
                 showError('Gagal memproses gambar');
+                submitButton.disabled = true;
+                submitButton.innerHTML = '<i class="fas fa-paper-plane"></i> KIRIM SUBMISSION';
             }
         }
         
@@ -1785,15 +1682,17 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                z-index: 1000;
+                z-index: 2000;
+                padding: 20px;
             `;
             
             const img = document.createElement('img');
             img.src = proofPreview.src;
             img.style.cssText = `
-                max-width: 90%;
-                max-height: 90%;
+                max-width: 100%;
+                max-height: 100%;
                 object-fit: contain;
+                border-radius: 8px;
             `;
             
             const closeBtn = document.createElement('button');
@@ -1811,6 +1710,9 @@
                 font-size: 20px;
                 cursor: pointer;
                 transition: all 0.3s ease;
+                display: flex;
+                align-items: center;
+                justify-content: center;
             `;
             closeBtn.addEventListener('mouseover', () => {
                 closeBtn.style.background = 'rgba(255,255,255,0.3)';
@@ -1839,6 +1741,12 @@
             submitButton.disabled = true;
         }
         
+        function validateForm() {
+            const isValid = proofImage !== null;
+            submitButton.disabled = !isValid;
+            return isValid;
+        }
+        
         async function submitTask() {
             if (isSubmitting || !proofImage) return;
             
@@ -1849,6 +1757,12 @@
                 
                 hideError();
                 hideSuccess();
+                
+                // Check if user has already submitted this task
+                const userSubmission = submissions.find(s => s.taskId === currentTask.id);
+                if (userSubmission && userSubmission.status !== 'rejected') {
+                    throw new Error('Anda sudah mengirim submission untuk tugas ini');
+                }
                 
                 // Prepare submission data
                 const submissionData = {
@@ -1874,8 +1788,7 @@
                 
                 // Update task slots
                 await updateDoc(doc(db, 'tasks', currentTask.id), {
-                    currentSlots: (currentTask.currentSlots || 0) + 1,
-                    lastSubmission: serverTimestamp()
+                    currentSlots: (currentTask.currentSlots || 0) + 1
                 });
                 
                 // Add to local submissions
@@ -1884,21 +1797,29 @@
                     ...submissionData
                 });
                 
+                // Update notification badge
+                const pendingCount = submissions.filter(s => s.status === 'pending').length;
+                notificationBadge.textContent = pendingCount;
+                notificationBadge.style.display = pendingCount > 0 ? 'flex' : 'none';
+                
                 // Show success message
-                showSuccess('Submission berhasil dikirim!');
+                showSuccess('Tugas berhasil dikirim! Tunggu review admin.');
                 
                 // Reset form
                 removeImage();
                 taskNotes.value = '';
                 
-                // Update stats
-                updateStats();
-                
                 console.log('Submission successful:', submissionRef.id);
+                
+                // Auto hide success message after 5 seconds
+                setTimeout(() => {
+                    hideSuccess();
+                    backButton.click(); // Go back to main section
+                }, 5000);
                 
             } catch (error) {
                 console.error('Error submitting task:', error);
-                showError(error.message || 'Gagal mengirim submission');
+                showError(error.message || 'Gagal mengirim submission. Coba lagi.');
             } finally {
                 isSubmitting = false;
                 submitButton.disabled = false;
@@ -1908,20 +1829,20 @@
         
         function showError(message) {
             errorText.textContent = message;
-            submitError.style.display = 'flex';
+            errorMessage.style.display = 'flex';
         }
         
         function hideError() {
-            submitError.style.display = 'none';
+            errorMessage.style.display = 'none';
         }
         
         function showSuccess(message) {
             successText.textContent = message;
-            submitSuccess.style.display = 'flex';
+            successMessage.style.display = 'flex';
         }
         
         function hideSuccess() {
-            submitSuccess.style.display = 'none';
+            successMessage.style.display = 'none';
         }
     </script>
 </body>
