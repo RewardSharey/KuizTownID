@@ -16,88 +16,58 @@
         
         body {
             font-family: 'Poppins', sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background-color: #5F729F;
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(255, 192, 203, 0.08) 0%, transparent 20%),
-                radial-gradient(circle at 90% 80%, rgba(255, 192, 203, 0.08) 0%, transparent 20%),
-                radial-gradient(circle at 50% 50%, rgba(255, 192, 203, 0.05) 0%, transparent 30%);
+            background: #f8fafc;
+            color: #334155;
             min-height: 100vh;
-            position: relative;
-            overflow-x: hidden;
         }
         
-        /* Geometric Pattern Background */
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                linear-gradient(30deg, rgba(255, 192, 203, 0.05) 12%, transparent 12.5%, transparent 87%, rgba(255, 192, 203, 0.05) 87.5%, rgba(255, 192, 203, 0.05)),
-                linear-gradient(150deg, rgba(255, 192, 203, 0.05) 12%, transparent 12.5%, transparent 87%, rgba(255, 192, 203, 0.05) 87.5%, rgba(255, 192, 203, 0.05)),
-                linear-gradient(30deg, rgba(255, 192, 203, 0.05) 12%, transparent 12.5%, transparent 87%, rgba(255, 192, 203, 0.05) 87.5%, rgba(255, 192, 203, 0.05)),
-                linear-gradient(150deg, rgba(255, 192, 203, 0.05) 12%, transparent 12.5%, transparent 87%, rgba(255, 192, 203, 0.05) 87.5%, rgba(255, 192, 203, 0.05)),
-                linear-gradient(60deg, rgba(255, 192, 203, 0.08) 25%, transparent 25.5%, transparent 75%, rgba(255, 192, 203, 0.08) 75%, rgba(255, 192, 203, 0.08)),
-                linear-gradient(60deg, rgba(255, 192, 203, 0.08) 25%, transparent 25.5%, transparent 75%, rgba(255, 192, 203, 0.08) 75%, rgba(255, 192, 203, 0.08));
-            background-size: 80px 140px;
-            background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
-            opacity: 0.3;
-            z-index: -1;
-        }
-        
-        /* Container */
+        /* Container Styles */
         .container {
             max-width: 100%;
             margin: 0 auto;
-            padding: 0 15px 80px;
+            padding: 0 15px;
         }
         
-        /* Header */
-        header {
+        /* Header Styles */
+        .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 20px 0;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
         
         .logo-container {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
         
         .logo-icon {
             font-size: 28px;
-            background: linear-gradient(135deg, #9b59b6, #3498db);
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
         }
         
         .logo-text {
-            font-size: 20px;
+            font-size: 22px;
             font-weight: 700;
-            color: #fff;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            color: #1e293b;
         }
         
         .notification-icon {
-            color: white;
+            position: relative;
+            color: #64748b;
             font-size: 22px;
             cursor: pointer;
-            position: relative;
         }
         
         .notification-badge {
             position: absolute;
             top: -5px;
             right: -5px;
-            background-color: #ff6b6b;
+            background: #ef4444;
             color: white;
             font-size: 12px;
             width: 18px;
@@ -106,93 +76,95 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            font-weight: 600;
         }
         
-        /* Task Panel Header */
-        .task-panel-header {
-            background: linear-gradient(135deg, rgba(135, 206, 235, 0.9), rgba(90, 200, 250, 0.9));
-            border-radius: 15px;
+        /* Stats Overview */
+        .stats-overview {
+            background: linear-gradient(135deg, #3b82f6, #6366f1);
+            border-radius: 16px;
             padding: 20px;
             margin-bottom: 20px;
             color: white;
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.2);
         }
         
-        .task-panel-title {
-            font-size: 1.5rem;
-            font-weight: 700;
+        .stats-title {
+            font-size: 16px;
             margin-bottom: 15px;
             display: flex;
             align-items: center;
             gap: 10px;
+            opacity: 0.9;
         }
         
-        .task-stats-container {
-            display: flex;
-            justify-content: space-around;
-            gap: 10px;
-            flex-wrap: wrap;
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
         }
         
-        .task-stat {
+        .stat-item {
             text-align: center;
-            flex: 1;
-            min-width: 100px;
-        }
-        
-        .stat-icon {
-            font-size: 24px;
-            margin-bottom: 8px;
+            padding: 15px 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
         }
         
         .stat-value {
-            font-size: 1.8rem;
+            font-size: 24px;
             font-weight: 700;
             margin-bottom: 5px;
         }
         
         .stat-label {
-            font-size: 0.85rem;
-            opacity: 0.9;
+            font-size: 12px;
+            opacity: 0.8;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
         
         /* Filter Tabs */
         .filter-tabs {
             display: flex;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
+            background: white;
+            border-radius: 12px;
             overflow: hidden;
-            margin-bottom: 15px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-            flex-wrap: wrap;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
         }
         
         .filter-tab {
             flex: 1;
-            padding: 12px 10px;
+            padding: 15px 10px;
             border: none;
             background: transparent;
-            font-weight: 600;
-            font-size: 0.85rem;
-            color: #666;
+            font-weight: 500;
+            font-size: 14px;
+            color: #64748b;
             cursor: pointer;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
-            min-width: 80px;
+            gap: 8px;
+            border-bottom: 3px solid transparent;
         }
         
         .filter-tab.active {
-            background: linear-gradient(135deg, #87CEEB, #5F729F);
-            color: white;
+            color: #3b82f6;
+            border-bottom-color: #3b82f6;
+            background: linear-gradient(to bottom, rgba(59, 130, 246, 0.05), transparent);
         }
         
         .filter-tab:hover:not(.active) {
-            background: rgba(135, 206, 235, 0.1);
+            color: #475569;
+            background: #f8fafc;
         }
         
-        /* Search Input */
+        /* Search Bar */
         .search-container {
             margin-bottom: 20px;
             position: relative;
@@ -200,90 +172,107 @@
         
         .search-input {
             width: 100%;
-            padding: 14px 45px 14px 15px;
+            padding: 16px 20px;
+            padding-left: 50px;
             border: none;
-            border-radius: 15px;
-            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            background: white;
             font-family: 'Poppins', sans-serif;
-            font-size: 1rem;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            font-size: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
         }
         
         .search-input:focus {
             outline: none;
-            box-shadow: 0 0 0 3px rgba(135, 206, 235, 0.3);
+            border-color: #3b82f6;
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.15);
         }
         
         .search-icon {
             position: absolute;
-            right: 15px;
+            left: 20px;
             top: 50%;
             transform: translateY(-50%);
-            color: #87CEEB;
+            color: #94a3b8;
             font-size: 18px;
         }
         
-        /* Task Card */
+        /* Task Cards Section */
+        #tasksSection {
+            display: block;
+        }
+        
+        .task-cards-container {
+            display: grid;
+            gap: 16px;
+            margin-bottom: 80px;
+        }
+        
         .task-card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
+            background: white;
+            border-radius: 16px;
             padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+            cursor: pointer;
         }
         
         .task-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            border-color: #cbd5e1;
         }
         
         .task-card-header {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 12px;
+            margin-bottom: 15px;
         }
         
-        .task-title {
-            font-size: 1.1rem;
+        .task-card-title {
+            font-size: 17px;
             font-weight: 600;
-            color: #333;
+            color: #1e293b;
             margin-bottom: 5px;
-            flex: 1;
         }
         
         .task-difficulty {
-            padding: 3px 10px;
+            padding: 4px 12px;
             border-radius: 20px;
-            font-size: 0.75rem;
+            font-size: 11px;
             font-weight: 700;
             text-transform: uppercase;
-            margin-left: 10px;
+            letter-spacing: 0.5px;
         }
         
         .difficulty-easy {
-            background: rgba(144, 238, 144, 0.2);
-            color: #2e8b57;
+            background: rgba(34, 197, 94, 0.1);
+            color: #16a34a;
         }
         
         .difficulty-medium {
-            background: rgba(255, 215, 0, 0.2);
-            color: #b8860b;
+            background: rgba(245, 158, 11, 0.1);
+            color: #d97706;
         }
         
         .difficulty-hard {
-            background: rgba(255, 105, 105, 0.2);
-            color: #dc143c;
+            background: rgba(239, 68, 68, 0.1);
+            color: #dc2626;
         }
         
         .task-description {
-            color: #666;
-            font-size: 0.9rem;
-            margin-bottom: 15px;
+            color: #64748b;
+            font-size: 14px;
             line-height: 1.5;
+            margin-bottom: 15px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
         
         .task-meta {
@@ -296,50 +285,36 @@
         .task-reward {
             display: inline-flex;
             align-items: center;
-            gap: 5px;
-            background: rgba(144, 238, 144, 0.2);
-            color: #2e8b57;
+            gap: 6px;
             padding: 6px 12px;
             border-radius: 20px;
-            font-weight: 600;
-            font-size: 0.85rem;
-        }
-        
-        .task-reward.life {
-            background: rgba(255, 192, 203, 0.2);
-            color: #d87093;
-        }
-        
-        .slot-counter {
-            background: rgba(135, 206, 235, 0.2);
-            color: #5F729F;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.85rem;
+            font-size: 13px;
             font-weight: 600;
         }
         
-        .slot-full {
-            background: rgba(255, 105, 105, 0.2);
-            color: #dc143c;
+        .geo-reward {
+            background: rgba(245, 158, 11, 0.1);
+            color: #d97706;
         }
         
-        .deadline-badge {
-            background: rgba(255, 215, 0, 0.2);
-            color: #b8860b;
+        .life-reward {
+            background: rgba(239, 68, 68, 0.1);
+            color: #dc2626;
+        }
+        
+        .slot-info {
+            background: rgba(59, 130, 246, 0.1);
+            color: #2563eb;
             padding: 6px 12px;
             border-radius: 20px;
-            font-size: 0.85rem;
+            font-size: 13px;
             font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
         }
         
         .status-badge {
             padding: 6px 12px;
             border-radius: 20px;
-            font-size: 0.8rem;
+            font-size: 12px;
             font-weight: 600;
             display: inline-flex;
             align-items: center;
@@ -347,18 +322,18 @@
         }
         
         .status-pending {
-            background: rgba(255, 215, 0, 0.2);
-            color: #b8860b;
+            background: rgba(245, 158, 11, 0.1);
+            color: #d97706;
         }
         
         .status-approved {
-            background: rgba(144, 238, 144, 0.2);
-            color: #2e8b57;
+            background: rgba(34, 197, 94, 0.1);
+            color: #16a34a;
         }
         
         .status-rejected {
-            background: rgba(255, 105, 105, 0.2);
-            color: #dc143c;
+            background: rgba(239, 68, 68, 0.1);
+            color: #dc2626;
         }
         
         .task-actions {
@@ -366,380 +341,521 @@
             gap: 10px;
         }
         
-        /* Button Styles */
-        .btn {
-            padding: 12px 20px;
+        .view-details-btn {
+            background: #3b82f6;
+            color: white;
             border: none;
+            padding: 10px 20px;
             border-radius: 10px;
-            font-weight: 600;
+            font-weight: 500;
+            font-size: 14px;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
             transition: all 0.3s ease;
+            flex: 1;
+        }
+        
+        .view-details-btn:hover {
+            background: #2563eb;
+            transform: translateY(-2px);
+        }
+        
+        .view-details-btn:disabled {
+            background: #94a3b8;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        /* Task Details Section */
+        #taskDetailsSection {
+            display: none;
+        }
+        
+        .details-container {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .details-header {
+            background: linear-gradient(135deg, #3b82f6, #6366f1);
+            padding: 25px;
+            color: white;
+            position: relative;
+        }
+        
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
         }
         
-        .btn-primary {
-            background: linear-gradient(135deg, #87CEEB, #5F729F);
-            color: white;
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateX(-3px);
+        }
+        
+        .details-title-section {
+            padding-top: 10px;
+            text-align: center;
+        }
+        
+        .task-id-badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 13px;
+            margin-bottom: 10px;
+            display: inline-block;
+            backdrop-filter: blur(10px);
+        }
+        
+        .details-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .details-subtitle {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+        
+        .details-tabs {
+            display: flex;
+            background: white;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .details-tab {
             flex: 1;
-        }
-        
-        .btn-primary:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(135, 206, 235, 0.3);
-        }
-        
-        .btn-secondary {
-            background: rgba(135, 206, 235, 0.1);
-            color: #5F729F;
-            border: 1px solid rgba(135, 206, 235, 0.3);
-            flex: 1;
-        }
-        
-        .btn-secondary:hover {
-            background: rgba(135, 206, 235, 0.2);
-        }
-        
-        .btn-disabled {
-            background: #e0e0e0;
-            color: #999;
-            cursor: not-allowed;
-            flex: 1;
-        }
-        
-        .btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none !important;
-            box-shadow: none !important;
-        }
-        
-        /* Skeleton Loading */
-        .skeleton {
-            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-            background-size: 200% 100%;
-            animation: loading 1.5s infinite;
-            border-radius: 8px;
-        }
-        
-        @keyframes loading {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
-        
-        .skeleton-card {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
             padding: 20px;
-            margin-bottom: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            border: none;
+            background: transparent;
+            font-weight: 500;
+            font-size: 15px;
+            color: #64748b;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
         
-        .skeleton-title {
-            width: 120px;
-            height: 20px;
+        .details-tab.active {
+            color: #3b82f6;
+            border-bottom-color: #3b82f6;
+            background: linear-gradient(to bottom, rgba(59, 130, 246, 0.05), transparent);
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 30px;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* Info Tab */
+        .info-item {
+            margin-bottom: 25px;
+        }
+        
+        .info-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .info-title i {
+            color: #3b82f6;
+            width: 20px;
+        }
+        
+        .info-content {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid #3b82f6;
+            color: #475569;
+            line-height: 1.6;
+        }
+        
+        .instructions-list {
+            list-style: none;
+        }
+        
+        .instructions-list li {
+            padding: 10px 15px;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        
+        .instruction-number {
+            background: #3b82f6;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+        
+        .link-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #10b981;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.2);
+        }
+        
+        .link-button:hover {
+            background: #0da271;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3);
+        }
+        
+        /* Rewards Tab */
+        .rewards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+        }
+        
+        .reward-card {
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .reward-icon {
+            font-size: 32px;
             margin-bottom: 15px;
         }
         
-        .skeleton-text {
-            width: 100%;
-            height: 15px;
-            margin-bottom: 10px;
-            border-radius: 5px;
+        .geo-icon {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         
-        .skeleton-button {
-            width: 100%;
-            height: 40px;
+        .life-icon {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .reward-value {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .geo-value {
+            color: #d97706;
+        }
+        
+        .life-value {
+            color: #dc2626;
+        }
+        
+        /* Rules Tab */
+        .rules-grid {
+            display: grid;
+            gap: 15px;
+        }
+        
+        .rule-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: #f8fafc;
             border-radius: 10px;
-            margin-top: 15px;
+            border-left: 4px solid #3b82f6;
         }
         
-        /* Modal Styles */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
+        .rule-icon {
+            color: #3b82f6;
+            font-size: 20px;
+            width: 24px;
         }
         
-        .modal-content {
-            background-color: white;
-            border-radius: 15px;
-            max-width: 500px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            animation: modalFadeIn 0.3s ease-out;
+        /* Submit Tab */
+        .upload-container {
+            margin-bottom: 25px;
         }
         
-        @keyframes modalFadeIn {
-            from {
-                opacity: 0;
-                transform: scale(0.9) translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
-        }
-        
-        .modal-header {
-            padding: 20px;
-            border-bottom: 1px solid #eee;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .modal-title {
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: #333;
-        }
-        
-        .modal-close {
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            color: #666;
-            cursor: pointer;
-            padding: 0;
-            width: 30px;
-            height: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .modal-body {
-            padding: 20px;
-        }
-        
-        /* Upload Area */
         .upload-area {
-            border: 2px dashed #87CEEB;
-            border-radius: 10px;
-            padding: 30px;
+            border: 2px dashed #94a3b8;
+            border-radius: 12px;
+            padding: 40px 20px;
             text-align: center;
-            background: rgba(135, 206, 235, 0.05);
-            margin-bottom: 20px;
+            background: #f8fafc;
             cursor: pointer;
             transition: all 0.3s ease;
         }
         
         .upload-area:hover {
-            background: rgba(135, 206, 235, 0.1);
+            border-color: #3b82f6;
+            background: #f1f5f9;
+        }
+        
+        .upload-area.drag-over {
+            border-color: #3b82f6;
+            background: #e0f2fe;
         }
         
         .upload-icon {
             font-size: 40px;
-            color: #87CEEB;
+            color: #94a3b8;
             margin-bottom: 15px;
         }
         
+        .upload-area:hover .upload-icon {
+            color: #3b82f6;
+        }
+        
         .upload-text {
-            color: #666;
-            margin-bottom: 10px;
+            font-size: 16px;
+            color: #475569;
+            margin-bottom: 8px;
         }
         
         .upload-subtext {
-            color: #999;
-            font-size: 0.9rem;
+            color: #94a3b8;
+            font-size: 14px;
         }
         
         .preview-container {
             margin-top: 20px;
+            display: none;
+        }
+        
+        .preview-wrapper {
             position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
         }
         
         .preview-image {
-            max-width: 100%;
-            max-height: 200px;
-            border-radius: 10px;
-            display: block;
-            margin: 0 auto;
-            cursor: pointer;
-        }
-        
-        /* Fullscreen Image Preview */
-        .fullscreen-preview {
-            position: fixed;
-            top: 0;
-            left: 0;
             width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
-            z-index: 3000;
-            display: none;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .fullscreen-image {
-            max-width: 90%;
-            max-height: 90%;
+            max-height: 300px;
             object-fit: contain;
+            display: block;
         }
         
-        .close-fullscreen {
+        .preview-actions {
             position: absolute;
-            top: 20px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: none;
-            border-radius: 50%;
+            top: 15px;
+            right: 15px;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .preview-btn {
             width: 40px;
             height: 40px;
-            font-size: 1.5rem;
-            cursor: pointer;
+            border-radius: 50%;
+            border: none;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
             display: flex;
             align-items: center;
             justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
         
-        /* Receipt Screen */
-        .receipt-container {
-            text-align: center;
-            padding: 20px;
+        .preview-btn:hover {
+            background: rgba(0, 0, 0, 0.9);
+            transform: scale(1.1);
         }
         
-        .receipt-icon {
-            font-size: 60px;
-            color: #90EE90;
-            margin-bottom: 20px;
+        .notes-container {
+            margin-bottom: 25px;
         }
         
-        .receipt-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #333;
+        .notes-label {
+            display: block;
             margin-bottom: 10px;
-        }
-        
-        .receipt-info {
-            background: #f9f9f9;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-            text-align: left;
-        }
-        
-        .receipt-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .receipt-label {
-            color: #666;
+            color: #1e293b;
             font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         
-        .receipt-value {
-            color: #333;
-            font-weight: 600;
+        .notes-label i {
+            color: #f59e0b;
         }
         
-        /* Toast Notification */
-        .toast-container {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1000;
-        }
-        
-        .toast {
-            background: white;
+        .notes-input {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #e2e8f0;
             border-radius: 10px;
-            padding: 15px 20px;
-            margin-bottom: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            resize: vertical;
+            min-height: 100px;
+            transition: all 0.3s ease;
+        }
+        
+        .notes-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        
+        .submit-section {
+            text-align: center;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3);
+        }
+        
+        .submit-btn:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4);
+        }
+        
+        .submit-btn:disabled {
+            background: #94a3b8;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .loading-spinner {
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Error & Success Messages */
+        .error-message {
+            background: #fef2f2;
+            color: #dc2626;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid #dc2626;
             display: flex;
             align-items: center;
             gap: 10px;
-            animation: slideIn 0.3s ease-out;
-            max-width: 300px;
+            display: none;
         }
         
-        @keyframes slideIn {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-        
-        .toast-icon {
-            font-size: 20px;
-        }
-        
-        .toast-success {
-            border-left: 4px solid #90EE90;
-        }
-        
-        .toast-error {
-            border-left: 4px solid #ff6b6b;
-        }
-        
-        .toast-info {
-            border-left: 4px solid #87CEEB;
+        .success-message {
+            background: #f0fdf4;
+            color: #16a34a;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid #16a34a;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            display: none;
         }
         
         /* Empty State */
         .empty-state {
             text-align: center;
-            padding: 40px 20px;
+            padding: 60px 20px;
+            display: none;
         }
         
         .empty-icon {
             font-size: 60px;
-            color: rgba(135, 206, 235, 0.5);
+            color: #cbd5e1;
             margin-bottom: 20px;
         }
         
         .empty-title {
-            font-size: 1.2rem;
-            color: #666;
+            font-size: 18px;
+            color: #64748b;
             margin-bottom: 10px;
         }
         
         .empty-desc {
-            color: #999;
+            color: #94a3b8;
             max-width: 300px;
             margin: 0 auto;
         }
         
-        /* Footer Navigation - KONSISTENSI WAJIB */
+        /* Footer Navigation - Hanya tampil di section tasks */
         .nav-footer {
             position: fixed;
             bottom: 0;
             left: 0;
             width: 100%;
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(10px);
-            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            background: white;
+            border-top: 1px solid #e2e8f0;
             padding: 12px 0;
             display: flex;
             justify-content: space-around;
             box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
-            z-index: 1000;
+            z-index: 100;
         }
         
         .nav-item {
@@ -747,14 +863,13 @@
             flex-direction: column;
             align-items: center;
             text-decoration: none;
-            color: #666;
+            color: #64748b;
             transition: all 0.3s ease;
             flex: 1;
-            padding: 5px 0;
         }
         
         .nav-item.active {
-            color: #87CEEB;
+            color: #3b82f6;
         }
         
         .nav-icon {
@@ -763,317 +878,340 @@
         }
         
         .nav-text {
-            font-size: 0.75rem;
+            font-size: 12px;
             font-weight: 500;
         }
         
-        /* Pagination */
-        .pagination {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin: 20px 0;
-        }
-        
-        .pagination-btn {
-            padding: 8px 15px;
-            border: 1px solid #ddd;
-            background: white;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .pagination-btn.active {
-            background: linear-gradient(135deg, #87CEEB, #5F729F);
-            color: white;
-            border-color: #87CEEB;
-        }
-        
-        .pagination-btn:hover:not(.active) {
-            background: #f5f5f5;
-        }
-        
-        /* Responsive */
-        @media (min-width: 768px) {
+        /* Responsive Design */
+        @media (max-width: 768px) {
             .container {
-                max-width: 600px;
+                padding: 0 12px;
             }
             
-            .task-stats-container {
-                justify-content: space-around;
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            
+            .filter-tab {
+                padding: 12px 8px;
+                font-size: 13px;
+            }
+            
+            .details-tab {
+                padding: 15px 10px;
+                font-size: 14px;
+            }
+            
+            .tab-content {
+                padding: 20px;
+            }
+            
+            .rewards-grid {
+                grid-template-columns: 1fr;
             }
         }
         
         @media (max-width: 480px) {
-            .filter-tab {
-                font-size: 0.8rem;
-                padding: 10px 8px;
-            }
-            
             .task-card-header {
                 flex-direction: column;
                 align-items: flex-start;
+                gap: 10px;
             }
             
             .task-difficulty {
-                margin-left: 0;
-                margin-top: 5px;
+                align-self: flex-start;
             }
             
-            .upload-area {
-                padding: 20px;
+            .details-tabs {
+                flex-wrap: wrap;
+            }
+            
+            .details-tab {
+                flex: 1 0 50%;
+                padding: 12px 8px;
+                font-size: 13px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Header -->
-        <header>
-            <div class="logo-container">
-                <i class="fas fa-shapes logo-icon"></i>
-                <span class="logo-text">KuizTown</span>
-            </div>
-            <div class="notification-icon">
-                <i class="fas fa-bell"></i>
-                <span class="notification-badge" id="notificationBadge">0</span>
-            </div>
-        </header>
-        
-        <!-- Task Panel Header -->
-        <div class="task-panel-header">
-            <div class="task-panel-title">
-                <i class="fas fa-tasks"></i> Tugas
-            </div>
-            <div class="task-stats-container">
-                <div class="task-stat">
-                    <div class="stat-icon"><i class="fas fa-check-circle"></i></div>
-                    <div class="stat-value" id="statApproved">0</div>
-                    <div class="stat-label">Approved</div>
+    <!-- Tasks List Section -->
+    <section id="tasksSection">
+        <div class="container">
+            <!-- Header -->
+            <div class="header">
+                <div class="logo-container">
+                    <i class="fas fa-shapes logo-icon"></i>
+                    <span class="logo-text">KuizTown</span>
                 </div>
-                <div class="task-stat">
-                    <div class="stat-icon"><i class="fas fa-clock"></i></div>
-                    <div class="stat-value" id="statPending">0</div>
-                    <div class="stat-label">Pending</div>
+                <div class="notification-icon">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge" id="notificationBadge">3</span>
                 </div>
-                <div class="task-stat">
-                    <div class="stat-icon"><i class="fas fa-times-circle"></i></div>
-                    <div class="stat-value" id="statRejected">0</div>
-                    <div class="stat-label">Rejected</div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Filter Tabs -->
-        <div class="filter-tabs">
-            <button class="filter-tab active" data-filter="all">
-                <i class="fas fa-layer-group"></i> Semua
-            </button>
-            <button class="filter-tab" data-filter="active">
-                <i class="fas fa-bolt"></i> Aktif
-            </button>
-            <button class="filter-tab" data-filter="pending">
-                <i class="fas fa-clock"></i> Menunggu
-            </button>
-            <button class="filter-tab" data-filter="approved">
-                <i class="fas fa-check"></i> Disetujui
-            </button>
-            <button class="filter-tab" data-filter="rejected">
-                <i class="fas fa-times"></i> Ditolak
-            </button>
-        </div>
-        
-        <!-- Search Input -->
-        <div class="search-container">
-            <input type="text" class="search-input" id="searchInput" placeholder="Cari tugas...">
-            <i class="fas fa-search search-icon"></i>
-        </div>
-        
-        <!-- Skeleton Loading -->
-        <div id="skeletonLoading">
-            <div class="skeleton-card">
-                <div class="skeleton skeleton-title"></div>
-                <div class="skeleton-text"></div>
-                <div class="skeleton-text" style="width: 80%;"></div>
-                <div class="skeleton-text" style="width: 60%;"></div>
-                <div class="skeleton-button"></div>
             </div>
             
-            <div class="skeleton-card">
-                <div class="skeleton skeleton-title"></div>
-                <div class="skeleton-text"></div>
-                <div class="skeleton-text" style="width: 80%;"></div>
-                <div class="skeleton-text" style="width: 60%;"></div>
-                <div class="skeleton-button"></div>
+            <!-- Stats Overview -->
+            <div class="stats-overview">
+                <div class="stats-title">
+                    <i class="fas fa-chart-line"></i> Statistik Tugas
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value" id="statActive">0</div>
+                        <div class="stat-label">Tugas Aktif</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="statPending">0</div>
+                        <div class="stat-label">Menunggu</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="statApproved">0</div>
+                        <div class="stat-label">Disetujui</div>
+                    </div>
+                </div>
             </div>
             
-            <div class="skeleton-card">
-                <div class="skeleton skeleton-title"></div>
-                <div class="skeleton-text"></div>
-                <div class="skeleton-text" style="width: 80%;"></div>
-                <div class="skeleton-text" style="width: 60%;"></div>
-                <div class="skeleton-button"></div>
+            <!-- Filter Tabs -->
+            <div class="filter-tabs">
+                <button class="filter-tab active" data-filter="all">
+                    <i class="fas fa-layer-group"></i> Semua
+                </button>
+                <button class="filter-tab" data-filter="active">
+                    <i class="fas fa-bolt"></i> Aktif
+                </button>
+                <button class="filter-tab" data-filter="pending">
+                    <i class="fas fa-clock"></i> Menunggu
+                </button>
+                <button class="filter-tab" data-filter="completed">
+                    <i class="fas fa-check-circle"></i> Selesai
+                </button>
+            </div>
+            
+            <!-- Search -->
+            <div class="search-container">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" class="search-input" id="searchInput" placeholder="Cari tugas...">
+            </div>
+            
+            <!-- Task Cards -->
+            <div id="taskCardsContainer" class="task-cards-container">
+                <!-- Cards will be loaded here -->
+            </div>
+            
+            <!-- Empty State -->
+            <div id="emptyState" class="empty-state">
+                <div class="empty-icon">
+                    <i class="fas fa-tasks"></i>
+                </div>
+                <h3 class="empty-title">Tidak Ada Tugas</h3>
+                <p class="empty-desc">
+                    Saat ini tidak ada tugas yang tersedia. 
+                    Silakan cek kembali nanti.
+                </p>
             </div>
         </div>
         
-        <!-- Task List -->
-        <div id="taskList"></div>
-        
-        <!-- Empty State -->
-        <div id="emptyState" class="empty-state" style="display: none;">
-            <div class="empty-icon">
-                <i class="fas fa-clipboard-list"></i>
-            </div>
-            <h3 class="empty-title">Tidak Ada Tugas</h3>
-            <p class="empty-desc">
-                Saat ini tidak ada tugas yang tersedia. 
-                Silakan cek kembali nanti.
-            </p>
-        </div>
-        
-        <!-- Pagination -->
-        <div id="pagination" class="pagination" style="display: none;"></div>
-    </div>
+        <!-- Footer Navigation -->
+        <nav class="nav-footer">
+            <a href="dashboard.html" class="nav-item">
+                <i class="fas fa-home nav-icon"></i>
+                <span class="nav-text">Home</span>
+            </a>
+            <a href="quiz.html" class="nav-item">
+                <i class="fas fa-brain nav-icon"></i>
+                <span class="nav-text">Quiz</span>
+            </a>
+            <a href="tugas.html" class="nav-item active">
+                <i class="fas fa-tasks nav-icon"></i>
+                <span class="nav-text">Tugas</span>
+            </a>
+            <a href="referral.html" class="nav-item">
+                <i class="fas fa-user-friends nav-icon"></i>
+                <span class="nav-text">Referral</span>
+            </a>
+            <a href="profil.html" class="nav-item">
+                <i class="fas fa-user nav-icon"></i>
+                <span class="nav-text">Profil</span>
+            </a>
+        </nav>
+    </section>
     
-    <!-- Submission Modal -->
-    <div id="submissionModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title">Submit Tugas</h2>
-                <button class="modal-close" id="closeSubmissionModal">&times;</button>
+    <!-- Task Details Section -->
+    <section id="taskDetailsSection">
+        <div class="details-container">
+            <!-- Details Header -->
+            <div class="details-header">
+                <button class="back-button" id="backButton">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <div class="details-title-section">
+                    <div class="task-id-badge" id="detailTaskId">TASK-001</div>
+                    <h1 class="details-title" id="detailTaskTitle">Judul Tugas</h1>
+                    <p class="details-subtitle" id="detailTaskSubtitle">Selesaikan untuk mendapatkan reward</p>
+                </div>
             </div>
-            <div class="modal-body">
-                <div id="submissionForm">
-                    <div class="form-group">
-                        <label class="form-label">Bukti Screenshot</label>
-                        <div class="upload-area" id="uploadArea">
-                            <div class="upload-icon">
-                                <i class="fas fa-cloud-upload-alt"></i>
-                            </div>
-                            <div class="upload-text">
-                                Klik atau seret file gambar ke sini
-                            </div>
-                            <div class="upload-subtext">
-                                Format: JPG, PNG (Maks. 5MB)
-                            </div>
-                            <input type="file" id="proofUpload" accept="image/*" style="display: none;">
-                        </div>
-                        <div class="preview-container">
-                            <img id="proofPreview" class="preview-image" alt="Preview Bukti" style="display: none;">
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label" for="taskNotes">
-                            <i class="fas fa-sticky-note"></i> Catatan (Opsional)
-                        </label>
-                        <textarea class="form-control" id="taskNotes" 
-                                  placeholder="Tambahkan catatan untuk admin..." rows="3"></textarea>
-                    </div>
-                    
-                    <div class="form-group">
-                        <button id="submitTaskBtn" class="btn btn-primary" disabled>
-                            <i class="fas fa-paper-plane"></i> KIRIM TUGAS
-                        </button>
+            
+            <!-- Details Tabs -->
+            <div class="details-tabs">
+                <button class="details-tab active" data-tab="info">
+                    <i class="fas fa-info-circle"></i> Informasi
+                </button>
+                <button class="details-tab" data-tab="rewards">
+                    <i class="fas fa-gift"></i> Hadiah
+                </button>
+                <button class="details-tab" data-tab="rules">
+                    <i class="fas fa-clipboard-check"></i> Aturan
+                </button>
+                <button class="details-tab" data-tab="submit">
+                    <i class="fas fa-paper-plane"></i> Submit
+                </button>
+            </div>
+            
+            <!-- Tab Contents -->
+            <div class="tab-content active" id="tabInfo">
+                <div class="info-item">
+                    <h3 class="info-title">
+                        <i class="fas fa-align-left"></i>
+                        Deskripsi Tugas
+                    </h3>
+                    <div class="info-content" id="infoDescription">
+                        Deskripsi tugas akan muncul di sini...
                     </div>
                 </div>
                 
-                <div id="receiptScreen" class="receipt-container" style="display: none;">
-                    <div class="receipt-icon">
-                        <i class="fas fa-check-circle"></i>
+                <div class="info-item">
+                    <h3 class="info-title">
+                        <i class="fas fa-list-ol"></i>
+                        Instruksi
+                    </h3>
+                    <ul class="info-content instructions-list" id="infoInstructions">
+                        <!-- Instructions will be loaded here -->
+                    </ul>
+                </div>
+                
+                <div class="info-item">
+                    <h3 class="info-title">
+                        <i class="fas fa-link"></i>
+                        Link Tugas
+                    </h3>
+                    <div class="info-content">
+                        <a href="#" class="link-button" id="infoLink" target="_blank">
+                            <i class="fas fa-external-link-alt"></i>
+                            Kunjungi Tugas
+                        </a>
                     </div>
-                    <h2 class="receipt-title">Tugas Terkirim!</h2>
-                    <div class="receipt-info">
-                        <div class="receipt-item">
-                            <span class="receipt-label">Submission ID:</span>
-                            <span class="receipt-value" id="receiptSubmissionId">-</span>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="tabRewards">
+                <div class="info-item">
+                    <h3 class="info-title">
+                        <i class="fas fa-gift"></i>
+                        Hadiah Penyelesaian
+                    </h3>
+                    <div class="rewards-grid">
+                        <div class="reward-card">
+                            <div class="reward-icon geo-icon">
+                                <i class="fas fa-coins"></i>
+                            </div>
+                            <div class="reward-value geo-value" id="rewardGeo">0.5 GEO</div>
+                            <div class="reward-label">Koin GEO</div>
                         </div>
-                        <div class="receipt-item">
-                            <span class="receipt-label">Task ID:</span>
-                            <span class="receipt-value" id="receiptTaskId">-</span>
-                        </div>
-                        <div class="receipt-item">
-                            <span class="receipt-label">Waktu Submit:</span>
-                            <span class="receipt-value" id="receiptSubmitTime">-</span>
-                        </div>
-                        <div class="receipt-item">
-                            <span class="receipt-label">Status:</span>
-                            <span class="receipt-value status-badge status-pending">
-                                <i class="fas fa-clock"></i> Menunggu Review
-                            </span>
+                        <div class="reward-card">
+                            <div class="reward-icon life-icon">
+                                <i class="fas fa-heart"></i>
+                            </div>
+                            <div class="reward-value life-value" id="rewardLife">1 LIFE</div>
+                            <div class="reward-label">Life Point</div>
                         </div>
                     </div>
-                    <button id="closeReceiptBtn" class="btn btn-primary">
-                        <i class="fas fa-check"></i> TUTUP
+                </div>
+            </div>
+            
+            <div class="tab-content" id="tabRules">
+                <div class="info-item">
+                    <h3 class="info-title">
+                        <i class="fas fa-clipboard-check"></i>
+                        Aturan Penting
+                    </h3>
+                    <div class="rules-grid" id="rulesList">
+                        <!-- Rules will be loaded here -->
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="tabSubmit">
+                <div class="error-message" id="submitError">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <span id="errorText">Terjadi kesalahan</span>
+                </div>
+                
+                <div class="success-message" id="submitSuccess">
+                    <i class="fas fa-check-circle"></i>
+                    <span id="successText">Submission berhasil!</span>
+                </div>
+                
+                <div class="upload-container">
+                    <h3 class="info-title">
+                        <i class="fas fa-camera"></i>
+                        Upload Bukti Screenshot
+                    </h3>
+                    <div class="upload-area" id="uploadArea">
+                        <div class="upload-icon">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                        </div>
+                        <div class="upload-text">
+                            Klik atau seret file gambar ke sini
+                        </div>
+                        <div class="upload-subtext">
+                            Format: JPG, PNG (Maks. 5MB) • Min. 300x300px
+                        </div>
+                        <input type="file" id="proofUpload" accept="image/*" style="display: none;">
+                    </div>
+                    
+                    <div class="preview-container" id="previewContainer">
+                        <div class="preview-wrapper">
+                            <img class="preview-image" id="proofPreview" alt="Preview Bukti">
+                            <div class="preview-actions">
+                                <button class="preview-btn" id="viewFullscreenBtn">
+                                    <i class="fas fa-expand"></i>
+                                </button>
+                                <button class="preview-btn" id="removeImageBtn">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="notes-container">
+                    <label class="notes-label">
+                        <i class="fas fa-sticky-note"></i> Catatan untuk Admin (Opsional)
+                    </label>
+                    <textarea 
+                        class="notes-input" 
+                        id="taskNotes" 
+                        placeholder="Tambahkan catatan jika diperlukan, misalnya: 'Screenshot diambil pada pukul 14:30' atau info tambahan lainnya..."
+                    ></textarea>
+                </div>
+                
+                <div class="submit-section">
+                    <button class="submit-btn" id="submitButton" disabled>
+                        <i class="fas fa-paper-plane"></i>
+                        KIRIM SUBMISSION
                     </button>
                 </div>
             </div>
         </div>
-    </div>
-    
-    <!-- Fullscreen Image Preview -->
-    <div id="fullscreenPreview" class="fullscreen-preview">
-        <button class="close-fullscreen">&times;</button>
-        <img id="fullscreenImage" class="fullscreen-image" alt="Fullscreen Preview">
-    </div>
-    
-    <!-- Connection Error Modal -->
-    <div id="connectionErrorModal" class="modal">
-        <div class="modal-content" style="max-width: 400px;">
-            <div class="modal-body" style="text-align: center;">
-                <div class="receipt-icon" style="color: #ff6b6b;">
-                    <i class="fas fa-exclamation-triangle"></i>
-                </div>
-                <h2 class="receipt-title">Koneksi Bermasalah</h2>
-                <p style="color: #666; margin-bottom: 20px;">
-                    Gagal terhubung ke server. Silakan refresh halaman.
-                </p>
-                <button id="refreshPageBtn" class="btn btn-primary">
-                    <i class="fas fa-redo"></i> REFRESH HALAMAN
-                </button>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Footer Navigation - KONSISTENSI WAJIB -->
-    <nav class="nav-footer">
-        <a href="dashboard.html" class="nav-item">
-            <i class="fas fa-home nav-icon"></i>
-            <span class="nav-text">Home</span>
-        </a>
-        <a href="quiz.html" class="nav-item">
-            <i class="fas fa-brain nav-icon"></i>
-            <span class="nav-text">Quiz</span>
-        </a>
-        <a href="tugas.html" class="nav-item active">
-            <i class="fas fa-tasks nav-icon"></i>
-            <span class="nav-text">Tugas</span>
-        </a>
-        <a href="referral.html" class="nav-item">
-            <i class="fas fa-user-friends nav-icon"></i>
-            <span class="nav-text">Referral</span>
-        </a>
-        <a href="profil.html" class="nav-item">
-            <i class="fas fa-user nav-icon"></i>
-            <span class="nav-text">Profil</span>
-        </a>
-    </nav>
-    
-    <!-- Toast Container -->
-    <div class="toast-container" id="toastContainer"></div>
+    </section>
 
     <script type="module">
-        // ============================================
-        // TUGAS PAGE - KUIZTOWN PRODUCTION
-        // ============================================
-        
-        // Konfigurasi Firebase
+        // Firebase Initialization
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { 
             getAuth, 
-            onAuthStateChanged, 
-            signOut 
+            onAuthStateChanged 
         } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
         import { 
             getFirestore,
@@ -1087,7 +1225,6 @@
             updateDoc,
             serverTimestamp,
             onSnapshot,
-            limit,
             orderBy
         } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
         
@@ -1100,202 +1237,104 @@
             appId: "1:334081803913:web:84899b42961e12f538a858"
         };
         
-        // Inisialisasi Firebase
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
         
-        // State management
+        // State variables
         let currentUser = null;
         let userData = null;
         let tasks = [];
         let submissions = [];
-        let filteredTasks = [];
-        let currentPage = 1;
-        const tasksPerPage = 10;
-        let currentTaskId = null;
-        let proofImageUrl = null;
-        let isSubmittingTask = false;
-        let cooldownEndTime = 0;
-        let imageHashCache = new Set();
+        let currentTask = null;
+        let proofImage = null;
+        let isSubmitting = false;
+        let selectedFilter = 'all';
+        let searchTerm = '';
         
         // DOM Elements
-        const skeletonLoading = document.getElementById('skeletonLoading');
-        const taskList = document.getElementById('taskList');
+        const tasksSection = document.getElementById('tasksSection');
+        const taskDetailsSection = document.getElementById('taskDetailsSection');
+        const taskCardsContainer = document.getElementById('taskCardsContainer');
         const emptyState = document.getElementById('emptyState');
         const searchInput = document.getElementById('searchInput');
         const filterTabs = document.querySelectorAll('.filter-tab');
-        const statApproved = document.getElementById('statApproved');
+        const statActive = document.getElementById('statActive');
         const statPending = document.getElementById('statPending');
-        const statRejected = document.getElementById('statRejected');
-        const notificationBadge = document.getElementById('notificationBadge');
-        const submissionModal = document.getElementById('submissionModal');
+        const statApproved = document.getElementById('statApproved');
+        
+        // Details Elements
+        const backButton = document.getElementById('backButton');
+        const detailTaskId = document.getElementById('detailTaskId');
+        const detailTaskTitle = document.getElementById('detailTaskTitle');
+        const detailTaskSubtitle = document.getElementById('detailTaskSubtitle');
+        const infoDescription = document.getElementById('infoDescription');
+        const infoInstructions = document.getElementById('infoInstructions');
+        const infoLink = document.getElementById('infoLink');
+        const rewardGeo = document.getElementById('rewardGeo');
+        const rewardLife = document.getElementById('rewardLife');
+        const rulesList = document.getElementById('rulesList');
+        const detailsTabs = document.querySelectorAll('.details-tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        // Submit Elements
         const uploadArea = document.getElementById('uploadArea');
         const proofUpload = document.getElementById('proofUpload');
+        const previewContainer = document.getElementById('previewContainer');
         const proofPreview = document.getElementById('proofPreview');
+        const viewFullscreenBtn = document.getElementById('viewFullscreenBtn');
+        const removeImageBtn = document.getElementById('removeImageBtn');
         const taskNotes = document.getElementById('taskNotes');
-        const submitTaskBtn = document.getElementById('submitTaskBtn');
-        const closeSubmissionModal = document.getElementById('closeSubmissionModal');
-        const submissionForm = document.getElementById('submissionForm');
-        const receiptScreen = document.getElementById('receiptScreen');
-        const closeReceiptBtn = document.getElementById('closeReceiptBtn');
-        const fullscreenPreview = document.getElementById('fullscreenPreview');
-        const fullscreenImage = document.getElementById('fullscreenImage');
-        const closeFullscreen = document.querySelector('.close-fullscreen');
-        const connectionErrorModal = document.getElementById('connectionErrorModal');
-        const refreshPageBtn = document.getElementById('refreshPageBtn');
-        const pagination = document.getElementById('pagination');
-        const toastContainer = document.getElementById('toastContainer');
+        const submitButton = document.getElementById('submitButton');
+        const submitError = document.getElementById('submitError');
+        const errorText = document.getElementById('errorText');
+        const submitSuccess = document.getElementById('submitSuccess');
+        const successText = document.getElementById('successText');
         
         // Event Listeners
         document.addEventListener('DOMContentLoaded', initApp);
         
-        function initApp() {
+        async function initApp() {
             console.log('Initializing Tugas App...');
-            setupEventListeners();
-            setupAuthListener();
-        }
-        
-        function setupEventListeners() {
-            // Filter tabs
-            filterTabs.forEach(tab => {
-                tab.addEventListener('click', () => {
-                    const filter = tab.dataset.filter;
-                    filterTabs.forEach(t => t.classList.remove('active'));
-                    tab.classList.add('active');
-                    filterTasks(filter);
-                });
-            });
             
-            // Search input
-            searchInput.addEventListener('input', debounce(() => {
-                const searchTerm = searchInput.value.toLowerCase();
-                filterTasks(document.querySelector('.filter-tab.active').dataset.filter, searchTerm);
-            }, 300));
-            
-            // Upload area
-            uploadArea.addEventListener('click', () => proofUpload.click());
-            uploadArea.addEventListener('dragover', handleDragOver);
-            uploadArea.addEventListener('drop', handleDrop);
-            
-            // File upload
-            proofUpload.addEventListener('change', handleFileUpload);
-            
-            // Modal close buttons
-            closeSubmissionModal.addEventListener('click', closeModal);
-            closeReceiptBtn.addEventListener('click', closeModal);
-            closeFullscreen.addEventListener('click', () => {
-                fullscreenPreview.style.display = 'none';
-            });
-            
-            // Image preview click
-            proofPreview.addEventListener('click', () => {
-                if (proofPreview.src) {
-                    fullscreenImage.src = proofPreview.src;
-                    fullscreenPreview.style.display = 'flex';
-                }
-            });
-            
-            // Fullscreen modal close on background click
-            fullscreenPreview.addEventListener('click', (e) => {
-                if (e.target === fullscreenPreview) {
-                    fullscreenPreview.style.display = 'none';
-                }
-            });
-            
-            // Refresh page button
-            refreshPageBtn.addEventListener('click', () => {
-                window.location.reload();
-            });
-            
-            // Submit task button
-            submitTaskBtn.addEventListener('click', submitTask);
-            
-            // Handle window beforeunload for draft saving
-            window.addEventListener('beforeunload', saveDraft);
-        }
-        
-        // Authentication listener
-        function setupAuthListener() {
+            // Setup auth listener
             onAuthStateChanged(auth, async (user) => {
                 if (user) {
-                    console.log('User authenticated:', user.uid);
                     currentUser = user;
-                    
-                    try {
-                        // Check user status
-                        await checkUserStatus(user.uid);
-                        
-                        // Load user data
-                        await loadUserData(user.uid);
-                        
-                        // Load tasks
-                        await loadTasks();
-                        
-                        // Load submissions history
-                        await loadSubmissions(user.uid);
-                        
-                        // Setup realtime listeners
-                        setupRealtimeListeners(user.uid);
-                        
-                        // Restore draft if exists
-                        restoreDraft();
-                        
-                        // Check cooldown
-                        checkCooldown();
-                        
-                    } catch (error) {
-                        console.error('Error in auth listener:', error);
-                        showConnectionError();
-                    }
+                    await loadUserData(user.uid);
+                    await loadTasks();
+                    await loadSubmissions(user.uid);
+                    setupEventListeners();
                 } else {
-                    console.log('User not authenticated, redirecting to login...');
                     window.location.href = 'login.html';
                 }
             });
         }
         
-        // Check user status
-        async function checkUserStatus(userId) {
-            try {
-                const userDoc = await getDoc(doc(db, 'users', userId));
-                if (userDoc.exists()) {
-                    const userData = userDoc.data();
-                    if (userData.status !== 'active') {
-                        await signOut(auth);
-                        window.location.href = 'banned.html';
-                        throw new Error('User not active');
-                    }
-                } else {
-                    throw new Error('User document not found');
-                }
-            } catch (error) {
-                console.error('Error checking user status:', error);
-                throw error;
-            }
-        }
-        
-        // Load user data
         async function loadUserData(userId) {
             try {
                 const userDoc = await getDoc(doc(db, 'users', userId));
                 if (userDoc.exists()) {
                     userData = userDoc.data();
-                    console.log('User data loaded:', userData);
+                    
+                    // Check if user is banned
+                    if (userData.status === 'banned') {
+                        showError('Akun Anda telah dibekukan.');
+                    }
                 }
             } catch (error) {
                 console.error('Error loading user data:', error);
             }
         }
         
-        // Load tasks from Firestore
         async function loadTasks() {
             try {
                 console.log('Loading tasks from Firestore...');
                 
                 const tasksQuery = query(
                     collection(db, 'tasks'),
-                    where('status', '==', 'active')
+                    where('status', '==', 'active'),
+                    orderBy('createdAt', 'desc')
                 );
                 
                 const tasksSnapshot = await getDocs(tasksQuery);
@@ -1311,19 +1350,15 @@
                 
                 console.log(`Loaded ${tasks.length} active tasks`);
                 
-                // Hide skeleton
-                skeletonLoading.style.display = 'none';
-                
-                // Filter and display tasks
-                filterTasks('all');
+                // Display tasks
+                displayTasks();
                 
             } catch (error) {
                 console.error('Error loading tasks:', error);
-                showConnectionError();
+                showEmptyState();
             }
         }
         
-        // Load submissions history
         async function loadSubmissions(userId) {
             try {
                 const submissionsQuery = query(
@@ -1353,381 +1388,341 @@
             }
         }
         
-        // Setup realtime listeners
-        function setupRealtimeListeners(userId) {
-            // Listen for new submissions
-            const submissionsQuery = query(
-                collection(db, 'taskSubmissions'),
-                where('userId', '==', userId),
-                orderBy('submittedAt', 'desc'),
-                limit(1)
-            );
+        function displayTasks() {
+            taskCardsContainer.innerHTML = '';
             
-            onSnapshot(submissionsQuery, (snapshot) => {
-                snapshot.docChanges().forEach(change => {
-                    if (change.type === 'added' || change.type === 'modified') {
-                        const submission = {
-                            id: change.doc.id,
-                            ...change.doc.data()
-                        };
-                        
-                        // Update local submissions
-                        const index = submissions.findIndex(s => s.id === submission.id);
-                        if (index >= 0) {
-                            submissions[index] = submission;
-                        } else {
-                            submissions.unshift(submission);
-                        }
-                        
-                        // Update stats
-                        updateStats();
-                        
-                        // Show notification for status change
-                        if (change.type === 'modified') {
-                            const oldStatus = change.doc._document?.value?.mapValue?.fields?.status?.stringValue;
-                            const newStatus = submission.status;
-                            
-                            if (oldStatus && oldStatus !== newStatus) {
-                                showStatusNotification(submission);
-                            }
-                        }
-                    }
-                });
-            });
-        }
-        
-        // Filter tasks
-        function filterTasks(filter, searchTerm = '') {
-            let filtered = [...tasks];
-            
-            // Apply status filter
-            if (filter !== 'all') {
-                filtered = filtered.filter(task => {
-                    const userSubmission = submissions.find(s => s.taskId === task.id);
-                    
-                    switch(filter) {
-                        case 'active':
-                            return !userSubmission || userSubmission.status === 'rejected';
-                        case 'pending':
-                            return userSubmission && userSubmission.status === 'pending';
-                        case 'approved':
-                            return userSubmission && userSubmission.status === 'approved';
-                        case 'rejected':
-                            return userSubmission && userSubmission.status === 'rejected';
-                        default:
-                            return true;
-                    }
-                });
+            if (tasks.length === 0) {
+                showEmptyState();
+                return;
             }
+            
+            // Filter tasks
+            let filteredTasks = tasks.filter(task => {
+                // Apply status filter
+                const userSubmission = submissions.find(s => s.taskId === task.id);
+                
+                switch(selectedFilter) {
+                    case 'active':
+                        return !userSubmission || userSubmission.status === 'rejected';
+                    case 'pending':
+                        return userSubmission && userSubmission.status === 'pending';
+                    case 'completed':
+                        return userSubmission && (userSubmission.status === 'approved' || userSubmission.status === 'rejected');
+                    case 'all':
+                    default:
+                        return true;
+                }
+            });
             
             // Apply search filter
             if (searchTerm) {
-                filtered = filtered.filter(task => {
-                    return task.title.toLowerCase().includes(searchTerm) ||
-                           task.id.toLowerCase().includes(searchTerm) ||
-                           (task.description && task.description.toLowerCase().includes(searchTerm));
+                filteredTasks = filteredTasks.filter(task => {
+                    return task.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                           task.description.toLowerCase().includes(searchTerm.toLowerCase());
                 });
             }
             
-            // Check 24-hour limit for each task
-            filtered = filtered.map(task => {
-                const userSubmission = submissions.find(s => s.taskId === task.id);
-                const isWithin24Hours = userSubmission && 
-                    ((Date.now() - userSubmission.submittedAt.toDate().getTime()) < 24 * 60 * 60 * 1000);
-                
-                return {
-                    ...task,
-                    canSubmit: !userSubmission || (userSubmission.status === 'rejected' && !isWithin24Hours),
-                    userSubmission: userSubmission
-                };
-            });
-            
-            filteredTasks = filtered;
-            currentPage = 1;
-            displayTasks();
-        }
-        
-        // Display tasks with pagination
-        function displayTasks() {
-            taskList.innerHTML = '';
-            
             if (filteredTasks.length === 0) {
-                emptyState.style.display = 'block';
-                pagination.style.display = 'none';
+                showEmptyState();
                 return;
             }
             
             emptyState.style.display = 'none';
             
-            // Calculate pagination
-            const startIndex = (currentPage - 1) * tasksPerPage;
-            const endIndex = startIndex + tasksPerPage;
-            const pageTasks = filteredTasks.slice(startIndex, endIndex);
-            
             // Create task cards
-            pageTasks.forEach(task => {
+            filteredTasks.forEach(task => {
                 const taskCard = createTaskCard(task);
-                taskList.appendChild(taskCard);
+                taskCardsContainer.appendChild(taskCard);
             });
-            
-            // Display pagination
-            displayPagination();
         }
         
-        // Create task card element
         function createTaskCard(task) {
             const card = document.createElement('div');
             card.className = 'task-card';
             card.dataset.taskId = task.id;
             
-            // Difficulty badge
-            const difficultyClass = `difficulty-${task.difficulty || 'medium'}`;
-            const difficultyText = task.difficulty ? task.difficulty.toUpperCase() : 'MEDIUM';
+            // Check user submission status
+            const userSubmission = submissions.find(s => s.taskId === task.id);
+            const canSubmit = !userSubmission || userSubmission.status === 'rejected';
             
-            // Slot counter
+            // Difficulty badge
+            const difficulty = task.difficulty || 'medium';
+            const difficultyClass = `difficulty-${difficulty}`;
+            
+            // Slot info
             const currentSlots = task.currentSlots || 0;
             const maxSlots = task.maxSlots || 50;
-            const slotClass = currentSlots >= maxSlots ? 'slot-counter slot-full' : 'slot-counter';
-            const slotText = currentSlots >= maxSlots ? 'FULL' : `${currentSlots} / ${maxSlots}`;
-            
-            // Deadline countdown
-            let deadlineBadge = '';
-            if (task.deadline) {
-                const deadlineDate = task.deadline.toDate ? task.deadline.toDate() : new Date(task.deadline);
-                const now = new Date();
-                const diffHours = Math.max(0, Math.floor((deadlineDate - now) / (1000 * 60 * 60)));
-                
-                if (diffHours < 24) {
-                    deadlineBadge = `
-                        <span class="deadline-badge">
-                            <i class="fas fa-clock"></i> ${diffHours} jam
-                        </span>
-                    `;
-                }
-            }
+            const slotStatus = currentSlots >= maxSlots ? 'FULL' : `${currentSlots}/${maxSlots}`;
             
             // Status badge
             let statusBadge = '';
-            if (task.userSubmission) {
-                const statusClass = `status-${task.userSubmission.status}`;
-                let statusText = '';
+            if (userSubmission) {
+                const statusClass = `status-${userSubmission.status}`;
                 let statusIcon = '';
+                let statusText = '';
                 
-                switch(task.userSubmission.status) {
+                switch(userSubmission.status) {
                     case 'pending':
-                        statusText = 'Menunggu Review';
-                        statusIcon = '<i class="fas fa-clock"></i>';
+                        statusIcon = 'clock';
+                        statusText = 'Menunggu';
                         break;
                     case 'approved':
+                        statusIcon = 'check-circle';
                         statusText = 'Disetujui';
-                        statusIcon = '<i class="fas fa-check-circle"></i>';
                         break;
                     case 'rejected':
+                        statusIcon = 'times-circle';
                         statusText = 'Ditolak';
-                        statusIcon = '<i class="fas fa-times-circle"></i>';
                         break;
                 }
                 
                 statusBadge = `
                     <span class="status-badge ${statusClass}">
-                        ${statusIcon} ${statusText}
+                        <i class="fas fa-${statusIcon}"></i> ${statusText}
                     </span>
-                `;
-            }
-            
-            // Action button
-            let actionButton = '';
-            if (task.canSubmit && !task.userSubmission) {
-                if (Date.now() < cooldownEndTime) {
-                    const cooldownMinutes = Math.ceil((cooldownEndTime - Date.now()) / (1000 * 60));
-                    actionButton = `
-                        <button class="btn btn-disabled" disabled>
-                            <i class="fas fa-clock"></i> COOLDOWN ${cooldownMinutes}m
-                        </button>
-                    `;
-                } else if (currentSlots >= maxSlots) {
-                    actionButton = `
-                        <button class="btn btn-disabled" disabled>
-                            <i class="fas fa-times-circle"></i> SLOT PENUH
-                        </button>
-                    `;
-                } else {
-                    actionButton = `
-                        <button class="btn btn-primary submit-task-btn">
-                            <i class="fas fa-paper-plane"></i> SUBMIT
-                        </button>
-                    `;
-                }
-            } else if (task.userSubmission) {
-                let buttonText = '';
-                let buttonIcon = '';
-                
-                switch(task.userSubmission.status) {
-                    case 'pending':
-                        buttonText = 'MENUNGGU REVIEW';
-                        buttonIcon = '<i class="fas fa-clock"></i>';
-                        break;
-                    case 'approved':
-                        buttonText = 'DISETUJUI';
-                        buttonIcon = '<i class="fas fa-check-circle"></i>';
-                        break;
-                    case 'rejected':
-                        buttonText = 'DITOLAK';
-                        buttonIcon = '<i class="fas fa-times-circle"></i>';
-                        break;
-                }
-                
-                actionButton = `
-                    <button class="btn btn-disabled" disabled>
-                        ${buttonIcon} ${buttonText}
-                    </button>
                 `;
             }
             
             card.innerHTML = `
                 <div class="task-card-header">
-                    <div class="task-title">${task.title}</div>
-                    <span class="task-difficulty ${difficultyClass}">${difficultyText}</span>
+                    <div>
+                        <h3 class="task-card-title">${task.title}</h3>
+                        <span class="task-difficulty ${difficultyClass}">${difficulty.toUpperCase()}</span>
+                    </div>
+                    ${statusBadge}
                 </div>
-                <div class="task-description">${task.description || 'Tidak ada deskripsi'}</div>
+                <p class="task-description">${task.description || 'Tidak ada deskripsi'}</p>
                 <div class="task-meta">
-                    <span class="task-reward">
-                        <i class="fas fa-seedling"></i> +${task.geoReward || 0} GEO
+                    <span class="task-reward geo-reward">
+                        <i class="fas fa-coins"></i> +${task.geoReward || 0} GEO
                     </span>
                     ${task.lifeReward ? `
-                    <span class="task-reward life">
+                    <span class="task-reward life-reward">
                         <i class="fas fa-heart"></i> +${task.lifeReward} LIFE
                     </span>
                     ` : ''}
-                    <span class="${slotClass}">
-                        <i class="fas fa-users"></i> ${slotText}
+                    <span class="slot-info">
+                        <i class="fas fa-users"></i> ${slotStatus}
                     </span>
-                    ${deadlineBadge}
-                    ${statusBadge}
                 </div>
                 <div class="task-actions">
-                    ${actionButton}
+                    <button class="view-details-btn" ${!canSubmit ? 'disabled' : ''}>
+                        <i class="fas fa-eye"></i> 
+                        ${userSubmission ? 'LIHAT STATUS' : 'LIHAT DETAIL'}
+                    </button>
                 </div>
             `;
             
-            // Add event listener to submit button
-            const submitBtn = card.querySelector('.submit-task-btn');
-            if (submitBtn) {
-                submitBtn.addEventListener('click', () => openSubmissionModal(task.id));
-            }
+            // Add click event
+            card.addEventListener('click', (e) => {
+                if (!e.target.closest('.view-details-btn')) return;
+                viewTaskDetails(task);
+            });
             
             return card;
         }
         
-        // Display pagination
-        function displayPagination() {
-            const totalPages = Math.ceil(filteredTasks.length / tasksPerPage);
+        function viewTaskDetails(task) {
+            currentTask = task;
             
-            if (totalPages <= 1) {
-                pagination.style.display = 'none';
-                return;
-            }
+            // Update details
+            detailTaskId.textContent = `TASK-${task.id.substring(0, 8).toUpperCase()}`;
+            detailTaskTitle.textContent = task.title;
+            detailTaskSubtitle.textContent = task.subtitle || 'Selesaikan untuk mendapatkan reward';
+            infoDescription.textContent = task.description || 'Tidak ada deskripsi';
             
-            pagination.style.display = 'flex';
-            pagination.innerHTML = '';
-            
-            // Previous button
-            if (currentPage > 1) {
-                const prevBtn = document.createElement('button');
-                prevBtn.className = 'pagination-btn';
-                prevBtn.innerHTML = '<i class="fas fa-chevron-left"></i>';
-                prevBtn.addEventListener('click', () => {
-                    currentPage--;
-                    displayTasks();
+            // Update instructions
+            infoInstructions.innerHTML = '';
+            if (task.instruction) {
+                const instructions = task.instruction.split('\n').filter(i => i.trim());
+                instructions.forEach((instruction, index) => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `
+                        <div class="instruction-number">${index + 1}</div>
+                        <span>${instruction.trim()}</span>
+                    `;
+                    infoInstructions.appendChild(li);
                 });
-                pagination.appendChild(prevBtn);
             }
             
-            // Page buttons
-            const maxButtons = 5;
-            let startPage = Math.max(1, currentPage - Math.floor(maxButtons / 2));
-            let endPage = Math.min(totalPages, startPage + maxButtons - 1);
-            
-            if (endPage - startPage + 1 < maxButtons) {
-                startPage = Math.max(1, endPage - maxButtons + 1);
+            // Update link
+            if (task.link) {
+                infoLink.href = task.link;
+                infoLink.style.display = 'inline-flex';
+            } else {
+                infoLink.style.display = 'none';
             }
             
-            for (let i = startPage; i <= endPage; i++) {
-                const pageBtn = document.createElement('button');
-                pageBtn.className = `pagination-btn ${i === currentPage ? 'active' : ''}`;
-                pageBtn.textContent = i;
-                pageBtn.addEventListener('click', () => {
-                    currentPage = i;
-                    displayTasks();
-                });
-                pagination.appendChild(pageBtn);
-            }
+            // Update rewards
+            rewardGeo.textContent = `${task.geoReward || 0} GEO`;
+            rewardLife.textContent = `${task.lifeReward || 0} LIFE`;
             
-            // Next button
-            if (currentPage < totalPages) {
-                const nextBtn = document.createElement('button');
-                nextBtn.className = 'pagination-btn';
-                nextBtn.innerHTML = '<i class="fas fa-chevron-right"></i>';
-                nextBtn.addEventListener('click', () => {
-                    currentPage++;
-                    displayTasks();
-                });
-                pagination.appendChild(nextBtn);
+            // Update rules
+            rulesList.innerHTML = `
+                <div class="rule-item">
+                    <i class="fas fa-clock rule-icon"></i>
+                    <span>Tugas harus diselesaikan dalam 24 jam setelah dimulai</span>
+                </div>
+                <div class="rule-item">
+                    <i class="fas fa-images rule-icon"></i>
+                    <span>Screenshot harus jelas dan tidak boleh di-edit</span>
+                </div>
+                <div class="rule-item">
+                    <i class="fas fa-ban rule-icon"></i>
+                    <span>Dilarang menggunakan akun ganda atau bot</span>
+                </div>
+                <div class="rule-item">
+                    <i class="fas fa-history rule-icon"></i>
+                    <span>Review admin membutuhkan waktu 1-3 hari kerja</span>
+                </div>
+            `;
+            
+            // Reset submit tab
+            resetSubmitTab();
+            
+            // Hide footer navigation
+            document.querySelector('.nav-footer').style.display = 'none';
+            
+            // Switch to details section
+            tasksSection.style.display = 'none';
+            taskDetailsSection.style.display = 'block';
+            
+            // Activate first tab
+            switchTab('info');
+        }
+        
+        function resetSubmitTab() {
+            // Reset form
+            proofImage = null;
+            proofPreview.src = '';
+            previewContainer.style.display = 'none';
+            proofUpload.value = '';
+            taskNotes.value = '';
+            submitButton.disabled = true;
+            
+            // Hide messages
+            submitError.style.display = 'none';
+            submitSuccess.style.display = 'none';
+            
+            // Check if user has already submitted
+            const userSubmission = submissions.find(s => s.taskId === currentTask.id);
+            if (userSubmission) {
+                submitButton.disabled = true;
+                submitButton.innerHTML = `
+                    <i class="fas fa-${userSubmission.status === 'pending' ? 'clock' : 
+                                      userSubmission.status === 'approved' ? 'check-circle' : 'times-circle'}"></i>
+                    ${userSubmission.status === 'pending' ? 'MENUNGGU REVIEW' : 
+                     userSubmission.status === 'approved' ? 'DISETUJUI' : 'DITOLAK'}
+                `;
+            } else {
+                submitButton.disabled = false;
+                submitButton.innerHTML = '<i class="fas fa-paper-plane"></i> KIRIM SUBMISSION';
             }
         }
         
-        // Update stats
         function updateStats() {
-            const approvedCount = submissions.filter(s => s.status === 'approved').length;
+            const activeCount = tasks.length;
             const pendingCount = submissions.filter(s => s.status === 'pending').length;
-            const rejectedCount = submissions.filter(s => s.status === 'rejected').length;
+            const approvedCount = submissions.filter(s => s.status === 'approved').length;
             
-            statApproved.textContent = approvedCount;
+            statActive.textContent = activeCount;
             statPending.textContent = pendingCount;
-            statRejected.textContent = rejectedCount;
+            statApproved.textContent = approvedCount;
             
             // Update notification badge
-            const newNotifications = pendingCount;
-            notificationBadge.textContent = newNotifications;
-            notificationBadge.style.display = newNotifications > 0 ? 'flex' : 'none';
+            notificationBadge.textContent = pendingCount;
+            notificationBadge.style.display = pendingCount > 0 ? 'flex' : 'none';
         }
         
-        // Open submission modal
-        function openSubmissionModal(taskId) {
-            currentTaskId = taskId;
-            proofImageUrl = null;
-            
-            // Reset form
-            proofPreview.style.display = 'none';
-            taskNotes.value = '';
-            submitTaskBtn.disabled = true;
-            
-            // Show form, hide receipt
-            submissionForm.style.display = 'block';
-            receiptScreen.style.display = 'none';
-            
-            // Show modal
-            submissionModal.style.display = 'flex';
+        function showEmptyState() {
+            emptyState.style.display = 'block';
+            taskCardsContainer.innerHTML = '';
         }
         
-        // Close modal
-        function closeModal() {
-            submissionModal.style.display = 'none';
-            saveDraft();
+        function setupEventListeners() {
+            // Filter tabs
+            filterTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const filter = tab.dataset.filter;
+                    filterTabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    selectedFilter = filter;
+                    displayTasks();
+                });
+            });
+            
+            // Search input
+            searchInput.addEventListener('input', () => {
+                searchTerm = searchInput.value.toLowerCase();
+                displayTasks();
+            });
+            
+            // Back button
+            backButton.addEventListener('click', () => {
+                taskDetailsSection.style.display = 'none';
+                tasksSection.style.display = 'block';
+                document.querySelector('.nav-footer').style.display = 'flex';
+                
+                // Refresh tasks list
+                displayTasks();
+            });
+            
+            // Details tabs
+            detailsTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const tabName = tab.dataset.tab;
+                    switchTab(tabName);
+                });
+            });
+            
+            // Upload area
+            uploadArea.addEventListener('click', () => proofUpload.click());
+            uploadArea.addEventListener('dragover', handleDragOver);
+            uploadArea.addEventListener('dragleave', handleDragLeave);
+            uploadArea.addEventListener('drop', handleDrop);
+            
+            // File input
+            proofUpload.addEventListener('change', handleFileSelect);
+            
+            // Preview buttons
+            viewFullscreenBtn.addEventListener('click', viewFullscreen);
+            removeImageBtn.addEventListener('click', removeImage);
+            
+            // Submit button
+            submitButton.addEventListener('click', submitTask);
         }
         
-        // Handle drag over
+        function switchTab(tabName) {
+            // Update tab buttons
+            detailsTabs.forEach(tab => {
+                tab.classList.remove('active');
+                if (tab.dataset.tab === tabName) {
+                    tab.classList.add('active');
+                }
+            });
+            
+            // Update tab contents
+            tabContents.forEach(content => {
+                content.classList.remove('active');
+                if (content.id === `tab${tabName.charAt(0).toUpperCase() + tabName.slice(1)}`) {
+                    content.classList.add('active');
+                }
+            });
+        }
+        
         function handleDragOver(e) {
             e.preventDefault();
-            e.stopPropagation();
-            uploadArea.style.background = 'rgba(135, 206, 235, 0.1)';
+            uploadArea.classList.add('drag-over');
         }
         
-        // Handle drop
+        function handleDragLeave(e) {
+            e.preventDefault();
+            uploadArea.classList.remove('drag-over');
+        }
+        
         function handleDrop(e) {
             e.preventDefault();
-            e.stopPropagation();
-            uploadArea.style.background = '';
+            uploadArea.classList.remove('drag-over');
             
             const files = e.dataTransfer.files;
             if (files.length > 0) {
@@ -1735,204 +1730,138 @@
             }
         }
         
-        // Handle file upload
-        function handleFileUpload(e) {
+        function handleFileSelect(e) {
             const file = e.target.files[0];
             if (file) {
                 handleImageFile(file);
             }
         }
         
-        // Handle image file
         async function handleImageFile(file) {
             try {
                 // Validate file
                 if (!file.type.match('image.*')) {
-                    showToast('Hanya file gambar yang diperbolehkan', 'error');
+                    showError('Hanya file gambar yang diperbolehkan');
                     return;
                 }
                 
                 if (file.size > 5 * 1024 * 1024) {
-                    showToast('Ukuran file maksimal 5MB', 'error');
+                    showError('Ukuran file maksimal 5MB');
                     return;
                 }
                 
-                // Compress image
-                const compressedFile = await compressImage(file);
-                
-                // Validate dimensions
-                const dimensions = await getImageDimensions(compressedFile);
-                if (dimensions.width < 300 || dimensions.height < 300) {
-                    showToast('Resolusi gambar minimal 300x300px', 'error');
-                    return;
-                }
-                
-                // Generate hash for duplicate detection
-                const hash = await generateImageHash(compressedFile);
-                if (imageHashCache.has(hash)) {
-                    showToast('Gambar ini sudah pernah diupload sebelumnya', 'error');
-                    return;
-                }
-                
-                // Upload to ImgBB
-                const imageUrl = await uploadToImgBB(compressedFile);
-                
-                // Update UI
-                proofImageUrl = imageUrl;
-                proofPreview.src = imageUrl;
-                proofPreview.style.display = 'block';
-                submitTaskBtn.disabled = false;
-                
-                // Add hash to cache
-                imageHashCache.add(hash);
-                
-                // Save draft
-                saveDraft();
-                
-                showToast('Gambar berhasil diupload', 'success');
-                
-            } catch (error) {
-                console.error('Error handling image file:', error);
-                showToast('Gagal memproses gambar', 'error');
-            }
-        }
-        
-        // Compress image
-        function compressImage(file) {
-            return new Promise((resolve, reject) => {
+                // Process image
                 const reader = new FileReader();
-                reader.readAsDataURL(file);
-                
                 reader.onload = (e) => {
-                    const img = new Image();
-                    img.src = e.target.result;
-                    
-                    img.onload = () => {
-                        const canvas = document.createElement('canvas');
-                        const ctx = canvas.getContext('2d');
-                        
-                        // Calculate new dimensions
-                        let width = img.width;
-                        let height = img.height;
-                        const maxWidth = 1080;
-                        
-                        if (width > maxWidth) {
-                            height = (height * maxWidth) / width;
-                            width = maxWidth;
-                        }
-                        
-                        canvas.width = width;
-                        canvas.height = height;
-                        
-                        // Draw and compress
-                        ctx.drawImage(img, 0, 0, width, height);
-                        
-                        canvas.toBlob((blob) => {
-                            const compressedFile = new File([blob], file.name, {
-                                type: 'image/jpeg',
-                                lastModified: Date.now()
-                            });
-                            resolve(compressedFile);
-                        }, 'image/jpeg', 0.8);
+                    proofImage = {
+                        file: file,
+                        url: e.target.result
                     };
                     
-                    img.onerror = reject;
+                    // Show preview
+                    proofPreview.src = proofImage.url;
+                    previewContainer.style.display = 'block';
+                    submitButton.disabled = false;
+                    
+                    hideError();
                 };
+                reader.readAsDataURL(file);
                 
-                reader.onerror = reject;
-            });
-        }
-        
-        // Get image dimensions
-        function getImageDimensions(file) {
-            return new Promise((resolve, reject) => {
-                const img = new Image();
-                img.onload = () => resolve({ width: img.width, height: img.height });
-                img.onerror = reject;
-                img.src = URL.createObjectURL(file);
-            });
-        }
-        
-        // Generate image hash
-        async function generateImageHash(file) {
-            const buffer = await file.arrayBuffer();
-            const hashBuffer = await crypto.subtle.digest('SHA-256', buffer);
-            const hashArray = Array.from(new Uint8Array(hashBuffer));
-            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-        }
-        
-        // Upload to ImgBB
-        async function uploadToImgBB(file) {
-            const IMGBB_API_KEY = '874a8bf96641caa969ce88e871be13e3';
-            const formData = new FormData();
-            formData.append('key', IMGBB_API_KEY);
-            formData.append('image', file);
-            
-            const response = await fetch('https://api.imgbb.com/1/upload', {
-                method: 'POST',
-                body: formData
-            });
-            
-            if (!response.ok) {
-                throw new Error('ImgBB upload failed');
+            } catch (error) {
+                console.error('Error handling image:', error);
+                showError('Gagal memproses gambar');
             }
-            
-            const data = await response.json();
-            if (!data.success) {
-                throw new Error('ImgBB API error');
-            }
-            
-            return data.data.url;
         }
         
-        // Submit task
+        function viewFullscreen() {
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.9);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 1000;
+            `;
+            
+            const img = document.createElement('img');
+            img.src = proofPreview.src;
+            img.style.cssText = `
+                max-width: 90%;
+                max-height: 90%;
+                object-fit: contain;
+            `;
+            
+            const closeBtn = document.createElement('button');
+            closeBtn.innerHTML = '<i class="fas fa-times"></i>';
+            closeBtn.style.cssText = `
+                position: absolute;
+                top: 20px;
+                right: 20px;
+                background: rgba(255,255,255,0.2);
+                color: white;
+                border: none;
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                font-size: 20px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            `;
+            closeBtn.addEventListener('mouseover', () => {
+                closeBtn.style.background = 'rgba(255,255,255,0.3)';
+            });
+            closeBtn.addEventListener('mouseout', () => {
+                closeBtn.style.background = 'rgba(255,255,255,0.2)';
+            });
+            closeBtn.addEventListener('click', () => modal.remove());
+            
+            modal.appendChild(img);
+            modal.appendChild(closeBtn);
+            document.body.appendChild(modal);
+            
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.remove();
+                }
+            });
+        }
+        
+        function removeImage() {
+            proofImage = null;
+            proofPreview.src = '';
+            previewContainer.style.display = 'none';
+            proofUpload.value = '';
+            submitButton.disabled = true;
+        }
+        
         async function submitTask() {
-            if (isSubmittingTask) return;
+            if (isSubmitting || !proofImage) return;
             
             try {
-                isSubmittingTask = true;
-                submitTaskBtn.disabled = true;
-                submitTaskBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> MENGIRIM...';
+                isSubmitting = true;
+                submitButton.disabled = true;
+                submitButton.innerHTML = '<i class="fas fa-spinner fa-spin loading-spinner"></i> MENGIRIM...';
                 
-                // Check localStorage lock
-                if (localStorage.getItem('task_submit_lock') === 'true') {
-                    throw new Error('Submit sedang diproses di tab lain');
-                }
+                hideError();
+                hideSuccess();
                 
-                // Set lock
-                localStorage.setItem('task_submit_lock', 'true');
-                
-                // Get task data
-                const task = tasks.find(t => t.id === currentTaskId);
-                if (!task) {
-                    throw new Error('Task tidak ditemukan');
-                }
-                
-                // Check 24-hour limit
-                const userSubmission = submissions.find(s => s.taskId === currentTaskId);
-                if (userSubmission) {
-                    const lastSubmissionTime = userSubmission.submittedAt.toDate().getTime();
-                    if (Date.now() - lastSubmissionTime < 24 * 60 * 60 * 1000) {
-                        throw new Error('Anda sudah submit tugas ini dalam 24 jam terakhir');
-                    }
-                }
-                
-                // Check slot availability
-                if (task.currentSlots >= task.maxSlots) {
-                    throw new Error('Slot tugas sudah penuh');
-                }
-                
-                // Create submission data
+                // Prepare submission data
                 const submissionData = {
                     userId: currentUser.uid,
-                    userEmail: currentUser.email || '',
-                    userName: userData?.username || '',
-                    taskId: currentTaskId,
-                    taskTitle: task.title,
-                    taskGeoReward: task.geoReward || 0,
-                    taskLifeReward: task.lifeReward || 0,
-                    proofUrl: proofImageUrl,
-                    notes: taskNotes.value || '',
+                    userEmail: currentUser.email,
+                    userName: userData?.username || 'User',
+                    taskId: currentTask.id,
+                    taskTitle: currentTask.title,
+                    taskDescription: currentTask.description,
+                    taskGeoReward: currentTask.geoReward || 0,
+                    taskLifeReward: currentTask.lifeReward || 0,
+                    proofUrl: proofImage.url,
+                    notes: taskNotes.value.trim(),
                     status: 'pending',
                     submittedAt: serverTimestamp(),
                     reviewedAt: null,
@@ -1944,18 +1873,10 @@
                 const submissionRef = await addDoc(collection(db, 'taskSubmissions'), submissionData);
                 
                 // Update task slots
-                await updateDoc(doc(db, 'tasks', currentTaskId), {
-                    currentSlots: (task.currentSlots || 0) + 1
+                await updateDoc(doc(db, 'tasks', currentTask.id), {
+                    currentSlots: (currentTask.currentSlots || 0) + 1,
+                    lastSubmission: serverTimestamp()
                 });
-                
-                // Set cooldown
-                cooldownEndTime = Date.now() + 10 * 60 * 1000; // 10 minutes
-                
-                // Show receipt
-                showReceipt(submissionRef.id, submissionData);
-                
-                // Clear draft
-                clearDraft();
                 
                 // Add to local submissions
                 submissions.unshift({
@@ -1963,242 +1884,44 @@
                     ...submissionData
                 });
                 
+                // Show success message
+                showSuccess('Submission berhasil dikirim!');
+                
+                // Reset form
+                removeImage();
+                taskNotes.value = '';
+                
                 // Update stats
                 updateStats();
                 
-                // Check for daily bonus
-                await checkDailyBonus();
-                
-                // Check for streak bonus
-                await checkStreakBonus();
-                
-                showToast('Tugas berhasil dikirim!', 'success');
+                console.log('Submission successful:', submissionRef.id);
                 
             } catch (error) {
                 console.error('Error submitting task:', error);
-                showToast(error.message || 'Gagal mengirim tugas', 'error');
-                submitTaskBtn.disabled = false;
-                submitTaskBtn.innerHTML = '<i class="fas fa-paper-plane"></i> KIRIM TUGAS';
+                showError(error.message || 'Gagal mengirim submission');
             } finally {
-                isSubmittingTask = false;
-                localStorage.removeItem('task_submit_lock');
+                isSubmitting = false;
+                submitButton.disabled = false;
+                submitButton.innerHTML = '<i class="fas fa-paper-plane"></i> KIRIM SUBMISSION';
             }
         }
         
-        // Show receipt
-        function showReceipt(submissionId, submissionData) {
-            // Update receipt info
-            document.getElementById('receiptSubmissionId').textContent = submissionId.substring(0, 8) + '...';
-            document.getElementById('receiptTaskId').textContent = submissionData.taskId.substring(0, 8) + '...';
-            document.getElementById('receiptSubmitTime').textContent = new Date().toLocaleString('id-ID');
-            
-            // Show receipt, hide form
-            submissionForm.style.display = 'none';
-            receiptScreen.style.display = 'block';
+        function showError(message) {
+            errorText.textContent = message;
+            submitError.style.display = 'flex';
         }
         
-        // Check daily bonus
-        async function checkDailyBonus() {
-            try {
-                // Check if this is first submission today
-                const today = new Date();
-                today.setHours(0, 0, 0, 0);
-                
-                const todaySubmissions = submissions.filter(s => {
-                    const submissionDate = s.submittedAt.toDate();
-                    submissionDate.setHours(0, 0, 0, 0);
-                    return submissionDate.getTime() === today.getTime();
-                });
-                
-                if (todaySubmissions.length === 1) {
-                    // First submission today, add bonus
-                    await updateDoc(doc(db, 'users', currentUser.uid), {
-                        geoBalance: (userData.geoBalance || 0) + 0.5
-                    });
-                    
-                    // Add to history
-                    await addDoc(collection(db, 'history'), {
-                        userId: currentUser.uid,
-                        type: 'daily_task_bonus',
-                        amount: 0.5,
-                        description: 'Bonus tugas harian pertama',
-                        createdAt: serverTimestamp()
-                    });
-                    
-                    showToast('+0.5 GEO Bonus tugas harian!', 'success');
-                }
-            } catch (error) {
-                console.error('Error checking daily bonus:', error);
-            }
+        function hideError() {
+            submitError.style.display = 'none';
         }
         
-        // Check streak bonus
-        async function checkStreakBonus() {
-            try {
-                // Get last 3 days submissions
-                const last3Days = submissions.filter(s => {
-                    const submissionDate = s.submittedAt.toDate();
-                    const threeDaysAgo = new Date();
-                    threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
-                    return submissionDate > threeDaysAgo;
-                });
-                
-                // Check for 3 consecutive days
-                const uniqueDays = new Set();
-                last3Days.forEach(s => {
-                    const dateStr = s.submittedAt.toDate().toDateString();
-                    uniqueDays.add(dateStr);
-                });
-                
-                if (uniqueDays.size >= 3) {
-                    // Add LIFE bonus
-                    await updateDoc(doc(db, 'users', currentUser.uid), {
-                        lifeBalance: (userData.lifeBalance || 0) + 1
-                    });
-                    
-                    // Add to history
-                    await addDoc(collection(db, 'history'), {
-                        userId: currentUser.uid,
-                        type: 'task_streak_bonus',
-                        amount: 1,
-                        description: 'Bonus streak 3 hari berturut-turut',
-                        createdAt: serverTimestamp()
-                    });
-                    
-                    showToast('+1 LIFE Bonus streak 3 hari!', 'success');
-                }
-            } catch (error) {
-                console.error('Error checking streak bonus:', error);
-            }
+        function showSuccess(message) {
+            successText.textContent = message;
+            submitSuccess.style.display = 'flex';
         }
         
-        // Check cooldown
-        function checkCooldown() {
-            if (Date.now() < cooldownEndTime) {
-                const taskCards = document.querySelectorAll('.task-card');
-                taskCards.forEach(card => {
-                    const submitBtn = card.querySelector('.submit-task-btn');
-                    if (submitBtn) {
-                        const cooldownMinutes = Math.ceil((cooldownEndTime - Date.now()) / (1000 * 60));
-                        submitBtn.innerHTML = `<i class="fas fa-clock"></i> COOLDOWN ${cooldownMinutes}m`;
-                        submitBtn.disabled = true;
-                        submitBtn.className = 'btn btn-disabled';
-                    }
-                });
-            }
-        }
-        
-        // Save draft
-        function saveDraft() {
-            if (currentTaskId && proofImageUrl) {
-                const draft = {
-                    taskId: currentTaskId,
-                    proofUrl: proofImageUrl,
-                    notes: taskNotes.value,
-                    savedAt: Date.now()
-                };
-                localStorage.setItem(`task_draft_${currentTaskId}`, JSON.stringify(draft));
-            }
-        }
-        
-        // Restore draft
-        function restoreDraft() {
-            if (currentTaskId) {
-                const draftStr = localStorage.getItem(`task_draft_${currentTaskId}`);
-                if (draftStr) {
-                    const draft = JSON.parse(draftStr);
-                    const hoursSinceSave = (Date.now() - draft.savedAt) / (1000 * 60 * 60);
-                    
-                    if (hoursSinceSave < 24) {
-                        proofImageUrl = draft.proofUrl;
-                        proofPreview.src = draft.proofUrl;
-                        proofPreview.style.display = 'block';
-                        taskNotes.value = draft.notes;
-                        submitTaskBtn.disabled = false;
-                        
-                        showToast('Draft berhasil dipulihkan', 'info');
-                    } else {
-                        clearDraft();
-                    }
-                }
-            }
-        }
-        
-        // Clear draft
-        function clearDraft() {
-            if (currentTaskId) {
-                localStorage.removeItem(`task_draft_${currentTaskId}`);
-            }
-        }
-        
-        // Show status notification
-        function showStatusNotification(submission) {
-            let message = '';
-            let type = 'info';
-            
-            switch(submission.status) {
-                case 'approved':
-                    message = `Tugas "${submission.taskTitle}" DISETUJUI! +${submission.taskGeoReward} GEO`;
-                    type = 'success';
-                    break;
-                case 'rejected':
-                    message = `Tugas "${submission.taskTitle}" DITOLAK. ${submission.adminNotes || ''}`;
-                    type = 'error';
-                    break;
-            }
-            
-            if (message) {
-                showToast(message, type);
-            }
-        }
-        
-        // Show toast notification
-        function showToast(message, type = 'info') {
-            const toast = document.createElement('div');
-            toast.className = `toast toast-${type}`;
-            
-            let icon = '';
-            switch(type) {
-                case 'success':
-                    icon = 'check-circle';
-                    break;
-                case 'error':
-                    icon = 'exclamation-circle';
-                    break;
-                default:
-                    icon = 'info-circle';
-            }
-            
-            toast.innerHTML = `
-                <i class="fas fa-${icon} toast-icon"></i>
-                <span>${message}</span>
-            `;
-            
-            toastContainer.appendChild(toast);
-            
-            // Auto remove after 5 seconds
-            setTimeout(() => {
-                toast.remove();
-            }, 5000);
-        }
-        
-        // Show connection error
-        function showConnectionError() {
-            skeletonLoading.style.display = 'none';
-            connectionErrorModal.style.display = 'flex';
-        }
-        
-        // Utility functions
-        function debounce(func, wait) {
-            let timeout;
-            return function executedFunction(...args) {
-                const later = () => {
-                    clearTimeout(timeout);
-                    func(...args);
-                };
-                clearTimeout(timeout);
-                timeout = setTimeout(later, wait);
-            };
+        function hideSuccess() {
+            submitSuccess.style.display = 'none';
         }
     </script>
 </body>
