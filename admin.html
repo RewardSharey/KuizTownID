@@ -1,0 +1,1298 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - KuizTown</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f5f7fa;
+            color: #333;
+            min-height: 100vh;
+        }
+        
+        .admin-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo-icon {
+            font-size: 24px;
+            background: white;
+            color: #667eea;
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .logo-text {
+            font-weight: 700;
+            font-size: 18px;
+        }
+        
+        .admin-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .admin-avatar {
+            width: 36px;
+            height: 36px;
+            background: white;
+            color: #667eea;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+        
+        .logout-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .tabs-container {
+            background: white;
+            border-bottom: 1px solid #e0e0e0;
+            overflow-x: auto;
+            padding: 0 1rem;
+        }
+        
+        .tabs {
+            display: inline-flex;
+            min-width: min-content;
+        }
+        
+        .tab {
+            padding: 1rem 1.5rem;
+            border: none;
+            background: none;
+            color: #666;
+            cursor: pointer;
+            font-weight: 500;
+            white-space: nowrap;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .tab:hover {
+            color: #667eea;
+        }
+        
+        .tab.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+            font-weight: 600;
+        }
+        
+        .content-area {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 1rem;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .card-title {
+            font-size: 1.1rem;
+            color: #333;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        
+        .stat-icon {
+            font-size: 24px;
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #333;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+        
+        .data-table th {
+            background: #f8f9fa;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: #333;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        .data-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .data-table tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+        
+        .badge-success {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .badge-warning {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .badge-danger {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        .btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            min-height: 32px;
+        }
+        
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+        
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+        
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+        
+        .btn-warning {
+            background: #ffc107;
+            color: #333;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 10px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-title {
+            font-size: 1.2rem;
+            color: #333;
+        }
+        
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+        
+        .modal-body {
+            padding: 1.5rem;
+        }
+        
+        .modal-footer {
+            padding: 1.5rem;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        @media (max-width: 768px) {
+            .tab {
+                padding: 0.75rem 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="admin-header">
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-shapes"></i>
+                </div>
+                <div class="logo-text">KuizTown Admin</div>
+            </div>
+            <div class="admin-info">
+                <div class="admin-avatar" id="adminAvatar">A</div>
+                <span id="adminName">Admin</span>
+                <button class="logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="tabs-container">
+        <div class="tabs">
+            <button class="tab active" data-tab="dashboard">
+                <i class="fas fa-tachometer-alt"></i> Dashboard
+            </button>
+            <button class="tab" data-tab="users">
+                <i class="fas fa-users"></i> Users
+            </button>
+            <button class="tab" data-tab="withdraw">
+                <i class="fas fa-wallet"></i> Withdraw
+            </button>
+            <button class="tab" data-tab="submissions">
+                <i class="fas fa-tasks"></i> Submissions
+            </button>
+            <button class="tab" data-tab="tasks">
+                <i class="fas fa-plus-circle"></i> Create Task
+            </button>
+            <button class="tab" data-tab="settings">
+                <i class="fas fa-cog"></i> Settings
+            </button>
+        </div>
+    </div>
+
+    <div class="content-area">
+        <!-- Dashboard Tab -->
+        <div id="dashboardTab" class="card" style="display: block;">
+            <h2 class="card-title"><i class="fas fa-tachometer-alt"></i> Dashboard Overview</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-users"></i></div>
+                    <div class="stat-value" id="totalUsers">0</div>
+                    <div class="stat-label">Total Users</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-wallet"></i></div>
+                    <div class="stat-value" id="totalWithdraw">0</div>
+                    <div class="stat-label">Pending Withdraw</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-tasks"></i></div>
+                    <div class="stat-value" id="totalSubmissions">0</div>
+                    <div class="stat-label">Pending Submissions</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-coins"></i></div>
+                    <div class="stat-value" id="totalGeo">0</div>
+                    <div class="stat-label">Total GEO</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Users Tab -->
+        <div id="usersTab" class="card" style="display: none;">
+            <h2 class="card-title"><i class="fas fa-users"></i> User Management</h2>
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>GEO</th>
+                            <th>LIFE</th>
+                            <th>Status</th>
+                            <th>Referral Code</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Withdraw Tab -->
+        <div id="withdrawTab" class="card" style="display: none;">
+            <h2 class="card-title"><i class="fas fa-wallet"></i> Withdraw Management</h2>
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Amount</th>
+                            <th>Method</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="withdrawBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Submissions Tab -->
+        <div id="submissionsTab" class="card" style="display: none;">
+            <h2 class="card-title"><i class="fas fa-tasks"></i> Task Submissions</h2>
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Task ID</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="submissionsBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Create Task Tab -->
+        <div id="tasksTab" class="card" style="display: none;">
+            <h2 class="card-title"><i class="fas fa-plus-circle"></i> Create New Task</h2>
+            <form id="taskForm">
+                <div class="form-group">
+                    <label class="form-label">Title</label>
+                    <input type="text" class="form-control" id="taskTitle" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-control" id="taskDesc" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Instructions</label>
+                    <textarea class="form-control" id="taskInstructions" rows="5" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Link</label>
+                    <input type="url" class="form-control" id="taskLink" required>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="form-group">
+                        <label class="form-label">GEO Reward</label>
+                        <input type="number" class="form-control" id="taskGeo" step="0.1" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">LIFE Reward</label>
+                        <input type="number" class="form-control" id="taskLife" min="0">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 12px;">
+                    <i class="fas fa-save"></i> Create Task
+                </button>
+            </form>
+        </div>
+
+        <!-- Settings Tab -->
+        <div id="settingsTab" class="card" style="display: none;">
+            <h2 class="card-title"><i class="fas fa-cog"></i> Maintenance Settings</h2>
+            <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <h3 style="margin-bottom: 5px;">Maintenance Mode</h3>
+                        <p style="color: #666; font-size: 0.9rem;">Enable to redirect all users to maintenance page</p>
+                    </div>
+                    <label style="position: relative; display: inline-block; width: 50px; height: 26px;">
+                        <input type="checkbox" id="maintenanceToggle" style="opacity: 0; width: 0; height: 0;">
+                        <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background: #ccc; transition: .4s; border-radius: 34px;">
+                            <span style="position: absolute; content: ''; height: 18px; width: 18px; left: 4px; bottom: 4px; background: white; transition: .4s; border-radius: 50%;"></span>
+                        </span>
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Maintenance Message</label>
+                <textarea class="form-control" id="maintenanceMsg" rows="3" placeholder="Optional message"></textarea>
+            </div>
+            <button class="btn btn-primary" onclick="saveSettings()" style="width: 100%; padding: 12px;">
+                <i class="fas fa-save"></i> Save Settings
+            </button>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div id="userModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">User Details</h3>
+                <button class="modal-close" onclick="closeModal('userModal')">&times;</button>
+            </div>
+            <div class="modal-body" id="userModalContent"></div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" onclick="closeModal('userModal')">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="withdrawModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Withdraw Details</h3>
+                <button class="modal-close" onclick="closeModal('withdrawModal')">&times;</button>
+            </div>
+            <div class="modal-body" id="withdrawModalContent"></div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" onclick="closeModal('withdrawModal')">Close</button>
+                <button class="btn btn-danger" onclick="rejectWithdraw()">Reject</button>
+                <button class="btn btn-success" onclick="approveWithdraw()">Approve</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="submissionModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Submission Details</h3>
+                <button class="modal-close" onclick="closeModal('submissionModal')">&times;</button>
+            </div>
+            <div class="modal-body" id="submissionModalContent"></div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" onclick="closeModal('submissionModal')">Close</button>
+                <button class="btn btn-danger" onclick="rejectSubmission()">Reject</button>
+                <button class="btn btn-success" onclick="approveSubmission()">Approve</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
+        import { 
+            getAuth, 
+            onAuthStateChanged, 
+            signOut 
+        } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
+        import { 
+            getFirestore,
+            collection,
+            getDocs,
+            getDoc,
+            doc,
+            query,
+            where,
+            addDoc,
+            updateDoc,
+            setDoc,
+            serverTimestamp,
+            orderBy
+        } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyB9DCc6rCmeXl0O3CCLYe6zUmfByfRz428",
+            authDomain: "kuiztown.firebaseapp.com",
+            projectId: "kuiztown",
+            storageBucket: "kuiztown.firebasestorage.app",
+            messagingSenderId: "334081803913",
+            appId: "1:334081803913:web:84899b42961e12f538a858"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        let currentAdmin = null;
+        let selectedUserId = null;
+        let selectedWithdrawId = null;
+        let selectedSubmissionId = null;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAdminAccess();
+            setupTabs();
+            setupForms();
+        });
+
+        async function checkAdminAccess() {
+            onAuthStateChanged(auth, async (user) => {
+                if (!user) {
+                    window.location.href = 'login.html';
+                    return;
+                }
+
+                try {
+                    const userDoc = await getDoc(doc(db, "users", user.uid));
+                    if (userDoc.exists()) {
+                        const userData = userDoc.data();
+                        if (userData.role !== 'admin') {
+                            window.location.href = 'dashboard.html';
+                            return;
+                        }
+                        
+                        currentAdmin = userData;
+                        setupAdminUI();
+                        loadDashboard();
+                    } else {
+                        window.location.href = 'login.html';
+                    }
+                } catch (error) {
+                    console.error("Auth error:", error);
+                    window.location.href = 'login.html';
+                }
+            });
+        }
+
+        function setupAdminUI() {
+            document.getElementById('adminName').textContent = currentAdmin.username || 'Admin';
+            document.getElementById('adminAvatar').textContent = (currentAdmin.username || 'A').charAt(0).toUpperCase();
+        }
+
+        function setupTabs() {
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const tabId = tab.getAttribute('data-tab');
+                    
+                    // Update active tab
+                    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    
+                    // Show selected content
+                    const tabs = ['dashboard', 'users', 'withdraw', 'submissions', 'tasks', 'settings'];
+                    tabs.forEach(t => {
+                        document.getElementById(t + 'Tab').style.display = 'none';
+                    });
+                    document.getElementById(tabId + 'Tab').style.display = 'block';
+                    
+                    // Load data
+                    switch(tabId) {
+                        case 'dashboard': loadDashboard(); break;
+                        case 'users': loadUsers(); break;
+                        case 'withdraw': loadWithdrawals(); break;
+                        case 'submissions': loadSubmissions(); break;
+                        case 'settings': loadSettings(); break;
+                    }
+                });
+            });
+        }
+
+        function setupForms() {
+            document.getElementById('taskForm').addEventListener('submit', createTask);
+        }
+
+        async function loadDashboard() {
+            try {
+                // Total Users
+                const usersSnapshot = await getDocs(collection(db, "users"));
+                document.getElementById('totalUsers').textContent = usersSnapshot.size;
+                
+                // Total GEO
+                let totalGeo = 0;
+                usersSnapshot.forEach(doc => {
+                    const data = doc.data();
+                    totalGeo += parseFloat(data.geoBalance || 0);
+                });
+                document.getElementById('totalGeo').textContent = totalGeo.toFixed(1);
+                
+                // Pending Withdraw (menggunakan collection "withdrawals" sesuai rules)
+                const withdrawQuery = query(
+                    collection(db, "withdrawals"),
+                    where("status", "==", "PENDING")
+                );
+                const withdrawSnapshot = await getDocs(withdrawQuery);
+                document.getElementById('totalWithdraw').textContent = withdrawSnapshot.size;
+                
+                // Pending Submissions (menggunakan collection "taskSubmissions" sesuai rules)
+                const submissionsQuery = query(
+                    collection(db, "taskSubmissions"),
+                    where("status", "==", "pending")
+                );
+                const submissionsSnapshot = await getDocs(submissionsQuery);
+                document.getElementById('totalSubmissions').textContent = submissionsSnapshot.size;
+                
+            } catch (error) {
+                console.error("Dashboard error:", error);
+            }
+        }
+
+        async function loadUsers() {
+            try {
+                const usersSnapshot = await getDocs(query(collection(db, "users"), orderBy("createdAt", "desc")));
+                const tbody = document.getElementById('usersBody');
+                tbody.innerHTML = '';
+                
+                usersSnapshot.forEach(userDoc => {
+                    const user = userDoc.data();
+                    const row = document.createElement('tr');
+                    
+                    row.innerHTML = `
+                        <td>${user.username || '-'}</td>
+                        <td>${user.email || '-'}</td>
+                        <td>${parseFloat(user.geoBalance || 0).toFixed(1)}</td>
+                        <td>${user.lifeBalance || 0}</td>
+                        <td><span class="badge ${user.status === 'banned' ? 'badge-danger' : 'badge-success'}">
+                            ${user.status || 'active'}
+                        </span></td>
+                        <td>${user.referralCode || '-'}</td>
+                        <td>
+                            <div class="btn-group">
+                                <button class="btn btn-primary" onclick="viewUser('${userDoc.id}')">
+                                    <i class="fas fa-eye"></i> View
+                                </button>
+                                <button class="btn btn-warning" onclick="editUserBalance('${userDoc.id}')">
+                                    <i class="fas fa-edit"></i> Edit
+                                </button>
+                                <button class="btn ${user.status === 'banned' ? 'btn-success' : 'btn-danger'}" 
+                                        onclick="toggleBanUser('${userDoc.id}', '${user.status || 'active'}')">
+                                    <i class="fas ${user.status === 'banned' ? 'fa-check' : 'fa-ban'}"></i>
+                                    ${user.status === 'banned' ? 'Unban' : 'Ban'}
+                                </button>
+                                <button class="btn btn-primary" onclick="resetDevice('${userDoc.id}')">
+                                    <i class="fas fa-mobile"></i> Reset Device
+                                </button>
+                            </div>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            } catch (error) {
+                console.error("Load users error:", error);
+            }
+        }
+
+        async function loadWithdrawals() {
+            try {
+                const withdrawQuery = query(
+                    collection(db, "withdrawals"),
+                    where("status", "==", "PENDING"),
+                    orderBy("createdAt", "desc")
+                );
+                
+                const snapshot = await getDocs(withdrawQuery);
+                const tbody = document.getElementById('withdrawBody');
+                tbody.innerHTML = '';
+                
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    const row = document.createElement('tr');
+                    
+                    row.innerHTML = `
+                        <td>${data.userEmail || 'Unknown'}</td>
+                        <td>${parseFloat(data.amount || 0).toFixed(1)} GEO</td>
+                        <td>${data.method || 'Unknown'}</td>
+                        <td>${data.createdAt ? new Date(data.createdAt.toDate()).toLocaleDateString('id-ID') : '-'}</td>
+                        <td><span class="badge badge-warning">PENDING</span></td>
+                        <td>
+                            <button class="btn btn-primary" onclick="viewWithdraw('${doc.id}')">
+                                <i class="fas fa-eye"></i> Review
+                            </button>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            } catch (error) {
+                console.error("Load withdrawals error:", error);
+            }
+        }
+
+        async function loadSubmissions() {
+            try {
+                const submissionsQuery = query(
+                    collection(db, "taskSubmissions"),
+                    where("status", "==", "pending"),
+                    orderBy("submittedAt", "desc")
+                );
+                
+                const snapshot = await getDocs(submissionsQuery);
+                const tbody = document.getElementById('submissionsBody');
+                tbody.innerHTML = '';
+                
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    const row = document.createElement('tr');
+                    
+                    row.innerHTML = `
+                        <td>${data.userEmail || 'Unknown'}</td>
+                        <td>${data.taskId || 'Unknown'}</td>
+                        <td>${data.submittedAt ? new Date(data.submittedAt.toDate()).toLocaleDateString('id-ID') : '-'}</td>
+                        <td><span class="badge badge-warning">pending</span></td>
+                        <td>
+                            <button class="btn btn-primary" onclick="viewSubmission('${doc.id}')">
+                                <i class="fas fa-eye"></i> Review
+                            </button>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            } catch (error) {
+                console.error("Load submissions error:", error);
+            }
+        }
+
+        async function viewUser(userId) {
+            selectedUserId = userId;
+            try {
+                const userDoc = await getDoc(doc(db, "users", userId));
+                if (userDoc.exists()) {
+                    const user = userDoc.data();
+                    
+                    let content = `
+                        <h4>User Information</h4>
+                        <p><strong>Username:</strong> ${user.username || '-'}</p>
+                        <p><strong>Email:</strong> ${user.email || '-'}</p>
+                        <p><strong>UID:</strong> ${userId}</p>
+                        <p><strong>Status:</strong> ${user.status || 'active'}</p>
+                        <p><strong>Role:</strong> ${user.role || 'user'}</p>
+                        <p><strong>Created:</strong> ${user.createdAt ? new Date(user.createdAt.toDate()).toLocaleString('id-ID') : '-'}</p>
+                        <p><strong>Last Login:</strong> ${user.lastLogin ? new Date(user.lastLogin.toDate()).toLocaleString('id-ID') : '-'}</p>
+                        
+                        <h4 style="margin-top: 20px;">Balance</h4>
+                        <p><strong>GEO:</strong> ${parseFloat(user.geoBalance || 0).toFixed(1)}</p>
+                        <p><strong>LIFE:</strong> ${user.lifeBalance || 0}</p>
+                        
+                        <h4 style="margin-top: 20px;">Referral</h4>
+                        <p><strong>Code:</strong> ${user.referralCode || '-'}</p>
+                        <p><strong>Referred By:</strong> ${user.referredBy || 'None'}</p>
+                        
+                        <h4 style="margin-top: 20px;">Device</h4>
+                        <p><strong>Device ID:</strong> ${user.device_id ? 'Set' : 'Not set'}</p>
+                    `;
+                    
+                    document.getElementById('userModalContent').innerHTML = content;
+                    document.getElementById('userModal').style.display = 'flex';
+                }
+            } catch (error) {
+                console.error("View user error:", error);
+            }
+        }
+
+        async function editUserBalance(userId) {
+            const userDoc = await getDoc(doc(db, "users", userId));
+            if (!userDoc.exists()) return;
+            
+            const user = userDoc.data();
+            const newGeo = prompt(`Edit GEO balance for ${user.username || 'user'}:`, user.geoBalance || 0);
+            const newLife = prompt(`Edit LIFE balance for ${user.username || 'user'} (0-10):`, user.lifeBalance || 0);
+            
+            if (newGeo !== null && newLife !== null) {
+                try {
+                    await updateDoc(doc(db, "users", userId), {
+                        geoBalance: parseFloat(newGeo) || 0,
+                        lifeBalance: Math.min(10, Math.max(0, parseInt(newLife) || 0))
+                    });
+                    alert('Balance updated!');
+                    loadUsers();
+                } catch (error) {
+                    console.error("Edit balance error:", error);
+                    alert('Failed to update balance');
+                }
+            }
+        }
+
+        async function toggleBanUser(userId, currentStatus) {
+            if (!confirm(`Are you sure you want to ${currentStatus === 'banned' ? 'unban' : 'ban'} this user?`)) return;
+            
+            try {
+                const newStatus = currentStatus === 'banned' ? 'active' : 'banned';
+                await updateDoc(doc(db, "users", userId), {
+                    status: newStatus
+                });
+                alert(`User ${newStatus === 'banned' ? 'banned' : 'unbanned'} successfully!`);
+                loadUsers();
+            } catch (error) {
+                console.error("Toggle ban error:", error);
+                alert('Failed to update user status');
+            }
+        }
+
+        async function resetDevice(userId) {
+            if (!confirm('Reset device ID? This will force user to login again.')) return;
+            
+            try {
+                await updateDoc(doc(db, "users", userId), {
+                    device_id: null
+                });
+                alert('Device ID reset!');
+                loadUsers();
+            } catch (error) {
+                console.error("Reset device error:", error);
+                alert('Failed to reset device');
+            }
+        }
+
+        async function viewWithdraw(withdrawId) {
+            selectedWithdrawId = withdrawId;
+            try {
+                const withdrawDoc = await getDoc(doc(db, "withdrawals", withdrawId));
+                if (withdrawDoc.exists()) {
+                    const data = withdrawDoc.data();
+                    
+                    let content = `
+                        <h4>Withdraw Request</h4>
+                        <p><strong>User:</strong> ${data.userEmail || 'Unknown'}</p>
+                        <p><strong>Amount:</strong> ${parseFloat(data.amount || 0).toFixed(1)} GEO</p>
+                        <p><strong>IDR Amount:</strong> ${data.idrAmount ? 'Rp ' + data.idrAmount.toLocaleString('id-ID') : 'N/A'}</p>
+                        <p><strong>Method:</strong> ${data.method || 'Unknown'}</p>
+                        <p><strong>Account:</strong> ${data.accountName || 'N/A'} - ${data.accountNumber || 'N/A'}</p>
+                        <p><strong>Date:</strong> ${data.createdAt ? new Date(data.createdAt.toDate()).toLocaleString('id-ID') : '-'}</p>
+                        
+                        <h4 style="margin-top: 20px;">Referral Info</h4>
+                        <p><strong>Referrals Used:</strong> ${data.referralsUsedCount || 0}</p>
+                        
+                        <h4 style="margin-top: 20px;">User Notes</h4>
+                        <p style="background: #f8f9fa; padding: 10px; border-radius: 5px;">${data.adminNote || 'No notes'}</p>
+                    `;
+                    
+                    document.getElementById('withdrawModalContent').innerHTML = content;
+                    document.getElementById('withdrawModal').style.display = 'flex';
+                }
+            } catch (error) {
+                console.error("View withdraw error:", error);
+            }
+        }
+
+        async function approveWithdraw() {
+            if (!confirm('Approve this withdrawal?')) return;
+            
+            try {
+                const withdrawDoc = await getDoc(doc(db, "withdrawals", selectedWithdrawId));
+                if (!withdrawDoc.exists()) return;
+                
+                const data = withdrawDoc.data();
+                
+                // Update withdrawal status
+                await updateDoc(doc(db, "withdrawals", selectedWithdrawId), {
+                    status: "APPROVED",
+                    reviewedAt: serverTimestamp(),
+                    reviewedBy: currentAdmin.username || "Admin"
+                });
+                
+                // Deduct GEO from user
+                const userRef = doc(db, "users", data.userId);
+                const userDoc = await getDoc(userRef);
+                if (userDoc.exists()) {
+                    const user = userDoc.data();
+                    const newBalance = parseFloat(user.geoBalance || 0) - parseFloat(data.amount || 0);
+                    
+                    await updateDoc(userRef, {
+                        geoBalance: newBalance >= 0 ? newBalance : 0
+                    });
+                    
+                    // Add to history
+                    await addDoc(collection(db, "history"), {
+                        uid: data.userId,
+                        type: "withdraw_success",
+                        amount: data.amount,
+                        geo: -data.amount,
+                        timestamp: serverTimestamp(),
+                        note: `Withdraw approved by admin`
+                    });
+                }
+                
+                alert('Withdrawal approved!');
+                closeModal('withdrawModal');
+                loadDashboard();
+                loadWithdrawals();
+            } catch (error) {
+                console.error("Approve withdraw error:", error);
+                alert('Failed to approve withdrawal');
+            }
+        }
+
+        async function rejectWithdraw() {
+            const note = prompt('Reason for rejection:');
+            if (note === null) return;
+            
+            try {
+                await updateDoc(doc(db, "withdrawals", selectedWithdrawId), {
+                    status: "REJECTED",
+                    note: note,
+                    reviewedAt: serverTimestamp(),
+                    reviewedBy: currentAdmin.username || "Admin"
+                });
+                
+                alert('Withdrawal rejected!');
+                closeModal('withdrawModal');
+                loadDashboard();
+                loadWithdrawals();
+            } catch (error) {
+                console.error("Reject withdraw error:", error);
+                alert('Failed to reject withdrawal');
+            }
+        }
+
+        async function viewSubmission(submissionId) {
+            selectedSubmissionId = submissionId;
+            try {
+                const submissionDoc = await getDoc(doc(db, "taskSubmissions", submissionId));
+                if (submissionDoc.exists()) {
+                    const data = submissionDoc.data();
+                    
+                    // Get task info
+                    let taskTitle = "Unknown Task";
+                    let taskRewards = "No rewards";
+                    
+                    if (data.taskId) {
+                        const taskDoc = await getDoc(doc(db, "tasks", data.taskId));
+                        if (taskDoc.exists()) {
+                            const task = taskDoc.data();
+                            taskTitle = task.title || "Unknown";
+                            
+                            let rewards = [];
+                            if (task.geoReward > 0) rewards.push(`${task.geoReward} GEO`);
+                            if (task.lifeReward > 0) rewards.push(`${task.lifeReward} LIFE`);
+                            taskRewards = rewards.join(" + ");
+                        }
+                    }
+                    
+                    let content = `
+                        <h4>Submission Details</h4>
+                        <p><strong>User:</strong> ${data.userEmail || 'Unknown'}</p>
+                        <p><strong>Task:</strong> ${taskTitle}</p>
+                        <p><strong>Rewards:</strong> ${taskRewards}</p>
+                        <p><strong>Submitted:</strong> ${data.submittedAt ? new Date(data.submittedAt.toDate()).toLocaleString('id-ID') : '-'}</p>
+                        
+                        <h4 style="margin-top: 20px;">Proof Image</h4>
+                    `;
+                    
+                    if (data.proofUrl) {
+                        content += `<img src="${data.proofUrl}" alt="Proof" style="max-width: 100%; border-radius: 5px; margin-bottom: 10px;">
+                                   <a href="${data.proofUrl}" target="_blank" style="display: inline-block; padding: 5px 10px; background: #667eea; color: white; text-decoration: none; border-radius: 4px;">
+                                       <i class="fas fa-external-link-alt"></i> Open Full Size
+                                   </a>`;
+                    } else {
+                        content += `<p>No proof image provided</p>`;
+                    }
+                    
+                    content += `
+                        <h4 style="margin-top: 20px;">User Notes</h4>
+                        <p style="background: #f8f9fa; padding: 10px; border-radius: 5px;">${data.notes || 'No notes'}</p>
+                    `;
+                    
+                    document.getElementById('submissionModalContent').innerHTML = content;
+                    document.getElementById('submissionModal').style.display = 'flex';
+                }
+            } catch (error) {
+                console.error("View submission error:", error);
+            }
+        }
+
+        async function approveSubmission() {
+            if (!confirm('Approve this submission?')) return;
+            
+            try {
+                const submissionDoc = await getDoc(doc(db, "taskSubmissions", selectedSubmissionId));
+                if (!submissionDoc.exists()) return;
+                
+                const data = submissionDoc.data();
+                
+                // Get task rewards
+                let geoReward = 0;
+                let lifeReward = 0;
+                
+                if (data.taskId) {
+                    const taskDoc = await getDoc(doc(db, "tasks", data.taskId));
+                    if (taskDoc.exists()) {
+                        const task = taskDoc.data();
+                        geoReward = task.geoReward || 0;
+                        lifeReward = task.lifeReward || 0;
+                    }
+                }
+                
+                // Update submission
+                await updateDoc(doc(db, "taskSubmissions", selectedSubmissionId), {
+                    status: "approved",
+                    reviewedAt: serverTimestamp(),
+                    reviewedBy: currentAdmin.username || "Admin"
+                });
+                
+                // Add rewards to user
+                const userRef = doc(db, "users", data.userId);
+                const userDoc = await getDoc(userRef);
+                if (userDoc.exists()) {
+                    const user = userDoc.data();
+                    const newGeo = parseFloat(user.geoBalance || 0) + parseFloat(geoReward);
+                    const newLife = parseInt(user.lifeBalance || 0) + parseInt(lifeReward);
+                    
+                    await updateDoc(userRef, {
+                        geoBalance: newGeo,
+                        lifeBalance: newLife
+                    });
+                    
+                    // Add to history
+                    await addDoc(collection(db, "history"), {
+                        uid: data.userId,
+                        type: "task_reward",
+                        geo: geoReward,
+                        life: lifeReward,
+                        timestamp: serverTimestamp(),
+                        note: `Task submission approved`
+                    });
+                }
+                
+                alert('Submission approved! Rewards added.');
+                closeModal('submissionModal');
+                loadDashboard();
+                loadSubmissions();
+            } catch (error) {
+                console.error("Approve submission error:", error);
+                alert('Failed to approve submission');
+            }
+        }
+
+        async function rejectSubmission() {
+            const note = prompt('Reason for rejection:');
+            if (note === null) return;
+            
+            try {
+                await updateDoc(doc(db, "taskSubmissions", selectedSubmissionId), {
+                    status: "rejected",
+                    note: note,
+                    reviewedAt: serverTimestamp(),
+                    reviewedBy: currentAdmin.username || "Admin"
+                });
+                
+                alert('Submission rejected!');
+                closeModal('submissionModal');
+                loadDashboard();
+                loadSubmissions();
+            } catch (error) {
+                console.error("Reject submission error:", error);
+                alert('Failed to reject submission');
+            }
+        }
+
+        async function createTask(e) {
+            e.preventDefault();
+            
+            const title = document.getElementById('taskTitle').value.trim();
+            const description = document.getElementById('taskDesc').value.trim();
+            const instructions = document.getElementById('taskInstructions').value.trim();
+            const link = document.getElementById('taskLink').value.trim();
+            const geoReward = parseFloat(document.getElementById('taskGeo').value) || 0;
+            const lifeReward = parseInt(document.getElementById('taskLife').value) || 0;
+            
+            if (!title || !description || !instructions || !link) {
+                alert('Please fill all required fields!');
+                return;
+            }
+            
+            if (geoReward === 0 && lifeReward === 0) {
+                alert('Please set at least one reward!');
+                return;
+            }
+            
+            try {
+                await addDoc(collection(db, "tasks"), {
+                    title: title,
+                    description: description,
+                    instruction: instructions,
+                    link: link,
+                    geoReward: geoReward,
+                    lifeReward: lifeReward,
+                    status: "active",
+                    createdAt: serverTimestamp(),
+                    currentSlots: 0
+                });
+                
+                document.getElementById('taskForm').reset();
+                alert('Task created successfully!');
+                
+                // Switch to submissions tab
+                document.querySelector('[data-tab="submissions"]').click();
+            } catch (error) {
+                console.error("Create task error:", error);
+                alert('Failed to create task');
+            }
+        }
+
+        async function loadSettings() {
+            try {
+                const settingsDoc = await getDoc(doc(db, "admin_config", "maintenance"));
+                if (settingsDoc.exists()) {
+                    const data = settingsDoc.data();
+                    document.getElementById('maintenanceToggle').checked = data.maintenance || false;
+                    document.getElementById('maintenanceMsg').value = data.message || '';
+                }
+            } catch (error) {
+                console.error("Load settings error:", error);
+            }
+        }
+
+        async function saveSettings() {
+            try {
+                const maintenance = document.getElementById('maintenanceToggle').checked;
+                const message = document.getElementById('maintenanceMsg').value.trim();
+                
+                await setDoc(doc(db, "admin_config", "maintenance"), {
+                    maintenance: maintenance,
+                    message: message,
+                    updatedAt: serverTimestamp(),
+                    updatedBy: currentAdmin.username || "Admin"
+                });
+                
+                alert('Settings saved!');
+            } catch (error) {
+                console.error("Save settings error:", error);
+                alert('Failed to save settings');
+            }
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        async function logout() {
+            if (confirm('Logout from admin panel?')) {
+                try {
+                    await signOut(auth);
+                    window.location.href = 'login.html';
+                } catch (error) {
+                    console.error("Logout error:", error);
+                }
+            }
+        }
+
+        // Make functions globally available
+        window.viewUser = viewUser;
+        window.editUserBalance = editUserBalance;
+        window.toggleBanUser = toggleBanUser;
+        window.resetDevice = resetDevice;
+        window.viewWithdraw = viewWithdraw;
+        window.approveWithdraw = approveWithdraw;
+        window.rejectWithdraw = rejectWithdraw;
+        window.viewSubmission = viewSubmission;
+        window.approveSubmission = approveSubmission;
+        window.rejectSubmission = rejectSubmission;
+        window.closeModal = closeModal;
+        window.logout = logout;
+        window.saveSettings = saveSettings;
+
+    </script>
+</body>
+</html>

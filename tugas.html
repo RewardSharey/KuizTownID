@@ -53,7 +53,7 @@
         .container {
             max-width: 100%;
             margin: 0 auto;
-            padding: 0 15px 80px; /* Padding bottom untuk nav bar */
+            padding: 0 15px 80px;
         }
         
         /* Header */
@@ -108,23 +108,270 @@
             justify-content: center;
         }
         
-        /* Tab Navigation */
-        .tab-nav {
+        /* Task Panel Header */
+        .task-panel-header {
+            background: linear-gradient(135deg, rgba(135, 206, 235, 0.9), rgba(90, 200, 250, 0.9));
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            color: white;
+        }
+        
+        .task-panel-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .task-stats-container {
+            display: flex;
+            justify-content: space-around;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .task-stat {
+            text-align: center;
+            flex: 1;
+            min-width: 100px;
+        }
+        
+        .stat-icon {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+        
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+        
+        /* Filter Tabs */
+        .filter-tabs {
             display: flex;
             background: rgba(255, 255, 255, 0.95);
             border-radius: 15px;
             overflow: hidden;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            flex-wrap: wrap;
         }
         
-        .tab-btn {
+        .filter-tab {
             flex: 1;
-            padding: 15px;
+            padding: 12px 10px;
             border: none;
             background: transparent;
             font-weight: 600;
+            font-size: 0.85rem;
             color: #666;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            min-width: 80px;
+        }
+        
+        .filter-tab.active {
+            background: linear-gradient(135deg, #87CEEB, #5F729F);
+            color: white;
+        }
+        
+        .filter-tab:hover:not(.active) {
+            background: rgba(135, 206, 235, 0.1);
+        }
+        
+        /* Search Input */
+        .search-container {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 14px 45px 14px 15px;
+            border: none;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.95);
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .search-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(135, 206, 235, 0.3);
+        }
+        
+        .search-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #87CEEB;
+            font-size: 18px;
+        }
+        
+        /* Task Card */
+        .task-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .task-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .task-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+        
+        .task-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+            flex: 1;
+        }
+        
+        .task-difficulty {
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-left: 10px;
+        }
+        
+        .difficulty-easy {
+            background: rgba(144, 238, 144, 0.2);
+            color: #2e8b57;
+        }
+        
+        .difficulty-medium {
+            background: rgba(255, 215, 0, 0.2);
+            color: #b8860b;
+        }
+        
+        .difficulty-hard {
+            background: rgba(255, 105, 105, 0.2);
+            color: #dc143c;
+        }
+        
+        .task-description {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        
+        .task-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .task-reward {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(144, 238, 144, 0.2);
+            color: #2e8b57;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+        
+        .task-reward.life {
+            background: rgba(255, 192, 203, 0.2);
+            color: #d87093;
+        }
+        
+        .slot-counter {
+            background: rgba(135, 206, 235, 0.2);
+            color: #5F729F;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        .slot-full {
+            background: rgba(255, 105, 105, 0.2);
+            color: #dc143c;
+        }
+        
+        .deadline-badge {
+            background: rgba(255, 215, 0, 0.2);
+            color: #b8860b;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .status-pending {
+            background: rgba(255, 215, 0, 0.2);
+            color: #b8860b;
+        }
+        
+        .status-approved {
+            background: rgba(144, 238, 144, 0.2);
+            color: #2e8b57;
+        }
+        
+        .status-rejected {
+            background: rgba(255, 105, 105, 0.2);
+            color: #dc143c;
+        }
+        
+        .task-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        /* Button Styles */
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
             display: flex;
@@ -133,28 +380,40 @@
             gap: 8px;
         }
         
-        .tab-btn.active {
+        .btn-primary {
             background: linear-gradient(135deg, #87CEEB, #5F729F);
             color: white;
+            flex: 1;
         }
         
-        .tab-btn:hover:not(.active) {
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(135, 206, 235, 0.3);
+        }
+        
+        .btn-secondary {
             background: rgba(135, 206, 235, 0.1);
+            color: #5F729F;
+            border: 1px solid rgba(135, 206, 235, 0.3);
+            flex: 1;
         }
         
-        /* Tab Content */
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.5s ease-out;
+        .btn-secondary:hover {
+            background: rgba(135, 206, 235, 0.2);
         }
         
-        .tab-content.active {
-            display: block;
+        .btn-disabled {
+            background: #e0e0e0;
+            color: #999;
+            cursor: not-allowed;
+            flex: 1;
         }
         
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
         }
         
         /* Skeleton Loading */
@@ -191,13 +450,6 @@
             border-radius: 5px;
         }
         
-        .skeleton-reward {
-            width: 80px;
-            height: 25px;
-            margin: 10px 0;
-            border-radius: 5px;
-        }
-        
         .skeleton-button {
             width: 100%;
             height: 40px;
@@ -205,247 +457,73 @@
             margin-top: 15px;
         }
         
-        /* Card Styles */
-        .card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
             padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.3);
         }
         
-        .card-title {
-            font-size: 1.1rem;
-            color: #444;
-            margin-bottom: 15px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+        .modal-content {
+            background-color: white;
+            border-radius: 15px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            animation: modalFadeIn 0.3s ease-out;
         }
         
-        .card-title i {
-            color: #87CEEB;
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
         }
         
-        /* User Info Card */
-        .user-info-card {
-            background: linear-gradient(135deg, rgba(135, 206, 235, 0.9), rgba(90, 200, 250, 0.9));
-            color: white;
-        }
-        
-        .user-info-card .card-title {
-            color: white;
-        }
-        
-        .user-info-stats {
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
         }
         
-        .user-stat {
-            text-align: center;
-            flex: 1;
-        }
-        
-        .stat-value {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 5px;
-        }
-        
-        .stat-label {
-            font-size: 0.9rem;
-            opacity: 0.9;
-        }
-        
-        /* Task Card */
-        .task-card {
-            border-left: 5px solid #87CEEB;
-            transition: transform 0.3s ease;
-        }
-        
-        .task-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-        }
-        
-        .task-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 10px;
-        }
-        
-        .task-title {
-            font-size: 1.1rem;
+        .modal-title {
+            font-size: 1.3rem;
             font-weight: 600;
             color: #333;
-            margin-bottom: 5px;
         }
         
-        .task-desc {
-            color: #666;
-            font-size: 0.9rem;
-            margin-bottom: 15px;
-            line-height: 1.5;
-        }
-        
-        .task-reward {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            background: rgba(144, 238, 144, 0.2);
-            color: #2e8b57;
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            margin-right: 10px;
-        }
-        
-        .task-reward.life {
-            background: rgba(255, 192, 203, 0.2);
-            color: #d87093;
-        }
-        
-        .task-status {
-            padding: 3px 10px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-        
-        .status-pending {
-            background: rgba(255, 215, 0, 0.2);
-            color: #b8860b;
-        }
-        
-        .status-approved {
-            background: rgba(144, 238, 144, 0.2);
-            color: #2e8b57;
-        }
-        
-        .status-rejected {
-            background: rgba(255, 105, 105, 0.2);
-            color: #dc143c;
-        }
-        
-        .task-actions {
-            margin-top: 15px;
-            display: flex;
-            gap: 10px;
-        }
-        
-        /* Button Styles */
-        .btn {
-            padding: 12px 20px;
+        .modal-close {
+            background: none;
             border: none;
-            border-radius: 10px;
-            font-weight: 600;
+            font-size: 1.5rem;
+            color: #666;
             cursor: pointer;
-            transition: all 0.3s ease;
+            padding: 0;
+            width: 30px;
+            height: 30px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
         }
         
-        .btn-primary {
-            background: linear-gradient(135deg, #87CEEB, #5F729F);
-            color: white;
-            flex: 1;
-        }
-        
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(135, 206, 235, 0.3);
-        }
-        
-        .btn-secondary {
-            background: rgba(135, 206, 235, 0.1);
-            color: #5F729F;
-            border: 1px solid rgba(135, 206, 235, 0.3);
-            flex: 1;
-        }
-        
-        .btn-secondary:hover {
-            background: rgba(135, 206, 235, 0.2);
-        }
-        
-        .btn-completed {
-            background: rgba(144, 238, 144, 0.1);
-            color: #2e8b57;
-            border: 1px solid rgba(144, 238, 144, 0.3);
-            flex: 1;
-            cursor: not-allowed;
-        }
-        
-        .btn-sm {
-            padding: 8px 15px;
-            font-size: 0.9rem;
-        }
-        
-        .btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none !important;
-            box-shadow: none !important;
-        }
-        
-        /* Task Detail Form */
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        .form-label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            color: #444;
-        }
-        
-        .form-control {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            font-family: 'Poppins', sans-serif;
-            font-size: 1rem;
-            transition: border 0.3s ease;
-        }
-        
-        .form-control:focus {
-            outline: none;
-            border-color: #87CEEB;
-            box-shadow: 0 0 0 3px rgba(135, 206, 235, 0.2);
-        }
-        
-        textarea.form-control {
-            min-height: 100px;
-            resize: vertical;
-        }
-        
-        .link-preview {
-            background: rgba(135, 206, 235, 0.1);
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 20px;
-        }
-        
-        .link-preview a {
-            color: #5F729F;
-            font-weight: 500;
-            text-decoration: none;
-            word-break: break-all;
-        }
-        
-        .link-preview a:hover {
-            text-decoration: underline;
+        .modal-body {
+            padding: 20px;
         }
         
         /* Upload Area */
@@ -480,15 +558,175 @@
             font-size: 0.9rem;
         }
         
+        .preview-container {
+            margin-top: 20px;
+            position: relative;
+        }
+        
         .preview-image {
             max-width: 100%;
             max-height: 200px;
             border-radius: 10px;
-            margin-top: 15px;
-            display: none;
+            display: block;
+            margin: 0 auto;
+            cursor: pointer;
         }
         
-        /* Footer Navigation */
+        /* Fullscreen Image Preview */
+        .fullscreen-preview {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 3000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .fullscreen-image {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+        }
+        
+        .close-fullscreen {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Receipt Screen */
+        .receipt-container {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .receipt-icon {
+            font-size: 60px;
+            color: #90EE90;
+            margin-bottom: 20px;
+        }
+        
+        .receipt-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .receipt-info {
+            background: #f9f9f9;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+        }
+        
+        .receipt-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .receipt-label {
+            color: #666;
+            font-weight: 500;
+        }
+        
+        .receipt-value {
+            color: #333;
+            font-weight: 600;
+        }
+        
+        /* Toast Notification */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        
+        .toast {
+            background: white;
+            border-radius: 10px;
+            padding: 15px 20px;
+            margin-bottom: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: slideIn 0.3s ease-out;
+            max-width: 300px;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        .toast-icon {
+            font-size: 20px;
+        }
+        
+        .toast-success {
+            border-left: 4px solid #90EE90;
+        }
+        
+        .toast-error {
+            border-left: 4px solid #ff6b6b;
+        }
+        
+        .toast-info {
+            border-left: 4px solid #87CEEB;
+        }
+        
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
+        .empty-icon {
+            font-size: 60px;
+            color: rgba(135, 206, 235, 0.5);
+            margin-bottom: 20px;
+        }
+        
+        .empty-title {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        .empty-desc {
+            color: #999;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+        
+        /* Footer Navigation - KONSISTENSI WAJIB */
         .nav-footer {
             position: fixed;
             bottom: 0;
@@ -529,129 +767,31 @@
             font-weight: 500;
         }
         
-        /* Separator */
-        .separator {
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
             margin: 20px 0;
         }
         
-        /* Empty State */
-        .empty-state {
-            text-align: center;
-            padding: 40px 20px;
-        }
-        
-        .empty-icon {
-            font-size: 60px;
-            color: rgba(135, 206, 235, 0.5);
-            margin-bottom: 20px;
-        }
-        
-        .empty-title {
-            font-size: 1.2rem;
-            color: #666;
-            margin-bottom: 10px;
-        }
-        
-        .empty-desc {
-            color: #999;
-            max-width: 300px;
-            margin: 0 auto;
-        }
-        
-        /* Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .modal-content {
-            background-color: white;
-            padding: 25px;
-            border-radius: 15px;
-            max-width: 400px;
-            width: 90%;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            animation: modalFadeIn 0.3s ease-out;
-        }
-        
-        @keyframes modalFadeIn {
-            from {
-                opacity: 0;
-                transform: scale(0.9) translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
-        }
-        
-        .modal-icon {
-            font-size: 50px;
-            margin-bottom: 20px;
-        }
-        
-        .success .modal-icon {
-            color: #90EE90;
-        }
-        
-        .error .modal-icon {
-            color: #ff6b6b;
-        }
-        
-        .modal-title {
-            font-size: 1.3rem;
-            margin-bottom: 10px;
-            color: #333;
-        }
-        
-        .modal-message {
-            color: #666;
-            margin-bottom: 25px;
-            line-height: 1.5;
-        }
-        
-        .modal-btn {
-            padding: 12px 30px;
-            background: linear-gradient(135deg, #87CEEB, #5F729F);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            font-weight: 600;
+        .pagination-btn {
+            padding: 8px 15px;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s ease;
         }
         
-        .modal-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(135, 206, 235, 0.4);
+        .pagination-btn.active {
+            background: linear-gradient(135deg, #87CEEB, #5F729F);
+            color: white;
+            border-color: #87CEEB;
         }
         
-        /* Progress Bar */
-        .progress-bar {
-            width: 100%;
-            height: 6px;
-            background: #eee;
-            border-radius: 3px;
-            margin: 10px 0;
-            overflow: hidden;
-        }
-        
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #87CEEB, #5F729F);
-            border-radius: 3px;
-            transition: width 0.3s ease;
+        .pagination-btn:hover:not(.active) {
+            background: #f5f5f5;
         }
         
         /* Responsive */
@@ -660,19 +800,25 @@
                 max-width: 600px;
             }
             
-            .user-info-stats {
+            .task-stats-container {
                 justify-content: space-around;
             }
         }
         
         @media (max-width: 480px) {
-            .task-header {
+            .filter-tab {
+                font-size: 0.8rem;
+                padding: 10px 8px;
+            }
+            
+            .task-card-header {
                 flex-direction: column;
                 align-items: flex-start;
             }
             
-            .task-status {
-                margin-top: 10px;
+            .task-difficulty {
+                margin-left: 0;
+                margin-top: 5px;
             }
             
             .upload-area {
@@ -691,18 +837,57 @@
             </div>
             <div class="notification-icon">
                 <i class="fas fa-bell"></i>
-                <span class="notification-badge" id="taskNotification">0</span>
+                <span class="notification-badge" id="notificationBadge">0</span>
             </div>
         </header>
         
-        <!-- Tab Navigation -->
-        <div class="tab-nav">
-            <button class="tab-btn active" data-tab="tasks">
+        <!-- Task Panel Header -->
+        <div class="task-panel-header">
+            <div class="task-panel-title">
                 <i class="fas fa-tasks"></i> Tugas
+            </div>
+            <div class="task-stats-container">
+                <div class="task-stat">
+                    <div class="stat-icon"><i class="fas fa-check-circle"></i></div>
+                    <div class="stat-value" id="statApproved">0</div>
+                    <div class="stat-label">Approved</div>
+                </div>
+                <div class="task-stat">
+                    <div class="stat-icon"><i class="fas fa-clock"></i></div>
+                    <div class="stat-value" id="statPending">0</div>
+                    <div class="stat-label">Pending</div>
+                </div>
+                <div class="task-stat">
+                    <div class="stat-icon"><i class="fas fa-times-circle"></i></div>
+                    <div class="stat-value" id="statRejected">0</div>
+                    <div class="stat-label">Rejected</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Filter Tabs -->
+        <div class="filter-tabs">
+            <button class="filter-tab active" data-filter="all">
+                <i class="fas fa-layer-group"></i> Semua
             </button>
-            <button class="tab-btn" data-tab="history">
-                <i class="fas fa-history"></i> Riwayat
+            <button class="filter-tab" data-filter="active">
+                <i class="fas fa-bolt"></i> Aktif
             </button>
+            <button class="filter-tab" data-filter="pending">
+                <i class="fas fa-clock"></i> Menunggu
+            </button>
+            <button class="filter-tab" data-filter="approved">
+                <i class="fas fa-check"></i> Disetujui
+            </button>
+            <button class="filter-tab" data-filter="rejected">
+                <i class="fas fa-times"></i> Ditolak
+            </button>
+        </div>
+        
+        <!-- Search Input -->
+        <div class="search-container">
+            <input type="text" class="search-input" id="searchInput" placeholder="Cari tugas...">
+            <i class="fas fa-search search-icon"></i>
         </div>
         
         <!-- Skeleton Loading -->
@@ -711,7 +896,7 @@
                 <div class="skeleton skeleton-title"></div>
                 <div class="skeleton-text"></div>
                 <div class="skeleton-text" style="width: 80%;"></div>
-                <div class="skeleton-reward"></div>
+                <div class="skeleton-text" style="width: 60%;"></div>
                 <div class="skeleton-button"></div>
             </div>
             
@@ -719,7 +904,7 @@
                 <div class="skeleton skeleton-title"></div>
                 <div class="skeleton-text"></div>
                 <div class="skeleton-text" style="width: 80%;"></div>
-                <div class="skeleton-reward"></div>
+                <div class="skeleton-text" style="width: 60%;"></div>
                 <div class="skeleton-button"></div>
             </div>
             
@@ -727,184 +912,131 @@
                 <div class="skeleton skeleton-title"></div>
                 <div class="skeleton-text"></div>
                 <div class="skeleton-text" style="width: 80%;"></div>
-                <div class="skeleton-reward"></div>
+                <div class="skeleton-text" style="width: 60%;"></div>
                 <div class="skeleton-button"></div>
             </div>
         </div>
         
-        <!-- Tab Content: Tugas Aktif -->
-        <div id="tasksTab" class="tab-content active">
-            <!-- User Info Card -->
-            <div class="card user-info-card">
-                <h2 class="card-title">
-                    <i class="fas fa-user-check"></i> Info Anda
-                </h2>
-                <div class="user-info-stats">
-                    <div class="user-stat">
-                        <div class="stat-value" id="currentLife">0</div>
-                        <div class="stat-label">LIFE</div>
-                    </div>
-                    <div class="user-stat">
-                        <div class="stat-value" id="currentGeo">0,0</div>
-                        <div class="stat-label">GEO</div>
-                    </div>
-                </div>
+        <!-- Task List -->
+        <div id="taskList"></div>
+        
+        <!-- Empty State -->
+        <div id="emptyState" class="empty-state" style="display: none;">
+            <div class="empty-icon">
+                <i class="fas fa-clipboard-list"></i>
             </div>
-            
-            <div class="separator"></div>
-            
-            <!-- Welcome Section -->
-            <div class="card">
-                <h2 class="card-title">
-                    <i class="fas fa-hand-sparkles"></i> Selamat Datang di Tugas!
-                </h2>
-                <p style="color: #666; line-height: 1.6;">
-                    Selesaikan tugas dari admin dan dapatkan reward berupa GEO atau LIFE. 
-                    Pastikan untuk mengikuti instruksi dengan benar dan upload bukti yang sesuai.
-                    <br><br>
-                    <strong>Catatan:</strong> Setiap tugas hanya bisa dikerjakan sekali. Jika sudah approved, tidak bisa dikerjakan lagi.
-                </p>
-            </div>
-            
-            <div class="separator"></div>
-            
-            <!-- Active Tasks -->
-            <h2 class="card-title" style="color: white; margin-bottom: 15px;">
-                <i class="fas fa-list-check"></i> Tugas Aktif
-            </h2>
-            <div id="activeTasksList">
-                <!-- Active tasks will be dynamically added here -->
-            </div>
-            
-            <!-- Empty State for Active Tasks -->
-            <div id="noActiveTasks" class="empty-state" style="display: none;">
-                <div class="empty-icon">
-                    <i class="fas fa-clipboard-check"></i>
-                </div>
-                <h3 class="empty-title">Tidak Ada Tugas Aktif</h3>
-                <p class="empty-desc">
-                    Saat ini tidak ada tugas yang tersedia. 
-                    Silakan cek kembali nanti atau hubungi admin.
-                </p>
-            </div>
+            <h3 class="empty-title">Tidak Ada Tugas</h3>
+            <p class="empty-desc">
+                Saat ini tidak ada tugas yang tersedia. 
+                Silakan cek kembali nanti.
+            </p>
         </div>
         
-        <!-- Tab Content: Riwayat Tugas -->
-        <div id="historyTab" class="tab-content">
-            <h2 class="card-title" style="color: white; margin-bottom: 15px;">
-                <i class="fas fa-history"></i> Riwayat Tugas
-            </h2>
-            <div id="taskHistoryList">
-                <!-- Task history will be dynamically added here -->
+        <!-- Pagination -->
+        <div id="pagination" class="pagination" style="display: none;"></div>
+    </div>
+    
+    <!-- Submission Modal -->
+    <div id="submissionModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Submit Tugas</h2>
+                <button class="modal-close" id="closeSubmissionModal">&times;</button>
             </div>
-            
-            <!-- Empty State for History -->
-            <div id="noTaskHistory" class="empty-state" style="display: none;">
-                <div class="empty-icon">
-                    <i class="fas fa-scroll"></i>
+            <div class="modal-body">
+                <div id="submissionForm">
+                    <div class="form-group">
+                        <label class="form-label">Bukti Screenshot</label>
+                        <div class="upload-area" id="uploadArea">
+                            <div class="upload-icon">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                            </div>
+                            <div class="upload-text">
+                                Klik atau seret file gambar ke sini
+                            </div>
+                            <div class="upload-subtext">
+                                Format: JPG, PNG (Maks. 5MB)
+                            </div>
+                            <input type="file" id="proofUpload" accept="image/*" style="display: none;">
+                        </div>
+                        <div class="preview-container">
+                            <img id="proofPreview" class="preview-image" alt="Preview Bukti" style="display: none;">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="taskNotes">
+                            <i class="fas fa-sticky-note"></i> Catatan (Opsional)
+                        </label>
+                        <textarea class="form-control" id="taskNotes" 
+                                  placeholder="Tambahkan catatan untuk admin..." rows="3"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <button id="submitTaskBtn" class="btn btn-primary" disabled>
+                            <i class="fas fa-paper-plane"></i> KIRIM TUGAS
+                        </button>
+                    </div>
                 </div>
-                <h3 class="empty-title">Belum Ada Riwayat</h3>
-                <p class="empty-desc">
-                    Anda belum menyelesaikan tugas apapun. 
-                    Coba selesaikan tugas dari daftar "Tugas Aktif".
-                </p>
+                
+                <div id="receiptScreen" class="receipt-container" style="display: none;">
+                    <div class="receipt-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h2 class="receipt-title">Tugas Terkirim!</h2>
+                    <div class="receipt-info">
+                        <div class="receipt-item">
+                            <span class="receipt-label">Submission ID:</span>
+                            <span class="receipt-value" id="receiptSubmissionId">-</span>
+                        </div>
+                        <div class="receipt-item">
+                            <span class="receipt-label">Task ID:</span>
+                            <span class="receipt-value" id="receiptTaskId">-</span>
+                        </div>
+                        <div class="receipt-item">
+                            <span class="receipt-label">Waktu Submit:</span>
+                            <span class="receipt-value" id="receiptSubmitTime">-</span>
+                        </div>
+                        <div class="receipt-item">
+                            <span class="receipt-label">Status:</span>
+                            <span class="receipt-value status-badge status-pending">
+                                <i class="fas fa-clock"></i> Menunggu Review
+                            </span>
+                        </div>
+                    </div>
+                    <button id="closeReceiptBtn" class="btn btn-primary">
+                        <i class="fas fa-check"></i> TUTUP
+                    </button>
+                </div>
             </div>
         </div>
-        
-        <!-- Tab Content: Detail Tugas -->
-        <div id="taskDetailTab" class="tab-content">
-            <!-- Back Button -->
-            <div style="margin-bottom: 20px;">
-                <button id="backToTasksBtn" class="btn btn-secondary">
-                    <i class="fas fa-arrow-left"></i> Kembali ke Tugas
-                </button>
-            </div>
-            
-            <!-- Task Detail -->
-            <div class="card">
-                <h2 class="card-title" id="detailTaskTitle">
-                    <i class="fas fa-tasks"></i> Loading...
-                </h2>
-                <p id="detailTaskDesc" style="color: #666; line-height: 1.6; margin-bottom: 20px;">
-                    Memuat deskripsi tugas...
+    </div>
+    
+    <!-- Fullscreen Image Preview -->
+    <div id="fullscreenPreview" class="fullscreen-preview">
+        <button class="close-fullscreen">&times;</button>
+        <img id="fullscreenImage" class="fullscreen-image" alt="Fullscreen Preview">
+    </div>
+    
+    <!-- Connection Error Modal -->
+    <div id="connectionErrorModal" class="modal">
+        <div class="modal-content" style="max-width: 400px;">
+            <div class="modal-body" style="text-align: center;">
+                <div class="receipt-icon" style="color: #ff6b6b;">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <h2 class="receipt-title">Koneksi Bermasalah</h2>
+                <p style="color: #666; margin-bottom: 20px;">
+                    Gagal terhubung ke server. Silakan refresh halaman.
                 </p>
-                
-                <div class="link-preview" id="taskLinkPreview" style="display: none;">
-                    <strong><i class="fas fa-link"></i> Link Tujuan:</strong><br>
-                    <a href="#" target="_blank" id="taskLink">Loading...</a>
-                </div>
-                
-                <div id="taskInstructions" style="background: #f9f9f9; padding: 15px; border-radius: 10px; margin-bottom: 20px;">
-                    <strong><i class="fas fa-info-circle"></i> Instruksi:</strong><br>
-                    <p id="instructionText" style="margin-top: 10px; color: #555;">
-                        Memuat instruksi...
-                    </p>
-                </div>
-                
-                <div style="display: flex; gap: 15px; margin-bottom: 20px;">
-                    <div class="task-reward" id="geoRewardBadge" style="display: none;">
-                        <i class="fas fa-seedling"></i> +0,0 GEO
-                    </div>
-                    <div class="task-reward life" id="lifeRewardBadge" style="display: none;">
-                        <i class="fas fa-heart"></i> +0 LIFE
-                    </div>
-                </div>
-                
-                <div class="separator"></div>
-                
-                <!-- Status Info -->
-                <div id="taskStatusInfo" style="display: none; background: #f0f8ff; padding: 15px; border-radius: 10px; margin-bottom: 20px; border-left: 4px solid #87CEEB;">
-                    <strong><i class="fas fa-info-circle"></i> Status Tugas:</strong>
-                    <p id="statusText" style="margin-top: 5px; color: #555;"></p>
-                </div>
-                
-                <!-- Upload Bukti -->
-                <h3 class="card-title" style="font-size: 1rem;">
-                    <i class="fas fa-camera"></i> Upload Bukti Tugas
-                </h3>
-                
-                <div class="upload-area" id="uploadArea">
-                    <div class="upload-icon">
-                        <i class="fas fa-cloud-upload-alt"></i>
-                    </div>
-                    <div class="upload-text">
-                        Klik atau seret file gambar ke sini
-                    </div>
-                    <div class="upload-subtext">
-                        Format: JPG, PNG (Maks. 5MB)
-                    </div>
-                    <input type="file" id="proofUpload" accept="image/*" style="display: none;">
-                    <img id="proofPreview" class="preview-image" alt="Preview Bukti">
-                </div>
-                
-                <!-- Progress Bar -->
-                <div id="uploadProgress" class="progress-bar" style="display: none;">
-                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
-                </div>
-                
-                <!-- Catatan -->
-                <div class="form-group">
-                    <label class="form-label" for="taskNotes">
-                        <i class="fas fa-sticky-note"></i> Catatan (Opsional)
-                    </label>
-                    <textarea class="form-control" id="taskNotes" 
-                              placeholder="Tambahkan catatan untuk admin..."></textarea>
-                </div>
-                
-                <!-- Submit Button -->
-                <button id="submitTaskBtn" class="btn btn-primary" disabled>
-                    <i class="fas fa-paper-plane"></i> KIRIM TUGAS
-                </button>
-                
-                <!-- Already Completed Button -->
-                <button id="alreadyCompletedBtn" class="btn btn-completed" style="display: none;">
-                    <i class="fas fa-check-circle"></i> SUDAH DIKERJAKAN
+                <button id="refreshPageBtn" class="btn btn-primary">
+                    <i class="fas fa-redo"></i> REFRESH HALAMAN
                 </button>
             </div>
         </div>
     </div>
     
-    <!-- Footer Navigation -->
+    <!-- Footer Navigation - KONSISTENSI WAJIB -->
     <nav class="nav-footer">
         <a href="dashboard.html" class="nav-item">
             <i class="fas fa-home nav-icon"></i>
@@ -928,1139 +1060,1145 @@
         </a>
     </nav>
     
-    <!-- Success Modal -->
-    <div id="successModal" class="modal">
-        <div class="modal-content success">
-            <i class="fas fa-check-circle modal-icon"></i>
-            <h2 class="modal-title">Tugas Terkirim!</h2>
-            <p class="modal-message">
-                Tugas Anda telah dikirim ke admin. Tunggu beberapa saat untuk admin mereview hasil tugas Anda.
-            </p>
-            <button class="modal-btn" id="closeSuccessModal">OK</button>
-        </div>
-    </div>
-    
-    <!-- Error Modal -->
-    <div id="errorModal" class="modal">
-        <div class="modal-content error">
-            <i class="fas fa-exclamation-circle modal-icon"></i>
-            <h2 class="modal-title">Terjadi Kesalahan</h2>
-            <p class="modal-message" id="errorMessage">
-                Terjadi kesalahan saat memproses permintaan.
-            </p>
-            <button class="modal-btn" id="closeErrorModal">Tutup</button>
-        </div>
-    </div>
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
 
-    <script>
+    <script type="module">
         // ============================================
-        // TUGAS PAGE - KUIZTOWN
+        // TUGAS PAGE - KUIZTOWN PRODUCTION
         // ============================================
         
-        // API Key ImgBB
-        const IMGBB_API_KEY = '874a8bf96641caa969ce88e871be13e3';
+        // Konfigurasi Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { 
+            getAuth, 
+            onAuthStateChanged, 
+            signOut 
+        } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { 
+            getFirestore,
+            collection,
+            query,
+            where,
+            getDocs,
+            getDoc,
+            doc,
+            addDoc,
+            updateDoc,
+            serverTimestamp,
+            onSnapshot,
+            limit,
+            orderBy
+        } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
         
-        // Cache untuk data
-        let cachedUserData = null;
-        let currentTasks = [];
-        let taskHistory = [];
-        let userCompletedTasks = new Set(); // Set untuk menyimpan taskId yang sudah dikerjakan user
+        const firebaseConfig = {
+            apiKey: "AIzaSyB9DCc6rCmeXl0O3CCLYe6zUmfByfRz428",
+            authDomain: "kuiztown.firebaseapp.com",
+            projectId: "kuiztown",
+            storageBucket: "kuiztown.firebasestorage.app",
+            messagingSenderId: "334081803913",
+            appId: "1:334081803913:web:84899b42961e12f538a858"
+        };
+        
+        // Inisialisasi Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        
+        // State management
+        let currentUser = null;
+        let userData = null;
+        let tasks = [];
+        let submissions = [];
+        let filteredTasks = [];
+        let currentPage = 1;
+        const tasksPerPage = 10;
         let currentTaskId = null;
         let proofImageUrl = null;
-        let currentUserId = null;
+        let isSubmittingTask = false;
+        let cooldownEndTime = 0;
+        let imageHashCache = new Set();
         
-        // Inisialisasi aplikasi
-        document.addEventListener('DOMContentLoaded', async function() {
-            console.log("DOM loaded, initializing Tugas App...");
-            
-            // Setup event listeners terlebih dahulu
+        // DOM Elements
+        const skeletonLoading = document.getElementById('skeletonLoading');
+        const taskList = document.getElementById('taskList');
+        const emptyState = document.getElementById('emptyState');
+        const searchInput = document.getElementById('searchInput');
+        const filterTabs = document.querySelectorAll('.filter-tab');
+        const statApproved = document.getElementById('statApproved');
+        const statPending = document.getElementById('statPending');
+        const statRejected = document.getElementById('statRejected');
+        const notificationBadge = document.getElementById('notificationBadge');
+        const submissionModal = document.getElementById('submissionModal');
+        const uploadArea = document.getElementById('uploadArea');
+        const proofUpload = document.getElementById('proofUpload');
+        const proofPreview = document.getElementById('proofPreview');
+        const taskNotes = document.getElementById('taskNotes');
+        const submitTaskBtn = document.getElementById('submitTaskBtn');
+        const closeSubmissionModal = document.getElementById('closeSubmissionModal');
+        const submissionForm = document.getElementById('submissionForm');
+        const receiptScreen = document.getElementById('receiptScreen');
+        const closeReceiptBtn = document.getElementById('closeReceiptBtn');
+        const fullscreenPreview = document.getElementById('fullscreenPreview');
+        const fullscreenImage = document.getElementById('fullscreenImage');
+        const closeFullscreen = document.querySelector('.close-fullscreen');
+        const connectionErrorModal = document.getElementById('connectionErrorModal');
+        const refreshPageBtn = document.getElementById('refreshPageBtn');
+        const pagination = document.getElementById('pagination');
+        const toastContainer = document.getElementById('toastContainer');
+        
+        // Event Listeners
+        document.addEventListener('DOMContentLoaded', initApp);
+        
+        function initApp() {
+            console.log('Initializing Tugas App...');
             setupEventListeners();
-            
-            // Cek apakah user sudah login dari localStorage
-            const cachedData = localStorage.getItem('kuiztown_user_data');
-            if (cachedData) {
-                try {
-                    cachedUserData = JSON.parse(cachedData);
-                    // Tampilkan data cached terlebih dahulu (instan)
-                    updateUserInfoFromCache();
-                } catch (e) {
-                    console.error("Error parsing cached data:", e);
-                }
-            }
-            
-            // Load Firebase dengan deferred loading
-            await loadFirebase();
-            
-            // Setup authentication listener
             setupAuthListener();
-        });
-        
-        // Load Firebase
-        async function loadFirebase() {
-            try {
-                console.log("Loading Firebase...");
-                
-                // Load Firebase SDK secara dinamis
-                const firebaseScript = document.createElement('script');
-                firebaseScript.type = 'module';
-                firebaseScript.textContent = `
-                    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
-                    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
-                    import { 
-                        getFirestore, 
-                        doc, 
-                        getDoc, 
-                        collection, 
-                        getDocs, 
-                        addDoc, 
-                        updateDoc,
-                        serverTimestamp,
-                        query,
-                        where 
-                    } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
-
-                    const firebaseConfig = {
-                        apiKey: "AIzaSyB9DCc6rCmeXl0O3CCLYe6zUmfByfRz428",
-                        authDomain: "kuiztown.firebaseapp.com",
-                        projectId: "kuiztown",
-                        storageBucket: "kuiztown.firebasestorage.app",
-                        messagingSenderId: "334081803913",
-                        appId: "1:334081803913:web:84899b42961e12f538a858"
-                    };
-
-                    const app = initializeApp(firebaseConfig);
-                    const auth = getAuth(app);
-                    const db = getFirestore(app);
-                    
-                    window.firebaseApp = app;
-                    window.firebaseAuth = auth;
-                    window.firebaseOnAuthStateChanged = onAuthStateChanged;
-                    window.firebaseDb = db;
-                    window.firebaseDoc = doc;
-                    window.firebaseGetDoc = getDoc;
-                    window.firebaseCollection = collection;
-                    window.firebaseGetDocs = getDocs;
-                    window.firebaseAddDoc = addDoc;
-                    window.firebaseUpdateDoc = updateDoc;
-                    window.firebaseServerTimestamp = serverTimestamp;
-                    window.firebaseQuery = query;
-                    window.firebaseWhere = where;
-                    
-                    console.log("Firebase loaded successfully");
-                `;
-                document.head.appendChild(firebaseScript);
-                
-                // Tunggu Firebase selesai load
-                await new Promise((resolve, reject) => {
-                    let attempts = 0;
-                    const maxAttempts = 50;
-                    
-                    const checkFirebase = setInterval(() => {
-                        attempts++;
-                        if (window.firebaseAuth) {
-                            clearInterval(checkFirebase);
-                            console.log("Firebase loaded after", attempts, "attempts");
-                            resolve();
-                        } else if (attempts >= maxAttempts) {
-                            clearInterval(checkFirebase);
-                            reject(new Error("Firebase load timeout"));
-                        }
-                    }, 100);
-                });
-                
-                console.log("Firebase loaded successfully");
-                
-            } catch (error) {
-                console.error("Error loading Firebase:", error);
-                showErrorModal("Koneksi Terputus", "Menggunakan data offline. Beberapa fitur mungkin terbatas.");
-                loadSampleData(); // Load sample data jika Firebase gagal
-            }
         }
         
-        // Setup authentication listener
+        function setupEventListeners() {
+            // Filter tabs
+            filterTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const filter = tab.dataset.filter;
+                    filterTabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    filterTasks(filter);
+                });
+            });
+            
+            // Search input
+            searchInput.addEventListener('input', debounce(() => {
+                const searchTerm = searchInput.value.toLowerCase();
+                filterTasks(document.querySelector('.filter-tab.active').dataset.filter, searchTerm);
+            }, 300));
+            
+            // Upload area
+            uploadArea.addEventListener('click', () => proofUpload.click());
+            uploadArea.addEventListener('dragover', handleDragOver);
+            uploadArea.addEventListener('drop', handleDrop);
+            
+            // File upload
+            proofUpload.addEventListener('change', handleFileUpload);
+            
+            // Modal close buttons
+            closeSubmissionModal.addEventListener('click', closeModal);
+            closeReceiptBtn.addEventListener('click', closeModal);
+            closeFullscreen.addEventListener('click', () => {
+                fullscreenPreview.style.display = 'none';
+            });
+            
+            // Image preview click
+            proofPreview.addEventListener('click', () => {
+                if (proofPreview.src) {
+                    fullscreenImage.src = proofPreview.src;
+                    fullscreenPreview.style.display = 'flex';
+                }
+            });
+            
+            // Fullscreen modal close on background click
+            fullscreenPreview.addEventListener('click', (e) => {
+                if (e.target === fullscreenPreview) {
+                    fullscreenPreview.style.display = 'none';
+                }
+            });
+            
+            // Refresh page button
+            refreshPageBtn.addEventListener('click', () => {
+                window.location.reload();
+            });
+            
+            // Submit task button
+            submitTaskBtn.addEventListener('click', submitTask);
+            
+            // Handle window beforeunload for draft saving
+            window.addEventListener('beforeunload', saveDraft);
+        }
+        
+        // Authentication listener
         function setupAuthListener() {
-            if (!window.firebaseOnAuthStateChanged) {
-                console.error("Firebase Auth not loaded");
-                return;
-            }
-            
-            console.log("Setting up auth listener...");
-            
-            window.firebaseOnAuthStateChanged(window.firebaseAuth, async (user) => {
+            onAuthStateChanged(auth, async (user) => {
                 if (user) {
-                    console.log("User logged in:", user.email);
-                    currentUserId = user.uid;
+                    console.log('User authenticated:', user.uid);
+                    currentUser = user;
                     
-                    // User is logged in, load fresh data
-                    await loadUserData(user.uid);
-                    await loadTasksData(user.uid);
+                    try {
+                        // Check user status
+                        await checkUserStatus(user.uid);
+                        
+                        // Load user data
+                        await loadUserData(user.uid);
+                        
+                        // Load tasks
+                        await loadTasks();
+                        
+                        // Load submissions history
+                        await loadSubmissions(user.uid);
+                        
+                        // Setup realtime listeners
+                        setupRealtimeListeners(user.uid);
+                        
+                        // Restore draft if exists
+                        restoreDraft();
+                        
+                        // Check cooldown
+                        checkCooldown();
+                        
+                    } catch (error) {
+                        console.error('Error in auth listener:', error);
+                        showConnectionError();
+                    }
                 } else {
-                    console.log("User not logged in, redirecting...");
-                    // User is not logged in, redirect to login
+                    console.log('User not authenticated, redirecting to login...');
                     window.location.href = 'login.html';
                 }
             });
         }
         
-        // Setup event listeners
-        function setupEventListeners() {
-            console.log("Setting up event listeners...");
-            
-            // Tab navigation
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const tabId = btn.getAttribute('data-tab');
-                    switchTab(tabId);
-                });
-            });
-            
-            // Back to tasks button
-            const backBtn = document.getElementById('backToTasksBtn');
-            if (backBtn) {
-                backBtn.addEventListener('click', () => {
-                    switchTab('tasks');
-                    resetTaskDetail();
-                });
-            }
-            
-            // Upload area click
-            const uploadArea = document.getElementById('uploadArea');
-            if (uploadArea) {
-                uploadArea.addEventListener('click', () => {
-                    document.getElementById('proofUpload').click();
-                });
-            }
-            
-            // File upload change
-            const proofUpload = document.getElementById('proofUpload');
-            if (proofUpload) {
-                proofUpload.addEventListener('change', handleFileUpload);
-            }
-            
-            // Submit task button
-            const submitBtn = document.getElementById('submitTaskBtn');
-            if (submitBtn) {
-                submitBtn.addEventListener('click', submitTask);
-            }
-            
-            // Close modals
-            const closeSuccessModal = document.getElementById('closeSuccessModal');
-            if (closeSuccessModal) {
-                closeSuccessModal.addEventListener('click', () => {
-                    document.getElementById('successModal').style.display = 'none';
-                    switchTab('tasks');
-                });
-            }
-            
-            const closeErrorModal = document.getElementById('closeErrorModal');
-            if (closeErrorModal) {
-                closeErrorModal.addEventListener('click', () => {
-                    document.getElementById('errorModal').style.display = 'none';
-                });
-            }
-            
-            // Close modals when clicking outside
-            window.addEventListener('click', function(event) {
-                const modals = ['successModal', 'errorModal'];
-                
-                modals.forEach(modalId => {
-                    const modal = document.getElementById(modalId);
-                    if (modal && event.target === modal) {
-                        modal.style.display = 'none';
+        // Check user status
+        async function checkUserStatus(userId) {
+            try {
+                const userDoc = await getDoc(doc(db, 'users', userId));
+                if (userDoc.exists()) {
+                    const userData = userDoc.data();
+                    if (userData.status !== 'active') {
+                        await signOut(auth);
+                        window.location.href = 'banned.html';
+                        throw new Error('User not active');
                     }
-                });
-            });
-            
-            console.log("Event listeners setup complete");
-        }
-        
-        // Tampilkan data user dari cache
-        function updateUserInfoFromCache() {
-            if (!cachedUserData) {
-                console.log("No cached user data available");
-                return;
-            }
-            
-            const lifeElement = document.getElementById('currentLife');
-            const geoElement = document.getElementById('currentGeo');
-            
-            if (lifeElement) {
-                lifeElement.textContent = cachedUserData.lifeBalance || 0;
-            }
-            
-            if (geoElement) {
-                const geoBalance = cachedUserData.geoBalance || 0;
-                geoElement.textContent = geoBalance.toLocaleString('id-ID', {
-                    minimumFractionDigits: 1,
-                    maximumFractionDigits: 1
-                });
+                } else {
+                    throw new Error('User document not found');
+                }
+            } catch (error) {
+                console.error('Error checking user status:', error);
+                throw error;
             }
         }
         
-        // Load user data dari Firestore
+        // Load user data
         async function loadUserData(userId) {
             try {
-                console.log("Loading user data for:", userId);
-                
-                if (!window.firebaseGetDoc || !window.firebaseDoc || !window.firebaseDb) {
-                    console.error("Firebase functions not available");
-                    return;
-                }
-                
-                const userDoc = await window.firebaseGetDoc(window.firebaseDoc(window.firebaseDb, "users", userId));
-                
+                const userDoc = await getDoc(doc(db, 'users', userId));
                 if (userDoc.exists()) {
-                    const freshData = userDoc.data();
-                    console.log("User data loaded:", freshData);
-                    
-                    // Cache data baru
-                    localStorage.setItem('kuiztown_user_data', JSON.stringify(freshData));
-                    cachedUserData = freshData;
-                    
-                    // Update UI dengan data baru
-                    updateUserInfoFromCache();
-                    
-                } else {
-                    console.error("User data not found in Firestore");
+                    userData = userDoc.data();
+                    console.log('User data loaded:', userData);
                 }
             } catch (error) {
-                console.error("Error loading user data:", error);
+                console.error('Error loading user data:', error);
             }
         }
         
-        // Load tasks data
-        async function loadTasksData(userId) {
+        // Load tasks from Firestore
+        async function loadTasks() {
             try {
-                console.log("Loading tasks data for user:", userId);
+                console.log('Loading tasks from Firestore...');
                 
-                if (!window.firebaseGetDocs || !window.firebaseCollection || !window.firebaseDb) {
-                    console.error("Firebase functions not available");
-                    loadSampleData();
-                    return;
-                }
-                
-                // Load active tasks dari koleksi tasks
-                const tasksSnapshot = await window.firebaseGetDocs(
-                    window.firebaseCollection(window.firebaseDb, "tasks")
+                const tasksQuery = query(
+                    collection(db, 'tasks'),
+                    where('status', '==', 'active')
                 );
                 
-                currentTasks = [];
-                tasksSnapshot.forEach(doc => {
-                    const task = doc.data();
-                    task.id = doc.id;
-                    // Hanya tampilkan tugas yang statusnya active
-                    if (task.status === 'active') {
-                        currentTasks.push(task);
-                    }
+                const tasksSnapshot = await getDocs(tasksQuery);
+                tasks = [];
+                
+                tasksSnapshot.forEach(docSnap => {
+                    const task = {
+                        id: docSnap.id,
+                        ...docSnap.data()
+                    };
+                    tasks.push(task);
                 });
                 
-                console.log("Active tasks loaded:", currentTasks.length);
+                console.log(`Loaded ${tasks.length} active tasks`);
                 
-                // Load task history untuk user ini
-                const historyQuery = window.firebaseQuery(
-                    window.firebaseCollection(window.firebaseDb, "taskSubmissions"),
-                    window.firebaseWhere("userId", "==", userId)
-                );
+                // Hide skeleton
+                skeletonLoading.style.display = 'none';
                 
-                const historySnapshot = await window.firebaseGetDocs(historyQuery);
-                
-                taskHistory = [];
-                userCompletedTasks.clear(); // Reset set
-                
-                historySnapshot.forEach(doc => {
-                    const submission = doc.data();
-                    submission.id = doc.id;
-                    taskHistory.push(submission);
-                    
-                    // Tambahkan taskId ke set jika statusnya approved atau pending
-                    if (submission.status === 'approved' || submission.status === 'pending') {
-                        userCompletedTasks.add(submission.taskId);
-                    }
-                });
-                
-                console.log("Task history loaded:", taskHistory.length);
-                console.log("User completed tasks:", Array.from(userCompletedTasks));
-                
-                // Update UI
-                updateTasksUI();
+                // Filter and display tasks
+                filterTasks('all');
                 
             } catch (error) {
-                console.error("Error loading tasks:", error);
-                loadSampleData(); // Load sample data jika error
+                console.error('Error loading tasks:', error);
+                showConnectionError();
             }
         }
         
-        // Load sample data (fallback)
-        function loadSampleData() {
-            console.log("Loading sample data...");
-            
-            // Hide skeleton
-            const skeleton = document.getElementById('skeletonLoading');
-            if (skeleton) {
-                skeleton.style.display = 'none';
+        // Load submissions history
+        async function loadSubmissions(userId) {
+            try {
+                const submissionsQuery = query(
+                    collection(db, 'taskSubmissions'),
+                    where('userId', '==', userId),
+                    orderBy('submittedAt', 'desc')
+                );
+                
+                const submissionsSnapshot = await getDocs(submissionsQuery);
+                submissions = [];
+                
+                submissionsSnapshot.forEach(docSnap => {
+                    const submission = {
+                        id: docSnap.id,
+                        ...docSnap.data()
+                    };
+                    submissions.push(submission);
+                });
+                
+                console.log(`Loaded ${submissions.length} submissions`);
+                
+                // Update stats
+                updateStats();
+                
+            } catch (error) {
+                console.error('Error loading submissions:', error);
             }
-            
-            // Sample active tasks
-            currentTasks = [
-                {
-                    id: 'task1',
-                    title: 'Follow Instagram KuizTown',
-                    description: 'Follow akun Instagram resmi KuizTown dan screenshot buktinya.',
-                    instructions: '1. Buka Instagram\n2. Cari @kuiztown.official\n3. Follow akun tersebut\n4. Screenshot halaman profil yang sudah di-follow',
-                    link: 'https://instagram.com',
-                    geoReward: 5.0,
-                    lifeReward: 0,
-                    status: 'active'
-                },
-                {
-                    id: 'task2',
-                    title: 'Subscribe YouTube Channel',
-                    description: 'Subscribe channel YouTube KuizTown dan like video terbaru.',
-                    instructions: '1. Buka YouTube\n2. Cari "KuizTown Official"\n3. Subscribe channel\n4. Like video terbaru\n5. Screenshot bukti subscribe dan like',
-                    link: 'https://youtube.com',
-                    geoReward: 8.0,
-                    lifeReward: 2,
-                    status: 'active'
-                },
-                {
-                    id: 'task3',
-                    title: 'Share di Facebook',
-                    description: 'Bagikan link KuizTown di Facebook dengan tag 3 teman.',
-                    instructions: '1. Buka Facebook\n2. Buat post berisi link KuizTown\n3. Tag 3 teman Anda\n4. Screenshot post yang sudah dibuat',
-                    link: 'https://facebook.com',
-                    geoReward: 3.0,
-                    lifeReward: 1,
-                    status: 'active'
-                }
-            ];
-            
-            // Sample task history
-            taskHistory = [];
-            userCompletedTasks.clear();
-            
-            // Update UI
-            updateTasksUI();
         }
         
-        // Update tasks UI
-        function updateTasksUI() {
-            console.log("Updating tasks UI...");
+        // Setup realtime listeners
+        function setupRealtimeListeners(userId) {
+            // Listen for new submissions
+            const submissionsQuery = query(
+                collection(db, 'taskSubmissions'),
+                where('userId', '==', userId),
+                orderBy('submittedAt', 'desc'),
+                limit(1)
+            );
             
-            // Hide skeleton
-            const skeleton = document.getElementById('skeletonLoading');
-            if (skeleton) {
-                skeleton.style.display = 'none';
-            }
-            
-            // Update notification badge
-            const notificationBadge = document.getElementById('taskNotification');
-            if (notificationBadge) {
-                // Hitung hanya tugas yang belum dikerjakan
-                const availableTasks = currentTasks.filter(task => !userCompletedTasks.has(task.id));
-                notificationBadge.textContent = availableTasks.length;
-            }
-            
-            // Update active tasks list
-            updateActiveTasksList();
-            
-            // Update task history list
-            updateTaskHistoryList();
-            
-            // Update user info
-            updateUserInfoFromCache();
-        }
-        
-        // Update active tasks list
-        function updateActiveTasksList() {
-            const container = document.getElementById('activeTasksList');
-            if (!container) {
-                console.error("Active tasks container not found");
-                return;
-            }
-            
-            container.innerHTML = '';
-            
-            // Filter hanya tugas yang belum dikerjakan user
-            const availableTasks = currentTasks.filter(task => !userCompletedTasks.has(task.id));
-            
-            if (availableTasks.length === 0) {
-                const noActiveTasks = document.getElementById('noActiveTasks');
-                if (noActiveTasks) {
-                    noActiveTasks.style.display = 'block';
-                }
-                return;
-            }
-            
-            const noActiveTasks = document.getElementById('noActiveTasks');
-            if (noActiveTasks) {
-                noActiveTasks.style.display = 'none';
-            }
-            
-            availableTasks.forEach(task => {
-                const taskCard = createTaskCard(task);
-                container.appendChild(taskCard);
+            onSnapshot(submissionsQuery, (snapshot) => {
+                snapshot.docChanges().forEach(change => {
+                    if (change.type === 'added' || change.type === 'modified') {
+                        const submission = {
+                            id: change.doc.id,
+                            ...change.doc.data()
+                        };
+                        
+                        // Update local submissions
+                        const index = submissions.findIndex(s => s.id === submission.id);
+                        if (index >= 0) {
+                            submissions[index] = submission;
+                        } else {
+                            submissions.unshift(submission);
+                        }
+                        
+                        // Update stats
+                        updateStats();
+                        
+                        // Show notification for status change
+                        if (change.type === 'modified') {
+                            const oldStatus = change.doc._document?.value?.mapValue?.fields?.status?.stringValue;
+                            const newStatus = submission.status;
+                            
+                            if (oldStatus && oldStatus !== newStatus) {
+                                showStatusNotification(submission);
+                            }
+                        }
+                    }
+                });
             });
+        }
+        
+        // Filter tasks
+        function filterTasks(filter, searchTerm = '') {
+            let filtered = [...tasks];
+            
+            // Apply status filter
+            if (filter !== 'all') {
+                filtered = filtered.filter(task => {
+                    const userSubmission = submissions.find(s => s.taskId === task.id);
+                    
+                    switch(filter) {
+                        case 'active':
+                            return !userSubmission || userSubmission.status === 'rejected';
+                        case 'pending':
+                            return userSubmission && userSubmission.status === 'pending';
+                        case 'approved':
+                            return userSubmission && userSubmission.status === 'approved';
+                        case 'rejected':
+                            return userSubmission && userSubmission.status === 'rejected';
+                        default:
+                            return true;
+                    }
+                });
+            }
+            
+            // Apply search filter
+            if (searchTerm) {
+                filtered = filtered.filter(task => {
+                    return task.title.toLowerCase().includes(searchTerm) ||
+                           task.id.toLowerCase().includes(searchTerm) ||
+                           (task.description && task.description.toLowerCase().includes(searchTerm));
+                });
+            }
+            
+            // Check 24-hour limit for each task
+            filtered = filtered.map(task => {
+                const userSubmission = submissions.find(s => s.taskId === task.id);
+                const isWithin24Hours = userSubmission && 
+                    ((Date.now() - userSubmission.submittedAt.toDate().getTime()) < 24 * 60 * 60 * 1000);
+                
+                return {
+                    ...task,
+                    canSubmit: !userSubmission || (userSubmission.status === 'rejected' && !isWithin24Hours),
+                    userSubmission: userSubmission
+                };
+            });
+            
+            filteredTasks = filtered;
+            currentPage = 1;
+            displayTasks();
+        }
+        
+        // Display tasks with pagination
+        function displayTasks() {
+            taskList.innerHTML = '';
+            
+            if (filteredTasks.length === 0) {
+                emptyState.style.display = 'block';
+                pagination.style.display = 'none';
+                return;
+            }
+            
+            emptyState.style.display = 'none';
+            
+            // Calculate pagination
+            const startIndex = (currentPage - 1) * tasksPerPage;
+            const endIndex = startIndex + tasksPerPage;
+            const pageTasks = filteredTasks.slice(startIndex, endIndex);
+            
+            // Create task cards
+            pageTasks.forEach(task => {
+                const taskCard = createTaskCard(task);
+                taskList.appendChild(taskCard);
+            });
+            
+            // Display pagination
+            displayPagination();
         }
         
         // Create task card element
         function createTaskCard(task) {
             const card = document.createElement('div');
-            card.className = 'card task-card';
+            card.className = 'task-card';
+            card.dataset.taskId = task.id;
             
-            // Format reward badges
-            let rewardBadges = '';
-            if (task.geoReward > 0) {
-                rewardBadges += `<span class="task-reward"><i class="fas fa-seedling"></i> +${task.geoReward.toLocaleString('id-ID', {minimumFractionDigits: 1, maximumFractionDigits: 1})} GEO</span>`;
+            // Difficulty badge
+            const difficultyClass = `difficulty-${task.difficulty || 'medium'}`;
+            const difficultyText = task.difficulty ? task.difficulty.toUpperCase() : 'MEDIUM';
+            
+            // Slot counter
+            const currentSlots = task.currentSlots || 0;
+            const maxSlots = task.maxSlots || 50;
+            const slotClass = currentSlots >= maxSlots ? 'slot-counter slot-full' : 'slot-counter';
+            const slotText = currentSlots >= maxSlots ? 'FULL' : `${currentSlots} / ${maxSlots}`;
+            
+            // Deadline countdown
+            let deadlineBadge = '';
+            if (task.deadline) {
+                const deadlineDate = task.deadline.toDate ? task.deadline.toDate() : new Date(task.deadline);
+                const now = new Date();
+                const diffHours = Math.max(0, Math.floor((deadlineDate - now) / (1000 * 60 * 60)));
+                
+                if (diffHours < 24) {
+                    deadlineBadge = `
+                        <span class="deadline-badge">
+                            <i class="fas fa-clock"></i> ${diffHours} jam
+                        </span>
+                    `;
+                }
             }
-            if (task.lifeReward > 0) {
-                rewardBadges += `<span class="task-reward life"><i class="fas fa-heart"></i> +${task.lifeReward} LIFE</span>`;
+            
+            // Status badge
+            let statusBadge = '';
+            if (task.userSubmission) {
+                const statusClass = `status-${task.userSubmission.status}`;
+                let statusText = '';
+                let statusIcon = '';
+                
+                switch(task.userSubmission.status) {
+                    case 'pending':
+                        statusText = 'Menunggu Review';
+                        statusIcon = '<i class="fas fa-clock"></i>';
+                        break;
+                    case 'approved':
+                        statusText = 'Disetujui';
+                        statusIcon = '<i class="fas fa-check-circle"></i>';
+                        break;
+                    case 'rejected':
+                        statusText = 'Ditolak';
+                        statusIcon = '<i class="fas fa-times-circle"></i>';
+                        break;
+                }
+                
+                statusBadge = `
+                    <span class="status-badge ${statusClass}">
+                        ${statusIcon} ${statusText}
+                    </span>
+                `;
+            }
+            
+            // Action button
+            let actionButton = '';
+            if (task.canSubmit && !task.userSubmission) {
+                if (Date.now() < cooldownEndTime) {
+                    const cooldownMinutes = Math.ceil((cooldownEndTime - Date.now()) / (1000 * 60));
+                    actionButton = `
+                        <button class="btn btn-disabled" disabled>
+                            <i class="fas fa-clock"></i> COOLDOWN ${cooldownMinutes}m
+                        </button>
+                    `;
+                } else if (currentSlots >= maxSlots) {
+                    actionButton = `
+                        <button class="btn btn-disabled" disabled>
+                            <i class="fas fa-times-circle"></i> SLOT PENUH
+                        </button>
+                    `;
+                } else {
+                    actionButton = `
+                        <button class="btn btn-primary submit-task-btn">
+                            <i class="fas fa-paper-plane"></i> SUBMIT
+                        </button>
+                    `;
+                }
+            } else if (task.userSubmission) {
+                let buttonText = '';
+                let buttonIcon = '';
+                
+                switch(task.userSubmission.status) {
+                    case 'pending':
+                        buttonText = 'MENUNGGU REVIEW';
+                        buttonIcon = '<i class="fas fa-clock"></i>';
+                        break;
+                    case 'approved':
+                        buttonText = 'DISETUJUI';
+                        buttonIcon = '<i class="fas fa-check-circle"></i>';
+                        break;
+                    case 'rejected':
+                        buttonText = 'DITOLAK';
+                        buttonIcon = '<i class="fas fa-times-circle"></i>';
+                        break;
+                }
+                
+                actionButton = `
+                    <button class="btn btn-disabled" disabled>
+                        ${buttonIcon} ${buttonText}
+                    </button>
+                `;
             }
             
             card.innerHTML = `
-                <div class="task-header">
-                    <div>
-                        <div class="task-title">${task.title}</div>
-                        <div class="task-desc">${task.description}</div>
-                    </div>
+                <div class="task-card-header">
+                    <div class="task-title">${task.title}</div>
+                    <span class="task-difficulty ${difficultyClass}">${difficultyText}</span>
                 </div>
-                <div>
-                    ${rewardBadges}
+                <div class="task-description">${task.description || 'Tidak ada deskripsi'}</div>
+                <div class="task-meta">
+                    <span class="task-reward">
+                        <i class="fas fa-seedling"></i> +${task.geoReward || 0} GEO
+                    </span>
+                    ${task.lifeReward ? `
+                    <span class="task-reward life">
+                        <i class="fas fa-heart"></i> +${task.lifeReward} LIFE
+                    </span>
+                    ` : ''}
+                    <span class="${slotClass}">
+                        <i class="fas fa-users"></i> ${slotText}
+                    </span>
+                    ${deadlineBadge}
+                    ${statusBadge}
                 </div>
                 <div class="task-actions">
-                    <button class="btn btn-primary" data-task-id="${task.id}">
-                        <i class="fas fa-play"></i> AMBIL TUGAS
-                    </button>
+                    ${actionButton}
                 </div>
             `;
             
-            // Add event listener to the button
-            const actionBtn = card.querySelector('button');
-            actionBtn.addEventListener('click', () => {
-                openTaskDetail(task.id);
-            });
+            // Add event listener to submit button
+            const submitBtn = card.querySelector('.submit-task-btn');
+            if (submitBtn) {
+                submitBtn.addEventListener('click', () => openSubmissionModal(task.id));
+            }
             
             return card;
         }
         
-        // Update task history list
-        function updateTaskHistoryList() {
-            const container = document.getElementById('taskHistoryList');
-            if (!container) {
-                console.error("Task history container not found");
+        // Display pagination
+        function displayPagination() {
+            const totalPages = Math.ceil(filteredTasks.length / tasksPerPage);
+            
+            if (totalPages <= 1) {
+                pagination.style.display = 'none';
                 return;
             }
             
-            container.innerHTML = '';
+            pagination.style.display = 'flex';
+            pagination.innerHTML = '';
             
-            if (taskHistory.length === 0) {
-                const noTaskHistory = document.getElementById('noTaskHistory');
-                if (noTaskHistory) {
-                    noTaskHistory.style.display = 'block';
-                }
-                return;
-            }
-            
-            const noTaskHistory = document.getElementById('noTaskHistory');
-            if (noTaskHistory) {
-                noTaskHistory.style.display = 'none';
-            }
-            
-            // Sort by date (newest first)
-            taskHistory.sort((a, b) => {
-                const dateA = a.submittedAt ? (a.submittedAt.toDate ? a.submittedAt.toDate() : new Date(a.submittedAt)) : new Date(0);
-                const dateB = b.submittedAt ? (b.submittedAt.toDate ? b.submittedAt.toDate() : new Date(b.submittedAt)) : new Date(0);
-                return dateB - dateA;
-            });
-            
-            taskHistory.forEach(submission => {
-                const historyCard = createHistoryCard(submission);
-                container.appendChild(historyCard);
-            });
-        }
-        
-        // Create history card element
-        function createHistoryCard(submission) {
-            const card = document.createElement('div');
-            card.className = 'card task-card';
-            
-            // Status class and text
-            let statusClass = '';
-            let statusText = '';
-            let rewardText = '';
-            
-            switch(submission.status) {
-                case 'approved':
-                    statusClass = 'status-approved';
-                    statusText = 'APPROVED';
-                    if (submission.taskGeoReward > 0) {
-                        rewardText = `+${submission.taskGeoReward.toLocaleString('id-ID', {minimumFractionDigits: 1, maximumFractionDigits: 1})} GEO`;
-                    }
-                    if (submission.taskLifeReward > 0) {
-                        if (rewardText) rewardText += ' & ';
-                        rewardText += `+${submission.taskLifeReward} LIFE`;
-                    }
-                    break;
-                case 'rejected':
-                    statusClass = 'status-rejected';
-                    statusText = 'REJECTED';
-                    rewardText = '<i class="fas fa-times"></i> No Reward';
-                    break;
-                case 'pending':
-                    statusClass = 'status-pending';
-                    statusText = 'PENDING REVIEW';
-                    break;
-            }
-            
-            // Format date
-            let dateStr = "Tanggal tidak tersedia";
-            if (submission.submittedAt) {
-                let date;
-                if (submission.submittedAt.toDate) {
-                    date = submission.submittedAt.toDate();
-                } else if (submission.submittedAt._seconds) {
-                    date = new Date(submission.submittedAt._seconds * 1000);
-                } else {
-                    date = new Date(submission.submittedAt);
-                }
-                dateStr = date.toLocaleDateString('id-ID', {
-                    day: 'numeric',
-                    month: 'short',
-                    year: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit'
+            // Previous button
+            if (currentPage > 1) {
+                const prevBtn = document.createElement('button');
+                prevBtn.className = 'pagination-btn';
+                prevBtn.innerHTML = '<i class="fas fa-chevron-left"></i>';
+                prevBtn.addEventListener('click', () => {
+                    currentPage--;
+                    displayTasks();
                 });
+                pagination.appendChild(prevBtn);
             }
             
-            card.innerHTML = `
-                <div class="task-header">
-                    <div>
-                        <div class="task-title">${submission.taskTitle || submission.taskId || 'Unknown Task'}</div>
-                        <div class="task-desc">Disubmit pada ${dateStr}</div>
-                    </div>
-                    <div class="task-status ${statusClass}">${statusText}</div>
-                </div>
-                <div>
-                    ${rewardText ? `<span class="task-reward">${rewardText}</span>` : ''}
-                </div>
-                ${submission.adminNotes ? `
-                <div style="margin-top: 10px; padding: 10px; background: #f9f9f9; border-radius: 8px; font-size: 0.85rem;">
-                    <strong>Catatan Admin:</strong> ${submission.adminNotes}
-                </div>
-                ` : ''}
-            `;
+            // Page buttons
+            const maxButtons = 5;
+            let startPage = Math.max(1, currentPage - Math.floor(maxButtons / 2));
+            let endPage = Math.min(totalPages, startPage + maxButtons - 1);
             
-            return card;
-        }
-        
-        // Switch between tabs
-        function switchTab(tabId) {
-            console.log("Switching to tab:", tabId);
+            if (endPage - startPage + 1 < maxButtons) {
+                startPage = Math.max(1, endPage - maxButtons + 1);
+            }
             
-            // Update tab buttons
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.getAttribute('data-tab') === tabId) {
-                    btn.classList.add('active');
-                }
-            });
+            for (let i = startPage; i <= endPage; i++) {
+                const pageBtn = document.createElement('button');
+                pageBtn.className = `pagination-btn ${i === currentPage ? 'active' : ''}`;
+                pageBtn.textContent = i;
+                pageBtn.addEventListener('click', () => {
+                    currentPage = i;
+                    displayTasks();
+                });
+                pagination.appendChild(pageBtn);
+            }
             
-            // Update tab content
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.classList.remove('active');
-            });
-            
-            const targetTab = document.getElementById(tabId + 'Tab');
-            if (targetTab) {
-                targetTab.classList.add('active');
+            // Next button
+            if (currentPage < totalPages) {
+                const nextBtn = document.createElement('button');
+                nextBtn.className = 'pagination-btn';
+                nextBtn.innerHTML = '<i class="fas fa-chevron-right"></i>';
+                nextBtn.addEventListener('click', () => {
+                    currentPage++;
+                    displayTasks();
+                });
+                pagination.appendChild(nextBtn);
             }
         }
         
-        // Open task detail
-        async function openTaskDetail(taskId) {
-            console.log("Opening task detail for:", taskId);
+        // Update stats
+        function updateStats() {
+            const approvedCount = submissions.filter(s => s.status === 'approved').length;
+            const pendingCount = submissions.filter(s => s.status === 'pending').length;
+            const rejectedCount = submissions.filter(s => s.status === 'rejected').length;
             
-            const task = currentTasks.find(t => t.id === taskId);
-            if (!task) {
-                console.error("Task not found:", taskId);
-                return;
-            }
+            statApproved.textContent = approvedCount;
+            statPending.textContent = pendingCount;
+            statRejected.textContent = rejectedCount;
             
+            // Update notification badge
+            const newNotifications = pendingCount;
+            notificationBadge.textContent = newNotifications;
+            notificationBadge.style.display = newNotifications > 0 ? 'flex' : 'none';
+        }
+        
+        // Open submission modal
+        function openSubmissionModal(taskId) {
             currentTaskId = taskId;
+            proofImageUrl = null;
             
-            // Cek apakah user sudah mengerjakan tugas ini
-            const hasCompleted = userCompletedTasks.has(taskId);
+            // Reset form
+            proofPreview.style.display = 'none';
+            taskNotes.value = '';
+            submitTaskBtn.disabled = true;
             
-            // Update task detail UI
-            const detailTaskTitle = document.getElementById('detailTaskTitle');
-            const detailTaskDesc = document.getElementById('detailTaskDesc');
-            const instructionText = document.getElementById('instructionText');
-            const taskStatusInfo = document.getElementById('taskStatusInfo');
-            const statusText = document.getElementById('statusText');
-            const submitBtn = document.getElementById('submitTaskBtn');
-            const alreadyCompletedBtn = document.getElementById('alreadyCompletedBtn');
+            // Show form, hide receipt
+            submissionForm.style.display = 'block';
+            receiptScreen.style.display = 'none';
             
-            if (detailTaskTitle) {
-                detailTaskTitle.innerHTML = `<i class="fas fa-tasks"></i> ${task.title}`;
-            }
-            
-            if (detailTaskDesc) {
-                detailTaskDesc.textContent = task.description;
-            }
-            
-            if (instructionText) {
-                instructionText.innerHTML = task.instructions.replace(/\n/g, '<br>');
-            }
-            
-            // Update link
-            const taskLinkPreview = document.getElementById('taskLinkPreview');
-            const taskLink = document.getElementById('taskLink');
-            
-            if (task.link) {
-                if (taskLinkPreview) taskLinkPreview.style.display = 'block';
-                if (taskLink) {
-                    taskLink.href = task.link;
-                    taskLink.textContent = task.link;
-                }
-            } else {
-                if (taskLinkPreview) taskLinkPreview.style.display = 'none';
-            }
-            
-            // Update rewards
-            const geoRewardBadge = document.getElementById('geoRewardBadge');
-            const lifeRewardBadge = document.getElementById('lifeRewardBadge');
-            
-            if (task.geoReward > 0) {
-                if (geoRewardBadge) {
-                    geoRewardBadge.style.display = 'inline-flex';
-                    geoRewardBadge.innerHTML = 
-                        `<i class="fas fa-seedling"></i> +${task.geoReward.toLocaleString('id-ID', {minimumFractionDigits: 1, maximumFractionDigits: 1})} GEO`;
-                }
-            } else {
-                if (geoRewardBadge) geoRewardBadge.style.display = 'none';
-            }
-            
-            if (task.lifeReward > 0) {
-                if (lifeRewardBadge) {
-                    lifeRewardBadge.style.display = 'inline-flex';
-                    lifeRewardBadge.innerHTML = 
-                        `<i class="fas fa-heart"></i> +${task.lifeReward} LIFE`;
-                }
-            } else {
-                if (lifeRewardBadge) lifeRewardBadge.style.display = 'none';
-            }
-            
-            // Tampilkan status jika sudah dikerjakan
-            if (hasCompleted) {
-                // Cari submission untuk tugas ini
-                const userSubmission = taskHistory.find(sub => sub.taskId === taskId);
-                
-                if (taskStatusInfo && statusText) {
-                    taskStatusInfo.style.display = 'block';
-                    
-                    if (userSubmission) {
-                        let statusMsg = '';
-                        switch(userSubmission.status) {
-                            case 'approved':
-                                statusMsg = `✅ Tugas ini sudah <strong>DISETUJUI</strong>. Anda telah mendapatkan reward.`;
-                                break;
-                            case 'pending':
-                                statusMsg = `⏳ Tugas ini sedang <strong>MENUNGGU REVIEW</strong> dari admin.`;
-                                break;
-                            case 'rejected':
-                                statusMsg = `❌ Tugas ini <strong>DITOLAK</strong>. ${userSubmission.adminNotes ? `Alasan: ${userSubmission.adminNotes}` : ''}`;
-                                break;
-                        }
-                        statusText.innerHTML = statusMsg;
-                    }
-                }
-                
-                // Sembunyikan tombol submit, tampilkan tombol sudah dikerjakan
-                if (submitBtn) submitBtn.style.display = 'none';
-                if (alreadyCompletedBtn) alreadyCompletedBtn.style.display = 'block';
-                
-                // Nonaktifkan upload area
-                const uploadArea = document.getElementById('uploadArea');
-                if (uploadArea) {
-                    uploadArea.style.opacity = '0.5';
-                    uploadArea.style.cursor = 'not-allowed';
-                    uploadArea.onclick = null;
-                }
-                
-            } else {
-                // Tugas belum dikerjakan
-                if (taskStatusInfo) taskStatusInfo.style.display = 'none';
-                if (submitBtn) submitBtn.style.display = 'block';
-                if (alreadyCompletedBtn) alreadyCompletedBtn.style.display = 'none';
-                
-                // Aktifkan upload area
-                const uploadArea = document.getElementById('uploadArea');
-                if (uploadArea) {
-                    uploadArea.style.opacity = '1';
-                    uploadArea.style.cursor = 'pointer';
-                    uploadArea.onclick = () => {
-                        document.getElementById('proofUpload').click();
-                    };
-                }
-                
-                resetUploadArea();
-            }
-            
-            // Switch to task detail tab
-            const taskDetailTab = document.getElementById('taskDetailTab');
-            if (taskDetailTab) {
-                taskDetailTab.classList.add('active');
-            }
-            
-            document.querySelectorAll('.tab-content').forEach(content => {
-                if (content.id !== 'taskDetailTab') {
-                    content.classList.remove('active');
-                }
-            });
+            // Show modal
+            submissionModal.style.display = 'flex';
         }
         
-        // Reset task detail form
-        function resetTaskDetail() {
-            proofImageUrl = null;
-            resetUploadArea();
+        // Close modal
+        function closeModal() {
+            submissionModal.style.display = 'none';
+            saveDraft();
+        }
+        
+        // Handle drag over
+        function handleDragOver(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            uploadArea.style.background = 'rgba(135, 206, 235, 0.1)';
+        }
+        
+        // Handle drop
+        function handleDrop(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            uploadArea.style.background = '';
             
-            const taskNotes = document.getElementById('taskNotes');
-            const submitBtn = document.getElementById('submitTaskBtn');
-            
-            if (taskNotes) taskNotes.value = '';
-            if (submitBtn) submitBtn.disabled = true;
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleImageFile(files[0]);
+            }
         }
         
         // Handle file upload
-        async function handleFileUpload(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-            
-            console.log("File selected:", file.name, file.size, file.type);
-            
-            // Check file size (max 5MB)
-            if (file.size > 5 * 1024 * 1024) {
-                showErrorModal('File Terlalu Besar', 'Ukuran file maksimal 5MB');
-                return;
+        function handleFileUpload(e) {
+            const file = e.target.files[0];
+            if (file) {
+                handleImageFile(file);
             }
-            
-            // Check file type
-            if (!file.type.match('image.*')) {
-                showErrorModal('Format Tidak Valid', 'Hanya file gambar yang diperbolehkan');
-                return;
-            }
-            
-            // Upload image to ImgBB
-            await uploadImageToImgBB(file);
         }
         
-        // Upload image to ImgBB
-        async function uploadImageToImgBB(file) {
-            console.log("Uploading image to ImgBB...");
-            
-            const uploadArea = document.getElementById('uploadArea');
-            const previewImage = document.getElementById('proofPreview');
-            const submitBtn = document.getElementById('submitTaskBtn');
-            const uploadProgress = document.getElementById('uploadProgress');
-            const progressFill = document.getElementById('progressFill');
-            
-            if (!uploadArea) {
-                console.error("Upload area not found");
-                return;
-            }
-            
-            // Show loading state
-            uploadArea.innerHTML = `
-                <div class="upload-icon">
-                    <i class="fas fa-spinner fa-spin"></i>
-                </div>
-                <div class="upload-text">
-                    Mengupload ke ImgBB...
-                </div>
-                <div class="upload-subtext" id="uploadPercentage">
-                    0%
-                </div>
-            `;
-            
-            if (uploadProgress) uploadProgress.style.display = 'block';
-            if (progressFill) progressFill.style.width = '0%';
-            
+        // Handle image file
+        async function handleImageFile(file) {
             try {
-                // Create FormData
-                const formData = new FormData();
-                formData.append('key', IMGBB_API_KEY);
-                formData.append('image', file);
+                // Validate file
+                if (!file.type.match('image.*')) {
+                    showToast('Hanya file gambar yang diperbolehkan', 'error');
+                    return;
+                }
                 
-                // Simulate progress (ImgBB doesn't have progress events in free API)
-                let progress = 0;
-                const progressInterval = setInterval(() => {
-                    progress += 10;
-                    if (progress > 90) clearInterval(progressInterval);
-                    
-                    const uploadPercentage = document.getElementById('uploadPercentage');
-                    if (uploadPercentage) uploadPercentage.textContent = `${progress}%`;
-                    
-                    if (progressFill) progressFill.style.width = `${progress}%`;
-                }, 200);
+                if (file.size > 5 * 1024 * 1024) {
+                    showToast('Ukuran file maksimal 5MB', 'error');
+                    return;
+                }
+                
+                // Compress image
+                const compressedFile = await compressImage(file);
+                
+                // Validate dimensions
+                const dimensions = await getImageDimensions(compressedFile);
+                if (dimensions.width < 300 || dimensions.height < 300) {
+                    showToast('Resolusi gambar minimal 300x300px', 'error');
+                    return;
+                }
+                
+                // Generate hash for duplicate detection
+                const hash = await generateImageHash(compressedFile);
+                if (imageHashCache.has(hash)) {
+                    showToast('Gambar ini sudah pernah diupload sebelumnya', 'error');
+                    return;
+                }
                 
                 // Upload to ImgBB
-                const response = await fetch('https://api.imgbb.com/1/upload', {
-                    method: 'POST',
-                    body: formData
-                });
+                const imageUrl = await uploadToImgBB(compressedFile);
                 
-                clearInterval(progressInterval);
-                
-                if (!response.ok) {
-                    throw new Error(`ImgBB upload failed: ${response.status}`);
-                }
-                
-                const result = await response.json();
-                
-                if (!result.success) {
-                    throw new Error(`ImgBB API error: ${result.error?.message || 'Unknown error'}`);
-                }
-                
-                console.log("ImgBB upload success:", result.data);
-                
-                // Set final progress
-                if (progressFill) progressFill.style.width = '100%';
-                
-                // Get image URL
-                const imageUrl = result.data.url;
-                const thumbnailUrl = result.data.thumb?.url || imageUrl;
-                
-                // Update upload area
-                uploadArea.innerHTML = `
-                    <div class="upload-icon">
-                        <i class="fas fa-check-circle"></i>
-                    </div>
-                    <div class="upload-text">
-                        Upload Berhasil ke ImgBB
-                    </div>
-                    <div class="upload-subtext">
-                        ${file.name}
-                    </div>
-                    <img id="proofPreview" class="preview-image" src="${thumbnailUrl}" alt="Preview Bukti">
-                `;
-                
-                // Set proof URL
+                // Update UI
                 proofImageUrl = imageUrl;
+                proofPreview.src = imageUrl;
+                proofPreview.style.display = 'block';
+                submitTaskBtn.disabled = false;
                 
-                // Show preview
-                if (previewImage) {
-                    previewImage.style.display = 'block';
-                }
+                // Add hash to cache
+                imageHashCache.add(hash);
                 
-                // Enable submit button
-                if (submitBtn) {
-                    submitBtn.disabled = false;
-                }
+                // Save draft
+                saveDraft();
                 
-                // Hide progress bar
-                setTimeout(() => {
-                    if (uploadProgress) uploadProgress.style.display = 'none';
-                }, 1000);
+                showToast('Gambar berhasil diupload', 'success');
                 
             } catch (error) {
-                console.error("Error uploading to ImgBB:", error);
-                
-                uploadArea.innerHTML = `
-                    <div class="upload-icon">
-                        <i class="fas fa-exclamation-circle"></i>
-                    </div>
-                    <div class="upload-text">
-                        Upload Gagal
-                    </div>
-                    <div class="upload-subtext">
-                        ${error.message || 'Silakan coba lagi'}
-                    </div>
-                `;
-                
-                if (uploadProgress) uploadProgress.style.display = 'none';
-                
-                showErrorModal('Upload Gagal', `Gagal mengupload gambar ke ImgBB: ${error.message || 'Silakan coba lagi'}`);
+                console.error('Error handling image file:', error);
+                showToast('Gagal memproses gambar', 'error');
             }
         }
         
-        // Reset upload area
-        function resetUploadArea() {
-            const uploadArea = document.getElementById('uploadArea');
-            const previewImage = document.getElementById('proofPreview');
-            const uploadProgress = document.getElementById('uploadProgress');
-            
-            if (!uploadArea) {
-                console.error("Upload area not found");
-                return;
-            }
-            
-            uploadArea.innerHTML = `
-                <div class="upload-icon">
-                    <i class="fas fa-cloud-upload-alt"></i>
-                </div>
-                <div class="upload-text">
-                    Klik atau seret file gambar ke sini
-                </div>
-                <div class="upload-subtext">
-                    Format: JPG, PNG (Maks. 5MB)
-                </div>
-                <input type="file" id="proofUpload" accept="image/*" style="display: none;">
-                <img id="proofPreview" class="preview-image" alt="Preview Bukti">
-            `;
-            
-            if (previewImage) {
-                previewImage.style.display = 'none';
-            }
-            
-            if (uploadProgress) {
-                uploadProgress.style.display = 'none';
-            }
-            
-            // Re-attach event listener
-            const newUploadArea = document.getElementById('uploadArea');
-            const newProofUpload = document.getElementById('proofUpload');
-            
-            if (newUploadArea && newProofUpload) {
-                newUploadArea.addEventListener('click', () => {
-                    newProofUpload.click();
-                });
+        // Compress image
+        function compressImage(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
                 
-                newProofUpload.addEventListener('change', handleFileUpload);
+                reader.onload = (e) => {
+                    const img = new Image();
+                    img.src = e.target.result;
+                    
+                    img.onload = () => {
+                        const canvas = document.createElement('canvas');
+                        const ctx = canvas.getContext('2d');
+                        
+                        // Calculate new dimensions
+                        let width = img.width;
+                        let height = img.height;
+                        const maxWidth = 1080;
+                        
+                        if (width > maxWidth) {
+                            height = (height * maxWidth) / width;
+                            width = maxWidth;
+                        }
+                        
+                        canvas.width = width;
+                        canvas.height = height;
+                        
+                        // Draw and compress
+                        ctx.drawImage(img, 0, 0, width, height);
+                        
+                        canvas.toBlob((blob) => {
+                            const compressedFile = new File([blob], file.name, {
+                                type: 'image/jpeg',
+                                lastModified: Date.now()
+                            });
+                            resolve(compressedFile);
+                        }, 'image/jpeg', 0.8);
+                    };
+                    
+                    img.onerror = reject;
+                };
+                
+                reader.onerror = reject;
+            });
+        }
+        
+        // Get image dimensions
+        function getImageDimensions(file) {
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                img.onload = () => resolve({ width: img.width, height: img.height });
+                img.onerror = reject;
+                img.src = URL.createObjectURL(file);
+            });
+        }
+        
+        // Generate image hash
+        async function generateImageHash(file) {
+            const buffer = await file.arrayBuffer();
+            const hashBuffer = await crypto.subtle.digest('SHA-256', buffer);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+        
+        // Upload to ImgBB
+        async function uploadToImgBB(file) {
+            const IMGBB_API_KEY = '874a8bf96641caa969ce88e871be13e3';
+            const formData = new FormData();
+            formData.append('key', IMGBB_API_KEY);
+            formData.append('image', file);
+            
+            const response = await fetch('https://api.imgbb.com/1/upload', {
+                method: 'POST',
+                body: formData
+            });
+            
+            if (!response.ok) {
+                throw new Error('ImgBB upload failed');
             }
+            
+            const data = await response.json();
+            if (!data.success) {
+                throw new Error('ImgBB API error');
+            }
+            
+            return data.data.url;
         }
         
         // Submit task
         async function submitTask() {
-            console.log("Submitting task...");
-            
-            // Cek apakah user sudah mengerjakan tugas ini
-            if (userCompletedTasks.has(currentTaskId)) {
-                showErrorModal('Tugas Sudah Dikerjakan', 'Anda sudah mengerjakan tugas ini sebelumnya.');
-                return;
-            }
-            
-            if (!proofImageUrl) {
-                showErrorModal('Bukti Diperlukan', 'Harap upload bukti gambar terlebih dahulu');
-                return;
-            }
-            
-            const submitBtn = document.getElementById('submitTaskBtn');
-            const taskNotes = document.getElementById('taskNotes');
-            
-            if (!submitBtn || !taskNotes) {
-                console.error("Submit button or task notes not found");
-                return;
-            }
-            
-            const notesValue = taskNotes.value;
-            
-            // Disable button and show loading
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> MENGIRIM...';
+            if (isSubmittingTask) return;
             
             try {
-                // Get current user
-                const user = window.firebaseAuth.currentUser;
-                if (!user) {
-                    showErrorModal('Login Diperlukan', 'Silakan login kembali');
-                    return;
+                isSubmittingTask = true;
+                submitTaskBtn.disabled = true;
+                submitTaskBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> MENGIRIM...';
+                
+                // Check localStorage lock
+                if (localStorage.getItem('task_submit_lock') === 'true') {
+                    throw new Error('Submit sedang diproses di tab lain');
                 }
                 
-                // Get user data
-                const userDoc = await window.firebaseGetDoc(window.firebaseDoc(window.firebaseDb, "users", user.uid));
-                if (!userDoc.exists()) {
-                    showErrorModal('Data User Tidak Ditemukan', 'Silakan login kembali');
-                    return;
-                }
-                
-                const userData = userDoc.data();
+                // Set lock
+                localStorage.setItem('task_submit_lock', 'true');
                 
                 // Get task data
-                const task = currentTasks.find(t => t.id === currentTaskId);
+                const task = tasks.find(t => t.id === currentTaskId);
                 if (!task) {
-                    showErrorModal('Tugas Tidak Ditemukan', 'Tugas tidak ditemukan. Silakan refresh halaman');
-                    return;
+                    throw new Error('Task tidak ditemukan');
                 }
                 
-                console.log("Creating submission for task:", task.title);
+                // Check 24-hour limit
+                const userSubmission = submissions.find(s => s.taskId === currentTaskId);
+                if (userSubmission) {
+                    const lastSubmissionTime = userSubmission.submittedAt.toDate().getTime();
+                    if (Date.now() - lastSubmissionTime < 24 * 60 * 60 * 1000) {
+                        throw new Error('Anda sudah submit tugas ini dalam 24 jam terakhir');
+                    }
+                }
+                
+                // Check slot availability
+                if (task.currentSlots >= task.maxSlots) {
+                    throw new Error('Slot tugas sudah penuh');
+                }
                 
                 // Create submission data
                 const submissionData = {
-                    userId: user.uid,
-                    userEmail: user.email || '',
-                    userName: userData.username || '',
+                    userId: currentUser.uid,
+                    userEmail: currentUser.email || '',
+                    userName: userData?.username || '',
                     taskId: currentTaskId,
                     taskTitle: task.title,
                     taskGeoReward: task.geoReward || 0,
                     taskLifeReward: task.lifeReward || 0,
                     proofUrl: proofImageUrl,
-                    notes: notesValue || '',
+                    notes: taskNotes.value || '',
                     status: 'pending',
-                    submittedAt: window.firebaseServerTimestamp(),
+                    submittedAt: serverTimestamp(),
                     reviewedAt: null,
                     reviewedBy: null,
                     adminNotes: ''
                 };
                 
-                console.log("Submission data:", submissionData);
-                
                 // Save to Firestore
-                const submissionRef = await window.firebaseAddDoc(
-                    window.firebaseCollection(window.firebaseDb, "taskSubmissions"), 
-                    submissionData
-                );
+                const submissionRef = await addDoc(collection(db, 'taskSubmissions'), submissionData);
                 
-                console.log('Task submission saved with ID:', submissionRef.id);
+                // Update task slots
+                await updateDoc(doc(db, 'tasks', currentTaskId), {
+                    currentSlots: (task.currentSlots || 0) + 1
+                });
                 
-                // Update local data
-                submissionData.id = submissionRef.id;
-                submissionData.submittedAt = new Date().toISOString();
+                // Set cooldown
+                cooldownEndTime = Date.now() + 10 * 60 * 1000; // 10 minutes
                 
-                taskHistory.unshift(submissionData);
-                userCompletedTasks.add(currentTaskId); // Tambahkan ke set tugas yang sudah dikerjakan
+                // Show receipt
+                showReceipt(submissionRef.id, submissionData);
                 
-                // Update UI
-                updateTaskHistoryList();
-                updateActiveTasksList();
+                // Clear draft
+                clearDraft();
                 
-                // Update notification badge
-                const notificationBadge = document.getElementById('taskNotification');
-                if (notificationBadge) {
-                    const availableTasks = currentTasks.filter(t => !userCompletedTasks.has(t.id));
-                    notificationBadge.textContent = availableTasks.length;
-                }
+                // Add to local submissions
+                submissions.unshift({
+                    id: submissionRef.id,
+                    ...submissionData
+                });
                 
-                // Show success modal
-                const successModal = document.getElementById('successModal');
-                if (successModal) {
-                    successModal.style.display = 'flex';
-                }
+                // Update stats
+                updateStats();
                 
-                // Reset form
-                resetTaskDetail();
+                // Check for daily bonus
+                await checkDailyBonus();
+                
+                // Check for streak bonus
+                await checkStreakBonus();
+                
+                showToast('Tugas berhasil dikirim!', 'success');
                 
             } catch (error) {
-                console.error("Error submitting task:", error);
-                showErrorModal("Gagal Mengirim", "Terjadi kesalahan saat mengirim tugas. Silakan coba lagi.");
+                console.error('Error submitting task:', error);
+                showToast(error.message || 'Gagal mengirim tugas', 'error');
+                submitTaskBtn.disabled = false;
+                submitTaskBtn.innerHTML = '<i class="fas fa-paper-plane"></i> KIRIM TUGAS';
             } finally {
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> KIRIM TUGAS';
+                isSubmittingTask = false;
+                localStorage.removeItem('task_submit_lock');
             }
         }
         
-        // Show error modal
-        function showErrorModal(title, message) {
-            console.error("Showing error modal:", title, message);
+        // Show receipt
+        function showReceipt(submissionId, submissionData) {
+            // Update receipt info
+            document.getElementById('receiptSubmissionId').textContent = submissionId.substring(0, 8) + '...';
+            document.getElementById('receiptTaskId').textContent = submissionData.taskId.substring(0, 8) + '...';
+            document.getElementById('receiptSubmitTime').textContent = new Date().toLocaleString('id-ID');
             
-            const errorMessage = document.getElementById('errorMessage');
-            const errorModal = document.getElementById('errorModal');
+            // Show receipt, hide form
+            submissionForm.style.display = 'none';
+            receiptScreen.style.display = 'block';
+        }
+        
+        // Check daily bonus
+        async function checkDailyBonus() {
+            try {
+                // Check if this is first submission today
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                
+                const todaySubmissions = submissions.filter(s => {
+                    const submissionDate = s.submittedAt.toDate();
+                    submissionDate.setHours(0, 0, 0, 0);
+                    return submissionDate.getTime() === today.getTime();
+                });
+                
+                if (todaySubmissions.length === 1) {
+                    // First submission today, add bonus
+                    await updateDoc(doc(db, 'users', currentUser.uid), {
+                        geoBalance: (userData.geoBalance || 0) + 0.5
+                    });
+                    
+                    // Add to history
+                    await addDoc(collection(db, 'history'), {
+                        userId: currentUser.uid,
+                        type: 'daily_task_bonus',
+                        amount: 0.5,
+                        description: 'Bonus tugas harian pertama',
+                        createdAt: serverTimestamp()
+                    });
+                    
+                    showToast('+0.5 GEO Bonus tugas harian!', 'success');
+                }
+            } catch (error) {
+                console.error('Error checking daily bonus:', error);
+            }
+        }
+        
+        // Check streak bonus
+        async function checkStreakBonus() {
+            try {
+                // Get last 3 days submissions
+                const last3Days = submissions.filter(s => {
+                    const submissionDate = s.submittedAt.toDate();
+                    const threeDaysAgo = new Date();
+                    threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
+                    return submissionDate > threeDaysAgo;
+                });
+                
+                // Check for 3 consecutive days
+                const uniqueDays = new Set();
+                last3Days.forEach(s => {
+                    const dateStr = s.submittedAt.toDate().toDateString();
+                    uniqueDays.add(dateStr);
+                });
+                
+                if (uniqueDays.size >= 3) {
+                    // Add LIFE bonus
+                    await updateDoc(doc(db, 'users', currentUser.uid), {
+                        lifeBalance: (userData.lifeBalance || 0) + 1
+                    });
+                    
+                    // Add to history
+                    await addDoc(collection(db, 'history'), {
+                        userId: currentUser.uid,
+                        type: 'task_streak_bonus',
+                        amount: 1,
+                        description: 'Bonus streak 3 hari berturut-turut',
+                        createdAt: serverTimestamp()
+                    });
+                    
+                    showToast('+1 LIFE Bonus streak 3 hari!', 'success');
+                }
+            } catch (error) {
+                console.error('Error checking streak bonus:', error);
+            }
+        }
+        
+        // Check cooldown
+        function checkCooldown() {
+            if (Date.now() < cooldownEndTime) {
+                const taskCards = document.querySelectorAll('.task-card');
+                taskCards.forEach(card => {
+                    const submitBtn = card.querySelector('.submit-task-btn');
+                    if (submitBtn) {
+                        const cooldownMinutes = Math.ceil((cooldownEndTime - Date.now()) / (1000 * 60));
+                        submitBtn.innerHTML = `<i class="fas fa-clock"></i> COOLDOWN ${cooldownMinutes}m`;
+                        submitBtn.disabled = true;
+                        submitBtn.className = 'btn btn-disabled';
+                    }
+                });
+            }
+        }
+        
+        // Save draft
+        function saveDraft() {
+            if (currentTaskId && proofImageUrl) {
+                const draft = {
+                    taskId: currentTaskId,
+                    proofUrl: proofImageUrl,
+                    notes: taskNotes.value,
+                    savedAt: Date.now()
+                };
+                localStorage.setItem(`task_draft_${currentTaskId}`, JSON.stringify(draft));
+            }
+        }
+        
+        // Restore draft
+        function restoreDraft() {
+            if (currentTaskId) {
+                const draftStr = localStorage.getItem(`task_draft_${currentTaskId}`);
+                if (draftStr) {
+                    const draft = JSON.parse(draftStr);
+                    const hoursSinceSave = (Date.now() - draft.savedAt) / (1000 * 60 * 60);
+                    
+                    if (hoursSinceSave < 24) {
+                        proofImageUrl = draft.proofUrl;
+                        proofPreview.src = draft.proofUrl;
+                        proofPreview.style.display = 'block';
+                        taskNotes.value = draft.notes;
+                        submitTaskBtn.disabled = false;
+                        
+                        showToast('Draft berhasil dipulihkan', 'info');
+                    } else {
+                        clearDraft();
+                    }
+                }
+            }
+        }
+        
+        // Clear draft
+        function clearDraft() {
+            if (currentTaskId) {
+                localStorage.removeItem(`task_draft_${currentTaskId}`);
+            }
+        }
+        
+        // Show status notification
+        function showStatusNotification(submission) {
+            let message = '';
+            let type = 'info';
             
-            if (errorMessage) {
-                errorMessage.textContent = message;
+            switch(submission.status) {
+                case 'approved':
+                    message = `Tugas "${submission.taskTitle}" DISETUJUI! +${submission.taskGeoReward} GEO`;
+                    type = 'success';
+                    break;
+                case 'rejected':
+                    message = `Tugas "${submission.taskTitle}" DITOLAK. ${submission.adminNotes || ''}`;
+                    type = 'error';
+                    break;
             }
             
-            if (errorModal) {
-                errorModal.style.display = 'flex';
+            if (message) {
+                showToast(message, type);
             }
+        }
+        
+        // Show toast notification
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type}`;
+            
+            let icon = '';
+            switch(type) {
+                case 'success':
+                    icon = 'check-circle';
+                    break;
+                case 'error':
+                    icon = 'exclamation-circle';
+                    break;
+                default:
+                    icon = 'info-circle';
+            }
+            
+            toast.innerHTML = `
+                <i class="fas fa-${icon} toast-icon"></i>
+                <span>${message}</span>
+            `;
+            
+            toastContainer.appendChild(toast);
+            
+            // Auto remove after 5 seconds
+            setTimeout(() => {
+                toast.remove();
+            }, 5000);
+        }
+        
+        // Show connection error
+        function showConnectionError() {
+            skeletonLoading.style.display = 'none';
+            connectionErrorModal.style.display = 'flex';
+        }
+        
+        // Utility functions
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
         }
     </script>
 </body>

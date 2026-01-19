@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Service - KuizTown</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ===== RESET & VARIABLES ===== */
+        :root {
+            --primary-blue: #2563eb;
+            --secondary-blue: #3b82f6;
+            --light-blue: #60a5fa;
+            --sky-blue: #87CEEB;
+            --soft-pink: #FFC0CB;
+            --light-pink: #fdf2f8;
+            --success-green: #10b981;
+            --warning-yellow: #f59e0b;
+            --danger-red: #ef4444;
+            --dark-bg: #5F729F;
+            --card-bg: rgba(255, 255, 255, 0.98);
+            --text-dark: #1f2937;
+            --text-gray: #6b7280;
+            --text-light: #9ca3af;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --border-radius: 16px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', 'Poppins', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-dark);
+            line-height: 1.6;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* ===== GEOMETRIC BACKGROUND PATTERN ===== */
+        .background-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 15% 20%, rgba(255, 192, 203, 0.08) 0%, transparent 25%),
+                radial-gradient(circle at 85% 80%, rgba(255, 192, 203, 0.08) 0%, transparent 25%),
+                radial-gradient(circle at 50% 50%, rgba(255, 192, 203, 0.05) 0%, transparent 35%);
+            z-index: -2;
+        }
+
+        .pattern-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255, 192, 203, 0.02) 35px, rgba(255, 192, 203, 0.02) 70px),
+                repeating-linear-gradient(-45deg, transparent, transparent 40px, rgba(135, 206, 235, 0.02) 40px, rgba(135, 206, 235, 0.02) 80px);
+            z-index: -1;
+            opacity: 0.6;
+        }
+
+        /* ===== MAIN CONTAINER ===== */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px 20px 40px;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            display: flex;
+            align-items: center;
+            padding: 20px 0;
+            margin-bottom: 30px;
+        }
+
+        .back-button {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateX(-2px);
+        }
+
+        .header-content {
+            flex: 1;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .logo-icon {
+            font-size: 32px;
+            background: linear-gradient(135deg, var(--sky-blue), var(--secondary-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .logo-text {
+            font-family: 'Poppins', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+            letter-spacing: -0.5px;
+        }
+
+        .page-subtitle {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 400;
+        }
+
+        /* ===== MAIN CONTENT ===== */
+        .main-content {
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero-section {
+            background: linear-gradient(135deg, var(--card-bg), rgba(255, 255, 255, 0.95));
+            border-radius: var(--border-radius);
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: var(--shadow-xl);
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(45deg, rgba(135, 206, 235, 0.1), rgba(255, 192, 203, 0.1));
+            border-radius: 50%;
+            transform: translate(100px, -100px);
+        }
+
+        .hero-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .hero-icon::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, rgba(135, 206, 235, 0.1), rgba(255, 192, 203, 0.1));
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        .hero-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .hero-description {
+            font-size: 16px;
+            color: var(--text-gray);
+            max-width: 600px;
+            margin: 0 auto 30px;
+            line-height: 1.6;
+        }
+
+        /* ===== WHATSAPP BUTTON ===== */
+        .whatsapp-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 20px 40px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.3);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            min-width: 280px;
+        }
+
+        .whatsapp-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+            z-index: -1;
+        }
+
+        .whatsapp-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(37, 211, 102, 0.4);
+        }
+
+        .whatsapp-button:hover::before {
+            left: 100%;
+        }
+
+        .whatsapp-button:active {
+            transform: translateY(-1px);
+        }
+
+        .whatsapp-icon {
+            font-size: 28px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .button-subtitle {
+            font-size: 14px;
+            color: var(--text-light);
+            margin-top: 15px;
+            font-weight: 400;
+        }
+
+        /* ===== INFO CARDS ===== */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .info-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--shadow-lg);
+            transition: var(--transition);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .info-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--sky-blue), var(--soft-pink));
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--light-blue), var(--sky-blue));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .card-subtitle {
+            font-size: 14px;
+            color: var(--text-gray);
+            margin-top: 3px;
+        }
+
+        /* ===== SERVICE HOURS CARD ===== */
+        .hours-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 248, 240, 0.95));
+            border-left-color: var(--warning-yellow);
+        }
+
+        .hours-card .card-icon {
+            background: linear-gradient(135deg, var(--warning-yellow), #fbbf24);
+        }
+
+        .hours-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 15px;
+        }
+
+        .hours-table tr {
+            transition: var(--transition);
+        }
+
+        .hours-table tr:hover {
+            background: rgba(0, 0, 0, 0.02);
+        }
+
+        .hours-table td {
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            vertical-align: middle;
+        }
+
+        .hours-table td:first-child {
+            font-weight: 600;
+            color: var(--text-dark);
+            padding-right: 20px;
+            width: 40%;
+        }
+
+        .hours-table td:last-child {
+            color: var(--text-gray);
+            font-family: 'Courier New', monospace;
+            font-weight: 500;
+        }
+
+        .hours-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* ===== FAQ CARD ===== */
+        .faq-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(240, 249, 255, 0.95));
+            border-left-color: var(--secondary-blue);
+        }
+
+        .faq-card .card-icon {
+            background: linear-gradient(135deg, var(--secondary-blue), #1d4ed8);
+        }
+
+        .faq-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .faq-item {
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 12px;
+            border-left: 4px solid var(--light-blue);
+            transition: var(--transition);
+        }
+
+        .faq-item:hover {
+            background: rgba(255, 255, 255, 0.9);
+            transform: translateX(5px);
+        }
+
+        .faq-question {
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .faq-question i {
+            color: var(--secondary-blue);
+            font-size: 14px;
+        }
+
+        .faq-answer {
+            font-size: 14px;
+            color: var(--text-gray);
+            line-height: 1.5;
+        }
+
+        /* ===== CONTACT INFO CARD ===== */
+        .contact-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(240, 255, 244, 0.95));
+            border-left-color: var(--success-green);
+        }
+
+        .contact-card .card-icon {
+            background: linear-gradient(135deg, var(--success-green), #059669);
+        }
+
+        .contact-details {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 12px;
+            transition: var(--transition);
+        }
+
+        .contact-item:hover {
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .contact-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: rgba(37, 99, 235, 0.1);
+            color: var(--primary-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .contact-content h4 {
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 5px;
+        }
+
+        .contact-content p {
+            font-size: 14px;
+            color: var(--text-gray);
+            line-height: 1.4;
+        }
+
+        /* ===== RESPONSE TIME BADGE ===== */
+        .response-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.2));
+            color: var(--success-green);
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            margin: 20px auto;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 40px;
+            position: relative;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+        }
+
+        .footer-quote {
+            font-size: 16px;
+            font-weight: 500;
+            color: white;
+            margin-bottom: 15px;
+            font-style: italic;
+            line-height: 1.5;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0.9;
+        }
+
+        .footer-copyright {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .footer-logo {
+            font-weight: 700;
+            color: var(--sky-blue);
+        }
+
+        /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px 15px 30px;
+            }
+
+            .hero-section {
+                padding: 30px 20px;
+            }
+
+            .hero-title {
+                font-size: 28px;
+            }
+
+            .hero-description {
+                font-size: 15px;
+            }
+
+            .whatsapp-button {
+                width: 100%;
+                min-width: auto;
+                padding: 18px 30px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .info-card {
+                padding: 25px;
+            }
+
+            .card-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .card-icon {
+                width: 45px;
+                height: 45px;
+                font-size: 20px;
+            }
+
+            .hours-table td:first-child {
+                width: 50%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 24px;
+            }
+
+            .hero-icon {
+                font-size: 60px;
+            }
+
+            .hero-icon::after {
+                width: 100px;
+                height: 100px;
+            }
+
+            .info-card {
+                padding: 20px;
+            }
+
+            .whatsapp-button {
+                font-size: 16px;
+                padding: 16px 25px;
+            }
+
+            .footer-quote {
+                font-size: 14px;
+            }
+        }
+
+        /* ===== UTILITY CLASSES ===== */
+        .text-center { text-align: center; }
+        .mt-10 { margin-top: 10px; }
+        .mt-20 { margin-top: 20px; }
+        .mb-10 { margin-bottom: 10px; }
+        .mb-20 { margin-bottom: 20px; }
+        .mb-30 { margin-bottom: 30px; }
+    </style>
+</head>
+<body>
+    <!-- Background Pattern -->
+    <div class="background-pattern"></div>
+    <div class="pattern-overlay"></div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <button class="back-button" id="backButton" aria-label="Kembali ke Dashboard">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <div class="header-content">
+                <div class="logo-container">
+                    <i class="fas fa-shapes logo-icon"></i>
+                    <span class="logo-text">KuizTown</span>
+                </div>
+                <div class="page-subtitle">Customer Service Center</div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Hero Section -->
+            <section class="hero-section">
+                <div class="hero-icon">
+                    <i class="fas fa-headset"></i>
+                </div>
+                <h1 class="hero-title">BUTUH PERTANYAAN?</h1>
+                <p class="hero-description">
+                    Tim Customer Service KuizTown siap membantu Anda 24/7. 
+                    Hubungi kami melalui WhatsApp untuk bantuan terkait akun, kuis, tugas, withdraw, 
+                    atau masalah lainnya.
+                </p>
+                
+                <div class="response-badge">
+                    <i class="fas fa-bolt"></i>
+                    <span>Rata-rata respons: 15-30 menit</span>
+                </div>
+
+                <button class="whatsapp-button" id="whatsappButton">
+                    <i class="fab fa-whatsapp whatsapp-icon"></i>
+                    <span>CHAT VIA WHATSAPP</span>
+                </button>
+                
+                <p class="button-subtitle">
+                    Klik tombol di atas untuk langsung terhubung dengan CS kami
+                </p>
+            </section>
+
+            <!-- Info Grid -->
+            <div class="info-grid">
+                <!-- Service Hours Card -->
+                <div class="info-card hours-card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div>
+                            <h3 class="card-title">Jam Operasional</h3>
+                            <p class="card-subtitle">Waktu pelayanan terbaik kami</p>
+                        </div>
+                    </div>
+                    <table class="hours-table">
+                        <tr>
+                            <td>Senin - Jumat</td>
+                            <td>08:00 - 22:00 WIB</td>
+                        </tr>
+                        <tr>
+                            <td>Sabtu - Minggu</td>
+                            <td>09:00 - 21:00 WIB</td>
+                        </tr>
+                        <tr>
+                            <td>Hari Libur Nasional</td>
+                            <td>10:00 - 18:00 WIB</td>
+                        </tr>
+                    </table>
+                    <div class="mt-20">
+                        <p style="font-size: 13px; color: var(--text-light); text-align: center;">
+                            <i class="fas fa-star" style="color: var(--warning-yellow); margin-right: 5px;"></i>
+                            Untuk keadaan darurat, kami tetap dapat dihubungi 24 jam
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ Card -->
+                <div class="info-card faq-card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-question-circle"></i>
+                        </div>
+                        <div>
+                            <h3 class="card-title">Pertanyaan Umum</h3>
+                            <p class="card-subtitle">Yang sering ditanyakan</p>
+                        </div>
+                    </div>
+                    <div class="faq-list">
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <i class="fas fa-circle"></i>
+                                Berapa lama proses withdraw?
+                            </div>
+                            <div class="faq-answer">
+                                Proses withdraw membutuhkan 1-3 hari kerja setelah disetujui admin. Pastikan data rekening/e-wallet Anda benar.
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <i class="fas fa-circle"></i>
+                                LIFE tidak bertambah setelah 1 jam?
+                            </div>
+                            <div class="faq-answer">
+                                Pastikan LIFE Anda belum penuh (max 10). Timer 1 jam dihitung dari pengurangan LIFE terakhir, bukan dari klaim terakhir.
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <i class="fas fa-circle"></i>
+                                Bagaimana reset password?
+                            </div>
+                            <div class="faq-answer">
+                                Gunakan fitur "Lupa Password" di halaman login atau hubungi CS untuk bantuan reset akun.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Info Card -->
+                <div class="info-card contact-card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div>
+                            <h3 class="card-title">Informasi Kontak</h3>
+                            <p class="card-subtitle">Cara lain menghubungi kami</p>
+                        </div>
+                    </div>
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-comments"></i>
+                            </div>
+                            <div class="contact-content">
+                                <h4>Live Chat</h4>
+                                <p>Tersedia di dashboard utama pada jam operasional</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope-open-text"></i>
+                            </div>
+                            <div class="contact-content">
+                                <h4>Email Support</h4>
+                                <p>support@kuiztown.com (respon dalam 24 jam)</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                            <div class="contact-content">
+                                <h4>Panduan Lengkap</h4>
+                                <p>Baca panduan pengguna di halaman "Panduan"</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tips Section -->
+            <div class="info-card">
+                <div class="card-header">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <div>
+                        <h3 class="card-title">Tips Menghubungi CS</h3>
+                        <p class="card-subtitle">Agar mendapatkan bantuan optimal</p>
+                    </div>
+                </div>
+                <div class="contact-details">
+                    <div class="contact-item" style="background: rgba(139, 92, 246, 0.05);">
+                        <div class="contact-icon" style="background: rgba(139, 92, 246, 0.1); color: #8b5cf6;">
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                        <div class="contact-content">
+                            <h4>Siapkan Data Akun</h4>
+                            <p>Username/email KuizTown Anda agar CS dapat membantu lebih cepat</p>
+                        </div>
+                    </div>
+                    <div class="contact-item" style="background: rgba(139, 92, 246, 0.05);">
+                        <div class="contact-icon" style="background: rgba(139, 92, 246, 0.1); color: #8b5cf6;">
+                            <i class="fas fa-camera"></i>
+                        </div>
+                        <div class="contact-content">
+                            <h4>Sertakan Bukti Visual</h4>
+                            <p>Screenshot atau rekaman video untuk masalah teknis</p>
+                        </div>
+                    </div>
+                    <div class="contact-item" style="background: rgba(139, 92, 246, 0.05);">
+                        <div class="contact-icon" style="background: rgba(139, 92, 246, 0.1); color: #8b5cf6;">
+                            <i class="fas fa-comment-alt"></i>
+                        </div>
+                        <div class="contact-content">
+                            <h4>Jelaskan dengan Detail</h4>
+                            <p>Deskripsikan masalah secara lengkap dengan kronologi kejadian</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-quote" id="footerQuote">
+                "Kepuasan Anda adalah prioritas kami. Tim Customer Service KuizTown berkomitmen memberikan pengalaman terbaik untuk setiap pengguna."
+            </div>
+            <div class="footer-copyright">
+                <span>&copy; 2026</span>
+                <span class="footer-logo">KuizTown</span>
+                <span>• Customer Service Center</span>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Inisialisasi halaman
+        document.addEventListener('DOMContentLoaded', function() {
+            // Back button functionality
+            document.getElementById('backButton').addEventListener('click', function() {
+                window.location.href = 'dashboard.html';
+            });
+            
+            // WhatsApp button functionality
+            document.getElementById('whatsappButton').addEventListener('click', function() {
+                const phoneNumber = '083161274382';
+                const defaultMessage = 'Halo Customer Service KuizTown, saya ingin bertanya tentang:';
+                const encodedMessage = encodeURIComponent(defaultMessage);
+                const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+                
+                window.open(whatsappUrl, '_blank');
+            });
+            
+            // Add hover effects to all info cards
+            const infoCards = document.querySelectorAll('.info-card');
+            infoCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-8px)';
+                    this.style.boxShadow = '0 25px 35px -5px rgba(0, 0, 0, 0.15)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                    this.style.boxShadow = 'var(--shadow-lg)';
+                });
+            });
+            
+            // Add click effect to WhatsApp button
+            const whatsappBtn = document.getElementById('whatsappButton');
+            whatsappBtn.addEventListener('mousedown', function() {
+                this.style.transform = 'translateY(-1px) scale(0.98)';
+            });
+            
+            whatsappBtn.addEventListener('mouseup', function() {
+                this.style.transform = 'translateY(-3px)';
+            });
+            
+            // Animate elements on scroll
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+            
+            // Observe all info cards and sections
+            document.querySelectorAll('.info-card, .hero-section').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(el);
+            });
+            
+            // Random footer quotes
+            const footerQuotes = [
+                "Kepuasan Anda adalah prioritas kami. Tim Customer Service KuizTown berkomitmen memberikan pengalaman terbaik untuk setiap pengguna.",
+                "Setiap pertanyaan adalah kesempatan kami untuk memberikan layanan terbaik. Jangan ragu menghubungi kami!",
+                "Tim CS KuizTown siap membantu menyelesaikan setiap kendala dengan solusi terbaik dan respon cepat.",
+                "Pengalaman pengguna yang mulus adalah tujuan utama kami. Hubungi CS untuk bantuan apapun.",
+                "Kami percaya komunikasi yang baik adalah kunci solusi. CS KuizTown hadir untuk Anda 24/7.",
+                "Setiap masalah memiliki solusi. Biarkan tim CS kami membantu menemukan solusi terbaik untuk Anda."
+            ];
+            
+            // Set random quote on load
+            const randomIndex = Math.floor(Math.random() * footerQuotes.length);
+            document.getElementById('footerQuote').textContent = `"${footerQuotes[randomIndex]}"`;
+            
+            // Add loading animation for better UX
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+            
+            // Prevent right-click (optional for production)
+            document.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+            });
+        });
+        
+        // Add CSS for initial page load
+        const style = document.createElement('style');
+        style.textContent = `
+            body {
+                opacity: 0;
+                transition: opacity 0.5s ease-in;
+            }
+            
+            .hero-section {
+                position: relative;
+                overflow: hidden;
+            }
+            
+            .hero-section::after {
+                content: '';
+                position: absolute;
+                top: -50%;
+                right: -50%;
+                width: 200px;
+                height: 200px;
+                background: linear-gradient(45deg, rgba(135, 206, 235, 0.05), rgba(255, 192, 203, 0.05));
+                border-radius: 50%;
+                animation: float 20s infinite linear;
+            }
+            
+            @keyframes float {
+                0% { transform: translate(0, 0) rotate(0deg); }
+                25% { transform: translate(100px, 50px) rotate(90deg); }
+                50% { transform: translate(0, 100px) rotate(180deg); }
+                75% { transform: translate(-100px, 50px) rotate(270deg); }
+                100% { transform: translate(0, 0) rotate(360deg); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

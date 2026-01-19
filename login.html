@@ -3,13 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - KuizTown</title>
+    <title>Masuk - KuizTown</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- Firebase SDK -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
+        import { 
+            getAuth, 
+            signInWithEmailAndPassword,
+            onAuthStateChanged,
+            signOut,
+            sendPasswordResetEmail
+        } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
+        import { 
+            getFirestore,
+            doc,
+            getDoc,
+            updateDoc,
+            serverTimestamp
+        } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyB9DCc6rCmeXl0O3CCLYe6zUmfByfRz428",
@@ -22,11 +35,19 @@
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
+        const db = getFirestore(app);
         
         // Ekspor ke global scope
         window.firebaseAuth = auth;
         window.firebaseSignIn = signInWithEmailAndPassword;
-        window.firebaseSendPasswordReset = sendPasswordResetEmail;
+        window.firebaseOnAuthStateChanged = onAuthStateChanged;
+        window.firebaseSignOut = signOut;
+        window.firebaseSendPasswordResetEmail = sendPasswordResetEmail;
+        window.firebaseDb = db;
+        window.firebaseDoc = doc;
+        window.firebaseGetDoc = getDoc;
+        window.firebaseUpdateDoc = updateDoc;
+        window.firebaseServerTimestamp = serverTimestamp;
     </script>
     <style>
         /* Reset & Base Styles */
@@ -171,6 +192,12 @@
             box-shadow: 0 0 0 3px rgba(135, 206, 235, 0.2);
         }
         
+        .form-input:disabled {
+            background-color: #f5f5f5;
+            color: #888;
+            cursor: not-allowed;
+        }
+        
         .password-container {
             position: relative;
         }
@@ -187,10 +214,22 @@
             font-size: 18px;
         }
         
+        .form-info {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 5px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .form-info i {
+            color: #87CEEB;
+        }
+        
         /* Forgot Password Link */
         .forgot-password {
             text-align: right;
-            margin-top: -10px;
             margin-bottom: 20px;
         }
         
@@ -324,30 +363,8 @@
             margin-bottom: 25px;
         }
         
-        .modal-input {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #e1e1e1;
-            border-radius: 10px;
-            font-size: 16px;
-            margin-bottom: 20px;
-            font-family: 'Poppins', sans-serif;
-        }
-        
-        .modal-input:focus {
-            outline: none;
-            border-color: #87CEEB;
-            box-shadow: 0 0 0 3px rgba(135, 206, 235, 0.2);
-        }
-        
-        .modal-buttons {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-        }
-        
         .modal-btn {
-            padding: 12px 25px;
+            padding: 12px 30px;
             background: linear-gradient(135deg, #87CEEB, #5F729F);
             color: white;
             border: none;
@@ -355,22 +372,11 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            flex: 1;
         }
         
         .modal-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 15px rgba(135, 206, 235, 0.4);
-        }
-        
-        .modal-btn-secondary {
-            background: #f0f0f0;
-            color: #666;
-        }
-        
-        .modal-btn-secondary:hover {
-            background: #e0e0e0;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
         
         /* Animations */
@@ -430,10 +436,6 @@
             .form-title {
                 font-size: 1.5rem;
             }
-            
-            .modal-buttons {
-                flex-direction: column;
-            }
         }
     </style>
 </head>
@@ -450,7 +452,7 @@
         <!-- Form Login -->
         <main class="form-container">
             <h1 class="form-title">Masuk ke KuizTown</h1>
-            <p class="form-subtitle">Selamat datang kembali! Ayo lanjutkan petualangan kuis Anda.</p>
+            <p class="form-subtitle">Selamat datang kembali! Masuk untuk lanjutkan petualangan GEO.</p>
             
             <form id="loginForm">
                 <div class="form-group">
@@ -469,7 +471,7 @@
                 </div>
                 
                 <div class="forgot-password">
-                    <a href="#" id="forgotPasswordLink">Lupa Sandi?</a>
+                    <a href="#" id="forgotPasswordLink">Lupa password?</a>
                 </div>
                 
                 <button type="submit" class="btn btn-primary" id="submitBtn">
@@ -492,8 +494,8 @@
         <div class="modal-content success">
             <i class="fas fa-check-circle modal-icon"></i>
             <h2 class="modal-title">Login Berhasil!</h2>
-            <p class="modal-message">Selamat datang kembali di KuizTown.</p>
-            <button class="modal-btn" id="goToDashboard">Lanjut ke Dashboard</button>
+            <p class="modal-message">Selamat datang kembali! Anda akan diarahkan ke dashboard.</p>
+            <div class="modal-btn" id="goToDashboard">Mengarahkan...</div>
         </div>
     </div>
     
@@ -502,36 +504,57 @@
         <div class="modal-content error">
             <i class="fas fa-exclamation-circle modal-icon"></i>
             <h2 class="modal-title" id="errorTitle">Login Gagal</h2>
-            <p class="modal-message" id="errorMessage">Email atau password salah.</p>
+            <p class="modal-message" id="errorMessage">Silakan coba lagi atau hubungi customer service.</p>
             <button class="modal-btn" id="closeErrorModal">Tutup</button>
         </div>
     </div>
     
-    <!-- Modal Lupa Password -->
-    <div id="forgotPasswordModal" class="modal">
+    <!-- Modal Reset Password -->
+    <div id="resetPasswordModal" class="modal">
         <div class="modal-content info">
             <i class="fas fa-key modal-icon"></i>
-            <h2 class="modal-title">Lupa Password</h2>
-            <p class="modal-message">Masukkan email Anda untuk mendapatkan link reset password.</p>
-            <input type="email" id="resetEmail" class="modal-input" placeholder="contoh@email.com">
-            <div class="modal-buttons">
-                <button class="modal-btn" id="sendResetEmail">Kirim Link Reset</button>
-                <button class="modal-btn modal-btn-secondary" id="closeForgotModal">Batal</button>
+            <h2 class="modal-title">Reset Password</h2>
+            <p class="modal-message" id="resetPasswordMessage">
+                Masukkan email Anda untuk menerima link reset password:
+            </p>
+            <input type="email" id="resetEmail" class="form-input" placeholder="Email Anda" style="margin-bottom: 15px;">
+            <div style="display: flex; gap: 10px; justify-content: center;">
+                <button class="modal-btn" id="sendResetEmail" style="padding: 10px 20px;">Kirim Link Reset</button>
+                <button class="modal-btn" id="cancelReset" style="background: #666; padding: 10px 20px;">Batal</button>
             </div>
         </div>
     </div>
     
-    <!-- Modal Reset Email Sent -->
-    <div id="resetSentModal" class="modal">
+    <!-- Modal Reset Success -->
+    <div id="resetSuccessModal" class="modal">
         <div class="modal-content success">
             <i class="fas fa-paper-plane modal-icon"></i>
-            <h2 class="modal-title">Email Terkirim!</h2>
-            <p class="modal-message">Link reset password telah dikirim ke email Anda. Silakan cek inbox atau spam folder.</p>
-            <button class="modal-btn" id="closeResetSentModal">Tutup</button>
+            <h2 class="modal-title">Link Reset Terkirim!</h2>
+            <p class="modal-message" id="resetSuccessMessage">
+                Cek email Anda untuk link reset password. Jika tidak ditemukan, cek folder spam.
+            </p>
+            <button class="modal-btn" id="closeResetSuccess">Tutup</button>
         </div>
     </div>
 
     <script>
+        // Global state variables
+        let isLoggingIn = false;
+        let loginCooldown = false;
+        let cooldownTimer = null;
+        let cooldownSeconds = 5;
+
+        // Check authentication state on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is already logged in using Firebase Auth
+            window.firebaseOnAuthStateChanged(window.firebaseAuth, (user) => {
+                if (user) {
+                    // User is already logged in, redirect to dashboard
+                    window.location.href = 'dashboard.html';
+                }
+            });
+        });
+
         // Toggle password visibility
         document.getElementById('togglePassword').addEventListener('click', function() {
             const passwordInput = document.getElementById('password');
@@ -547,69 +570,207 @@
                 icon.classList.add('fa-eye');
             }
         });
-        
-        // Open forgot password modal
+
+        // Forgot password link
         document.getElementById('forgotPasswordLink').addEventListener('click', function(e) {
             e.preventDefault();
-            document.getElementById('forgotPasswordModal').style.display = 'flex';
+            document.getElementById('resetPasswordModal').style.display = 'flex';
         });
-        
+
+        // Cancel reset password
+        document.getElementById('cancelReset').addEventListener('click', function() {
+            document.getElementById('resetPasswordModal').style.display = 'none';
+        });
+
+        // Send reset password email
+        document.getElementById('sendResetEmail').addEventListener('click', async function() {
+            const email = document.getElementById('resetEmail').value.trim();
+            
+            if (!email) {
+                showError('Email Kosong', 'Harap masukkan email Anda.');
+                return;
+            }
+            
+            const sendBtn = document.getElementById('sendResetEmail');
+            const originalText = sendBtn.textContent;
+            sendBtn.textContent = 'Mengirim...';
+            sendBtn.disabled = true;
+            
+            try {
+                await window.firebaseSendPasswordResetEmail(window.firebaseAuth, email);
+                
+                // Show success modal
+                document.getElementById('resetPasswordModal').style.display = 'none';
+                document.getElementById('resetSuccessModal').style.display = 'flex';
+                
+            } catch (error) {
+                console.error('Reset password error:', error);
+                
+                let errorMessage = 'Gagal mengirim email reset. Coba lagi nanti.';
+                
+                switch (error.code) {
+                    case 'auth/user-not-found':
+                        errorMessage = 'Email tidak terdaftar.';
+                        break;
+                    case 'auth/invalid-email':
+                        errorMessage = 'Format email tidak valid.';
+                        break;
+                    case 'auth/too-many-requests':
+                        errorMessage = 'Terlalu banyak permintaan. Coba lagi nanti.';
+                        break;
+                }
+                
+                showError('Reset Password Gagal', errorMessage);
+            } finally {
+                sendBtn.textContent = originalText;
+                sendBtn.disabled = false;
+            }
+        });
+
+        // Close reset success modal
+        document.getElementById('closeResetSuccess').addEventListener('click', function() {
+            document.getElementById('resetSuccessModal').style.display = 'none';
+            document.getElementById('resetEmail').value = '';
+        });
+
+        // Start cooldown after failed login
+        function startCooldown() {
+            loginCooldown = true;
+            const submitBtn = document.getElementById('submitBtn');
+            const originalText = submitBtn.innerHTML;
+            
+            let secondsLeft = cooldownSeconds;
+            
+            cooldownTimer = setInterval(() => {
+                submitBtn.innerHTML = `<i class="fas fa-clock"></i> Tunggu ${secondsLeft} detik...`;
+                secondsLeft--;
+                
+                if (secondsLeft < 0) {
+                    clearInterval(cooldownTimer);
+                    loginCooldown = false;
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                }
+            }, 1000);
+            
+            submitBtn.disabled = true;
+        }
+
         // Form submission
         document.getElementById('loginForm').addEventListener('submit', async function(e) {
             e.preventDefault();
+            
+            // Prevent double submission
+            if (isLoggingIn || loginCooldown) {
+                return;
+            }
             
             // Get form values
             const email = document.getElementById('email').value.trim();
             const password = document.getElementById('password').value;
             
-            // Validation
+            // Basic validation
             if (!email || !password) {
                 showError('Data Tidak Lengkap', 'Harap isi email dan password.');
                 return;
             }
             
-            // Disable submit button
+            // Set login state
+            isLoggingIn = true;
+            
+            // Disable submit button and show spinner
             const submitBtn = document.getElementById('submitBtn');
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Memproses...';
             
             try {
-                // Login with Firebase Authentication
-                await window.firebaseSignIn(window.firebaseAuth, email, password);
+                // Firebase Authentication sign in
+                const userCredential = await window.firebaseSignIn(
+                    window.firebaseAuth, 
+                    email, 
+                    password
+                );
+                
+                const user = userCredential.user;
+                
+                // Check user status in Firestore
+                const userDocRef = window.firebaseDoc(window.firebaseDb, "users", user.uid);
+                const userDoc = await window.firebaseGetDoc(userDocRef);
+                
+                if (!userDoc.exists()) {
+                    // User data not found in Firestore
+                    await window.firebaseSignOut(window.firebaseAuth);
+                    throw new Error('Data pengguna tidak ditemukan di database.');
+                }
+                
+                const userData = userDoc.data();
+                
+                // Check if user account is active
+                if (userData.status !== 'active') {
+                    await window.firebaseSignOut(window.firebaseAuth);
+                    showError('Akun Tidak Aktif', 'Akun Anda sedang dibatasi. Silakan hubungi admin.');
+                    isLoggingIn = false;
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Masuk';
+                    return;
+                }
+                
+                // Update lastLogin timestamp
+                await window.firebaseUpdateDoc(userDocRef, {
+                    lastLogin: window.firebaseServerTimestamp()
+                });
                 
                 // Show success modal
                 showSuccess();
                 
-                // In a real implementation, you would save user session to localStorage
-                // and update last login timestamp in Firestore
-                localStorage.setItem('kuiztown_user', email);
+                // Delay before redirect
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 800);
                 
             } catch (error) {
-                // Handle errors
-                let errorMessage = 'Email atau password salah.';
+                console.error('Login error:', error);
+                
+                // Reset login state
+                isLoggingIn = false;
+                
+                // Standardize error messages
+                let errorTitle = 'Login Gagal';
+                let errorMessage = 'Terjadi kesalahan saat login.';
                 
                 switch (error.code) {
-                    case 'auth/invalid-email':
-                        errorMessage = 'Format email tidak valid.';
-                        break;
-                    case 'auth/user-disabled':
-                        errorMessage = 'Akun ini telah dinonaktifkan. Hubungi customer service.';
-                        break;
                     case 'auth/user-not-found':
-                        errorMessage = 'Email tidak terdaftar.';
+                        errorMessage = 'Email belum terdaftar.';
                         break;
                     case 'auth/wrong-password':
                         errorMessage = 'Password salah.';
+                        startCooldown();
                         break;
                     case 'auth/too-many-requests':
                         errorMessage = 'Terlalu banyak percobaan login. Coba lagi nanti.';
+                        startCooldown();
+                        cooldownSeconds = 10;
                         break;
                     case 'auth/network-request-failed':
-                        errorMessage = 'Gagal terhubung ke jaringan. Periksa koneksi internet Anda.';
+                        errorMessage = 'Koneksi internet bermasalah. Periksa jaringan Anda.';
                         break;
+                    case 'auth/user-disabled':
+                        errorMessage = 'Akun telah dinonaktifkan. Hubungi admin.';
+                        break;
+                    case 'auth/invalid-email':
+                        errorMessage = 'Format email tidak valid.';
+                        break;
+                    case 'auth/invalid-credential':
+                        errorMessage = 'Email atau password salah.';
+                        startCooldown();
+                        break;
+                    default:
+                        if (error.message.includes('tidak ditemukan')) {
+                            errorMessage = 'Akun tidak ditemukan dalam sistem.';
+                        }
                 }
                 
-                showError('Login Gagal', errorMessage);
+                showError(errorTitle, errorMessage);
                 
                 // Re-enable submit button
                 submitBtn.disabled = false;
@@ -617,47 +778,14 @@
             }
         });
         
-        // Send reset password email
-        document.getElementById('sendResetEmail').addEventListener('click', async function() {
-            const email = document.getElementById('resetEmail').value.trim();
-            
-            if (!email) {
-                document.getElementById('resetEmail').classList.add('shake');
-                setTimeout(() => document.getElementById('resetEmail').classList.remove('shake'), 500);
-                return;
-            }
-            
-            const sendBtn = this;
-            sendBtn.disabled = true;
-            sendBtn.textContent = 'Mengirim...';
-            
-            try {
-                await window.firebaseSendPasswordReset(window.firebaseAuth, email);
-                
-                // Close forgot password modal
-                document.getElementById('forgotPasswordModal').style.display = 'none';
-                
-                // Show success modal
-                document.getElementById('resetSentModal').style.display = 'flex';
-                
-            } catch (error) {
-                let errorMessage = 'Gagal mengirim email reset.';
-                
-                if (error.code === 'auth/user-not-found') {
-                    errorMessage = 'Email tidak terdaftar.';
-                } else if (error.code === 'auth/invalid-email') {
-                    errorMessage = 'Format email tidak valid.';
-                }
-                
-                showError('Gagal Mengirim Email', errorMessage);
-                sendBtn.disabled = false;
-                sendBtn.textContent = 'Kirim Link Reset';
-            }
-        });
-        
         // Modal functions
         function showSuccess() {
-            document.getElementById('successModal').style.display = 'flex';
+            const modal = document.getElementById('successModal');
+            modal.style.display = 'flex';
+            
+            // Update button text
+            const button = document.getElementById('goToDashboard');
+            button.textContent = 'Mengarahkan...';
         }
         
         function showError(title, message) {
@@ -666,57 +794,32 @@
             document.getElementById('errorModal').style.display = 'flex';
         }
         
-        // Close modals
-        document.getElementById('goToDashboard').addEventListener('click', function() {
-            // Redirect to dashboard
-            window.location.href = 'dashboard.html';
-        });
-        
+        // Close error modal
         document.getElementById('closeErrorModal').addEventListener('click', function() {
             document.getElementById('errorModal').style.display = 'none';
         });
         
-        document.getElementById('closeForgotModal').addEventListener('click', function() {
-            document.getElementById('forgotPasswordModal').style.display = 'none';
-            document.getElementById('resetEmail').value = '';
-            document.getElementById('sendResetEmail').disabled = false;
-            document.getElementById('sendResetEmail').textContent = 'Kirim Link Reset';
-        });
-        
-        document.getElementById('closeResetSentModal').addEventListener('click', function() {
-            document.getElementById('resetSentModal').style.display = 'none';
-        });
-        
         // Close modals when clicking outside
         window.addEventListener('click', function(event) {
-            const modals = ['successModal', 'errorModal', 'forgotPasswordModal', 'resetSentModal'];
+            const successModal = document.getElementById('successModal');
+            const errorModal = document.getElementById('errorModal');
+            const resetModal = document.getElementById('resetPasswordModal');
+            const resetSuccessModal = document.getElementById('resetSuccessModal');
             
-            modals.forEach(modalId => {
-                const modal = document.getElementById(modalId);
-                if (event.target === modal) {
-                    modal.style.display = 'none';
-                    
-                    // Reset forgot password modal
-                    if (modalId === 'forgotPasswordModal') {
-                        document.getElementById('resetEmail').value = '';
-                        document.getElementById('sendResetEmail').disabled = false;
-                        document.getElementById('sendResetEmail').textContent = 'Kirim Link Reset';
-                    }
-                }
-            });
-        });
-        
-        // Check if user is already logged in
-        document.addEventListener('DOMContentLoaded', function() {
-            if (localStorage.getItem('kuiztown_user')) {
-                window.location.href = 'dashboard.html';
+            if (event.target === successModal) {
+                successModal.style.display = 'none';
             }
-        });
-        
-        // Enter key to submit login form
-        document.getElementById('password').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                document.getElementById('loginForm').dispatchEvent(new Event('submit'));
+            
+            if (event.target === errorModal) {
+                errorModal.style.display = 'none';
+            }
+            
+            if (event.target === resetModal) {
+                resetModal.style.display = 'none';
+            }
+            
+            if (event.target === resetSuccessModal) {
+                resetSuccessModal.style.display = 'none';
             }
         });
     </script>

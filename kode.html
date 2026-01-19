@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Admin Kode Hadiah - KuizTown</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+body{
+font-family:Poppins,Arial;
+background:#5F729F;
+padding:15px;
+}
+
+h2{
+color:white;
+margin-bottom:12px;
+}
+
+.card{
+background:white;
+border-radius:14px;
+padding:15px;
+margin-bottom:15px;
+box-shadow:0 6px 16px rgba(0,0,0,.12)
+}
+
+input,button{
+width:100%;
+padding:12px;
+border-radius:10px;
+border:1px solid #ddd;
+margin-bottom:10px;
+font-size:14px
+}
+
+button{
+background:#2563eb;
+color:white;
+border:none;
+font-weight:600;
+cursor:pointer
+}
+
+.row{
+display:flex;
+gap:10px
+}
+
+.row input{
+flex:1
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+font-size:13px
+}
+
+th,td{
+padding:8px;
+border-bottom:1px solid #eee;
+text-align:center
+}
+
+.badge{
+padding:4px 8px;
+border-radius:6px;
+font-size:11px;
+color:white
+}
+
+.on{background:#22c55e}
+.off{background:#ef4444}
+
+.small{
+font-size:12px;
+color:#666
+}
+</style>
+</head>
+
+<body>
+
+<h2>🎁 Admin Kode Hadiah</h2>
+
+<!-- CREATE CODE -->
+<div class="card">
+
+<h3>Buat Kode Baru</h3>
+
+<input id="codeInput" placeholder="Kode (kosong = auto generate)">
+
+<div class="row">
+<input id="rewardGeo" type="number" placeholder="Bonus GEO">
+<input id="rewardLife" type="number" placeholder="Bonus LIFE">
+</div>
+
+<div class="row">
+<input id="maxUse" type="number" placeholder="Max Klaim">
+<input id="expireDate" type="datetime-local">
+</div>
+
+<button onclick="createCode()">GENERATE KODE</button>
+
+<p class="small">
+✔ Case Sensitive aktif<br>
+✔ Bisa reward GEO + LIFE sekaligus
+</p>
+
+</div>
+
+<!-- LIST -->
+<div class="card">
+
+<h3>Daftar Kode</h3>
+
+<table>
+<thead>
+<tr>
+<th>Kode</th>
+<th>Bonus</th>
+<th>Pakai</th>
+<th>Status</th>
+<th>Aksi</th>
+</tr>
+</thead>
+
+<tbody id="codeTable"></tbody>
+</table>
+
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
+import { getAuth,onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
+import { 
+getFirestore,
+doc,
+getDoc,
+setDoc,
+collection,
+onSnapshot,
+updateDoc,
+serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
+
+// ================= CONFIG =================
+
+const firebaseConfig = {
+apiKey: "AIzaSyB9DCc6rCmeXl0O3CCLYe6zUmfByfRz428",
+authDomain: "kuiztown.firebaseapp.com",
+projectId: "kuiztown",
+storageBucket: "kuiztown.firebasestorage.app",
+messagingSenderId: "334081803913",
+appId: "1:334081803913:web:84899b42961e12f538a858"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+// ================= ADMIN PROTECT =================
+
+onAuthStateChanged(auth, async(user)=>{
+
+ if(!user){
+ location.href="login.html";
+ return;
+ }
+
+ const snap = await getDoc(doc(db,"users",user.uid));
+
+ if(!snap.exists() || snap.data().role !== "admin"){
+ alert("Admin only!");
+ location.href="dashboard.html";
+ return;
+ }
+
+ loadCodes();
+
+});
+
+// ================= RANDOM CODE =================
+
+function randomCode(){
+ const chars = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789";
+ let code = "";
+ for(let i=0;i<8;i++){
+ code += chars.charAt(Math.floor(Math.random()*chars.length));
+ }
+ return code;
+}
+
+// ================= CREATE CODE =================
+
+window.createCode = async()=>{
+
+ let code = codeInput.value.trim();
+ if(!code) code = randomCode();
+
+ const geo = Number(rewardGeo.value) || 0;
+ const life = Number(rewardLife.value) || 0;
+ const max = Number(maxUse.value);
+
+ if(geo <= 0 && life <= 0){
+ alert("Minimal salah satu reward harus diisi");
+ return;
+ }
+
+ if(!max || max <= 0){
+ alert("Max klaim wajib diisi");
+ return;
+ }
+
+ const data = {
+ code: code,
+ rewardGeo: geo,
+ rewardLife: life,
+ maxUse: max,
+ usedCount: 0,
+ active: true,
+ claimedBy: [],
+ expireAt: expireDate.value ? new Date(expireDate.value) : null,
+ createdAt: serverTimestamp()
+ };
+
+ await setDoc(doc(db,"reward_codes",code), data);
+
+ alert("Kode berhasil dibuat");
+
+ codeInput.value="";
+ rewardGeo.value="";
+ rewardLife.value="";
+ maxUse.value="";
+ expireDate.value="";
+
+};
+
+// ================= LOAD LIST =================
+
+function loadCodes(){
+
+ onSnapshot(collection(db,"reward_codes"), snap=>{
+
+ const table = document.getElementById("codeTable");
+ table.innerHTML="";
+
+ snap.forEach(docu=>{
+
+ const d = docu.data();
+
+ let bonusText = "";
+ if(d.rewardGeo > 0) bonusText += `${d.rewardGeo} GEO `;
+ if(d.rewardLife > 0) bonusText += `${d.rewardLife} LIFE`;
+
+ table.innerHTML += `
+<tr>
+<td>${d.code}</td>
+<td>${bonusText}</td>
+<td>${d.usedCount}/${d.maxUse}</td>
+<td>
+<span class="badge ${d.active?'on':'off'}">
+${d.active?'AKTIF':'OFF'}
+</span>
+</td>
+<td>
+<button onclick="toggleCode('${d.code}',${d.active})">
+${d.active?'OFF':'ON'}
+</button>
+</td>
+</tr>
+`;
+
+ });
+
+ });
+
+}
+
+// ================= TOGGLE STATUS =================
+
+window.toggleCode = async(code,status)=>{
+
+ await updateDoc(doc(db,"reward_codes",code),{
+ active: !status
+ });
+
+};
+
+</script>
+
+</body>
+</html>

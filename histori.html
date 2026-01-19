@@ -186,11 +186,13 @@
             padding: 5px;
             margin-bottom: 20px;
             gap: 5px;
+            flex-wrap: wrap;
         }
         
         .filter-tab {
             flex: 1;
-            padding: 12px;
+            min-width: 70px;
+            padding: 12px 8px;
             border: none;
             background: transparent;
             border-radius: 8px;
@@ -200,6 +202,7 @@
             cursor: pointer;
             transition: all 0.3s ease;
             text-align: center;
+            font-size: 0.85rem;
         }
         
         .filter-tab.active {
@@ -268,35 +271,21 @@
         .history-reward {
             font-weight: 600;
             font-size: 0.9rem;
-            color: #32CD32;
             display: flex;
             align-items: center;
             gap: 5px;
         }
         
-        .history-status {
-            display: inline-flex;
-            align-items: center;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            gap: 5px;
+        .reward-positive {
+            color: #32CD32;
         }
         
-        .status-success {
-            background: rgba(144, 238, 144, 0.1);
-            color: #90EE90;
-        }
-        
-        .status-pending {
-            background: rgba(255, 165, 0, 0.1);
-            color: #FFA500;
-        }
-        
-        .status-reject {
-            background: rgba(255, 99, 71, 0.1);
+        .reward-negative {
             color: #FF6347;
+        }
+        
+        .reward-neutral {
+            color: #666;
         }
         
         /* Ikon berdasarkan tipe */
@@ -322,8 +311,18 @@
         }
         
         .icon-withdraw {
-            background: rgba(144, 238, 144, 0.1);
-            color: #90EE90;
+            background: rgba(255, 99, 71, 0.1);
+            color: #FF6347;
+        }
+        
+        .icon-referral {
+            background: rgba(154, 205, 50, 0.1);
+            color: #9ACD32;
+        }
+        
+        .icon-manual {
+            background: rgba(128, 128, 128, 0.1);
+            color: #808080;
         }
         
         /* Item layout */
@@ -378,6 +377,69 @@
             font-size: 1.2rem;
         }
         
+        /* Load More Button */
+        .load-more-container {
+            text-align: center;
+            margin-top: 20px;
+            padding: 10px 0;
+        }
+        
+        .load-more-btn {
+            background: #87CEEB;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 12px 24px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(135, 206, 235, 0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .load-more-btn:hover:not(:disabled) {
+            background: #6CB4D9;
+            transform: translateY(-2px);
+        }
+        
+        .load-more-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+        
+        /* Error State */
+        .error-state {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
+        .error-icon {
+            font-size: 60px;
+            color: rgba(255, 99, 71, 0.4);
+            margin-bottom: 15px;
+        }
+        
+        .error-btn {
+            background: #87CEEB;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 12px 24px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .error-btn:hover {
+            background: #6CB4D9;
+        }
+        
         /* Separator */
         .separator {
             height: 1px;
@@ -424,8 +486,9 @@
                 gap: 5px;
             }
             
-            .history-status {
-                margin-top: 5px;
+            .filter-tab {
+                font-size: 0.8rem;
+                padding: 10px 6px;
             }
         }
     </style>
@@ -473,6 +536,7 @@
                     <button class="filter-tab" data-filter="quiz">Quiz</button>
                     <button class="filter-tab" data-filter="tugas">Tugas</button>
                     <button class="filter-tab" data-filter="withdraw">Withdraw</button>
+                    <button class="filter-tab" data-filter="referral">Referral</button>
                 </div>
             </div>
             
@@ -480,19 +544,38 @@
             
             <!-- History List -->
             <div class="card">
+                <!-- Error State (hidden by default) -->
+                <div id="errorState" class="error-state" style="display: none;">
+                    <div class="error-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <h3 class="empty-title">Gagal memuat histori</h3>
+                    <button class="error-btn" id="retryButton">
+                        <i class="fas fa-redo"></i> Coba Lagi
+                    </button>
+                </div>
+                
+                <!-- History List -->
                 <div class="history-list" id="historyList">
                     <!-- History items will be loaded here -->
                 </div>
                 
                 <!-- Empty State -->
-                <div id="noHistory" class="empty-state">
+                <div id="noHistory" class="empty-state" style="display: none;">
                     <div class="empty-icon">
                         <i class="fas fa-history"></i>
                     </div>
-                    <h3 class="empty-title">Belum Ada Aktivitas</h3>
+                    <h3 class="empty-title">Tidak ada riwayat aktivitas</h3>
                     <p class="empty-desc">
                         Anda belum memiliki riwayat aktivitas. Mulailah main kuis atau kerjakan tugas!
                     </p>
+                </div>
+                
+                <!-- Load More Button -->
+                <div id="loadMoreContainer" class="load-more-container" style="display: none;">
+                    <button class="load-more-btn" id="loadMoreBtn">
+                        <i class="fas fa-arrow-down"></i> Tampilkan Lebih Banyak
+                    </button>
                 </div>
             </div>
         </div>
@@ -501,7 +584,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
-        import { getFirestore, collection, query, where, getDocs, orderBy } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
+        import { getFirestore, collection, query, where, getDocs, orderBy, limit, startAfter } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
 
         // Firebase configuration
         const firebaseConfig = {
@@ -521,7 +604,9 @@
         // Variables
         let currentUser = null;
         let currentFilter = 'all';
-        let allHistory = [];
+        let lastVisible = null;
+        let hasMoreData = true;
+        let isLoading = false;
 
         // Initialize the app
         document.addEventListener('DOMContentLoaded', function() {
@@ -542,8 +627,27 @@
                     
                     // Update filter and refresh list
                     currentFilter = this.getAttribute('data-filter');
-                    displayHistory();
+                    lastVisible = null;
+                    hasMoreData = true;
+                    document.getElementById('loadMoreContainer').style.display = 'none';
+                    loadHistoryData(currentUser.uid);
                 });
+            });
+            
+            // Retry button
+            document.getElementById('retryButton').addEventListener('click', function() {
+                if (currentUser) {
+                    lastVisible = null;
+                    hasMoreData = true;
+                    loadHistoryData(currentUser.uid);
+                }
+            });
+            
+            // Load more button
+            document.getElementById('loadMoreBtn').addEventListener('click', function() {
+                if (currentUser && !isLoading && hasMoreData) {
+                    loadMoreHistory(currentUser.uid);
+                }
             });
         }
 
@@ -562,198 +666,239 @@
         // Load history data from Firestore
         async function loadHistoryData(userId) {
             showLoading(true);
+            hideErrorState();
+            document.getElementById('noHistory').style.display = 'none';
+            document.getElementById('historyList').innerHTML = '';
             
             try {
-                allHistory = [];
+                // Create query based on filter
+                let historyQuery;
                 
-                // Load quiz history
-                await loadQuizHistory(userId);
+                if (currentFilter === 'all') {
+                    historyQuery = query(
+                        collection(db, "history"),
+                        where("uid", "==", userId),
+                        orderBy("timestamp", "desc"),
+                        limit(50)
+                    );
+                } else {
+                    // Map filter to history types
+                    const typeFilter = getTypeFilter();
+                    historyQuery = query(
+                        collection(db, "history"),
+                        where("uid", "==", userId),
+                        where("type", "in", typeFilter),
+                        orderBy("timestamp", "desc"),
+                        limit(50)
+                    );
+                }
                 
-                // Load task history
-                await loadTaskHistory(userId);
+                const querySnapshot = await getDocs(historyQuery);
                 
-                // Load withdraw history
-                await loadWithdrawHistory(userId);
-                
-                // Sort all history by date (newest first)
-                allHistory.sort((a, b) => {
-                    const dateA = a.timestamp?.toDate ? a.timestamp.toDate() : new Date(a.timestamp || 0);
-                    const dateB = b.timestamp?.toDate ? b.timestamp.toDate() : new Date(b.timestamp || 0);
-                    return dateB - dateA;
-                });
+                // Process results
+                if (querySnapshot.empty) {
+                    showEmptyState();
+                } else {
+                    displayHistory(querySnapshot);
+                    lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
+                    
+                    // Show load more button if we have at least 50 results
+                    if (querySnapshot.docs.length >= 50) {
+                        document.getElementById('loadMoreContainer').style.display = 'block';
+                    }
+                }
                 
                 // Hide skeleton and show content
                 document.getElementById('skeletonLoading').style.display = 'none';
                 document.getElementById('contentArea').style.display = 'block';
                 
-                // Display history
-                displayHistory();
-                
             } catch (error) {
                 console.error("Error loading history data:", error);
-                showEmptyState("Gagal memuat riwayat. Silakan coba lagi.");
+                showErrorState();
             } finally {
                 showLoading(false);
             }
         }
 
-        // Load quiz history
-        async function loadQuizHistory(userId) {
+        // Load more history (pagination)
+        async function loadMoreHistory(userId) {
+            if (!lastVisible || !hasMoreData || isLoading) return;
+            
+            isLoading = true;
+            document.getElementById('loadMoreBtn').disabled = true;
+            document.getElementById('loadMoreBtn').innerHTML = '<i class="fas fa-spinner fa-spin"></i> Memuat...';
+            
             try {
-                // Note: In a real implementation, you should store quiz history in Firestore
-                // For now, we'll use localStorage as a fallback
-                const quizHistory = JSON.parse(localStorage.getItem(`kuiztown_quiz_history_${userId}`)) || [];
+                // Create query based on filter
+                let historyQuery;
                 
-                quizHistory.forEach(quiz => {
-                    allHistory.push({
-                        type: 'quiz',
-                        title: `Quiz - Level ${quiz.level} Kategori ${getCategoryName(quiz.category)}`,
-                        details: `Score: ${quiz.score}/10`,
-                        reward: `${quiz.reward.toFixed(1).replace('.', ',')} GEO`,
-                        date: formatDate(quiz.date),
-                        timestamp: new Date(quiz.date),
-                        status: 'completed'
-                    });
-                });
+                if (currentFilter === 'all') {
+                    historyQuery = query(
+                        collection(db, "history"),
+                        where("uid", "==", userId),
+                        orderBy("timestamp", "desc"),
+                        startAfter(lastVisible),
+                        limit(50)
+                    );
+                } else {
+                    // Map filter to history types
+                    const typeFilter = getTypeFilter();
+                    historyQuery = query(
+                        collection(db, "history"),
+                        where("uid", "==", userId),
+                        where("type", "in", typeFilter),
+                        orderBy("timestamp", "desc"),
+                        startAfter(lastVisible),
+                        limit(50)
+                    );
+                }
+                
+                const querySnapshot = await getDocs(historyQuery);
+                
+                // Process results
+                if (querySnapshot.empty) {
+                    hasMoreData = false;
+                    document.getElementById('loadMoreContainer').style.display = 'none';
+                } else {
+                    displayHistory(querySnapshot, true);
+                    lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
+                    
+                    // Hide load more button if we have less than 50 results
+                    if (querySnapshot.docs.length < 50) {
+                        hasMoreData = false;
+                        document.getElementById('loadMoreContainer').style.display = 'none';
+                    }
+                }
                 
             } catch (error) {
-                console.error("Error loading quiz history:", error);
+                console.error("Error loading more history:", error);
+            } finally {
+                isLoading = false;
+                document.getElementById('loadMoreBtn').disabled = false;
+                document.getElementById('loadMoreBtn').innerHTML = '<i class="fas fa-arrow-down"></i> Tampilkan Lebih Banyak';
             }
         }
 
-        // Load task history
-        async function loadTaskHistory(userId) {
-            try {
-                const tasksQuery = query(
-                    collection(db, "user_tasks"),
-                    where("userId", "==", userId),
-                    orderBy("submittedAt", "desc")
-                );
-                
-                const querySnapshot = await getDocs(tasksQuery);
-                
-                querySnapshot.forEach(doc => {
-                    const task = doc.data();
-                    allHistory.push({
-                        type: 'tugas',
-                        title: `Tugas - ${task.taskTitle || 'Task'}`,
-                        details: task.taskDescription || '',
-                        reward: task.reward ? `${parseFloat(task.reward).toFixed(1).replace('.', ',')} GEO` : '',
-                        date: formatDate(task.submittedAt),
-                        timestamp: task.submittedAt,
-                        status: task.status?.toLowerCase() || 'pending'
-                    });
-                });
-                
-            } catch (error) {
-                console.error("Error loading task history:", error);
+        // Map filter to history types
+        function getTypeFilter() {
+            switch(currentFilter) {
+                case 'quiz':
+                    return ['quiz_reward'];
+                case 'tugas':
+                    return ['task_reward'];
+                case 'withdraw':
+                    return ['withdraw_success'];
+                case 'referral':
+                    return ['referral_register_bonus', 'referral_activation_reward'];
+                default:
+                    return [];
             }
         }
 
-        // Load withdraw history
-        async function loadWithdrawHistory(userId) {
-            try {
-                const withdrawQuery = query(
-                    collection(db, "withdrawals"),
-                    where("userId", "==", userId),
-                    orderBy("createdAt", "desc")
-                );
-                
-                const querySnapshot = await getDocs(withdrawQuery);
-                
-                querySnapshot.forEach(doc => {
-                    const withdrawal = doc.data();
-                    allHistory.push({
-                        type: 'withdraw',
-                        title: `Withdraw - ${withdrawal.amount?.toFixed(1).replace('.', ',')} GEO`,
-                        details: `${withdrawal.method === 'bank' ? 'BANK' : 'E-WALLET'} - ${withdrawal.methodDetail || ''}`,
-                        reward: '', // No reward for withdraw
-                        date: formatDate(withdrawal.createdAt),
-                        timestamp: withdrawal.createdAt,
-                        status: withdrawal.status?.toLowerCase() || 'pending'
-                    });
-                });
-                
-            } catch (error) {
-                console.error("Error loading withdraw history:", error);
-            }
-        }
-
-        // Display history based on current filter
-        function displayHistory() {
+        // Display history from query snapshot
+        function displayHistory(querySnapshot, append = false) {
             const historyList = document.getElementById('historyList');
             const noHistory = document.getElementById('noHistory');
             
-            // Filter history
-            const filteredHistory = allHistory.filter(item => {
-                if (currentFilter === 'all') return true;
-                return item.type === currentFilter;
-            });
+            if (!append) {
+                historyList.innerHTML = '';
+            }
             
-            if (filteredHistory.length === 0) {
-                historyList.style.display = 'none';
-                noHistory.style.display = 'block';
+            if (querySnapshot.empty && !append) {
+                showEmptyState();
                 return;
             }
             
             noHistory.style.display = 'none';
             historyList.style.display = 'block';
-            historyList.innerHTML = '';
             
-            // Display filtered history
-            filteredHistory.forEach(item => {
-                const historyItem = createHistoryItem(item);
+            // Display history items
+            querySnapshot.forEach(doc => {
+                const historyData = doc.data();
+                const historyItem = createHistoryItem(historyData);
                 historyList.appendChild(historyItem);
             });
         }
 
         // Create history item element
-        function createHistoryItem(item) {
+        function createHistoryItem(historyData) {
             const div = document.createElement('div');
             div.className = 'history-item';
             
-            // Determine icon and color based on type
+            // Determine icon, title, and details based on type
             let iconClass = '';
             let icon = '';
-            let statusClass = '';
-            let statusText = '';
+            let title = '';
+            let details = '';
+            let geoAmount = 0;
+            let lifeAmount = 0;
             
-            switch(item.type) {
-                case 'quiz':
+            switch(historyData.type) {
+                case 'quiz_reward':
                     iconClass = 'icon-quiz';
                     icon = 'fas fa-brain';
-                    statusClass = 'status-success';
-                    statusText = 'SELESAI';
+                    title = 'Quiz Reward';
+                    details = 'Reward dari kuis';
                     break;
-                case 'tugas':
+                case 'task_reward':
                     iconClass = 'icon-task';
                     icon = 'fas fa-tasks';
-                    if (item.status === 'approved') {
-                        statusClass = 'status-success';
-                        statusText = 'APPROVE';
-                    } else if (item.status === 'rejected') {
-                        statusClass = 'status-reject';
-                        statusText = 'REJECT';
-                    } else {
-                        statusClass = 'status-pending';
-                        statusText = 'PENDING';
-                    }
+                    title = 'Task Reward';
+                    details = 'Reward dari tugas';
                     break;
-                case 'withdraw':
+                case 'withdraw_success':
                     iconClass = 'icon-withdraw';
                     icon = 'fas fa-money-bill-wave';
-                    if (item.status === 'approved') {
-                        statusClass = 'status-success';
-                        statusText = 'APPROVE';
-                    } else if (item.status === 'rejected') {
-                        statusClass = 'status-reject';
-                        statusText = 'REJECT';
-                    } else {
-                        statusClass = 'status-pending';
-                        statusText = 'PENDING';
-                    }
+                    title = 'Withdraw Success';
+                    details = 'Penarikan saldo';
                     break;
+                case 'referral_register_bonus':
+                    iconClass = 'icon-referral';
+                    icon = 'fas fa-user-plus';
+                    title = 'Referral Bonus';
+                    details = 'Bonus referral daftar';
+                    break;
+                case 'referral_activation_reward':
+                    iconClass = 'icon-referral';
+                    icon = 'fas fa-users';
+                    title = 'Referral Activation';
+                    details = 'Bonus referral aktivasi';
+                    break;
+                case 'manual_adjustment':
+                case 'life_manual_add':
+                    iconClass = 'icon-manual';
+                    icon = 'fas fa-cog';
+                    title = 'Manual Adjustment';
+                    details = 'Penyesuaian manual';
+                    break;
+                default:
+                    iconClass = 'icon-manual';
+                    icon = 'fas fa-history';
+                    title = historyData.type || 'Aktivitas';
+                    details = historyData.note || '';
             }
+            
+            // Get amounts
+            geoAmount = historyData.geo || historyData.amount || 0;
+            lifeAmount = historyData.life || 0;
+            
+            // Format reward text
+            let rewardText = '';
+            let rewardClass = 'reward-neutral';
+            
+            if (historyData.type === 'withdraw_success') {
+                rewardText = `-${geoAmount.toFixed(1).replace('.', ',')} GEO`;
+                rewardClass = 'reward-negative';
+            } else if (geoAmount > 0) {
+                rewardText = `+${geoAmount.toFixed(1).replace('.', ',')} GEO`;
+                rewardClass = 'reward-positive';
+            } else if (lifeAmount > 0) {
+                rewardText = `+${lifeAmount} LIFE`;
+                rewardClass = 'reward-positive';
+            }
+            
+            // Format timestamp
+            const formattedDate = formatDate(historyData.timestamp);
             
             div.innerHTML = `
                 <div class="history-item-content">
@@ -762,19 +907,16 @@
                     </div>
                     <div class="history-text-content">
                         <div class="history-header">
-                            <div class="history-title">${item.title}</div>
-                            <div class="history-date">${item.date}</div>
+                            <div class="history-title">${title}</div>
+                            <div class="history-date">${formattedDate}</div>
                         </div>
                         <div class="history-details">
-                            <div class="history-info">${item.details}</div>
-                            ${item.reward ? `
-                                <div class="history-reward">
-                                    <i class="fas fa-seedling"></i> ${item.reward}
+                            <div class="history-info">${details}</div>
+                            ${rewardText ? `
+                                <div class="history-reward ${rewardClass}">
+                                    <i class="fas fa-seedling"></i> ${rewardText}
                                 </div>
                             ` : ''}
-                        </div>
-                        <div class="history-status ${statusClass}">
-                            <i class="fas fa-circle" style="font-size: 8px;"></i> ${statusText}
                         </div>
                     </div>
                 </div>
@@ -783,26 +925,14 @@
             return div;
         }
 
-        // Helper function to get category name
-        function getCategoryName(categoryCode) {
-            const categories = {
-                'E': 'Easy',
-                'M': 'Medium',
-                'H': 'Hard',
-                'VH': 'Very Hard',
-                'UH': 'Ultimate Hard'
-            };
-            return categories[categoryCode] || categoryCode;
-        }
-
         // Helper function to format date
-        function formatDate(dateObj) {
-            if (!dateObj) return 'Tanggal tidak tersedia';
+        function formatDate(timestamp) {
+            if (!timestamp) return 'Tanggal tidak tersedia';
             
             try {
-                const date = dateObj.toDate ? dateObj.toDate() : new Date(dateObj);
+                const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
                 
-                // Format: DD MMM YYYY, HH:MM
+                // Format: DD MMM YYYY HH:mm
                 const day = date.getDate().toString().padStart(2, '0');
                 const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
                 const month = monthNames[date.getMonth()];
@@ -810,7 +940,7 @@
                 const hours = date.getHours().toString().padStart(2, '0');
                 const minutes = date.getMinutes().toString().padStart(2, '0');
                 
-                return `${day} ${month} ${year}, ${hours}:${minutes}`;
+                return `${day} ${month} ${year} ${hours}:${minutes}`;
             } catch (error) {
                 console.error("Error formatting date:", error);
                 return 'Tanggal tidak valid';
@@ -822,84 +952,37 @@
             document.getElementById('loadingOverlay').style.display = show ? 'flex' : 'none';
         }
 
-        // Show empty state with custom message
-        function showEmptyState(message) {
+        // Show empty state
+        function showEmptyState() {
             const noHistory = document.getElementById('noHistory');
             const historyList = document.getElementById('historyList');
-            
-            if (noHistory && message) {
-                noHistory.querySelector('.empty-title').textContent = message;
-            }
+            const loadMoreContainer = document.getElementById('loadMoreContainer');
             
             document.getElementById('skeletonLoading').style.display = 'none';
             document.getElementById('contentArea').style.display = 'block';
             historyList.style.display = 'none';
+            loadMoreContainer.style.display = 'none';
             noHistory.style.display = 'block';
         }
 
-        // Simulate some initial data for demo purposes
-        function createDemoHistory() {
-            const demoHistory = [
-                {
-                    type: 'quiz',
-                    title: 'Quiz - Level 1 Kategori Easy',
-                    details: 'Score: 8/10',
-                    reward: '+1,6 GEO',
-                    date: '15 Mar 2024, 14:30',
-                    timestamp: new Date('2024-03-15T14:30:00'),
-                    status: 'completed'
-                },
-                {
-                    type: 'tugas',
-                    title: 'Tugas - Follow Instagram',
-                    details: 'Status: APPROVE',
-                    reward: '+5,0 GEO',
-                    date: '14 Mar 2024, 10:15',
-                    timestamp: new Date('2024-03-14T10:15:00'),
-                    status: 'approved'
-                },
-                {
-                    type: 'withdraw',
-                    title: 'Withdraw - 100,0 GEO',
-                    details: 'BANK - BCA',
-                    reward: '',
-                    date: '13 Mar 2024, 16:45',
-                    timestamp: new Date('2024-03-13T16:45:00'),
-                    status: 'pending'
-                },
-                {
-                    type: 'quiz',
-                    title: 'Quiz - Level 2 Kategori Easy',
-                    details: 'Score: 10/10',
-                    reward: '+2,0 GEO',
-                    date: '12 Mar 2024, 09:20',
-                    timestamp: new Date('2024-03-12T09:20:00'),
-                    status: 'completed'
-                },
-                {
-                    type: 'tugas',
-                    title: 'Tugas - Subscribe YouTube',
-                    details: 'Status: REJECT',
-                    reward: '',
-                    date: '11 Mar 2024, 13:10',
-                    timestamp: new Date('2024-03-11T13:10:00'),
-                    status: 'rejected'
-                }
-            ];
+        // Show error state
+        function showErrorState() {
+            const errorState = document.getElementById('errorState');
+            const historyList = document.getElementById('historyList');
+            const noHistory = document.getElementById('noHistory');
+            const loadMoreContainer = document.getElementById('loadMoreContainer');
             
-            return demoHistory;
-        }
-
-        // Fallback function if Firestore data is not available
-        function loadFallbackHistory() {
-            allHistory = createDemoHistory();
-            
-            // Hide skeleton and show content
             document.getElementById('skeletonLoading').style.display = 'none';
             document.getElementById('contentArea').style.display = 'block';
-            
-            // Display history
-            displayHistory();
+            historyList.style.display = 'none';
+            noHistory.style.display = 'none';
+            loadMoreContainer.style.display = 'none';
+            errorState.style.display = 'block';
+        }
+
+        // Hide error state
+        function hideErrorState() {
+            document.getElementById('errorState').style.display = 'none';
         }
     </script>
 </body>
